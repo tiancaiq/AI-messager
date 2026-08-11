@@ -1,0 +1,152 @@
+# Privacy and security
+
+## Data classification
+
+Conversation screenshots, crops, extracted message text, drafts, contact names, avatars, relationship inferences, generated replies, and memory evidence are **highly sensitive content**. API credentials, encryption keys, and provider tokens are **secrets**. Operational metrics should be designed so they remain non-content metadata.
+
+Privacy is an architecture constraint, not only a disclosure in the UI.
+
+## Default capture lifecycle
+
+```text
+explicit Generate or equivalent user trigger
+→ hide Message Coach
+→ capture in desktop memory
+→ restore Message Coach
+→ locally select a previously confirmed, automatically inferred, or user-corrected region
+→ trusted provider-neutral request boundary
+→ encrypted transport directly to the selected provider when practical
+  or through an explicitly justified application service
+→ request-scoped provider processing
+→ structured result
+→ release crop buffers after completion/cancel/timeout
+```
+
+The default is no disk persistence on the desktop or application API. The full screen should not leave the device when a relevant region can be determined locally. Early versions may require manual crop selection; later versions may reuse a confirmed region or infer one, while retaining manual selection as a fallback and correction. Temporary retry state may exist only for the active UI session, with a short bound and explicit release.
+
+In Phase 1, the full-screen PNG crosses only the local trusted Electron main → sandboxed preload/renderer IPC boundary so the renderer can present manual selection. It is never written to a file, sent to `apps/api`, uploaded, or logged. The renderer immediately wraps a copied byte array in an in-memory `Blob`, zeroes the temporary copy, and keeps only revocable object URLs. Creating a preview releases the full-screen URL; Retake, Cancel, Escape, Continue, errors, reload, and unmount release the remaining capture/preview references. Continue is a text-only placeholder and performs no network request. A future provider milestone must preserve the stronger rule that only the selected crop may cross a provider or application-network boundary.
+
+Resettable local region metadata such as `x`, `y`, `width`, and `height` is configuration, not conversation content, and may be considered in a separately approved milestone. That distinction does not permit retaining screenshot pixels, extracted text, drafts, or identity evidence.
+
+Direct provider communication is the preferred topology when practical because it avoids an unnecessary Message Coach-operated content hop. It does not make the request local: the selected provider still receives the minimized content. If a provider or an application-operated service retains inputs under its configuration, that fact and retention must be verified and documented before production. “Deleted by our API” must not be used to imply deletion from systems we do not control.
+
+## Data minimization
+
+- Capture only after the user explicitly clicks Generate or invokes an equivalent capture trigger.
+- Hide the assistant before capture so it does not contaminate the conversation image.
+- Determine the smallest useful region locally, and let the user select, correct, change, or reset it.
+- Do not continuously record or capture in the background.
+- Do not add OCR, analytics, backups, object storage, or queues that duplicate content without a milestone need.
+- Send only context required by the selected model and response task.
+- Prefer direct encrypted provider requests from the trusted desktop process; add server mediation only for a documented requirement.
+- Store structured candidate facts instead of screenshots or transcript excerpts when future memory is enabled.
+- Use synthetic, generated, or deliberately redacted fixtures in the repository.
+
+## Logging and observability
+
+Never log:
+
+- image bytes, base64 payloads, or data URLs;
+- extracted messages or compose-box drafts;
+- generated reply text;
+- usernames, display names, avatar features, or memory values;
+- prompts containing user content;
+- authorization headers, provider keys, or full upstream responses.
+
+Allowed operational fields may include a random request ID, timestamps, coarse duration, byte-size buckets, schema version, selected action enum, skill IDs/versions, provider/model identifier, token counts, and coarse error codes—provided none can reconstruct content or become a stable cross-context user identifier.
+
+Central error handling must sanitize validation errors and upstream failures. Development logging must follow the same content rules; “debug mode” is not permission to leak conversations.
+
+## Trust boundaries and safeguards
+
+### Desktop
+
+- Electron context isolation enabled and sandboxing used where compatible.
+- No renderer Node.js integration.
+- Minimal allowlisted IPC methods with shared schema validation on both ends.
+- Future provider credentials use OS-protected secure storage where practical and remain accessible only to trusted Electron main-process code.
+- The renderer may submit a replacement credential through a narrow write operation but cannot read a stored credential back; it receives only safe configuration status.
+- Restrictive Content Security Policy and no arbitrary remote renderer content.
+- Explicit OS capture permission handling and visible capture state.
+- Clipboard write only after a direct user action.
+
+### Network and API
+
+- TLS for every provider or application-service request.
+- The Fastify service is not automatically a model proxy and must not persist BYOK credentials by default.
+- A server-mediated provider path requires a documented technical need, minimized content and credential exposure, authentication, retention limits, log review, and clear user disclosure.
+- Strict MIME type, image dimension, decoded-size, and request-size limits.
+- Timeouts, bounded concurrency, and rate controls to reduce accidental data exposure and abuse.
+- Authentication and origin/deployment controls must be defined before any non-local release.
+- Model output treated as untrusted input and validated before use.
+
+### Model provider
+
+- Use the minimum capable request and avoid unrelated memory/context.
+- Select models by declared task capability rather than assuming support from the provider name.
+- Do not grant tools that can send messages or access messaging apps.
+- Scope, rotate, replace, and delete user-owned provider keys through the trusted credential boundary; never expose stored values to the renderer.
+- Verify provider data-use and retention settings before external testing.
+- Make clear that the provider receives the request and bills the user directly under the user's provider account.
+- Do not expose hidden reasoning; keep returned evidence concise and observable.
+
+### Credentials
+
+- Never commit or hard-code provider keys.
+- Never store them in plaintext settings, logs, analytics, crash reports, screenshots, backups, fixtures, or support bundles.
+- Do not include credentials in URLs, provider-neutral errors, or serialized application state.
+- Keep connection-test and authentication failures sanitized.
+- A future settings UI may show provider, model, capability metadata, and configured/not-configured status, but not the saved secret.
+
+### Future storage
+
+- Encrypt durable memory in transit and at rest.
+- Separate identity keys from content where practical.
+- Enforce user-scoped access and deletion.
+- Track provenance, confirmation, freshness, and supersession.
+- Never use uncertain candidates as confirmed profile facts.
+
+## User control
+
+The user chooses when to capture by clicking Generate or invoking an equivalent explicit trigger, can correct or reset the selected region, chooses the reply/action, and decides whether to copy it. The coach never sends automatically. A future insertion feature still requires explicit review and action.
+
+Before durable memory is introduced, the product needs clear controls to:
+
+- enable/disable memory acquisition;
+- inspect confirmed memories and meaningful candidates;
+- correct or reject a candidate;
+- delete individual memories and all stored data;
+- understand what is local versus sent to a provider.
+
+Before BYOK provider integration, the product also needs clear controls to select the provider/model, add or replace the credential, test the connection safely, delete the credential, understand relevant capabilities, and see that usage is billed directly by the selected provider.
+
+Consent to analyze one Generate-triggered capture is not blanket consent to capture continuously, archive the conversation, or enroll a contact in identity matching.
+
+## Repository and testing policy
+
+- Do not commit real private conversations, screenshots, names, avatars, tokens, or production exports.
+- Test fixtures must be synthetic or explicitly approved and irreversibly redacted.
+- Live-model tests are opt-in, isolated from default CI, and clearly disclose what data is sent.
+- Secrets belong in ignored environment files or a secret manager; commit only placeholder examples.
+- Dependency and build choices should preserve reproducibility without introducing content telemetry.
+
+## Security and privacy review gates
+
+Before the first real screenshot reaches an external provider or application API, verify:
+
+1. local crop and full-screen disposal behavior;
+2. request/image bounds and MIME validation;
+3. log redaction under success, validation failure, and upstream failure;
+4. provider retention/data-use configuration and billing disclosure;
+5. OS-protected BYOK storage, renderer isolation, replacement, and deletion;
+6. renderer/main-process isolation;
+7. cancellation, timeout, and retry buffer disposal;
+8. direct-versus-server request topology and every infrastructure trust boundary;
+9. capability checks before transmission;
+10. clear no-auto-send UX.
+
+Before durable memory, identity matching, insertion, beta distribution, or telemetry launches, perform a focused threat/privacy review for that capability. These are milestone gates, not cleanup tasks.
+
+## Incident posture
+
+If sensitive content may have entered logs, artifacts, issue trackers, or version control, stop propagation, preserve only the minimal audit information, rotate exposed secrets, remove accessible copies through the relevant system's supported process, and document impact. Do not copy the sensitive value into a remediation report.
