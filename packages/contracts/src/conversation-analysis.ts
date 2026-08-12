@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { ConfidenceSchema } from "./coaching.js";
+import { ConfidenceSchema } from "./confidence.js";
 
 export const CONVERSATION_ANALYSIS_CHANNEL = "conversation-analysis:request";
 export const PROVIDER_CONFIGURATION_CHANNEL = "conversation-analysis:provider-configuration";

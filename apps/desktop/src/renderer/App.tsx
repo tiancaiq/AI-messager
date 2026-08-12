@@ -1,5 +1,8 @@
 import type {
   AiProviderErrorCode,
+  CoachingDecision,
+  CoachingErrorCode,
+  CoachingSelection,
   ConversationAnalysis,
   ProviderConfiguration,
 } from "@ai-message-coach/contracts";
@@ -33,6 +36,18 @@ const analysisErrorMessages: Record<AiProviderErrorCode, string> = {
   TIMEOUT: "The provider request timed out. Please try again.",
   INVALID_RESPONSE: "The provider returned an invalid analysis. Please try again.",
   PROVIDER_ERROR: "The conversation could not be analyzed. Please try again.",
+};
+
+const coachingErrorMessages: Record<CoachingErrorCode, string> = {
+  COACHING_IN_PROGRESS: "A coaching request is already in progress.",
+  NOT_CONFIGURED: "Configure an OpenAI API key in .env.local, then restart the desktop app.",
+  INVALID_CREDENTIALS: "The configured provider key was rejected. Check it and try again.",
+  RATE_LIMITED: "The provider is busy. Wait briefly, then try again.",
+  INSUFFICIENT_CREDITS: "The provider account does not have enough available credits.",
+  MODEL_UNAVAILABLE: "The configured model cannot generate coaching.",
+  TIMEOUT: "The provider request timed out. Please try again.",
+  INVALID_RESPONSE: "The provider returned an invalid coaching result. Please try again.",
+  PROVIDER_ERROR: "A message could not be generated. Please try again.",
 };
 
 function stateImageUrl(state: CaptureState): string | undefined {
@@ -151,13 +166,113 @@ export function AnalysisResultView({ analysis }: { analysis: ConversationAnalysi
   );
 }
 
+function decisionMessages(decision: CoachingDecision): { label: string; text: string }[] {
+  if (decision.action === "REWRITE_DRAFT" || decision.action === "COMPLETE_DRAFT") {
+    return [{ label: "Suggested message", text: decision.primary }, ...decision.alternatives];
+  }
+  if (decision.action === "SUGGEST_REPLY") return decision.replies;
+  if (decision.action === "NO_REPLY_NEEDED" && decision.optionalReply)
+    return [{ label: "Optional acknowledgment", text: decision.optionalReply }];
+  return [];
+}
+
+export function CoachingDecisionView({
+  decision,
+  copyStatus,
+  onCopy,
+  onSelect,
+}: {
+  decision: CoachingDecision;
+  copyStatus: string | undefined;
+  onCopy: (text: string) => void;
+  onSelect: (selection: CoachingSelection) => void;
+}) {
+  const messages = decisionMessages(decision);
+  return (
+    <section className="coaching-card">
+      <p className="eyebrow">{decision.action.toLowerCase().replaceAll("_", " ")}</p>
+      {decision.action === "SUGGEST_ACTIONS" ? (
+        <>
+          <h1>What would you like to do?</h1>
+          <div className="choice-grid">
+            {decision.actions.map((action) => (
+              <button
+                key={action.id}
+                className="button button-quiet"
+                type="button"
+                onClick={() => onSelect({ kind: "ACTION", ...action })}
+              >
+                {action.label}
+              </button>
+            ))}
+          </div>
+        </>
+      ) : decision.action === "ASK_CLARIFICATION" ? (
+        <>
+          <h1>{decision.question}</h1>
+          <div className="choice-grid">
+            {decision.options.map((option) => (
+              <button
+                key={option}
+                className="button button-quiet"
+                type="button"
+                onClick={() => onSelect({ kind: "CLARIFICATION", answer: option })}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </>
+      ) : decision.action === "NO_REPLY_NEEDED" ? (
+        <>
+          <h1>No reply is necessary.</h1>
+          <p>{decision.reason}</p>
+        </>
+      ) : (
+        <h1>
+          {decision.action === "SUGGEST_REPLY"
+            ? "Here are a few replies"
+            : "Here’s a clearer message"}
+        </h1>
+      )}
+      {messages.length > 0 ? (
+        <div className="message-options">
+          {messages.map((message) => (
+            <article key={`${message.label}-${message.text}`} className="message-option">
+              <span>{message.label}</span>
+              <p>{message.text}</p>
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={() => onCopy(message.text)}
+              >
+                Copy
+              </button>
+            </article>
+          ))}
+        </div>
+      ) : null}
+      <p className="confidence-note">
+        Action confidence {confidence(decision.actionConfidence)} · model-estimated, not calibrated
+      </p>
+      {copyStatus ? (
+        <p className="copy-status" role="status">
+          {copyStatus}
+        </p>
+      ) : null}
+    </section>
+  );
+}
+
 export function App() {
   const [state, dispatch] = useReducer(captureReducer, initialCaptureState);
   const [providerConfiguration, setProviderConfiguration] = useState<
     ProviderConfiguration | undefined
   >();
+  const [copyStatus, setCopyStatus] = useState<string>();
   const captureInFlightReference = useRef(false);
   const analysisInFlightReference = useRef(false);
+  const coachingInFlightReference = useRef(false);
   const captureSessionReference = useRef(0);
   const analysisSessionReference = useRef(0);
   const mountedReference = useRef(true);
@@ -204,7 +319,11 @@ export function App() {
 
   const beginCapture = useCallback(
     async (eventType: "GENERATE" | "RETAKE"): Promise<void> => {
-      if (captureInFlightReference.current || analysisInFlightReference.current) {
+      if (
+        captureInFlightReference.current ||
+        analysisInFlightReference.current ||
+        coachingInFlightReference.current
+      ) {
         return;
       }
 
@@ -212,7 +331,8 @@ export function App() {
         eventType === "RETAKE"
           ? state.status === "PREVIEW" || state.status === "ANALYSIS_ERROR"
           : state.status === "IDLE" ||
-            state.status === "RESULT" ||
+            state.status === "COACHING_RESULT" ||
+            state.status === "COACHING_ERROR" ||
             state.status === "CAPTURE_ERROR";
 
       if (!canGenerate) {
@@ -366,6 +486,54 @@ export function App() {
     }
   }, [releaseObjectUrl, state]);
 
+  const requestCoaching = useCallback(
+    async (
+      analysis: ConversationAnalysis,
+      selection: CoachingSelection | null,
+      retry = false,
+    ): Promise<void> => {
+      if (coachingInFlightReference.current) return;
+      coachingInFlightReference.current = true;
+      if (retry) dispatch({ type: "RETRY_COACHING" });
+      else if (selection !== null) dispatch({ type: "CONTINUE_COACHING" });
+      setCopyStatus(undefined);
+      try {
+        const bridge = window.messageCoach;
+        if (!bridge) throw new Error("The desktop coaching bridge is unavailable.");
+        const result = await bridge.requestCoaching({ analysis, selection });
+        if (!mountedReference.current) return;
+        dispatch(
+          result.ok
+            ? { type: "COACHING_SUCCEEDED", decision: result.decision }
+            : { type: "COACHING_FAILED", message: coachingErrorMessages[result.error.code] },
+        );
+      } catch {
+        if (mountedReference.current)
+          dispatch({ type: "COACHING_FAILED", message: coachingErrorMessages.PROVIDER_ERROR });
+      } finally {
+        coachingInFlightReference.current = false;
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (state.status === "DECIDING" && !coachingInFlightReference.current) {
+      void requestCoaching(state.result.analysis, null);
+    }
+  }, [requestCoaching, state]);
+
+  const copyMessage = useCallback(async (text: string): Promise<void> => {
+    try {
+      const result = await window.messageCoach?.copyCoachingText(text);
+      setCopyStatus(
+        result?.ok ? "Copied." : (result?.error.message ?? "Copy failed. Please try again."),
+      );
+    } catch {
+      setCopyStatus("Copy failed. Please try again.");
+    }
+  }, []);
+
   useEffect(() => {
     const isCancelable =
       state.status === "CAPTURING" ||
@@ -415,7 +583,7 @@ export function App() {
       <main className="app-shell preview-shell">
         <section className="content-card preview-card">
           <p className="eyebrow">Conversation understanding</p>
-          <h1>{isAnalyzing ? "Reading visible messages…" : "Review selection"}</h1>
+          <h1>{isAnalyzing ? "Analyzing conversation…" : "Review selection"}</h1>
           <div className="preview-frame">
             <img alt="Selected conversation region preview" src={state.preview.imageUrl} />
             {isAnalyzing ? <div className="analysis-progress">Analyzing securely…</div> : null}
@@ -451,7 +619,7 @@ export function App() {
               type="button"
               onClick={() => void analyzeSelected()}
             >
-              {hasError ? "Try analysis again" : "Analyze conversation"}
+              {hasError ? "Try analysis again" : "Continue"}
             </button>
           </div>
           <p className="provider-note">
@@ -501,13 +669,57 @@ export function App() {
     );
   }
 
-  if (state.status === "RESULT") {
+  if (state.status === "DECIDING") {
     return (
-      <main className="result-shell">
+      <main className="app-shell">
+        <section className="content-card status-card" aria-live="polite">
+          <p className="eyebrow">Draft-aware coaching</p>
+          <h1>Thinking about the response…</h1>
+          <p>Choosing the most useful next step from the visible conversation.</p>
+        </section>
+      </main>
+    );
+  }
+
+  if (state.status === "COACHING_ERROR") {
+    return (
+      <main className="app-shell">
+        <section className="content-card status-card" aria-live="polite">
+          <p className="eyebrow">Coaching unavailable</p>
+          <h1>We couldn’t prepare a message.</h1>
+          <p className="inline-error">{state.message}</p>
+          <div className="button-row">
+            <button
+              className="button button-quiet"
+              type="button"
+              onClick={() => void beginCapture("GENERATE")}
+            >
+              Start over
+            </button>
+            <button
+              className="button button-primary"
+              type="button"
+              onClick={() => void requestCoaching(state.result.analysis, null, true)}
+            >
+              Try again
+            </button>
+          </div>
+          <details className="analysis-details">
+            <summary>Inspect extracted conversation</summary>
+            <AnalysisResultView analysis={state.result.analysis} />
+          </details>
+        </section>
+      </main>
+    );
+  }
+
+  if (state.status === "COACHING_RESULT") {
+    return (
+      <main className="coaching-shell">
         <header className="result-header">
           <div>
-            <p className="eyebrow">Validated visible context</p>
-            <h1>Conversation analysis</h1>
+            <p className="eyebrow">AI Message Coach</p>
+            <h1>Your next message</h1>
             <p className="provider-note">
               {state.result.provider.providerId} · {state.result.provider.modelId}
             </p>
@@ -517,13 +729,21 @@ export function App() {
             type="button"
             onClick={() => void beginCapture("GENERATE")}
           >
-            Analyze another capture
+            New capture
           </button>
         </header>
-        <AnalysisResultView analysis={state.result.analysis} />
+        <CoachingDecisionView
+          decision={state.result.decision}
+          copyStatus={copyStatus}
+          onCopy={(text) => void copyMessage(text)}
+          onSelect={(selection) => void requestCoaching(state.result.analysis, selection)}
+        />
+        <details className="analysis-details">
+          <summary>Inspect extracted conversation</summary>
+          <AnalysisResultView analysis={state.result.analysis} />
+        </details>
         <p className="phase-boundary-note">
-          Phase 2 reports only visible observations. It does not generate a reply or infer a
-          relationship.
+          Review before sending. Message Coach never sends or inserts text automatically.
         </p>
       </main>
     );

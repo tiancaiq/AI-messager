@@ -224,7 +224,9 @@ An optional shortcut follows the same sequence by requesting the same capture ca
 
 Phase 2 selects the direct path: renderer → authorized preload/main IPC → provider-neutral task → isolated OpenAI adapter. `apps/api` receives neither crop nor credential. A future server path must justify the additional trust boundary; the desktop path preserves adapter isolation, trusted key access, request bounds, output validation, and safe errors.
 
-The Phase 2 path makes one understanding call and no repair, coaching, skill, or response call. Invalid, refused, or incomplete output becomes a recoverable error. A later approved coaching milestone consumes the validated observation contract without re-extracting the screenshot.
+The Phase 2 path makes one understanding call and no repair, coaching, skill, or response call. Invalid, refused, or incomplete output becomes a recoverable error. Phase 3 consumes the validated observation contract without re-extracting the screenshot. A deterministic draft-aware policy fixes one `AgentAction`; local choice, clarification, and no-reply decisions need no wording call, while rewrite/complete/reply actions use one provider-neutral text-generation call through an isolated OpenAI adapter. A user choice can require one follow-up wording call using the same in-memory context.
+
+Phase 3 adds fixed authorized coaching and clipboard IPC methods. The sandboxed renderer sends strict `ConversationAnalysis` plus at most one bounded selection; Electron main retains credentials, prevents overlapping coaching calls, validates every provider result, and writes clipboard text only after an explicit user action. No screenshot, conversation, generated message, or key enters `apps/api`, logs, or persistent storage.
 
 ## Core domain shape
 

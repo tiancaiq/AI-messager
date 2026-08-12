@@ -85,7 +85,7 @@ The first implementation may use one selected provider/model for every task it s
 
 ## Structured output and errors
 
-Phase 2 conversation extraction is a provider-neutral Zod-backed contract for visible messages/order/ownership, draft, contact signals, language, warnings, and extraction confidence. It explicitly rejects relationship, situation, intent, skill, action, and response fields. An API call succeeding does not make its output trusted. Later inference and coaching contracts require their own approved milestone.
+Phase 2 conversation extraction is a provider-neutral Zod-backed contract for visible messages/order/ownership, draft, contact signals, language, warnings, and extraction confidence. It explicitly rejects relationship, situation, intent, skill, action, and response fields. Phase 3 defines its own strict provider-neutral coaching request/result contract, fixes the action through deterministic policy, and uses an isolated text adapter only for basic wording. Both boundaries reject malformed and relationship/skill-expanded output.
 
 Each adapter is responsible for:
 
@@ -130,7 +130,7 @@ Never commit, hard-code, log, analyze, or place keys in plaintext application se
 
 ## Sensitive-request topology
 
-For Phase 2 screenshot conversation analysis, the implemented topology is:
+For Phase 2 screenshot analysis and Phase 3 basic coaching, the implemented topology is:
 
 ```text
 user device
@@ -138,7 +138,7 @@ user device
 → OpenAI Responses API
 ```
 
-This avoids sending private conversation content through Message Coach-operated infrastructure when no product requirement justifies that extra trust boundary. The selected crop goes through authorized local IPC; the full-display capture stays local. The existing Fastify service receives neither crop nor credential.
+This avoids sending private conversation content through Message Coach-operated infrastructure when no product requirement justifies that extra trust boundary. Phase 2 sends the selected crop; Phase 3 sends only validated structured context and no image. The full-display capture stays local. The existing Fastify service receives neither private content nor credential.
 
 A server-mediated provider path remains possible if later technical requirements justify it. Before choosing it, the milestone plan must document why direct communication is insufficient, what sensitive content and credential material cross the server, retention and logging controls, authentication, deployment boundaries, and how the user is informed. The decision should remain reversible until tested requirements make one topology necessary.
 

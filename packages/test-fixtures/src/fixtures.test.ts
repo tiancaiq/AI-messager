@@ -1,29 +1,27 @@
 import {
-  CoachResultSchema,
+  CoachingDecisionSchema,
   ConversationAnalysisSchema,
-  ConversationObservationSchema,
   SkillDefinitionSchema,
 } from "@ai-message-coach/contracts";
 import { describe, expect, it } from "vitest";
 
 import {
-  invalidCoachResultFixture,
+  invalidCoachingDecisionFixture,
   conversationUnderstandingFixtures,
+  coachingEvaluationFixtures,
   renderConversationFixtureSvg,
-  syntheticObservationFixture,
-  validCoachResultFixture,
+  validCoachingDecisionFixture,
   validSkillFixture,
 } from "./index.js";
 
 describe("synthetic workspace fixtures", () => {
   it("keeps valid fixtures aligned with shared schemas", () => {
-    expect(CoachResultSchema.safeParse(validCoachResultFixture).success).toBe(true);
-    expect(ConversationObservationSchema.safeParse(syntheticObservationFixture).success).toBe(true);
+    expect(CoachingDecisionSchema.safeParse(validCoachingDecisionFixture).success).toBe(true);
     expect(SkillDefinitionSchema.safeParse(validSkillFixture).success).toBe(true);
   });
 
   it("provides an intentionally invalid result boundary fixture", () => {
-    expect(CoachResultSchema.safeParse(invalidCoachResultFixture).success).toBe(false);
+    expect(CoachingDecisionSchema.safeParse(invalidCoachingDecisionFixture).success).toBe(false);
   });
 
   it("provides at least fifty valid observation-only Phase 2 scenarios", () => {
@@ -58,6 +56,25 @@ describe("synthetic workspace fixtures", () => {
       "dark",
     ]) {
       expect(categories.has(category)).toBe(true);
+    }
+  });
+
+  it("provides representative Phase 3 decision and integrity scenarios", () => {
+    expect(coachingEvaluationFixtures).toHaveLength(14);
+    expect(new Set(coachingEvaluationFixtures.map((fixture) => fixture.id)).size).toBe(14);
+    expect(new Set(coachingEvaluationFixtures.map((fixture) => fixture.expectedAction))).toEqual(
+      new Set([
+        "REWRITE_DRAFT",
+        "COMPLETE_DRAFT",
+        "SUGGEST_REPLY",
+        "SUGGEST_ACTIONS",
+        "ASK_CLARIFICATION",
+        "NO_REPLY_NEEDED",
+      ]),
+    );
+    for (const fixture of coachingEvaluationFixtures) {
+      expect(ConversationAnalysisSchema.safeParse(fixture.input).success).toBe(true);
+      expect(fixture.importantConstraints.length).toBeGreaterThan(0);
     }
   });
 });

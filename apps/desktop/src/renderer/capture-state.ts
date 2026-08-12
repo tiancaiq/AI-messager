@@ -1,5 +1,6 @@
 import type {
   CaptureDisplay,
+  CoachingDecision,
   ConversationAnalysis,
   ProviderConfiguration,
 } from "@ai-message-coach/contracts";
@@ -23,6 +24,10 @@ export interface AnalysisResultResource {
   provider: Pick<ProviderConfiguration, "providerId" | "modelId">;
 }
 
+export interface CoachingResultResource extends AnalysisResultResource {
+  decision: CoachingDecision;
+}
+
 export type CaptureState =
   | { status: "IDLE" }
   | { status: "CAPTURING" }
@@ -30,7 +35,9 @@ export type CaptureState =
   | { status: "PREVIEW"; preview: CropPreviewResource }
   | { status: "ANALYZING"; preview: CropPreviewResource }
   | { status: "ANALYSIS_ERROR"; preview: CropPreviewResource; message: string }
-  | { status: "RESULT"; result: AnalysisResultResource }
+  | { status: "DECIDING"; result: AnalysisResultResource }
+  | { status: "COACHING_ERROR"; result: AnalysisResultResource; message: string }
+  | { status: "COACHING_RESULT"; result: CoachingResultResource }
   | { status: "CAPTURE_ERROR"; message: string };
 
 export type CaptureEvent =
@@ -45,7 +52,11 @@ export type CaptureEvent =
   | { type: "ANALYZE" }
   | { type: "RETRY_ANALYSIS" }
   | { type: "ANALYSIS_SUCCEEDED"; result: AnalysisResultResource }
-  | { type: "ANALYSIS_FAILED"; message: string };
+  | { type: "ANALYSIS_FAILED"; message: string }
+  | { type: "COACHING_SUCCEEDED"; decision: CoachingDecision }
+  | { type: "COACHING_FAILED"; message: string }
+  | { type: "RETRY_COACHING" }
+  | { type: "CONTINUE_COACHING" };
 
 export const initialCaptureState: CaptureState = { status: "IDLE" };
 
@@ -53,7 +64,8 @@ export function captureReducer(state: CaptureState, event: CaptureEvent): Captur
   switch (event.type) {
     case "GENERATE":
       return state.status === "IDLE" ||
-        state.status === "RESULT" ||
+        state.status === "COACHING_RESULT" ||
+        state.status === "COACHING_ERROR" ||
         state.status === "CAPTURE_ERROR"
         ? { status: "CAPTURING" }
         : state;
@@ -78,10 +90,29 @@ export function captureReducer(state: CaptureState, event: CaptureEvent): Captur
         ? { status: "ANALYZING", preview: state.preview }
         : state;
     case "ANALYSIS_SUCCEEDED":
-      return state.status === "ANALYZING" ? { status: "RESULT", result: event.result } : state;
+      return state.status === "ANALYZING" ? { status: "DECIDING", result: event.result } : state;
     case "ANALYSIS_FAILED":
       return state.status === "ANALYZING"
         ? { status: "ANALYSIS_ERROR", preview: state.preview, message: event.message }
+        : state;
+    case "COACHING_SUCCEEDED":
+      return state.status === "DECIDING"
+        ? { status: "COACHING_RESULT", result: { ...state.result, decision: event.decision } }
+        : state;
+    case "COACHING_FAILED":
+      return state.status === "DECIDING"
+        ? { status: "COACHING_ERROR", result: state.result, message: event.message }
+        : state;
+    case "RETRY_COACHING":
+      return state.status === "COACHING_ERROR"
+        ? { status: "DECIDING", result: state.result }
+        : state;
+    case "CONTINUE_COACHING":
+      return state.status === "COACHING_RESULT"
+        ? {
+            status: "DECIDING",
+            result: { analysis: state.result.analysis, provider: state.result.provider },
+          }
         : state;
     case "RETAKE":
       return state.status === "PREVIEW" || state.status === "ANALYSIS_ERROR"

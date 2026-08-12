@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
-import { AnalysisResultView, App } from "./App.js";
+import { AnalysisResultView, App, CoachingDecisionView } from "./App.js";
 
 describe("desktop capture entry", () => {
   it("renders the product name and primary Generate trigger", () => {
@@ -55,5 +55,66 @@ describe("desktop capture entry", () => {
     expect(markup).toContain("Alex");
     expect(markup).not.toContain("Suggested reply");
     expect(markup).not.toContain("Copy reply");
+  });
+
+  it("renders a copyable coaching result", () => {
+    const markup = renderToStaticMarkup(
+      <CoachingDecisionView
+        copyStatus={undefined}
+        decision={{
+          action: "REWRITE_DRAFT",
+          userIntent: { value: "Preserve uncertainty about tomorrow.", confidence: 0.95 },
+          actionConfidence: 0.96,
+          ambiguity: { material: false, reason: null },
+          primary: "Sorry, testing is taking longer, so it will probably be tomorrow.",
+          alternatives: [{ label: "Shorter", text: "Testing is taking longer—probably tomorrow." }],
+        }}
+        onCopy={() => undefined}
+        onSelect={() => undefined}
+      />,
+    );
+
+    expect(markup).toContain("Here’s a clearer message");
+    expect(markup).toContain("probably be tomorrow");
+    expect(markup).toContain(">Copy</button>");
+    expect(markup).toContain("model-estimated, not calibrated");
+  });
+
+  it("renders suggested actions and one clarification question", () => {
+    const actions = renderToStaticMarkup(
+      <CoachingDecisionView
+        copyStatus={undefined}
+        decision={{
+          action: "SUGGEST_ACTIONS",
+          userIntent: { value: null, confidence: 0.4 },
+          actionConfidence: 0.9,
+          ambiguity: { material: true, reason: "The choice changes the reply." },
+          actions: [
+            { id: "accept", label: "Accept", intent: "Accept." },
+            { id: "decline", label: "Decline", intent: "Decline." },
+          ],
+        }}
+        onCopy={() => undefined}
+        onSelect={() => undefined}
+      />,
+    );
+    const clarification = renderToStaticMarkup(
+      <CoachingDecisionView
+        copyStatus={undefined}
+        decision={{
+          action: "ASK_CLARIFICATION",
+          userIntent: { value: null, confidence: 0.2 },
+          actionConfidence: 0.8,
+          ambiguity: { material: true, reason: "The intent is unclear." },
+          question: "What would you like to do next?",
+          options: ["Acknowledge", "Ask a follow-up"],
+        }}
+        onCopy={() => undefined}
+        onSelect={() => undefined}
+      />,
+    );
+    expect(actions).toContain(">Accept</button>");
+    expect(actions).toContain(">Decline</button>");
+    expect(clarification).toContain("What would you like to do next?");
   });
 });

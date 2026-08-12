@@ -135,6 +135,8 @@ Implementation, deterministic verification, local UI/runtime verification, API h
 
 **Outcome:** consume the validated Phase 2 context to decide whether to rewrite, complete, suggest a reply, offer action choices, ask one necessary clarification, or recommend no reply, then present an editable result without automatic sending.
 
+Implementation is active under the [Phase 3 execution plan](../.agent/plans/phase-3.md). The approved boundary is basic draft-aware decision and generation only: relationship reasoning, identity/memory, and the Communication Skill Engine are deferred. Live coaching quality remains pending while `api.openai.com:443` is unreachable from the current host.
+
 **In scope:** observation/inference/decision separation; draft-aware deterministic action policy; clarification gate; provider-neutral response task; small approved skill registry; language eligibility; one-call normal path; minimal provider/model settings; OS-protected credentials where practical; connection testing; response/action/clarification/no-reply UI; editable result and copy; representative English/Chinese evaluation; packaging for controlled Windows testing; and end-to-end privacy/failure review.
 
 **Out of scope:** relationship prediction unless separately proposed and approved, additional providers, multiple simultaneous task models, custom/local endpoints, durable personal/contact memory, identity recognition, insertion/sending, app-specific integrations, vector databases, iOS, and Skill Factory.
@@ -169,4 +171,4 @@ App-specific messaging integrations and automatic sending remain outside the pla
 
 ## Next recommended work
 
-Complete and evaluate Phase 2 screenshot conversation understanding without adding coaching or relationship prediction. Then prepare an approved Phase 3 plan for deterministic coaching policy and production-grade secure BYOK settings. Separately, run controlled Windows checks at 100% and 125% scaling with a second monitor where available before Windows release signoff.
+Complete and evaluate the active Phase 3 draft-aware coaching baseline without adding relationship reasoning or skills. Then prepare an approved Phase 4 plan for the first Communication Skill Engine. Separately, run live Phase 2/3 provider evaluation from a reachable host and controlled Windows checks at 100% and 125% scaling with a second monitor where available.

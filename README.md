@@ -10,7 +10,7 @@ The first product target is a Windows desktop application built with Electron, R
 
 ## Current status
 
-Phase 0 and Phase 1 are complete. Phase 2 is **implemented — live provider evaluation pending**: the selected Phase 1 crop now enters a provider-neutral conversation-understanding task, one isolated OpenAI vision adapter, and a validated extraction/debug UI. Deterministic and local runtime verification pass, while live extraction quality is not yet verified because this host cannot reach `api.openai.com:443`. The analysis reports visible messages/order/ownership, draft, visible contact signals, language, warnings, and confidence only. It does not predict relationships, choose coaching actions, use skills or memory, or generate replies.
+Phase 0 and Phase 1 are complete. Phase 2 is **implemented — live provider evaluation pending**. Phase 3 is in progress: the validated Phase 2 `ConversationAnalysis` now enters a draft-aware deterministic action gate and provider-neutral basic message generator. It can rewrite or complete a draft, suggest replies or action choices, ask one material clarification, say no reply is needed, and explicitly copy generated text. It does not predict relationships, use identity/memory, retrieve skills, persist conversations, insert text, or send messages. Live extraction and coaching quality remain unverified because this host cannot reach `api.openai.com:443`.
 
 Phase 1 is complete. Automated checks, synthetic UI checks, and the real Electron capture/exclusion/restoration workflow pass on the current macOS host at 2× display scale. Controlled Windows DPI and multi-monitor verification remains a documented target-platform follow-up before Windows release signoff.
 
@@ -27,6 +27,7 @@ Phase 1 is complete. Automated checks, synthetic UI checks, and the real Electro
 - [Phase 0 plan](.agent/plans/phase-0.md): implementation decisions, acceptance evidence, and completion record.
 - [Phase 1 plan](.agent/plans/phase-1.md): capture decisions, progress, validation evidence, and remaining native gates.
 - [Phase 2 plan](.agent/plans/phase-2.md): screenshot-understanding boundary, provider decision, evaluation, and acceptance evidence.
+- [Phase 3 plan](.agent/plans/phase-3.md): draft-aware decision/generation boundary, evaluation, and acceptance tracking.
 
 ## Repository layout
 
@@ -73,6 +74,7 @@ No API key or external service is required for default tests. Phase 2 live use r
 | `pnpm dev:desktop` | Build shared packages and launch the Electron/Vite desktop shell |
 | `pnpm dev:api` | Build shared packages and run the Fastify API in watch mode |
 | `pnpm eval:phase2 -- --limit 6` | Run the opt-in synthetic live-provider evaluation |
+| `pnpm eval:phase3 -- --limit 6` | Run the opt-in coaching live-provider evaluation |
 | `pnpm format` | Format workspace source and configuration files |
 | `pnpm format:check` | Verify formatting without edits |
 | `pnpm lint` | Run ESLint with zero warnings allowed |
@@ -100,11 +102,11 @@ pnpm --filter @ai-message-coach/api start
 - `apps/api` imports shared contracts and keeps construction separate from listening so the health route can be tested with Fastify injection.
 - `packages/contracts` defines Zod schemas first and infers TypeScript types from them.
 - `packages/skills` validates a definition through the shared schema but contains no runtime catalog or retrieval engine.
-- `packages/ai` owns a task-specific provider-neutral conversation-image analyzer, capability preflight, observation-only prompt, and isolated OpenAI Responses adapter. It uses native `fetch`; no provider SDK leaks into core code.
+- `packages/ai` owns provider-neutral conversation analysis and coaching contracts, a deterministic draft-aware action gate, compact model-facing prompts, and isolated OpenAI vision/text adapters. It uses native `fetch`; no provider SDK leaks into core code.
 - `packages/test-fixtures` contains 52 renderable synthetic conversation-understanding scenarios plus the original Phase 0 examples. No real conversations or credentials belong in the repository.
 - Phase 1 adds a main-process single-flight capture service, one allowlisted IPC command, shared strict capture-result schemas, pure crop geometry/state logic, and a browser-only selection/preview renderer. Captures are never written to disk or sent to the API.
 
-PostgreSQL, pgvector, durable memory, coaching policy, relationship prediction, reply generation, iOS, the Skill Factory runtime, and messaging-platform integrations remain intentionally absent from Phase 2.
+PostgreSQL, pgvector, durable memory, relationship prediction, identity resolution, runtime skill retrieval, the Skill Factory, automatic insertion/sending, iOS, and messaging-platform integrations remain intentionally absent.
 
 ## Future LLM provider model
 
@@ -120,10 +122,10 @@ Credentials will eventually be held behind the trusted Electron main/preload bou
 2. The desktop client calls its reusable conversation-capture capability, temporarily hides itself, captures the relevant display context, and restores itself.
 3. During early implementations or when automatic selection is wrong, the user selects, adjusts, or resets the conversation region locally.
 4. Phase 2 temporarily analyzes only the selected context for visible messages, ownership/order, the current compose-box draft, visible contact signals, language, warnings, and extraction confidence through a capable model.
-5. A later approved coaching milestone consumes that validated context to choose an action and any approved skills; it does not re-extract the screenshot.
+5. Phase 3 consumes that validated context directly through a draft-aware action gate; it does not re-extract the screenshot or use skills.
 6. The coach may then rewrite or complete the draft, suggest replies/actions, ask at most one necessary question, or say that no reply is needed.
 7. The user reviews and copies the result. Captured image data is discarded.
 
 The Generate button is the primary product trigger. A global shortcut or future quick action may invoke the same capture capability as an optional convenience; it must not create a parallel capture workflow. Manual screenshot selection is an initial setup mechanism, fallback, and correction tool rather than the intended long-term center of the experience.
 
-Phase 1 implements steps 1–3. Phase 2 implements step 4 only; it deliberately excludes relationship prediction and every coaching/reply behavior. See [the roadmap](docs/roadmap.md); each milestone is deliberately narrow.
+Phase 1 implements steps 1–3. Phase 2 implements step 4 only. Phase 3 implements steps 5–7 with basic generation and no relationship or Skill Engine. See [the roadmap](docs/roadmap.md); each milestone is deliberately narrow.

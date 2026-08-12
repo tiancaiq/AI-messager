@@ -1,19 +1,26 @@
 import { join } from "node:path";
 
-import { OpenAiVisionAdapter } from "@ai-message-coach/ai";
+import { OpenAiCoachingAdapter, OpenAiVisionAdapter } from "@ai-message-coach/ai";
 import {
   APP_NAME,
+  COACHING_REQUEST_CHANNEL,
+  COPY_COACHING_TEXT_CHANNEL,
   CONVERSATION_ANALYSIS_CHANNEL,
   CONVERSATION_CAPTURE_CHANNEL,
   ConversationImageRequestSchema,
+  CoachingRequestSchema,
+  CopyCoachingTextRequestSchema,
   PROVIDER_CONFIGURATION_CHANNEL,
   type ConversationAnalysisResult,
+  type CoachingDecisionResult,
+  type CopyCoachingTextResult,
   type ConversationCaptureResult,
 } from "@ai-message-coach/contracts";
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, clipboard, ipcMain } from "electron";
 
 import { createConversationCaptureService } from "./conversation-capture.js";
 import { createConversationAnalysisService } from "./conversation-analysis.js";
+import { copyCoachingText, createCoachingService } from "./coaching.js";
 
 app.enableSandbox();
 
@@ -25,6 +32,16 @@ const conversationAnalysisService = createConversationAnalysisService(
     ...(process.env.OPENAI_VISION_MODEL === undefined
       ? {}
       : { modelId: process.env.OPENAI_VISION_MODEL }),
+  }),
+);
+const coachingService = createCoachingService(
+  new OpenAiCoachingAdapter({
+    ...(process.env.OPENAI_API_KEY === undefined ? {} : { apiKey: process.env.OPENAI_API_KEY }),
+    ...(process.env.OPENAI_TEXT_MODEL === undefined
+      ? process.env.OPENAI_VISION_MODEL === undefined
+        ? {}
+        : { modelId: process.env.OPENAI_VISION_MODEL }
+      : { modelId: process.env.OPENAI_TEXT_MODEL }),
   }),
 );
 
@@ -42,6 +59,14 @@ const invalidAnalysisRequest: ConversationAnalysisResult = {
     code: "PROVIDER_ERROR",
     message: "The analysis request was not accepted.",
   },
+};
+const invalidCoachingRequest: CoachingDecisionResult = {
+  ok: false,
+  error: { code: "PROVIDER_ERROR", message: "The coaching request was not accepted." },
+};
+const invalidCopyRequest: CopyCoachingTextResult = {
+  ok: false,
+  error: { message: "The copy request was not accepted." },
 };
 
 function isAuthorizedRenderer(
@@ -91,6 +116,23 @@ function registerAnalysisHandlers(): void {
     }
 
     return await conversationAnalysisService.requestAnalysis(request.data);
+  });
+}
+
+function registerCoachingHandlers(): void {
+  ipcMain.handle(COACHING_REQUEST_CHANNEL, async (event, ...arguments_: unknown[]) => {
+    if (arguments_.length !== 1 || !isAuthorizedRenderer(event.sender, event.senderFrame))
+      return invalidCoachingRequest;
+    const request = CoachingRequestSchema.safeParse(arguments_[0]);
+    return request.success
+      ? await coachingService.requestCoaching(request.data)
+      : invalidCoachingRequest;
+  });
+  ipcMain.handle(COPY_COACHING_TEXT_CHANNEL, (event, ...arguments_: unknown[]) => {
+    if (arguments_.length !== 1 || !isAuthorizedRenderer(event.sender, event.senderFrame))
+      return invalidCopyRequest;
+    const request = CopyCoachingTextRequestSchema.safeParse(arguments_[0]);
+    return request.success ? copyCoachingText(clipboard, request.data.text) : invalidCopyRequest;
   });
 }
 
@@ -149,6 +191,7 @@ app
   .then(async () => {
     registerCaptureHandler();
     registerAnalysisHandlers();
+    registerCoachingHandlers();
     await createWindow();
 
     app.on("activate", () => {

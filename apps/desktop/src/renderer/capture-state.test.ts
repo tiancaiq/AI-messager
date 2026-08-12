@@ -57,13 +57,24 @@ describe("capture and analysis state", () => {
     const selecting = captureReducer(capturing, { type: "CAPTURE_SUCCEEDED", capture });
     const previewing = captureReducer(selecting, { type: "SELECTION_SUCCEEDED", preview });
     const analyzing = captureReducer(previewing, { type: "ANALYZE" });
-    const result = captureReducer(analyzing, {
+    const deciding = captureReducer(analyzing, {
       type: "ANALYSIS_SUCCEEDED",
       result: { analysis, provider: { providerId: "openai", modelId: "fixture-model" } },
     });
+    const result = captureReducer(deciding, {
+      type: "COACHING_SUCCEEDED",
+      decision: {
+        action: "SUGGEST_REPLY",
+        userIntent: { value: "Reply naturally.", confidence: 0.8 },
+        actionConfidence: 0.9,
+        ambiguity: { material: false, reason: null },
+        replies: [{ label: "Natural", text: "Sure." }],
+      },
+    });
 
     expect(analyzing).toEqual({ status: "ANALYZING", preview });
-    expect(result).toMatchObject({ status: "RESULT", result: { analysis } });
+    expect(deciding).toMatchObject({ status: "DECIDING", result: { analysis } });
+    expect(result).toMatchObject({ status: "COACHING_RESULT", result: { analysis } });
   });
 
   it("retains the selected crop for recoverable analysis failures", () => {
@@ -85,6 +96,33 @@ describe("capture and analysis state", () => {
 
     expect(captureReducer(analyzing, { type: "ANALYZE" })).toBe(analyzing);
     expect(captureReducer(capturing, { type: "GENERATE" })).toBe(capturing);
+  });
+
+  it("keeps coaching failures recoverable and reuses analysis for a choice", () => {
+    const provider = { providerId: "openai", modelId: "fixture-model" };
+    const deciding = { status: "DECIDING", result: { analysis, provider } } as const;
+    const error = captureReducer(deciding, { type: "COACHING_FAILED", message: "Try again." });
+    expect(error).toEqual({
+      status: "COACHING_ERROR",
+      result: deciding.result,
+      message: "Try again.",
+    });
+    expect(captureReducer(error, { type: "RETRY_COACHING" })).toEqual(deciding);
+
+    const choices = captureReducer(deciding, {
+      type: "COACHING_SUCCEEDED",
+      decision: {
+        action: "SUGGEST_ACTIONS",
+        userIntent: { value: null, confidence: 0.4 },
+        actionConfidence: 0.9,
+        ambiguity: { material: true, reason: "The choice changes the reply." },
+        actions: [
+          { id: "accept", label: "Accept", intent: "Accept." },
+          { id: "decline", label: "Decline", intent: "Decline." },
+        ],
+      },
+    });
+    expect(captureReducer(choices, { type: "CONTINUE_COACHING" })).toEqual(deciding);
   });
 
   it("allows retake or cancel after an analysis failure", () => {

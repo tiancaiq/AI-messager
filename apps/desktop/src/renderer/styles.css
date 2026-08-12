@@ -352,11 +352,107 @@ button {
   margin: 0;
 }
 
-.result-shell {
+.result-shell,
+.coaching-shell {
   height: 100vh;
   overflow: auto;
   padding: clamp(1rem, 3vw, 2.5rem);
   background: radial-gradient(circle at 20% 0, rgb(57 68 255 / 24%), transparent 34rem), #05091c;
+}
+
+.coaching-card,
+.analysis-details {
+  width: min(100%, 78rem);
+  margin: 0 auto;
+}
+
+.coaching-card {
+  padding: clamp(1.25rem, 4vw, 2.25rem);
+  border: 1px solid rgb(177 183 255 / 16%);
+  background: rgb(8 13 38 / 82%);
+  border-radius: 1.25rem;
+  box-shadow: 0 1.5rem 5rem rgb(0 0 0 / 24%);
+}
+
+.coaching-card h1 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.7rem, 4vw, 3rem);
+  letter-spacing: -0.04em;
+}
+
+.coaching-card > p:not(.eyebrow, .confidence-note, .copy-status) {
+  color: #d7daf0;
+  line-height: 1.6;
+}
+
+.message-options,
+.choice-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.message-options {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.choice-grid {
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+}
+
+.message-option {
+  display: grid;
+  align-content: start;
+  gap: 0.85rem;
+  padding: 1.1rem;
+  border: 1px solid rgb(170 176 255 / 18%);
+  background: rgb(255 255 255 / 4%);
+  border-radius: 0.9rem;
+}
+
+.message-option span {
+  color: #9fa6d0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.message-option p {
+  min-height: 4.5rem;
+  margin: 0;
+  color: #f0f1ff;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.message-option .button {
+  justify-self: start;
+}
+
+.confidence-note,
+.copy-status {
+  margin: 1rem 0 0;
+  color: #8f97bc;
+  font-size: 0.78rem;
+}
+
+.copy-status {
+  color: #8dddc5;
+}
+
+.analysis-details {
+  margin-top: 1rem;
+  color: #aab0ff;
+}
+
+.analysis-details summary {
+  padding: 0.8rem 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.analysis-details .analysis-grid {
+  margin-top: 0.5rem;
 }
 
 .result-header {

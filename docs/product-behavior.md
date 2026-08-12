@@ -162,6 +162,12 @@ Provider abstraction does not change language or skill behavior. A model underst
 
 ## Result presentation
 
+## Phase 3 draft-aware baseline
+
+Phase 3 consumes the validated Phase 2 `ConversationAnalysis` without looking at the screenshot again. A reliable visible draft is the strongest user-intent signal: complete drafts are rewritten, incomplete thoughts may be completed, and neither case asks about tone or relationship when neutral wording can preserve visible meaning. With no draft, clear requests receive reply suggestions, materially different choices receive compact action buttons, isolated low-context messages receive one clarification, and natural closings may produce no reply.
+
+Clarification requires both uncertain intent and a material effect on the response. Relationship uncertainty alone never triggers a question or relationship guess. Basic generation preserves uncertainty, refusal, commitments, language, and natural code-switching and must not invent facts. Results require explicit review and Copy; there is no insertion or sending.
+
 The floating panel should lead with a recommended result and make alternatives easy to compare. It should reveal enough context to catch a misread—such as an inferred “professional update” label—without exposing internal reasoning.
 
 Every generated message remains editable and reviewable. Copying is explicit. Automatic sending is prohibited. If a future approved milestone supports insertion, insertion must still be an explicit user action and must not trigger send.
@@ -188,6 +194,6 @@ Fixture-based evaluation should measure:
 - no-reply precision;
 - schema validity and privacy-safe failures.
 
-Phase 2 evaluation uses only speaker/message-order extraction, draft/contact extraction, language/script/code-switch detection, warning behavior, schema validity, and privacy-safe failures. Action, clarification, response, skill, identity, and relationship metrics belong to later approved milestones.
+Phase 2 evaluation uses only speaker/message-order extraction, draft/contact extraction, language/script/code-switch detection, warning behavior, schema validity, and privacy-safe failures. Phase 3 adds action accuracy, unnecessary/missed clarification, intent preservation, hallucinated-fact, and language-match checks. Skill, identity, and relationship metrics remain deferred.
 
 Quality is not just eloquence. A polished response based on the wrong person, goal, or commitment is a failure.

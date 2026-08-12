@@ -1,42 +1,23 @@
 import type {
-  CoachResult,
+  CoachingDecision,
   ConversationAnalysis,
-  ConversationObservation,
   ConversationSpeaker,
   LanguageObservation,
   SkillDefinition,
 } from "@ai-message-coach/contracts";
 
-export const validCoachResultFixture = {
+export const validCoachingDecisionFixture = {
   action: "SUGGEST_REPLY",
-  confidences: {
-    identity: 0.1,
-    relationship: 0.85,
-    situation: 0.95,
-    userIntent: 0.9,
-    otherIntent: 0.8,
-    language: 1,
-    skillSelection: 0.75,
-  },
-} satisfies CoachResult;
+  userIntent: { value: "Provide the requested status update.", confidence: 0.9 },
+  actionConfidence: 0.95,
+  ambiguity: { material: false, reason: null },
+  replies: [{ label: "Natural", text: "I'm reviewing it now and will share an update soon." }],
+} satisfies CoachingDecision;
 
-export const invalidCoachResultFixture: unknown = {
+export const invalidCoachingDecisionFixture: unknown = {
   action: "SEND_MESSAGE",
-  confidences: {
-    identity: 2,
-  },
+  actionConfidence: 2,
 };
-
-export const syntheticObservationFixture = {
-  messages: [
-    {
-      id: "message-1",
-      owner: "OTHER",
-      text: "Can you share a synthetic status update?",
-    },
-  ],
-  draft: null,
-} satisfies ConversationObservation;
 
 export const validSkillFixture = {
   id: "concise-status-update",
@@ -73,6 +54,15 @@ export interface ConversationUnderstandingFixture {
   messages: ConversationFixtureMessage[];
   draft: string | null;
   expected: ConversationAnalysis;
+}
+
+export interface CoachingEvaluationFixture {
+  id: string;
+  input: ConversationAnalysis;
+  expectedAction: import("@ai-message-coach/contracts").AgentAction;
+  acceptableActions?: import("@ai-message-coach/contracts").AgentAction[];
+  forbiddenActions?: import("@ai-message-coach/contracts").AgentAction[];
+  importantConstraints: string[];
 }
 
 interface ScenarioSeed {
@@ -480,6 +470,154 @@ export const conversationUnderstandingFixtures: ConversationUnderstandingFixture
       expected: createExpectedAnalysis(seed),
     })),
   );
+
+function coachingInput(
+  id: string,
+  message: string,
+  draft: string | null,
+  options: {
+    language?: LanguageObservation;
+    confidence?: number;
+    speaker?: ConversationSpeaker;
+  } = {},
+): ConversationAnalysis {
+  const confidence = options.confidence ?? 0.94;
+  return {
+    messages: [
+      {
+        id: `${id}-message`,
+        order: 1,
+        speaker: options.speaker ?? "OTHER",
+        text: message,
+        textConfidence: confidence,
+        speakerConfidence: confidence,
+      },
+    ],
+    draft: { text: draft, confidence },
+    participants: [],
+    visibleContact: {
+      displayName: null,
+      username: null,
+      channelOrGroupName: null,
+      platformHint: null,
+      confidence: 0.2,
+    },
+    language: options.language ?? language("en"),
+    conversation: { summary: "Synthetic Phase 3 evaluation context.", confidence },
+    warnings: options.speaker === "UNKNOWN" ? ["AMBIGUOUS_SPEAKER"] : [],
+    overallConfidence: confidence,
+  };
+}
+
+export const coachingEvaluationFixtures: CoachingEvaluationFixture[] = [
+  {
+    id: "clear-draft-uncertain-tomorrow",
+    input: coachingInput(
+      "clear-draft",
+      "Can you finish today?",
+      "sry testing taking longer probably tomorrow",
+    ),
+    expectedAction: "REWRITE_DRAFT",
+    forbiddenActions: ["ASK_CLARIFICATION"],
+    importantConstraints: ["preserve tomorrow as uncertain", "do not invent a deadline"],
+  },
+  {
+    id: "incomplete-apology",
+    input: coachingInput("incomplete", "You missed the commitment.", "I'm sorry I didn't..."),
+    expectedAction: "COMPLETE_DRAFT",
+    importantConstraints: ["do not invent an excuse"],
+  },
+  {
+    id: "clear-refusal",
+    input: coachingInput("refusal", "Want to come?", "I don't want to go"),
+    expectedAction: "REWRITE_DRAFT",
+    forbiddenActions: ["ASK_CLARIFICATION"],
+    importantConstraints: ["do not turn refusal into acceptance"],
+  },
+  {
+    id: "professional-neutral",
+    input: coachingInput(
+      "professional",
+      "Can you finish today?",
+      "I can't finish today because testing is still failing.",
+    ),
+    expectedAction: "REWRITE_DRAFT",
+    forbiddenActions: ["ASK_CLARIFICATION"],
+    importantConstraints: ["do not assume a relationship"],
+  },
+  {
+    id: "obvious-file-reply",
+    input: coachingInput("file", "Can you send me the file when you get home?", null),
+    expectedAction: "SUGGEST_REPLY",
+    forbiddenActions: ["ASK_CLARIFICATION"],
+    importantConstraints: ["do not add a time"],
+  },
+  {
+    id: "invitation-choices",
+    input: coachingInput("invite", "Want to come tonight?", null),
+    expectedAction: "SUGGEST_ACTIONS",
+    forbiddenActions: ["ASK_CLARIFICATION"],
+    importantConstraints: ["offer accept and decline"],
+  },
+  {
+    id: "isolated-okay",
+    input: coachingInput("okay", "Okay.", null),
+    expectedAction: "ASK_CLARIFICATION",
+    importantConstraints: ["ask one high-value question"],
+  },
+  {
+    id: "closed-thanks",
+    input: coachingInput("thanks", "Thanks, looks good.", null),
+    expectedAction: "NO_REPLY_NEEDED",
+    importantConstraints: ["do not force a response"],
+  },
+  {
+    id: "low-draft-confidence",
+    input: coachingInput("low-draft", "Can you decide?", "maybe no", { confidence: 0.3 }),
+    expectedAction: "ASK_CLARIFICATION",
+    importantConstraints: ["do not force uncertain extracted intent"],
+  },
+  {
+    id: "unknown-obvious",
+    input: coachingInput("unknown", "Can you review this?", null, {
+      speaker: "UNKNOWN",
+      confidence: 0.75,
+    }),
+    expectedAction: "SUGGEST_REPLY",
+    acceptableActions: ["ASK_CLARIFICATION"],
+    importantConstraints: ["do not infer identity"],
+  },
+  {
+    id: "simplified-draft",
+    input: coachingInput("zh-cn", "今天能发吗？", "可能明天", {
+      language: language("zh", { script: "SIMPLIFIED" }),
+    }),
+    expectedAction: "REWRITE_DRAFT",
+    importantConstraints: ["use Simplified Chinese", "preserve uncertainty"],
+  },
+  {
+    id: "traditional-invitation",
+    input: coachingInput("zh-tw", "今晚要不要一起來？", null, {
+      language: language("zh", { script: "TRADITIONAL" }),
+    }),
+    expectedAction: "SUGGEST_ACTIONS",
+    importantConstraints: ["use Traditional Chinese labels"],
+  },
+  {
+    id: "mixed-draft",
+    input: coachingInput("mixed", "明天 meeting 幾點？", "ok，那我大概 3 点过去", {
+      language: language("zh", { secondary: "en", script: "MIXED", codeSwitching: true }),
+    }),
+    expectedAction: "REWRITE_DRAFT",
+    importantConstraints: ["preserve natural code-switching", "preserve approximate time"],
+  },
+  {
+    id: "other-language",
+    input: coachingInput("ko", "자료를 보내 주세요", null, { language: language("ko") }),
+    expectedAction: "SUGGEST_REPLY",
+    importantConstraints: ["match visible language when supported"],
+  },
+];
 
 function escapeXml(value: string): string {
   return value

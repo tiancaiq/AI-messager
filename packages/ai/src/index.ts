@@ -11,3 +11,11 @@ export {
   OpenAiVisionAdapter,
   type OpenAiVisionAdapterOptions,
 } from "./openai-vision-adapter.js";
+export { coachConversation, type CoachingTextGenerator } from "./coaching-engine.js";
+export { decideCoachingAction, type CoachingPolicyDecision } from "./coaching-policy.js";
+export { COACHING_INSTRUCTIONS } from "./coaching-prompt.js";
+export {
+  buildOpenAiCoachingRequest,
+  OpenAiCoachingAdapter,
+  type OpenAiCoachingAdapterOptions,
+} from "./openai-coaching-adapter.js";
