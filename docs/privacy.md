@@ -24,7 +24,9 @@ explicit Generate or equivalent user trigger
 
 The default is no disk persistence on the desktop or application API. The full screen should not leave the device when a relevant region can be determined locally. Early versions may require manual crop selection; later versions may reuse a confirmed region or infer one, while retaining manual selection as a fallback and correction. Temporary retry state may exist only for the active UI session, with a short bound and explicit release.
 
-In Phase 1, the full-screen PNG crosses only the local trusted Electron main → sandboxed preload/renderer IPC boundary so the renderer can present manual selection. It is never written to a file, sent to `apps/api`, uploaded, or logged. The renderer immediately wraps a copied byte array in an in-memory `Blob`, zeroes the temporary copy, and keeps only revocable object URLs. Creating a preview releases the full-screen URL; Retake, Cancel, Escape, Continue, errors, reload, and unmount release the remaining capture/preview references. Continue is a text-only placeholder and performs no network request. A future provider milestone must preserve the stronger rule that only the selected crop may cross a provider or application-network boundary.
+In Phase 1, the full-screen PNG crosses only the local trusted Electron main → sandboxed preload/renderer IPC boundary so the renderer can present manual selection. It is never written to a file, sent to `apps/api`, uploaded, or logged. The renderer wraps copied bytes in an in-memory `Blob`, zeroes the temporary copy, and keeps only revocable object URLs. Creating a preview releases the full-screen URL.
+
+In Phase 2, Continue sends only that selected crop through a fixed validated preload method to trusted Electron main and directly over TLS to OpenAI. `apps/api` receives neither the crop nor credential. The provider request sets `store: false`, but provider retention/data-use configuration still requires production review. Temporary IPC bytes are zeroed after completion. Success releases the crop URL/reference; Retake, Cancel, Escape, reload, and unmount also release it. A normalized provider failure retains the crop only for explicit retry during the active UI session. Nothing persists to disk or application storage.
 
 Resettable local region metadata such as `x`, `y`, `width`, and `height` is configuration, not conversation content, and may be considered in a separately approved milestone. That distinction does not permit retaining screenshot pixels, extracted text, drafts, or identity evidence.
 
@@ -64,7 +66,7 @@ Central error handling must sanitize validation errors and upstream failures. De
 - Electron context isolation enabled and sandboxing used where compatible.
 - No renderer Node.js integration.
 - Minimal allowlisted IPC methods with shared schema validation on both ends.
-- Future provider credentials use OS-protected secure storage where practical and remain accessible only to trusted Electron main-process code.
+- Phase 2 development credentials are loaded from ignored `.env.local` into trusted Electron main only. Production provider credentials require OS-protected secure storage where practical.
 - The renderer may submit a replacement credential through a narrow write operation but cannot read a stored credential back; it receives only safe configuration status.
 - Restrictive Content Security Policy and no arbitrary remote renderer content.
 - Explicit OS capture permission handling and visible capture state.
@@ -96,7 +98,7 @@ Central error handling must sanitize validation errors and upstream failures. De
 - Never store them in plaintext settings, logs, analytics, crash reports, screenshots, backups, fixtures, or support bundles.
 - Do not include credentials in URLs, provider-neutral errors, or serialized application state.
 - Keep connection-test and authentication failures sanitized.
-- A future settings UI may show provider, model, capability metadata, and configured/not-configured status, but not the saved secret.
+- Phase 2 may show provider, model, capability metadata, and configured/not-configured status, but never the saved secret.
 
 ### Future storage
 
@@ -118,7 +120,7 @@ Before durable memory is introduced, the product needs clear controls to:
 - delete individual memories and all stored data;
 - understand what is local versus sent to a provider.
 
-Before BYOK provider integration, the product also needs clear controls to select the provider/model, add or replace the credential, test the connection safely, delete the credential, understand relevant capabilities, and see that usage is billed directly by the selected provider.
+Before production BYOK distribution, the product needs clear controls to select the provider/model, add or replace the credential, test the connection safely, delete the credential, understand relevant capabilities, and see that usage is billed directly by the selected provider. Phase 2's ignored local environment file is development-only and does not satisfy this release gate.
 
 Consent to analyze one Generate-triggered capture is not blanket consent to capture continuously, archive the conversation, or enroll a contact in identity matching.
 

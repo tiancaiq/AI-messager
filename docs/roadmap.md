@@ -108,42 +108,45 @@ Completed on 2026-08-10. See the [Phase 0 execution plan](../.agent/plans/phase-
 
 Implementation landed on 2026-08-10 and native macOS signoff completed on 2026-08-11. Automated tests, the synthetic production-renderer flow, the real permission-failure/restoration path, and three real 2×-scale capture/exclusion/restoration cycles pass. Windows DPI and multi-monitor acceptance remains a target-platform follow-up before Windows release signoff. See the [Phase 1 execution plan](../.agent/plans/phase-1.md).
 
-## Phase 2 — provider-neutral screenshot understanding and coaching
+## Phase 2 — screenshot conversation understanding
 
-**Outcome:** turn a bounded synthetic/redacted selected crop into a validated coaching result through provider-neutral analysis/policy contracts, one isolated vision-capable provider adapter, and a small approved skill registry.
+**Outcome:** pass the existing selected crop to one provider-neutral, vision-capable analysis task and return a validated observation-only conversation context.
 
-**In scope:** observation/inference/decision separation; draft-aware deterministic action policy and clarification gate; language eligibility; a no-memory reader; provider-neutral task contracts at concrete call sites; capability metadata/preflight checks; one isolated vision-capable adapter; bounded image validation; structured prompts and outputs; a small approved skill registry; one-call normal path; normalized provider errors; bounded output repair; privacy-safe telemetry; opt-in live evaluation; and an explicit direct-desktop-versus-server topology decision before real screenshots are transmitted.
+**In scope:** visible message text and order; `USER`/`OTHER`/`UNKNOWN` ownership; compose-box draft/no-draft; visible contact and participant signals; language, Chinese script, and code-switching; independent extraction confidence and warnings; bounded PNG validation; provider capability preflight; one isolated OpenAI Responses adapter; direct trusted desktop-to-provider transport; safe provider status; loading/result/retry/cancel/recapture UI; synthetic fixtures; and opt-in live evaluation.
 
-**Out of scope:** changes to desktop capture, provider settings UI, persistent BYOK credential storage, additional adapters, multi-model routing, custom endpoints, durable memory/storage, identity matching, vector retrieval, Skill Factory, insertion, and sending.
-
-**Acceptance criteria:**
-
-- Synthetic/redacted crop fixtures yield validated observations, inferences, action, skills, and response.
-- Every `AgentAction` and its material decision boundaries are exercised; clear contexts do not ask unnecessary questions.
-- Independent confidence dimensions, broad-versus-specific relationships, English, Simplified/Traditional Chinese, mixed English/Chinese, and universal-only other-language behavior are tested.
-- Core policy imports no provider SDK; the first SDK remains isolated in its adapter.
-- Screenshot tasks require declared vision and text-generation capabilities and fail before transmission when unsupported.
-- Provider results and failures are normalized and Zod-validated before core use.
-- The successful normal path makes one model call; a second is reserved for one necessary clarification.
-- The approved request topology minimizes application-operated private-content handling and logs no crop, transcript, draft, or generated reply.
-- Default tests require no credentials; live evaluation is explicit and documented.
-
-## Phase 3 — integrated secure BYOK MVP
-
-**Outcome:** prove the complete Generate-to-capture-to-coaching desktop promise with a minimal secure BYOK provider experience, while retaining manual crop as setup, fallback, and correction.
-
-**In scope:** Generate-to-analysis integration through the approved provider topology; minimal provider/model selection; OS-protected credentials where practical; narrow settings IPC and safe configured/not-configured state; capability and provider-billing disclosure; connection testing; loading/cancel/retry states; response/action/clarification/no-reply UI; editable result and copy; one clarification round-trip; representative English/Chinese evaluation; packaging for controlled Windows testing; and end-to-end privacy/failure review.
-
-**Out of scope:** multiple simultaneous task models, additional providers, custom/local endpoints, durable personal/contact memory, complex identity recognition, automatic insertion/sending, application-specific integrations, vector databases, iOS, and Skill Factory.
+**Out of scope:** relationship prediction or roles; situation, intent, emotion, coaching actions, clarification, reply generation, rewriting, completion, skills, memory, identity matching, persistent provider settings/credential storage, additional adapters, multi-model routing, automatic region detection, insertion, and sending.
 
 **Acceptance criteria:**
 
-- A user can click Generate, capture/select context, receive a useful result, edit it, and copy it without an app-specific integration.
-- The user can configure the supported provider/model with their own credential and understand relevant capabilities/billing.
-- Stored credentials remain OS-protected where practical, never return to the renderer, and never appear in logs or plaintext configuration.
-- Private screenshots use the reviewed minimum-trust topology; any application-server hop is justified and disclosed.
+- The selected Phase 1 crop reaches analysis without recapture, while the full-display capture never crosses the provider boundary.
+- Provider-neutral schemas validate visible messages/order/ownership, draft, contact signals, language/script/code-switching, warnings, and independent confidence values.
+- Relationship-like, decision, skill, and response fields are absent and rejected by strict schemas.
+- The first adapter is isolated; provider wire types and credentials never enter renderer or core contracts.
+- Screenshot tasks require vision, text-generation, and structured-output capabilities and fail before transmission when unsupported.
+- Invalid output and provider failures are normalized into safe recoverable states; overlapping requests are suppressed.
+- Screenshots are not persisted or logged, temporary bytes are zeroed, and crop URLs/references are released after success, cancel, recapture, reload, or unmount.
+- Default tests require no credential and cover at least 50 synthetic scenarios; live evaluation is explicit and reports limitations.
+
+See the [Phase 2 execution plan](../.agent/plans/phase-2.md).
+
+Implementation, deterministic verification, local UI/runtime verification, API health, and production startup are complete. Live OpenAI extraction evaluation remains pending because the current host cannot reach `api.openai.com:443`; Windows DPI, multi-monitor, and capture-exclusion validation remains a separate release follow-up. Live extraction quality is not yet verified.
+
+## Phase 3 — deterministic coaching policy and secure BYOK MVP
+
+**Outcome:** consume the validated Phase 2 context to decide whether to rewrite, complete, suggest a reply, offer action choices, ask one necessary clarification, or recommend no reply, then present an editable result without automatic sending.
+
+**In scope:** observation/inference/decision separation; draft-aware deterministic action policy; clarification gate; provider-neutral response task; small approved skill registry; language eligibility; one-call normal path; minimal provider/model settings; OS-protected credentials where practical; connection testing; response/action/clarification/no-reply UI; editable result and copy; representative English/Chinese evaluation; packaging for controlled Windows testing; and end-to-end privacy/failure review.
+
+**Out of scope:** relationship prediction unless separately proposed and approved, additional providers, multiple simultaneous task models, custom/local endpoints, durable personal/contact memory, identity recognition, insertion/sending, app-specific integrations, vector databases, iOS, and Skill Factory.
+
+**Acceptance criteria:**
+
+- Validated Phase 2 context drives every `AgentAction` and its material decision boundaries without re-extracting the screenshot.
+- Clear contexts do not ask unnecessary questions; at most one clarification is reserved for materially divergent low-confidence paths.
 - Draft-aware, empty-draft, action-choice, clarification, and no-reply flows satisfy the behavior matrix.
-- No screenshot is persisted by default and every capture/model/network/cancellation failure recovers safely.
+- The user can configure the supported provider/model with their own credential and understand capabilities and billing.
+- Stored credentials remain OS-protected where practical, never return to the renderer, and never appear in logs or plaintext settings.
+- A user can review, edit, and copy a result; no screenshot is persisted and the coach never sends automatically.
 - Lint, typecheck, unit/integration/e2e tests, build, packaging, and controlled Windows acceptance checks pass.
 
 Completion of Phase 3 is the MVP decision point: assess whether users can get context-aware help without explaining the conversation before expanding scope.
@@ -166,4 +169,4 @@ App-specific messaging integrations and automatic sending remain outside the pla
 
 ## Next recommended work
 
-Prepare and approve `.agent/plans/phase-2.md` for provider-neutral screenshot understanding and coaching; do not begin that work inside Phase 1. Separately, run controlled Windows checks at 100% and 125% scaling with a second monitor where available before Windows release signoff.
+Complete and evaluate Phase 2 screenshot conversation understanding without adding coaching or relationship prediction. Then prepare an approved Phase 3 plan for deterministic coaching policy and production-grade secure BYOK settings. Separately, run controlled Windows checks at 100% and 125% scaling with a second monitor where available before Windows release signoff.

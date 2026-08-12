@@ -4,7 +4,7 @@
 
 AI Message Coach should let users choose the AI provider they trust and want to pay for. Message Coach supplies the communication-intelligence layer; it must not depend for its product value or architecture on one hard-coded provider.
 
-This document records future product and architecture direction only. Phase 0 contains no provider interface, adapter, SDK, credential storage, settings UI, or model call. Exact contracts should be added only when an approved milestone has concrete callers.
+Phase 2 implements the first concrete slice: a task-specific provider-neutral `ConversationImageAnalyzer`, capability preflight, one isolated OpenAI Responses adapter using native `fetch`, direct trusted-desktop transport, safe configured/model status, and strict observation-only output. Additional providers, a general provider catalog, production credential storage, and settings remain future work.
 
 ## Product model
 
@@ -30,19 +30,18 @@ User-facing provider settings should eventually make clear:
 
 Context analysis, response planning, skill selection, memory extraction, and evaluation must consume internal contracts. They must not import a provider SDK or branch on provider names to decide product behavior.
 
-A future abstraction may resemble:
+The concrete Phase 2 port is intentionally task-specific:
 
 ```ts
-interface LlmProvider {
-  id: string;
-  listModels(): Promise<ModelInfo[]>;
-  analyzeImage?(request: ImageAnalysisRequest): Promise<ImageAnalysisResult>;
-  generate(request: GenerationRequest): Promise<GenerationResult>;
-  stream?(request: GenerationRequest): AsyncIterable<GenerationChunk>;
+interface ConversationImageAnalyzer {
+  readonly configuration: ProviderConfiguration;
+  analyzeConversationImage(
+    request: ConversationImageRequest,
+  ): Promise<ConversationAnalysisResult>;
 }
 ```
 
-This shape is illustrative, not a contract to implement now. Implementation experience may favor task-specific ports, a smaller request executor, or a different streaming boundary. The invariant is that core logic targets provider-neutral interfaces and provider-specific SDKs, request formats, authentication, and response handling stay inside adapters.
+Core logic targets this neutral interface. Provider request formats, authentication, response extraction, and errors remain inside the adapter. Broader generation, streaming, and model-catalog interfaces should be created only when they have real callers.
 
 The conceptual ownership is:
 
@@ -86,7 +85,7 @@ The first implementation may use one selected provider/model for every task it s
 
 ## Structured output and errors
 
-Conversation extraction, relationship and intent hypotheses, confidence dimensions, skill selection, memory candidates, and agent actions remain provider-neutral Zod-backed contracts. An API call succeeding does not make its output trusted.
+Phase 2 conversation extraction is a provider-neutral Zod-backed contract for visible messages/order/ownership, draft, contact signals, language, warnings, and extraction confidence. It explicitly rejects relationship, situation, intent, skill, action, and response fields. An API call succeeding does not make its output trusted. Later inference and coaching contracts require their own approved milestone.
 
 Each adapter is responsible for:
 
@@ -94,7 +93,7 @@ Each adapter is responsible for:
 2. using native schema features where useful without leaking them into core contracts;
 3. converting the response into the internal result shape;
 4. validating that result before returning it to core logic;
-5. applying only bounded, documented repair behavior;
+5. applying only bounded, documented repair behavior (Phase 2 performs no repair call);
 6. mapping provider failures to safe internal errors.
 
 The future error vocabulary should cover at least:
@@ -102,11 +101,12 @@ The future error vocabulary should cover at least:
 ```text
 INVALID_CREDENTIALS
 RATE_LIMITED
-INSUFFICIENT_PROVIDER_CREDITS
+INSUFFICIENT_CREDITS
 MODEL_UNAVAILABLE
-MODEL_DOES_NOT_SUPPORT_VISION
+VISION_UNSUPPORTED
 REQUEST_TOO_LARGE
-PROVIDER_TIMEOUT
+TIMEOUT
+INVALID_RESPONSE
 PROVIDER_ERROR
 ```
 
@@ -114,7 +114,7 @@ Exact error schemas belong in `packages/contracts` only when a producer and cons
 
 ## BYOK credential boundary
 
-The user owns the credential. Future desktop credential flow should be:
+The user owns the credential. The production desktop credential flow should be:
 
 ```text
 React settings UI
@@ -126,19 +126,19 @@ React settings UI
 
 The renderer may submit a newly entered key through a narrowly scoped write operation, but it must not be able to read a stored key back. Safe renderer-visible state includes provider/model identifiers, capability metadata, and `configured: true | false`.
 
-Never commit, hard-code, log, analyze, or place keys in plaintext application configuration. Exclude them from analytics, crash reports, error details, screenshots, backups, and test fixtures. Credential deletion, replacement, and connection testing need explicit future UX and failure handling.
+Never commit, hard-code, log, analyze, or place keys in plaintext application settings. Exclude them from analytics, crash reports, error details, screenshots, backups, and test fixtures. Phase 2 development may load a user-approved key from ignored `.env.local` into Electron main; no key value reaches the renderer. OS-protected storage, deletion, replacement, and connection testing remain production requirements.
 
 ## Sensitive-request topology
 
-For screenshot and conversation analysis, the preferred long-term topology is:
+For Phase 2 screenshot conversation analysis, the implemented topology is:
 
 ```text
 user device
 → trusted Electron process
-→ user-selected provider
+→ OpenAI Responses API
 ```
 
-This avoids sending private conversation content through Message Coach-operated infrastructure when no product requirement justifies that extra trust boundary. The existing Fastify service may support health, coordination, updates, or other future functions; its existence does not require it to proxy provider requests.
+This avoids sending private conversation content through Message Coach-operated infrastructure when no product requirement justifies that extra trust boundary. The selected crop goes through authorized local IPC; the full-display capture stays local. The existing Fastify service receives neither crop nor credential.
 
 A server-mediated provider path remains possible if later technical requirements justify it. Before choosing it, the milestone plan must document why direct communication is insufficient, what sensitive content and credential material cross the server, retention and logging controls, authentication, deployment boundaries, and how the user is informed. The decision should remain reversible until tested requirements make one topology necessary.
 

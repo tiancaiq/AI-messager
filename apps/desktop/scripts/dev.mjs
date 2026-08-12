@@ -1,12 +1,20 @@
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 
 const packageManager = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
 const rendererUrl = "http://127.0.0.1:5173";
 const children = new Set();
+const packageDirectory = resolve(import.meta.dirname, "..");
+const localEnvironmentPath = resolve(packageDirectory, "../..", ".env.local");
+
+if (existsSync(localEnvironmentPath)) {
+  process.loadEnvFile(localEnvironmentPath);
+}
 
 function spawnProcess(args, options = {}) {
   const child = spawn(packageManager, args, {
-    cwd: import.meta.dirname.replace(/[/\\]scripts$/, ""),
+    cwd: packageDirectory,
     stdio: "inherit",
     ...options,
   });

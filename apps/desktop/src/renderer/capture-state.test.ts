@@ -1,3 +1,4 @@
+import type { ConversationAnalysis } from "@ai-message-coach/contracts";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -20,60 +21,80 @@ const capture: CapturedImageResource = {
 };
 
 const preview: CropPreviewResource = {
+  blob: new Blob(["preview"], { type: "image/png" }),
   imageUrl: "blob:preview",
   width: 600,
   height: 400,
 };
 
-describe("capture state", () => {
-  it("follows IDLE → CAPTURING → SELECTING → PREVIEW → READY", () => {
+const analysis: ConversationAnalysis = {
+  messages: [],
+  draft: { text: null, confidence: 0.8 },
+  participants: [],
+  visibleContact: {
+    displayName: null,
+    username: null,
+    channelOrGroupName: null,
+    platformHint: null,
+    confidence: 0.2,
+  },
+  language: {
+    primary: "en",
+    secondary: null,
+    script: "NOT_APPLICABLE",
+    codeSwitching: false,
+    supportedForLanguageSpecificSkills: true,
+    confidence: 0.9,
+  },
+  conversation: { summary: "No readable messages.", confidence: 0.2 },
+  warnings: ["UNREADABLE_TEXT"],
+  overallConfidence: 0.2,
+};
+
+describe("capture and analysis state", () => {
+  it("follows capture, selection, analysis, and validated result transitions", () => {
     const capturing = captureReducer(initialCaptureState, { type: "GENERATE" });
     const selecting = captureReducer(capturing, { type: "CAPTURE_SUCCEEDED", capture });
-    const previewing = captureReducer(selecting, {
-      type: "SELECTION_SUCCEEDED",
-      preview,
+    const previewing = captureReducer(selecting, { type: "SELECTION_SUCCEEDED", preview });
+    const analyzing = captureReducer(previewing, { type: "ANALYZE" });
+    const result = captureReducer(analyzing, {
+      type: "ANALYSIS_SUCCEEDED",
+      result: { analysis, provider: { providerId: "openai", modelId: "fixture-model" } },
     });
-    const ready = captureReducer(previewing, { type: "CONTINUE" });
 
-    expect(capturing).toEqual({ status: "CAPTURING" });
-    expect(selecting).toEqual({ status: "SELECTING", capture });
-    expect(previewing).toEqual({ status: "PREVIEW", preview });
-    expect(ready).toEqual({ status: "READY" });
+    expect(analyzing).toEqual({ status: "ANALYZING", preview });
+    expect(result).toMatchObject({ status: "RESULT", result: { analysis } });
   });
 
-  it("retakes from PREVIEW and ignores duplicate Generate while capturing", () => {
-    const capturing = { status: "CAPTURING" } as const;
-    const previewing = { status: "PREVIEW", preview } as const;
+  it("retains the selected crop for recoverable analysis failures", () => {
+    const error = captureReducer(
+      { status: "ANALYZING", preview },
+      { type: "ANALYSIS_FAILED", message: "Try again." },
+    );
 
-    expect(captureReducer(previewing, { type: "RETAKE" })).toEqual({
-      status: "CAPTURING",
+    expect(error).toEqual({ status: "ANALYSIS_ERROR", preview, message: "Try again." });
+    expect(captureReducer(error, { type: "RETRY_ANALYSIS" })).toEqual({
+      status: "ANALYZING",
+      preview,
     });
+  });
+
+  it("suppresses duplicate analysis and capture events", () => {
+    const analyzing = { status: "ANALYZING", preview } as const;
+    const capturing = { status: "CAPTURING" } as const;
+
+    expect(captureReducer(analyzing, { type: "ANALYZE" })).toBe(analyzing);
     expect(captureReducer(capturing, { type: "GENERATE" })).toBe(capturing);
   });
 
-  it("cancels from SELECTING and PREVIEW", () => {
-    expect(captureReducer({ status: "SELECTING", capture }, { type: "CANCEL" })).toEqual(
-      initialCaptureState,
-    );
-    expect(captureReducer({ status: "PREVIEW", preview }, { type: "CANCEL" })).toEqual(
-      initialCaptureState,
-    );
-  });
+  it("allows retake or cancel after an analysis failure", () => {
+    const error = { status: "ANALYSIS_ERROR", preview, message: "Try again." } as const;
 
-  it("moves capture failures to a recoverable error state", () => {
-    const error = captureReducer(
-      { status: "CAPTURING" },
-      { type: "CAPTURE_FAILED", message: "Capture unavailable." },
-    );
-
-    expect(error).toEqual({ status: "ERROR", message: "Capture unavailable." });
-    expect(captureReducer(error, { type: "GENERATE" })).toEqual({
-      status: "CAPTURING",
-    });
+    expect(captureReducer(error, { type: "RETAKE" })).toEqual({ status: "CAPTURING" });
     expect(captureReducer(error, { type: "CANCEL" })).toEqual(initialCaptureState);
   });
 
-  it("keeps invalid selections recoverable in selection mode", () => {
+  it("keeps invalid selections recoverable and capture failures retryable", () => {
     expect(
       captureReducer(
         { status: "SELECTING", capture },
@@ -84,20 +105,11 @@ describe("capture state", () => {
       capture,
       message: "Select a larger region.",
     });
-  });
 
-  it("turns image decoding failures into a recoverable error", () => {
     const error = captureReducer(
-      { status: "SELECTING", capture },
-      { type: "SELECTION_FAILED", message: "The image could not be displayed." },
+      { status: "CAPTURING" },
+      { type: "CAPTURE_FAILED", message: "Capture unavailable." },
     );
-
-    expect(error).toEqual({
-      status: "ERROR",
-      message: "The image could not be displayed.",
-    });
-    expect(captureReducer(error, { type: "GENERATE" })).toEqual({
-      status: "CAPTURING",
-    });
+    expect(captureReducer(error, { type: "GENERATE" })).toEqual({ status: "CAPTURING" });
   });
 });

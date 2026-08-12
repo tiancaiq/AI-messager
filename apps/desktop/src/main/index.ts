@@ -1,18 +1,32 @@
 import { join } from "node:path";
 
+import { OpenAiVisionAdapter } from "@ai-message-coach/ai";
 import {
   APP_NAME,
+  CONVERSATION_ANALYSIS_CHANNEL,
   CONVERSATION_CAPTURE_CHANNEL,
+  ConversationImageRequestSchema,
+  PROVIDER_CONFIGURATION_CHANNEL,
+  type ConversationAnalysisResult,
   type ConversationCaptureResult,
 } from "@ai-message-coach/contracts";
 import { app, BrowserWindow, ipcMain } from "electron";
 
 import { createConversationCaptureService } from "./conversation-capture.js";
+import { createConversationAnalysisService } from "./conversation-analysis.js";
 
 app.enableSandbox();
 
 const coachWindows = new Set<BrowserWindow>();
 const conversationCaptureService = createConversationCaptureService(() => [...coachWindows]);
+const conversationAnalysisService = createConversationAnalysisService(
+  new OpenAiVisionAdapter({
+    ...(process.env.OPENAI_API_KEY === undefined ? {} : { apiKey: process.env.OPENAI_API_KEY }),
+    ...(process.env.OPENAI_VISION_MODEL === undefined
+      ? {}
+      : { modelId: process.env.OPENAI_VISION_MODEL }),
+  }),
+);
 
 const invalidCaptureRequest: ConversationCaptureResult = {
   ok: false,
@@ -22,22 +36,61 @@ const invalidCaptureRequest: ConversationCaptureResult = {
   },
 };
 
+const invalidAnalysisRequest: ConversationAnalysisResult = {
+  ok: false,
+  error: {
+    code: "PROVIDER_ERROR",
+    message: "The analysis request was not accepted.",
+  },
+};
+
+function isAuthorizedRenderer(
+  sender: Electron.WebContents,
+  senderFrame: Electron.WebFrameMain | null,
+): boolean {
+  const requestingWindow = BrowserWindow.fromWebContents(sender);
+  const isMainFrame = senderFrame?.frameTreeNodeId === sender.mainFrame.frameTreeNodeId;
+
+  return requestingWindow !== null && coachWindows.has(requestingWindow) && isMainFrame;
+}
+
 function registerCaptureHandler(): void {
   ipcMain.handle(CONVERSATION_CAPTURE_CHANNEL, async (event, ...arguments_: unknown[]) => {
     const requestingWindow = BrowserWindow.fromWebContents(event.sender);
-    const isMainFrame =
-      event.senderFrame?.frameTreeNodeId === event.sender.mainFrame.frameTreeNodeId;
 
     if (
       arguments_.length !== 0 ||
       requestingWindow === null ||
-      !coachWindows.has(requestingWindow) ||
-      !isMainFrame
+      !isAuthorizedRenderer(event.sender, event.senderFrame)
     ) {
       return invalidCaptureRequest;
     }
 
     return await conversationCaptureService.requestConversationCapture(requestingWindow);
+  });
+}
+
+function registerAnalysisHandlers(): void {
+  ipcMain.handle(PROVIDER_CONFIGURATION_CHANNEL, (event, ...arguments_: unknown[]) => {
+    if (arguments_.length !== 0 || !isAuthorizedRenderer(event.sender, event.senderFrame)) {
+      return null;
+    }
+
+    return conversationAnalysisService.getProviderConfiguration();
+  });
+
+  ipcMain.handle(CONVERSATION_ANALYSIS_CHANNEL, async (event, ...arguments_: unknown[]) => {
+    if (arguments_.length !== 1 || !isAuthorizedRenderer(event.sender, event.senderFrame)) {
+      return invalidAnalysisRequest;
+    }
+
+    const request = ConversationImageRequestSchema.safeParse(arguments_[0]);
+
+    if (!request.success) {
+      return invalidAnalysisRequest;
+    }
+
+    return await conversationAnalysisService.requestAnalysis(request.data);
   });
 }
 
@@ -95,6 +148,7 @@ app
   .whenReady()
   .then(async () => {
     registerCaptureHandler();
+    registerAnalysisHandlers();
     await createWindow();
 
     app.on("activate", () => {

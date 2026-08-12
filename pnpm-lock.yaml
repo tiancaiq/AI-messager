@@ -62,6 +62,9 @@ importers:
 
   apps/desktop:
     dependencies:
+      '@ai-message-coach/ai':
+        specifier: workspace:*
+        version: link:../../packages/ai
       '@ai-message-coach/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
@@ -76,7 +79,11 @@ importers:
         specifier: ^43.2.0
         version: 43.3.0
 
-  packages/ai: {}
+  packages/ai:
+    dependencies:
+      '@ai-message-coach/contracts':
+        specifier: workspace:*
+        version: link:../contracts
 
   packages/contracts:
     dependencies:

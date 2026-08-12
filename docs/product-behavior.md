@@ -29,6 +29,8 @@ Within the explicitly captured and locally selected conversation region, the coa
 - conversation and draft language, including English/Chinese code-switching;
 - likely relationship, situation, intentions, and emotional cues.
 
+Phase 2 implements only visible extraction: message text/order and likely ownership, compose-box draft, visible contact signals, language/script/code-switching, warnings, and extraction confidence. It must not output relationship predictions or roles, situation/intent/emotion hypotheses, actions, skills, clarifying questions, or reply text. The broader items above describe possible later coaching behavior and do not authorize adding them to Phase 2.
+
 The capture should include both visible conversation history and text currently typed in the compose box whenever they are visible. The draft is a high-value direct signal for choosing between rewriting, completing, suggesting a reply, offering actions, or asking one necessary question.
 
 The coach may later use trusted, relevant, fresh local memory only after the applicable identity and relevance gates pass. Absence from captured context is not proof of absence in the relationship.
@@ -150,7 +152,7 @@ Unsupported does not mean forbidden: the model may reply in another language, bu
 
 AI Message Coach follows a bring-your-own-key model. The user eventually chooses a supported provider and model, supplies that provider's credential, and pays the provider directly. Product copy must not imply that Message Coach includes model-token usage.
 
-Future settings should show the selected provider and model, safe credential-configuration status, relevant capabilities, screenshot-analysis eligibility, connection-test results, and the provider-billing disclosure. A stored key must never be displayed back to the renderer.
+Phase 2 shows the selected provider/model, safe configured status, capabilities, and a provider-billing disclosure. Future production settings should add provider/model selection, connection testing, credential replacement, and deletion. A stored key must never be displayed back to the renderer.
 
 Task availability depends on model capabilities rather than provider name. Screenshot understanding requires vision and text generation. If the selected model cannot perform it, the UI should explain the limitation before sending private content. Provider-specific errors should become useful internal states such as invalid credentials, rate limiting, insufficient provider credits, model unavailable, unsupported vision, request too large, timeout, or generic provider failure; raw provider errors must not appear in product UI.
 
@@ -185,5 +187,7 @@ Fixture-based evaluation should measure:
 - relationship granularity without overclaiming;
 - no-reply precision;
 - schema validity and privacy-safe failures.
+
+Phase 2 evaluation uses only speaker/message-order extraction, draft/contact extraction, language/script/code-switch detection, warning behavior, schema validity, and privacy-safe failures. Action, clarification, response, skill, identity, and relationship metrics belong to later approved milestones.
 
 Quality is not just eloquence. A polished response based on the wrong person, goal, or commitment is a failure.

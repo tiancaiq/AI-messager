@@ -1,5 +1,13 @@
-/**
- * Phase 0 establishes this package boundary without inventing an AI interface
- * before the deterministic coaching policy has a concrete caller in Phase 1.
- */
-export {};
+export {
+  analyzeConversationImage,
+  type ConversationImageAnalyzer,
+} from "./conversation-analyzer.js";
+export {
+  CONVERSATION_ANALYSIS_INSTRUCTIONS,
+  CONVERSATION_ANALYSIS_USER_TEXT,
+} from "./conversation-prompt.js";
+export {
+  buildOpenAiConversationRequest,
+  OpenAiVisionAdapter,
+  type OpenAiVisionAdapterOptions,
+} from "./openai-vision-adapter.js";

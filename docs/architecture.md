@@ -23,7 +23,7 @@ Key constraints:
 
 The long-term system has five logical engines:
 
-1. **Context Engine** — extracts the visible conversation and draft, then estimates identity, relationship, situation, intents, and language.
+1. **Context Engine** — extracts visible conversation observations. Phase 2 stops at messages/order/ownership, draft, visible contact signals, language, warnings, and extraction confidence; later inference work requires its own approved scope.
 2. **Memory Engine** — retrieves relevant trusted history, assesses freshness, and proposes evidence-backed memory candidates.
 3. **Skill Engine** — filters, retrieves, reranks, and composes approved communication skills.
 4. **Response Engine** — chooses an agent action, creates a communication plan, and produces replies or action choices.
@@ -35,13 +35,13 @@ For the MVP these are modules, not separate deployments and not separate autonom
 
 ### Desktop application
 
-`apps/desktop` will contain three security boundaries:
+`apps/desktop` contains three security boundaries:
 
-- **Electron main process:** the reusable conversation-capture capability, window hide/show behavior, screen-capture permission and acquisition, optional global-shortcut registration, clipboard writes, future OS-protected credential access, and—when selected—trusted direct provider request execution.
-- **Preload bridge:** a narrow, typed IPC API. Context isolation stays enabled; the renderer gets no general Node.js access or stored credential values.
-- **React renderer:** the primary Generate control, crop setup/correction, progress/error states, future provider/model settings using safe configuration status, result choices, clarification UI, and copy controls.
+- **Electron main process:** the reusable conversation-capture capability, window hide/show behavior, screen-capture permission and acquisition, trusted Phase 2 provider request execution, optional future shortcut registration, clipboard writes, and future OS-protected credential access.
+- **Preload bridge:** narrow, typed capture, provider-status, and conversation-analysis methods. Context isolation stays enabled; the renderer gets no general Node.js access, channel selection, provider request shape, or credential value.
+- **React renderer:** the primary Generate control, crop setup/correction, progress/error/retry states, safe provider/model status, and the Phase 2 extraction-verification result. Coaching choices, clarification, and copy controls remain later work.
 
-The desktop app should determine and crop the relevant region locally and send only that region beyond the desktop trust boundary. Phase 1 passes the full capture through the trusted main → sandboxed preload/renderer IPC path solely so the user can select it locally; no full capture or crop reaches a network boundary. Early implementations may require the user to select it; later implementations may reuse a previously confirmed region or infer one automatically. The desktop owns ephemeral image memory and must release it after the request completes or is cancelled. Product prompts and communication policy remain in `packages/ai`; a trusted Electron composition root may invoke a provider-neutral adapter without moving that policy into Electron-specific code.
+The desktop determines and crops the relevant region locally and sends only that crop beyond the device. Phase 1 passes the full capture through the trusted main → sandboxed preload/renderer IPC path solely so the user can select it locally. Phase 2 sends the selected crop through one fixed preload method to trusted main and directly over TLS to OpenAI; it does not route the image through `apps/api`. The desktop owns ephemeral image memory and releases it after success, cancellation, recapture, reload, or unmount, retaining a crop only for an explicit retry in the active UI session. Product prompts and provider-neutral orchestration remain in `packages/ai`; Electron main is only the trusted composition root.
 
 ### Conversation-capture capability
 
@@ -78,7 +78,7 @@ The capture target baseline is one display, selected from the coach window bound
 
 Main converts the `NativeImage` to PNG bytes in memory. Strict Zod schemas validate the result in main and again in preload. The renderer copies the bytes into a `Blob`, zeroes that temporary copy, and uses a revocable `blob:` URL. Pointer coordinates are measured against the screenshot's actual rendered content box, normalized in every drag direction, clamped to its bounds, and converted by the intrinsic-pixel/rendered-CSS ratio. The ratio already incorporates display scaling; `window.devicePixelRatio` is deliberately not multiplied again. Near crop edges are floored, far edges are ceiled, and selections below eight CSS pixels on either dimension remain in selection mode.
 
-Canvas produces the crop locally. Completing a crop releases the full-capture URL; Retake, Cancel, Escape, Continue, errors, reload, and unmount release every remaining URL/reference. Continue discards the preview and reaches the text-only `Capture ready for analysis.` state. No capture file, screenshot history, API request, provider call, OCR, or persisted region exists.
+Canvas produces the crop locally. Completing a crop releases the full-capture URL. In Phase 2, Continue reuses that exact crop for analysis rather than capturing again. Success, Retake, Cancel, Escape, reload, and unmount release remaining URLs/references; a normalized provider failure retains only the crop preview for explicit retry. No capture file, screenshot history, application-API request, or persisted region exists.
 
 ### API service
 
@@ -108,24 +108,25 @@ Phase 0 establishes:
 
 Phase 1 adds strict capture bounds/display metadata, in-memory PNG bytes, safe capture errors, a discriminated capture result, and the one allowlisted IPC channel. It does not add AI task or provider contracts.
 
-Image inputs, model/capability metadata, provider-neutral task requests, normalized errors, evidence references, action-specific response payloads, and selection results are added only when their approved milestone has a producer and consumer.
+Phase 2 adds the bounded PNG analysis request, safe provider/model/capability metadata, observation-only conversation analysis, normalized provider errors/results, and fixed provider-status/analysis IPC channels. Strict schemas reject relationship, situation, intent, skill, action, and reply fields.
+
+Action-specific response payloads, coaching inferences, selection results, and future memory records are added only when an approved later milestone has a producer and consumer.
 
 Do not expose chain-of-thought. Evidence should be concise, observable references such as “draft contains an apology” or message indices, not hidden reasoning transcripts.
 
 ### AI logic
 
-`packages/ai` remains an intentionally empty, buildable boundary through Phase 1. Phase 2 may add deterministic provider-independent policy and neutral interfaces at real call sites while isolating provider-specific behavior in adapters. The package will own:
+`packages/ai` now owns the Phase 2 provider-neutral conversation-image task and isolated OpenAI adapter. Its current responsibilities are:
 
 - provider-neutral task interfaces and model capability descriptors;
-- prompt/version definitions;
-- multimodal structured extraction;
-- confidence-aware action selection;
-- communication planning and response generation;
-- repair/fallback behavior for invalid model output;
+- an observation-only multimodal prompt;
+- one bounded, strict structured extraction call;
+- validation and safe failure for invalid/refused/incomplete model output;
 - normalized provider failure handling;
-- a future memory-reader interface, initially implemented as no memory.
 
-Core Context, Memory, Skill, and Response logic must not import provider SDKs or branch on provider name for product behavior. Provider adapters alone translate internal tasks, authenticate, call provider APIs, convert responses, and validate them against shared schemas. The exact interface and folder layout remain deferred; a conceptual `LlmProvider` is documented in `docs/llm-providers.md`, but no unused interface or adapter should be created before a concrete caller exists.
+Confidence-aware action selection, communication planning, response generation, skill selection, and memory interfaces are not part of Phase 2.
+
+Core Context, Memory, Skill, and Response logic must not import provider SDKs or branch on provider name for product behavior. The Phase 2 task-specific port is `ConversationImageAnalyzer`; `OpenAiVisionAdapter` alone translates the request, authenticates, calls the Responses API with native `fetch`, extracts output, and validates it against shared schemas. No general unused provider interface or SDK was added.
 
 Each model eventually advertises capabilities such as text generation, vision, structured output, streaming, tool calling, and embeddings. Task code declares requirements. Screenshot understanding, for example, requires vision and text generation; an incompatible model should produce a normalized unsupported-capability result before any request is sent. A provider's name is never a substitute for capability checking.
 
@@ -135,11 +136,11 @@ Business policy should be testable without a live model. For example, choosing a
 
 ### BYOK credential and settings boundary
 
-Users supply credentials for their selected provider and pay that provider's usage charges directly. Future settings should show provider, model, relevant capabilities, connection status, and a clear billing disclosure.
+Users supply credentials for their selected provider and pay that provider's usage charges directly. Phase 2 exposes only safe provider/model/configured/capability status and a billing notice. Full settings should later add selection, connection testing, replacement, and deletion.
 
 New credentials may pass from a settings form through a narrow validated preload write operation to Electron main, then into OS-protected credential storage where practical. Stored keys must never be readable by the React renderer. Renderer-visible state is limited to safe metadata such as provider/model identifiers, capabilities, and `configured: true | false`.
 
-Credentials must not be committed, hard-coded, logged, stored in plaintext configuration, included in analytics/crash reports, or attached to provider-neutral error details. Credential storage, deletion, replacement, and connection testing are future milestone work, not Phase 0 or Phase 1 work.
+Credentials must not be committed, hard-coded, logged, included in analytics/crash reports, or attached to provider-neutral error details. Phase 2 development loads an ignored `.env.local` key into Electron main only; this is not production credential storage. OS-protected storage, deletion, replacement, and connection testing remain Phase 3 work.
 
 ### Skill library
 
@@ -169,17 +170,17 @@ packages/
 
 Tests that concern one package stay next to that package. Root `tests/` is reserved for future cross-boundary and end-to-end tests with concrete callers.
 
-The implemented Phase 0 dependency direction is:
+The implemented Phase 2 dependency direction is:
 
 ```text
+apps/desktop → packages/ai → packages/contracts
 apps/desktop → packages/contracts
 apps/api     → packages/contracts
 packages/skills → packages/contracts
 packages/test-fixtures → packages/contracts
-packages/ai  → no dependency yet
 ```
 
-Future dependencies may add `packages/ai → packages/contracts` plus a composition root in trusted Electron main or `apps/api`, depending on the approved request topology. The React renderer must not import provider adapters, SDKs, prompts, Fastify, or the skill registry. Electron-specific credential access must be injected into provider-neutral AI code rather than imported by `packages/ai`. Domain packages must not import Electron or Fastify. If `packages/ai` needs skill or memory data, prefer an injected narrow interface over importing an application composition root or future storage adapter.
+Trusted Electron main composes the AI task for the approved direct-provider topology. The React renderer imports only shared types and must not import provider adapters, SDKs, prompts, Fastify, or the skill registry. The credential is injected into the adapter; `packages/ai` imports neither Electron nor Fastify. If it later needs skill or memory data, prefer an injected narrow interface over importing an application composition root or storage adapter.
 
 ## Phase 0 toolchain and build
 
@@ -191,7 +192,7 @@ Future dependencies may add `packages/ai → packages/contracts` plus a composit
 - Package builds clean their own `dist` directories and exclude test modules from production artifacts.
 - pnpm permits install scripts only for the explicitly allowlisted Electron and esbuild dependencies and applies a 24-hour package-release maturity gate.
 
-## MVP request flow
+## Phase 2 request flow
 
 ```mermaid
 sequenceDiagram
@@ -199,9 +200,7 @@ sequenceDiagram
     participant Desktop
     participant Capture as Conversation Capture
     participant AI as Provider-neutral AI
-    participant Skills
-    participant Provider as Selected Provider
-    participant API as Optional API
+    participant Provider as OpenAI adapter/API
 
     User->>Desktop: Click Generate
     Desktop->>Capture: Request conversation context
@@ -211,29 +210,21 @@ sequenceDiagram
     opt First use, fallback, or correction
         User->>Capture: Select or adjust conversation region
     end
-    Capture->>AI: Selected crop + internal coaching task
-    AI->>Skills: Load small approved candidate set
-    alt Direct provider path (preferred when practical)
-        AI->>Provider: Minimal request through selected adapter
-        Provider-->>AI: Provider-specific response
-    else Approved server-mediated path
-        AI->>API: Validated request with minimized content
-        API->>Provider: Request through selected adapter
-        Provider-->>API: Provider-specific response
-        API-->>AI: Normalized response
-    end
-    AI->>AI: Normalize and validate shared schemas
-    AI-->>Desktop: Action + reply/actions/question + confidences
+    Capture->>AI: Selected crop + observation task
+    AI->>AI: Validate bounds and capabilities
+    AI->>Provider: One store:false image + strict schema request
+    Provider-->>AI: Provider-specific structured response
+    AI->>AI: Normalize and validate shared schema
+    AI-->>Desktop: Visible observations + confidence/warnings
     Capture->>Capture: Release crop bytes
-    Desktop-->>User: Show reviewable result
-    User->>Desktop: Copy selected text
+    Desktop-->>User: Show extraction-verification result
 ```
 
 An optional shortcut follows the same sequence by requesting the same capture capability; it is not the primary flow and does not own a separate pipeline.
 
-The direct path is the privacy preference, not an irreversible implementation choice. Before real screenshots are sent, the approved provider milestone must decide and test where the provider-neutral runtime is composed. A server path must justify the additional trust boundary; a desktop path must preserve SDK isolation, secure key access, request bounds, and output validation.
+Phase 2 selects the direct path: renderer → authorized preload/main IPC → provider-neutral task → isolated OpenAI adapter. `apps/api` receives neither crop nor credential. A future server path must justify the additional trust boundary; the desktop path preserves adapter isolation, trusted key access, request bounds, output validation, and safe errors.
 
-The normal path combines understanding and response generation in one model request. A second request is permitted only if the first result is `ASK_CLARIFICATION` and the user's single answer materially changes the response. If reliable single-call skill selection is not possible, a deterministic local prefilter may select candidates before the model request; adding a separate selection model call is not the default.
+The Phase 2 path makes one understanding call and no repair, coaching, skill, or response call. Invalid, refused, or incomplete output becomes a recoverable error. A later approved coaching milestone consumes the validated observation contract without re-extracting the screenshot.
 
 ## Core domain shape
 
@@ -264,10 +255,10 @@ interface Hypothesis<T> {
 }
 ```
 
-The analysis contract should keep these layers separate:
+The long-term system should keep these layers separate:
 
-1. **Observed:** visible text, message grouping/order, draft, names, UI cues, and language tokens.
-2. **Inferred:** speaker ownership, relationship, situation, intents, emotion, identity hypothesis, and confidence.
+1. **Extracted observations (Phase 2):** visible text, message grouping/order, draft, names, UI cues, language, speaker assignment, warnings, and extraction confidence.
+2. **Inferred (later approved milestone):** situation, intents, emotion, identity hypothesis, and any separately approved relationship hypothesis.
 3. **Decided:** selected action, communication plan, skills, reply choices, or clarification.
 
 That separation prevents an inference such as “likely manager” from being stored or presented as an observed fact.
@@ -295,7 +286,7 @@ See `docs/product-behavior.md` for the decision policy.
 - **Network/provider failure:** retain the crop only long enough for an explicit retry in the current UI session, then release it.
 - **Invalid credentials, insufficient provider credits, rate limits, unavailable models, timeouts, or unsupported capabilities:** map the provider-specific failure to a safe internal error with a useful provider-neutral user message.
 - **Model lacks vision:** stop before transmission and explain that the selected model cannot analyze screenshots.
-- **Invalid structured model output:** attempt one bounded schema repair or return a retryable error; never pass malformed data to the UI.
+- **Invalid structured model output:** Phase 2 returns a retryable error without a repair call; never pass malformed data to the UI.
 - **Unsupported/uncertain language:** use universal skills and preserve the visible language when possible.
 - **Ambiguous speaker ownership:** avoid claims tied to identity and choose actions or one clarification if the difference is material.
 - **Unsafe or impossible request:** return a safe alternative without leaking provider internals.
@@ -312,7 +303,7 @@ The following have intentional seams but no MVP implementation:
 - iOS, Share Extension, and custom keyboard clients;
 - application-specific messaging integrations;
 - remembered capture-region metadata, active-window awareness, and automatic conversation-region detection until separately approved;
-- BYOK settings, secure credential storage, provider adapters, multi-provider routing, and custom/local endpoints until separately approved;
+- production BYOK settings, secure credential storage, additional provider adapters, multi-provider routing, and custom/local endpoints until separately approved;
 - insertion automation and automatic sending (automatic sending remains prohibited).
 
 Adding a seam means defining a small interface at the point of use—not building unused adapters, services, or deployment infrastructure.

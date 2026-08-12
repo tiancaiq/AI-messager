@@ -15,7 +15,10 @@
     }
   },
   "scripts": {
-    "build": "node ../../scripts/clean-package.mjs && tsc -p tsconfig.json",
+    "build": "node ../../scripts/clean-package.mjs && tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@ai-message-coach/contracts": "workspace:*"
   }
 }

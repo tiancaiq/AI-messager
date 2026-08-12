@@ -14,6 +14,7 @@
     "dev": "pnpm build:packages && pnpm --parallel --filter './apps/*' dev",
     "dev:api": "pnpm build:packages && pnpm --filter @ai-message-coach/api dev",
     "dev:desktop": "pnpm build:packages && pnpm --filter @ai-message-coach/desktop dev",
+    "eval:phase2": "pnpm build:packages && node scripts/evaluate-phase-2.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . --max-warnings 0",

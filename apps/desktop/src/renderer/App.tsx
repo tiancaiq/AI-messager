@@ -1,4 +1,9 @@
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import type {
+  AiProviderErrorCode,
+  ConversationAnalysis,
+  ProviderConfiguration,
+} from "@ai-message-coach/contracts";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 
 import { CaptureSelection } from "./CaptureSelection.js";
 import {
@@ -8,7 +13,7 @@ import {
   type CropPreviewResource,
 } from "./capture-state.js";
 
-const errorMessages = {
+const captureErrorMessages = {
   CAPTURE_IN_PROGRESS: "A conversation capture is already in progress.",
   CAPTURE_PERMISSION_DENIED:
     "Allow screen recording for AI Message Coach in system settings, then try again.",
@@ -16,22 +21,145 @@ const errorMessages = {
   CAPTURE_FAILED: "The screen could not be captured. Please try again.",
 } as const;
 
+const analysisErrorMessages: Record<AiProviderErrorCode, string> = {
+  ANALYSIS_IN_PROGRESS: "Conversation analysis is already in progress.",
+  NOT_CONFIGURED: "Configure an OpenAI API key in .env.local, then restart the desktop app.",
+  INVALID_CREDENTIALS: "The configured provider key was rejected. Check it and try again.",
+  RATE_LIMITED: "The provider is busy. Wait briefly, then try again.",
+  INSUFFICIENT_CREDITS: "The provider account does not have enough available credits.",
+  MODEL_UNAVAILABLE: "The configured analysis model is unavailable.",
+  VISION_UNSUPPORTED: "The configured model cannot analyze conversation screenshots.",
+  REQUEST_TOO_LARGE: "The selected conversation image is too large.",
+  TIMEOUT: "The provider request timed out. Please try again.",
+  INVALID_RESPONSE: "The provider returned an invalid analysis. Please try again.",
+  PROVIDER_ERROR: "The conversation could not be analyzed. Please try again.",
+};
+
 function stateImageUrl(state: CaptureState): string | undefined {
   if (state.status === "SELECTING") {
     return state.capture.imageUrl;
   }
 
-  if (state.status === "PREVIEW") {
+  if (
+    state.status === "PREVIEW" ||
+    state.status === "ANALYZING" ||
+    state.status === "ANALYSIS_ERROR"
+  ) {
     return state.preview.imageUrl;
   }
 
   return undefined;
 }
 
+function confidence(value: number): string {
+  return `${Math.round(value * 100)}%`;
+}
+
+function displayValue(value: string | null): string {
+  return value ?? "Not visible";
+}
+
+export function AnalysisResultView({ analysis }: { analysis: ConversationAnalysis }) {
+  return (
+    <div className="analysis-grid">
+      <section className="analysis-panel analysis-summary">
+        <div>
+          <p className="result-label">Visible conversation</p>
+          <h2>{analysis.conversation.summary || "No readable conversation summary."}</h2>
+        </div>
+        <span className="confidence-chip">{confidence(analysis.overallConfidence)} confidence</span>
+      </section>
+
+      <section className="analysis-panel">
+        <h2>Visible contact</h2>
+        <dl className="fact-grid">
+          <div>
+            <dt>Name</dt>
+            <dd>{displayValue(analysis.visibleContact.displayName)}</dd>
+          </div>
+          <div>
+            <dt>Username</dt>
+            <dd>{displayValue(analysis.visibleContact.username)}</dd>
+          </div>
+          <div>
+            <dt>Channel or group</dt>
+            <dd>{displayValue(analysis.visibleContact.channelOrGroupName)}</dd>
+          </div>
+          <div>
+            <dt>Platform hint</dt>
+            <dd>{displayValue(analysis.visibleContact.platformHint)}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section className="analysis-panel">
+        <h2>Language</h2>
+        <p>
+          {analysis.language.primary ?? "Unknown"}
+          {analysis.language.secondary === null ? "" : ` + ${analysis.language.secondary}`} ·{" "}
+          {analysis.language.script.toLowerCase().replaceAll("_", " ")} ·{" "}
+          {confidence(analysis.language.confidence)} confidence
+        </p>
+        <p className="result-note">
+          {analysis.language.codeSwitching
+            ? "Code-switching observed."
+            : "No code-switching observed."}
+        </p>
+      </section>
+
+      <section className="analysis-panel analysis-messages">
+        <h2>Messages in visible order</h2>
+        {analysis.messages.length === 0 ? (
+          <p className="empty-result">No readable messages were extracted.</p>
+        ) : (
+          <ol className="message-list">
+            {analysis.messages.map((message) => (
+              <li key={message.id}>
+                <div className="message-meta">
+                  <span>{message.speaker.toLowerCase()}</span>
+                  <span>
+                    text {confidence(message.textConfidence)} · speaker{" "}
+                    {confidence(message.speakerConfidence)}
+                  </span>
+                </div>
+                <p>{message.text}</p>
+              </li>
+            ))}
+          </ol>
+        )}
+      </section>
+
+      <section className="analysis-panel">
+        <h2>Visible draft</h2>
+        <p>{analysis.draft.text ?? "No draft detected."}</p>
+        <p className="result-note">{confidence(analysis.draft.confidence)} confidence</p>
+      </section>
+
+      <section className="analysis-panel">
+        <h2>Warnings</h2>
+        {analysis.warnings.length === 0 ? (
+          <p className="empty-result">No extraction warnings.</p>
+        ) : (
+          <ul className="warning-list">
+            {analysis.warnings.map((warning) => (
+              <li key={warning}>{warning.toLowerCase().replaceAll("_", " ")}</li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
+}
+
 export function App() {
   const [state, dispatch] = useReducer(captureReducer, initialCaptureState);
-  const requestInFlightReference = useRef(false);
+  const [providerConfiguration, setProviderConfiguration] = useState<
+    ProviderConfiguration | undefined
+  >();
+  const captureInFlightReference = useRef(false);
+  const analysisInFlightReference = useRef(false);
   const captureSessionReference = useRef(0);
+  const analysisSessionReference = useRef(0);
   const mountedReference = useRef(true);
   const objectUrlsReference = useRef(new Set<string>());
   const appName =
@@ -50,8 +178,22 @@ export function App() {
   useEffect(() => {
     mountedReference.current = true;
     const objectUrls = objectUrlsReference.current;
+    let active = true;
+
+    const bridge = window.messageCoach;
+    if (bridge !== undefined) {
+      void bridge
+        .getProviderConfiguration()
+        .then((configuration) => {
+          if (active) {
+            setProviderConfiguration(configuration);
+          }
+        })
+        .catch(() => undefined);
+    }
 
     return () => {
+      active = false;
       mountedReference.current = false;
       for (const imageUrl of objectUrls) {
         URL.revokeObjectURL(imageUrl);
@@ -62,26 +204,28 @@ export function App() {
 
   const beginCapture = useCallback(
     async (eventType: "GENERATE" | "RETAKE"): Promise<void> => {
-      if (requestInFlightReference.current) {
+      if (captureInFlightReference.current || analysisInFlightReference.current) {
         return;
       }
 
       const canGenerate =
         eventType === "RETAKE"
-          ? state.status === "PREVIEW"
-          : state.status === "IDLE" || state.status === "READY" || state.status === "ERROR";
+          ? state.status === "PREVIEW" || state.status === "ANALYSIS_ERROR"
+          : state.status === "IDLE" ||
+            state.status === "RESULT" ||
+            state.status === "CAPTURE_ERROR";
 
       if (!canGenerate) {
         return;
       }
 
-      requestInFlightReference.current = true;
+      captureInFlightReference.current = true;
       const session = ++captureSessionReference.current;
       releaseObjectUrl(stateImageUrl(state));
       dispatch({ type: eventType });
 
       try {
-        const bridge = typeof window === "undefined" ? undefined : window.messageCoach;
+        const bridge = window.messageCoach;
 
         if (bridge === undefined) {
           throw new Error("The desktop capture bridge is unavailable.");
@@ -94,7 +238,7 @@ export function App() {
         }
 
         if (!result.ok) {
-          dispatch({ type: "CAPTURE_FAILED", message: errorMessages[result.error.code] });
+          dispatch({ type: "CAPTURE_FAILED", message: captureErrorMessages[result.error.code] });
           return;
         }
 
@@ -127,7 +271,7 @@ export function App() {
           });
         }
       } finally {
-        requestInFlightReference.current = false;
+        captureInFlightReference.current = false;
       }
     },
     [releaseObjectUrl, state],
@@ -135,6 +279,7 @@ export function App() {
 
   const cancelCapture = useCallback((): void => {
     captureSessionReference.current += 1;
+    analysisSessionReference.current += 1;
     releaseObjectUrl(stateImageUrl(state));
     dispatch({ type: "CANCEL" });
   }, [releaseObjectUrl, state]);
@@ -148,6 +293,7 @@ export function App() {
       try {
         const previewUrl = URL.createObjectURL(blob);
         const preview: CropPreviewResource = {
+          blob,
           imageUrl: previewUrl,
           width: size.width,
           height: size.height,
@@ -165,18 +311,67 @@ export function App() {
     [releaseObjectUrl, state],
   );
 
-  const continueCapture = useCallback((): void => {
-    if (state.status !== "PREVIEW") {
+  const analyzeSelected = useCallback(async (): Promise<void> => {
+    if (
+      analysisInFlightReference.current ||
+      (state.status !== "PREVIEW" && state.status !== "ANALYSIS_ERROR")
+    ) {
       return;
     }
 
-    releaseObjectUrl(state.preview.imageUrl);
-    dispatch({ type: "CONTINUE" });
+    const preview = state.preview;
+    const retry = state.status === "ANALYSIS_ERROR";
+    analysisInFlightReference.current = true;
+    const session = ++analysisSessionReference.current;
+    dispatch({ type: retry ? "RETRY_ANALYSIS" : "ANALYZE" });
+
+    let ownedBytes: Uint8Array<ArrayBuffer> | undefined;
+
+    try {
+      const bridge = window.messageCoach;
+
+      if (bridge === undefined) {
+        throw new Error("The desktop analysis bridge is unavailable.");
+      }
+
+      ownedBytes = new Uint8Array(await preview.blob.arrayBuffer());
+      const result = await bridge.analyzeConversationImage({
+        mimeType: "image/png",
+        bytes: ownedBytes,
+        width: preview.width,
+        height: preview.height,
+      });
+
+      if (!mountedReference.current || session !== analysisSessionReference.current) {
+        return;
+      }
+
+      if (!result.ok) {
+        dispatch({ type: "ANALYSIS_FAILED", message: analysisErrorMessages[result.error.code] });
+        return;
+      }
+
+      releaseObjectUrl(preview.imageUrl);
+      dispatch({
+        type: "ANALYSIS_SUCCEEDED",
+        result: { analysis: result.analysis, provider: result.provider },
+      });
+    } catch {
+      if (mountedReference.current && session === analysisSessionReference.current) {
+        dispatch({ type: "ANALYSIS_FAILED", message: analysisErrorMessages.PROVIDER_ERROR });
+      }
+    } finally {
+      ownedBytes?.fill(0);
+      analysisInFlightReference.current = false;
+    }
   }, [releaseObjectUrl, state]);
 
   useEffect(() => {
     const isCancelable =
-      state.status === "CAPTURING" || state.status === "SELECTING" || state.status === "PREVIEW";
+      state.status === "CAPTURING" ||
+      state.status === "SELECTING" ||
+      state.status === "PREVIEW" ||
+      state.status === "ANALYSIS_ERROR";
 
     if (!isCancelable) {
       return;
@@ -208,34 +403,63 @@ export function App() {
     );
   }
 
-  if (state.status === "PREVIEW") {
+  if (
+    state.status === "PREVIEW" ||
+    state.status === "ANALYZING" ||
+    state.status === "ANALYSIS_ERROR"
+  ) {
+    const isAnalyzing = state.status === "ANALYZING";
+    const hasError = state.status === "ANALYSIS_ERROR";
+
     return (
       <main className="app-shell preview-shell">
         <section className="content-card preview-card">
-          <p className="eyebrow">Conversation capture</p>
-          <h1>Review selection</h1>
+          <p className="eyebrow">Conversation understanding</p>
+          <h1>{isAnalyzing ? "Reading visible messages…" : "Review selection"}</h1>
           <div className="preview-frame">
             <img alt="Selected conversation region preview" src={state.preview.imageUrl} />
+            {isAnalyzing ? <div className="analysis-progress">Analyzing securely…</div> : null}
           </div>
           <p className="preview-size">
             {state.preview.width} × {state.preview.height} px
           </p>
+          {hasError ? (
+            <p className="inline-error" role="alert">
+              {state.message}
+            </p>
+          ) : null}
           <div className="button-row">
             <button
               className="button button-quiet"
+              disabled={isAnalyzing}
               type="button"
               onClick={() => void beginCapture("RETAKE")}
             >
               Retake
             </button>
-            <button className="button button-quiet" type="button" onClick={cancelCapture}>
+            <button
+              className="button button-quiet"
+              disabled={isAnalyzing}
+              type="button"
+              onClick={cancelCapture}
+            >
               Cancel
             </button>
-            <button className="button button-primary" type="button" onClick={continueCapture}>
-              Continue
+            <button
+              className="button button-primary"
+              disabled={isAnalyzing}
+              type="button"
+              onClick={() => void analyzeSelected()}
+            >
+              {hasError ? "Try analysis again" : "Analyze conversation"}
             </button>
           </div>
-          <p className="keyboard-hint">Press Esc to cancel</p>
+          <p className="provider-note">
+            {providerConfiguration?.providerId ?? "Provider"} ·{" "}
+            {providerConfiguration?.modelId ?? "status unavailable"} · Your provider may charge for
+            this request.
+          </p>
+          {!isAnalyzing ? <p className="keyboard-hint">Press Esc to cancel</p> : null}
         </section>
       </main>
     );
@@ -253,7 +477,7 @@ export function App() {
     );
   }
 
-  if (state.status === "ERROR") {
+  if (state.status === "CAPTURE_ERROR") {
     return (
       <main className="app-shell">
         <section className="content-card status-card" aria-live="polite">
@@ -277,21 +501,30 @@ export function App() {
     );
   }
 
-  if (state.status === "READY") {
+  if (state.status === "RESULT") {
     return (
-      <main className="app-shell">
-        <section className="content-card status-card" aria-live="polite">
-          <p className="eyebrow">Conversation capture</p>
-          <h1>Capture ready for analysis.</h1>
-          <p>No analysis or network request is performed in Phase 1.</p>
+      <main className="result-shell">
+        <header className="result-header">
+          <div>
+            <p className="eyebrow">Validated visible context</p>
+            <h1>Conversation analysis</h1>
+            <p className="provider-note">
+              {state.result.provider.providerId} · {state.result.provider.modelId}
+            </p>
+          </div>
           <button
             className="button button-primary"
             type="button"
             onClick={() => void beginCapture("GENERATE")}
           >
-            Capture again
+            Analyze another capture
           </button>
-        </section>
+        </header>
+        <AnalysisResultView analysis={state.result.analysis} />
+        <p className="phase-boundary-note">
+          Phase 2 reports only visible observations. It does not generate a reply or infer a
+          relationship.
+        </p>
       </main>
     );
   }
@@ -311,6 +544,13 @@ export function App() {
         >
           Generate
         </button>
+        <p className={`provider-status ${providerConfiguration?.configured ? "is-ready" : ""}`}>
+          {providerConfiguration === undefined
+            ? "Checking provider configuration…"
+            : `${providerConfiguration.providerId} · ${providerConfiguration.modelId} · ${
+                providerConfiguration.configured ? "configured" : "not configured"
+              }`}
+        </p>
       </section>
     </main>
   );
