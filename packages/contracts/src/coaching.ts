@@ -83,15 +83,27 @@ export const SuggestedActionSchema = z
   })
   .strict();
 
+export const RewriteOrCompletionOutputSchema = z
+  .object({
+    primary: z.string().trim().min(1).max(10_000),
+    alternatives: z.array(MessageOptionSchema).max(3),
+  })
+  .strict();
+
+export const SuggestedReplyOutputSchema = z
+  .object({
+    replies: z.array(MessageOptionSchema).min(1).max(3),
+  })
+  .strict();
+
 const GeneratedDecisionSchema = DecisionBaseSchema.extend({
   action: z.enum(["REWRITE_DRAFT", "COMPLETE_DRAFT"]),
-  primary: z.string().trim().min(1).max(10_000),
-  alternatives: z.array(MessageOptionSchema).max(3),
+  ...RewriteOrCompletionOutputSchema.shape,
 }).strict();
 
 const ReplyDecisionSchema = DecisionBaseSchema.extend({
   action: z.literal("SUGGEST_REPLY"),
-  replies: z.array(MessageOptionSchema).min(1).max(3),
+  ...SuggestedReplyOutputSchema.shape,
 }).strict();
 
 const ActionDecisionSchema = DecisionBaseSchema.extend({
@@ -119,7 +131,11 @@ export const CoachingDecisionSchema = z.discriminatedUnion("action", [
   NoReplyDecisionSchema,
 ]);
 
-export const CoachingDecisionJsonSchema = z.toJSONSchema(CoachingDecisionSchema, {
+export const RewriteOrCompletionOutputJsonSchema = z.toJSONSchema(RewriteOrCompletionOutputSchema, {
+  target: "draft-7",
+});
+
+export const SuggestedReplyOutputJsonSchema = z.toJSONSchema(SuggestedReplyOutputSchema, {
   target: "draft-7",
 });
 
@@ -166,6 +182,8 @@ export type CoachingSelection = z.infer<typeof CoachingSelectionSchema>;
 export type CoachingRequest = z.infer<typeof CoachingRequestSchema>;
 export type MessageOption = z.infer<typeof MessageOptionSchema>;
 export type SuggestedAction = z.infer<typeof SuggestedActionSchema>;
+export type RewriteOrCompletionOutput = z.infer<typeof RewriteOrCompletionOutputSchema>;
+export type SuggestedReplyOutput = z.infer<typeof SuggestedReplyOutputSchema>;
 export type CoachingDecision = z.infer<typeof CoachingDecisionSchema>;
 export type CoachingErrorCode = z.infer<typeof CoachingErrorCodeSchema>;
 export type CoachingError = z.infer<typeof CoachingErrorSchema>;

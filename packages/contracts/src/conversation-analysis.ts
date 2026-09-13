@@ -72,7 +72,8 @@ export const LanguageObservationSchema = z
   })
   .strict()
   .superRefine((value, context) => {
-    const shouldBeSupported = value.primary === "en" || value.primary === "zh";
+    const primaryLanguage = value.primary?.split("-", 1)[0]?.toLowerCase();
+    const shouldBeSupported = primaryLanguage === "en" || primaryLanguage === "zh";
 
     if (value.supportedForLanguageSpecificSkills !== shouldBeSupported) {
       context.addIssue({

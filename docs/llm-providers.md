@@ -4,7 +4,7 @@
 
 AI Message Coach should let users choose the AI provider they trust and want to pay for. Message Coach supplies the communication-intelligence layer; it must not depend for its product value or architecture on one hard-coded provider.
 
-Phase 2 implements the first concrete slice: a task-specific provider-neutral `ConversationImageAnalyzer`, capability preflight, one isolated OpenAI Responses adapter using native `fetch`, direct trusted-desktop transport, safe configured/model status, and strict observation-only output. Additional providers, a general provider catalog, production credential storage, and settings remain future work.
+Phase 2 implements the first concrete slice: a task-specific provider-neutral `ConversationImageAnalyzer`, capability preflight, one isolated OpenAI Responses adapter using native `fetch`, direct trusted-desktop transport, safe configured/model status, and strict observation-only output. Phase 3 adds a provider-neutral coaching generator with one isolated OpenAI text adapter. Phase 4 adds deterministic provider-neutral skill selection/composition before that generator; it introduces no provider call or SDK. Additional providers, a general provider catalog, production credential storage, and settings remain future work.
 
 ## Product model
 
@@ -85,7 +85,9 @@ The first implementation may use one selected provider/model for every task it s
 
 ## Structured output and errors
 
-Phase 2 conversation extraction is a provider-neutral Zod-backed contract for visible messages/order/ownership, draft, contact signals, language, warnings, and extraction confidence. It explicitly rejects relationship, situation, intent, skill, action, and response fields. Phase 3 defines its own strict provider-neutral coaching request/result contract, fixes the action through deterministic policy, and uses an isolated text adapter only for basic wording. Both boundaries reject malformed and relationship/skill-expanded output.
+Phase 2 conversation extraction is a provider-neutral Zod-backed contract for visible messages/order/ownership, draft, contact signals, language, warnings, and extraction confidence. It explicitly rejects relationship, situation, intent, skill, action, and response fields. Phase 3 defines its own strict provider-neutral coaching request/result contract, fixes the action through deterministic policy, and uses an isolated text adapter only for basic wording. Phase 4 deterministically produces a strict `CommunicationPlan` after the action is fixed. The adapter receives only bounded `principles` and `avoid` lists—not skill definitions, IDs, versions, reasons, or registry content.
+
+The internal coaching result remains a strict discriminated union. It is not sent wholesale as a provider schema because OpenAI Structured Outputs requires a root object rather than a root union. For rewrite/complete and reply generation, the adapter selects an action-specific strict root-object schema containing only provider-owned wording fields. It parses that wording, reattaches the deterministic policy's exact action, intent, action confidence, and ambiguity locally, then validates the complete internal result. Provider output therefore cannot echo or replace policy-owned metadata.
 
 Each adapter is responsible for:
 
@@ -130,7 +132,7 @@ Never commit, hard-code, log, analyze, or place keys in plaintext application se
 
 ## Sensitive-request topology
 
-For Phase 2 screenshot analysis and Phase 3 basic coaching, the implemented topology is:
+For Phase 2 screenshot analysis and Phase 3/4 skill-guided coaching, the implemented topology is:
 
 ```text
 user device
@@ -138,7 +140,7 @@ user device
 → OpenAI Responses API
 ```
 
-This avoids sending private conversation content through Message Coach-operated infrastructure when no product requirement justifies that extra trust boundary. Phase 2 sends the selected crop; Phase 3 sends only validated structured context and no image. The full-display capture stays local. The existing Fastify service receives neither private content nor credential.
+This avoids sending private conversation content through Message Coach-operated infrastructure when no product requirement justifies that extra trust boundary. Phase 2 sends the selected crop; Phase 3 sends only validated structured context and no image; Phase 4 adds only the compact composed guidance needed for wording. Full skill definitions and selection metadata stay local, and the full-display capture stays local. The existing Fastify service receives neither private content nor credential.
 
 A server-mediated provider path remains possible if later technical requirements justify it. Before choosing it, the milestone plan must document why direct communication is insufficient, what sensitive content and credential material cross the server, retention and logging controls, authentication, deployment boundaries, and how the user is informed. The decision should remain reversible until tested requirements make one topology necessary.
 
@@ -146,7 +148,7 @@ Direct provider communication does not eliminate third-party disclosure: the sel
 
 ## Provider-independent skills, memory, and language
 
-Skills describe communication behavior and operate on internal contracts. They must not claim compatibility with only a named provider/model. Model-assisted reranking, memory extraction, and the Skill Factory must call provider-neutral task interfaces.
+Skills describe communication behavior and operate on internal contracts. They must not claim compatibility with only a named provider/model. Phase 4 uses deterministic filtering/ranking and therefore makes no separate model call. If later evidence justifies model-assisted reranking, memory extraction, or a Skill Factory, each must call a provider-neutral task interface.
 
 Provider choice does not expand the validated skill-language policy:
 
@@ -156,6 +158,8 @@ Provider choice does not expand the validated skill-language policy:
 - Other languages use universal skills only.
 
 A model supporting another language does not mean Message Coach has validated language-specific communication skills for it.
+
+The Phase 4 skill package imports no OpenAI adapter or SDK. Provider selection cannot change registry eligibility, skill IDs, conflict handling, or composition semantics. A request-scoped skill failure can fall back to generic Phase 3 generation, while registry/schema defects remain explicit validation failures rather than provider errors.
 
 ## Incremental roadmap direction
 

@@ -30,6 +30,8 @@ In Phase 2, Continue sends only that selected crop through a fixed validated pre
 
 In Phase 3, trusted Electron main sends only the validated structured `ConversationAnalysis`—never screenshot bytes—to the selected provider when basic wording is required. Suggested-action and clarification continuations reuse that same in-memory context without recapture. The context and generated messages are not persisted or routed through `apps/api`, and Copy occurs only after an explicit click through a narrow clipboard IPC command.
 
+In Phase 4, the Skill Engine consumes that same request-scoped structured context in memory after Phase 3 has fixed the action. It derives normalized tags, selects zero to four source-controlled skills, and adds only bounded communication principles/avoidances to the provider-facing coaching payload. It does not add screenshots, identity, relationship, memory, or history. Full definitions, selected skill IDs/versions/reasons, and the registry do not enter the provider prompt. No raw conversation, draft, or selected-skill history is persisted.
+
 Resettable local region metadata such as `x`, `y`, `width`, and `height` is configuration, not conversation content, and may be considered in a separately approved milestone. That distinction does not permit retaining screenshot pixels, extracted text, drafts, or identity evidence.
 
 Direct provider communication is the preferred topology when practical because it avoids an unnecessary Message Coach-operated content hop. It does not make the request local: the selected provider still receives the minimized content. If a provider or an application-operated service retains inputs under its configuration, that fact and retention must be verified and documented before production. “Deleted by our API” must not be used to imply deletion from systems we do not control.
@@ -57,7 +59,7 @@ Never log:
 - prompts containing user content;
 - authorization headers, provider keys, or full upstream responses.
 
-Allowed operational fields may include a random request ID, timestamps, coarse duration, byte-size buckets, schema version, selected action enum, skill IDs/versions, provider/model identifier, token counts, and coarse error codes—provided none can reconstruct content or become a stable cross-context user identifier.
+Allowed operational fields may include a random request ID, timestamps, coarse duration, byte-size buckets, schema version, selected action enum, skill IDs/versions, plan status (`SELECTED`, `NONE`, or `FAILED`), provider/model identifier, token counts, and coarse error codes—provided none can reconstruct content or become a stable cross-context user identifier. Phase 4 development/evaluation may inspect exact skill IDs, versions, and concise metadata-derived reasons, but must not join them to raw messages/drafts or retain them as user/contact history.
 
 Central error handling must sanitize validation errors and upstream failures. Development logging must follow the same content rules; “debug mode” is not permission to leak conversations.
 
@@ -87,6 +89,7 @@ Central error handling must sanitize validation errors and upstream failures. De
 ### Model provider
 
 - Use the minimum capable request and avoid unrelated memory/context.
+- Send only composed Phase 4 principles/avoidances for wording; do not send the skill registry, definitions, IDs, versions, selection reasons, or evaluation metadata.
 - Select models by declared task capability rather than assuming support from the provider name.
 - Do not grant tools that can send messages or access messaging apps.
 - Scope, rotate, replace, and delete user-owned provider keys through the trusted credential boundary; never expose stored values to the renderer.
@@ -136,7 +139,7 @@ Consent to analyze one Generate-triggered capture is not blanket consent to capt
 
 ## Security and privacy review gates
 
-Before the first real screenshot reaches an external provider or application API, verify:
+One user-authorized production smoke test sent a tightly cropped conversation screenshot directly to OpenAI on 2026-08-23 and confirmed renderer isolation, safe failure copy, and ephemeral cleanup. That one-off test does not satisfy the full production privacy gate. Before beta/production screenshot use or further real-data evaluation, verify:
 
 1. local crop and full-screen disposal behavior;
 2. request/image bounds and MIME validation;

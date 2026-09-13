@@ -84,6 +84,13 @@ importers:
       '@ai-message-coach/contracts':
         specifier: workspace:*
         version: link:../contracts
+      '@ai-message-coach/skills':
+        specifier: workspace:*
+        version: link:../skills
+    devDependencies:
+      '@ai-message-coach/test-fixtures':
+        specifier: workspace:*
+        version: link:../test-fixtures
 
   packages/contracts:
     dependencies:
@@ -96,10 +103,6 @@ importers:
       '@ai-message-coach/contracts':
         specifier: workspace:*
         version: link:../contracts
-    devDependencies:
-      '@ai-message-coach/test-fixtures':
-        specifier: workspace:*
-        version: link:../test-fixtures
 
   packages/test-fixtures:
     dependencies:

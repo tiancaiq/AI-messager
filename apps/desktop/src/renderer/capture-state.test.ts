@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 import {
   captureReducer,
   initialCaptureState,
+  type CaptureState,
   type CapturedImageResource,
   type CropPreviewResource,
 } from "./capture-state.js";
@@ -73,7 +74,11 @@ describe("capture and analysis state", () => {
     });
 
     expect(analyzing).toEqual({ status: "ANALYZING", preview });
-    expect(deciding).toMatchObject({ status: "DECIDING", result: { analysis } });
+    expect(deciding).toMatchObject({
+      status: "DECIDING",
+      result: { analysis },
+      selection: null,
+    });
     expect(result).toMatchObject({ status: "COACHING_RESULT", result: { analysis } });
   });
 
@@ -100,11 +105,16 @@ describe("capture and analysis state", () => {
 
   it("keeps coaching failures recoverable and reuses analysis for a choice", () => {
     const provider = { providerId: "openai", modelId: "fixture-model" };
-    const deciding = { status: "DECIDING", result: { analysis, provider } } as const;
+    const deciding = {
+      status: "DECIDING",
+      result: { analysis, provider },
+      selection: null,
+    } as const;
     const error = captureReducer(deciding, { type: "COACHING_FAILED", message: "Try again." });
     expect(error).toEqual({
       status: "COACHING_ERROR",
       result: deciding.result,
+      selection: null,
       message: "Try again.",
     });
     expect(captureReducer(error, { type: "RETRY_COACHING" })).toEqual(deciding);
@@ -122,7 +132,46 @@ describe("capture and analysis state", () => {
         ],
       },
     });
-    expect(captureReducer(choices, { type: "CONTINUE_COACHING" })).toEqual(deciding);
+    expect(
+      captureReducer(choices, {
+        type: "CONTINUE_COACHING",
+        selection: { kind: "CLARIFICATION", answer: "Acknowledge" },
+      }),
+    ).toEqual({
+      status: "DECIDING",
+      result: deciding.result,
+      selection: { kind: "CLARIFICATION", answer: "Acknowledge" },
+    });
+  });
+
+  it("preserves the exact selected intent after failure and retry", () => {
+    const provider = { providerId: "openai", modelId: "fixture-model" };
+    const selection = { kind: "CLARIFICATION", answer: "Acknowledge" } as const;
+    const choices: CaptureState = {
+      status: "COACHING_RESULT",
+      result: {
+        analysis,
+        provider,
+        decision: {
+          action: "ASK_CLARIFICATION",
+          userIntent: { value: null, confidence: 0.2 },
+          actionConfidence: 0.8,
+          ambiguity: { material: true, reason: "The intent is unclear." },
+          question: "What would you like to do next?",
+          options: ["Acknowledge", "Ask a follow-up"],
+        },
+      },
+    };
+    const deciding = captureReducer(choices, { type: "CONTINUE_COACHING", selection });
+    const failed = captureReducer(deciding, { type: "COACHING_FAILED", message: "Try again." });
+    const retried = captureReducer(failed, { type: "RETRY_COACHING" });
+
+    expect(failed).toMatchObject({ status: "COACHING_ERROR", selection });
+    expect(retried).toEqual({
+      status: "DECIDING",
+      result: { analysis, provider },
+      selection,
+    });
   });
 
   it("allows retake or cancel after an analysis failure", () => {

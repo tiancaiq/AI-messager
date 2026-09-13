@@ -20,8 +20,5 @@
   },
   "dependencies": {
     "@ai-message-coach/contracts": "workspace:*"
-  },
-  "devDependencies": {
-    "@ai-message-coach/test-fixtures": "workspace:*"
   }
 }

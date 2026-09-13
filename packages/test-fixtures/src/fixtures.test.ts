@@ -9,6 +9,7 @@ import {
   invalidCoachingDecisionFixture,
   conversationUnderstandingFixtures,
   coachingEvaluationFixtures,
+  skillSelectionEvaluationFixtures,
   renderConversationFixtureSvg,
   validCoachingDecisionFixture,
   validSkillFixture,
@@ -75,6 +76,34 @@ describe("synthetic workspace fixtures", () => {
     for (const fixture of coachingEvaluationFixtures) {
       expect(ConversationAnalysisSchema.safeParse(fixture.input).success).toBe(true);
       expect(fixture.importantConstraints.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("provides separate exact-ID Phase 4 skill-selection scenarios", () => {
+    expect(skillSelectionEvaluationFixtures).toHaveLength(21);
+    expect(
+      skillSelectionEvaluationFixtures.filter((fixture) =>
+        fixture.categories.includes("regional-language-tag"),
+      ),
+    ).toHaveLength(2);
+    expect(
+      skillSelectionEvaluationFixtures.some(
+        (fixture) => fixture.id === "unsupported-primary-code-switching",
+      ),
+    ).toBe(true);
+    for (const fixture of skillSelectionEvaluationFixtures) {
+      expect(fixture.importantConstraints.length).toBeGreaterThan(0);
+      expect(
+        new Set([
+          ...fixture.expectedSkills,
+          ...fixture.acceptableSkills,
+          ...fixture.forbiddenSkills,
+        ]).size,
+      ).toBe(
+        fixture.expectedSkills.length +
+          fixture.acceptableSkills.length +
+          fixture.forbiddenSkills.length,
+      );
     }
   });
 });

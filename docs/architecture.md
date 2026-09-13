@@ -25,7 +25,7 @@ The long-term system has five logical engines:
 
 1. **Context Engine** — extracts visible conversation observations. Phase 2 stops at messages/order/ownership, draft, visible contact signals, language, warnings, and extraction confidence; later inference work requires its own approved scope.
 2. **Memory Engine** — retrieves relevant trusted history, assesses freshness, and proposes evidence-backed memory candidates.
-3. **Skill Engine** — filters, retrieves, reranks, and composes approved communication skills.
+3. **Skill Engine** — Phase 4 deterministically filters, ranks, and composes a small approved communication-skill registry; large-catalog retrieval/reranking remains future work.
 4. **Response Engine** — chooses an agent action, creates a communication plan, and produces replies or action choices.
 5. **Skill Factory** — an offline, governed workflow for proposing and evaluating skills.
 
@@ -37,9 +37,9 @@ For the MVP these are modules, not separate deployments and not separate autonom
 
 `apps/desktop` contains three security boundaries:
 
-- **Electron main process:** the reusable conversation-capture capability, window hide/show behavior, screen-capture permission and acquisition, trusted Phase 2 provider request execution, optional future shortcut registration, clipboard writes, and future OS-protected credential access.
-- **Preload bridge:** narrow, typed capture, provider-status, and conversation-analysis methods. Context isolation stays enabled; the renderer gets no general Node.js access, channel selection, provider request shape, or credential value.
-- **React renderer:** the primary Generate control, crop setup/correction, progress/error/retry states, safe provider/model status, and the Phase 2 extraction-verification result. Coaching choices, clarification, and copy controls remain later work.
+- **Electron main process:** the reusable conversation-capture capability, window hide/show behavior, screen-capture permission and acquisition, trusted Phase 2/3 provider request execution, coaching orchestration, optional future shortcut registration, explicit clipboard writes, and future OS-protected credential access.
+- **Preload bridge:** narrow, typed capture, provider-status, analysis, coaching, and clipboard methods. Context isolation stays enabled; the renderer gets no general Node.js access, channel selection, provider request shape, or credential value.
+- **React renderer:** the primary Generate control, crop setup/correction, progress/error/retry states, safe provider/model status, extraction-verification details, action/clarification/no-reply flows, generated results, and explicit Copy.
 
 The desktop determines and crops the relevant region locally and sends only that crop beyond the device. Phase 1 passes the full capture through the trusted main → sandboxed preload/renderer IPC path solely so the user can select it locally. Phase 2 sends the selected crop through one fixed preload method to trusted main and directly over TLS to OpenAI; it does not route the image through `apps/api`. The desktop owns ephemeral image memory and releases it after success, cancellation, recapture, reload, or unmount, retaining a crop only for an explicit retry in the active UI session. Product prompts and provider-neutral orchestration remain in `packages/ai`; Electron main is only the trusted composition root.
 
@@ -110,21 +110,25 @@ Phase 1 adds strict capture bounds/display metadata, in-memory PNG bytes, safe c
 
 Phase 2 adds the bounded PNG analysis request, safe provider/model/capability metadata, observation-only conversation analysis, normalized provider errors/results, and fixed provider-status/analysis IPC channels. Strict schemas reject relationship, situation, intent, skill, action, and reply fields.
 
-Action-specific response payloads, coaching inferences, selection results, and future memory records are added only when an approved later milestone has a producer and consumer.
+Phase 3 adds strict coaching request/selection/result, action-specific payload, coaching error, clipboard, and IPC contracts. Its internal `CoachingDecision` remains a discriminated union, while provider-facing generation uses action-specific strict root-object schemas containing wording only. Phase 4 adds strict atomic skill definitions, a bounded normalized `SkillContext`, selected skill references/reasons, and a `CommunicationPlan` whose status distinguishes `SELECTED`, legitimate `NONE`, and request-scoped `FAILED`. The plan contains at most four selected references and bounded principles/avoidances. Future memory records remain absent until an approved milestone has a producer and consumer.
 
 Do not expose chain-of-thought. Evidence should be concise, observable references such as “draft contains an apology” or message indices, not hidden reasoning transcripts.
 
 ### AI logic
 
-`packages/ai` now owns the Phase 2 provider-neutral conversation-image task and isolated OpenAI adapter. Its current responsibilities are:
+`packages/ai` owns provider-neutral conversation analysis and coaching orchestration. Its current responsibilities are:
 
 - provider-neutral task interfaces and model capability descriptors;
 - an observation-only multimodal prompt;
 - one bounded, strict structured extraction call;
 - validation and safe failure for invalid/refused/incomplete model output;
 - normalized provider failure handling;
+- deterministic Phase 3 draft-aware action policy;
+- deterministic Phase 4 skill-context derivation after the action is fixed;
+- provider-neutral wording generation with compact composed skill guidance;
+- isolated OpenAI vision and coaching adapters.
 
-Confidence-aware action selection, communication planning, response generation, skill selection, and memory interfaces are not part of Phase 2.
+Phase 2 remains observation-only. Phase 3 chooses the action; Phase 4 chooses communication expertise for actions that need wording. The skill engine never changes the action, and relationship/identity/memory remain absent.
 
 Core Context, Memory, Skill, and Response logic must not import provider SDKs or branch on provider name for product behavior. The Phase 2 task-specific port is `ConversationImageAnalyzer`; `OpenAiVisionAdapter` alone translates the request, authenticates, calls the Responses API with native `fetch`, extracts output, and validates it against shared schemas. No general unused provider interface or SDK was added.
 
@@ -140,11 +144,15 @@ Users supply credentials for their selected provider and pay that provider's usa
 
 New credentials may pass from a settings form through a narrow validated preload write operation to Electron main, then into OS-protected credential storage where practical. Stored keys must never be readable by the React renderer. Renderer-visible state is limited to safe metadata such as provider/model identifiers, capabilities, and `configured: true | false`.
 
-Credentials must not be committed, hard-coded, logged, included in analytics/crash reports, or attached to provider-neutral error details. Phase 2 development loads an ignored `.env.local` key into Electron main only; this is not production credential storage. OS-protected storage, deletion, replacement, and connection testing remain Phase 3 work.
+Credentials must not be committed, hard-coded, logged, included in analytics/crash reports, or attached to provider-neutral error details. Current development loads an ignored `.env.local` key into Electron main only; this is not production credential storage. OS-protected storage, deletion, replacement, and connection testing remain a separately approved production milestone.
 
 ### Skill library
 
-In Phase 0, `packages/skills` only validates a definition with the contract-owned schema. It owns no catalog and ships no production skill. Later it will own structured, versioned, approved skill data plus deterministic metadata filtering and conflict/dependency resolution. Skill content and selection remain provider-independent; model-assisted reranking calls a neutral AI task boundary. Initial scale does not need embeddings or a vector database. See `docs/skills.md`.
+Phase 4 makes `packages/skills` a first-class runtime package. It owns 21 manually approved, source-controlled atomic definitions; registry/referential validation; deterministic active/language/action/situation/intent eligibility; stable bounded ranking; bidirectional conflict checks; compact composition; and selection metrics. `packages/contracts` remains the Zod-first schema owner, while `packages/ai` derives the request-scoped context and consumes the resulting provider-neutral plan.
+
+The engine selects zero to four skills. English can use universal + `en`; Chinese can use universal + `zh`; mixed English/Chinese may use both supported families; other languages use universal only. `SUGGEST_ACTIONS`, `ASK_CLARIFICATION`, and `NO_REPLY_NEEDED` return no skill plan. A user action selection re-enters Phase 3 first, then skills may guide the resulting reply.
+
+Only selected `principles` and `avoid` guidance crosses into the provider request. Full definitions, selection reasons, and skill IDs stay out of the prompt. Registry validation defects fail explicitly; a request-scoped selection failure is marked `FAILED` and can fall back to generic Phase 3 generation. No provider SDK or OpenAI-specific content appears in the skill package. See `docs/skills.md`.
 
 ## Implemented monorepo
 
@@ -163,24 +171,25 @@ apps/
         └── server.ts         # loopback listening and lifecycle
 packages/
 ├── contracts/src/            # Zod schemas + inferred types
-├── ai/src/                   # empty boundary until a concrete Phase 1 caller
-├── skills/src/               # skill-definition validation only
+├── ai/src/                   # provider-neutral analysis, action policy, skill context, generation
+├── skills/src/               # approved registry, deterministic selection/composition/evaluation
 └── test-fixtures/src/        # synthetic cross-package fixtures
 ```
 
 Tests that concern one package stay next to that package. Root `tests/` is reserved for future cross-boundary and end-to-end tests with concrete callers.
 
-The implemented Phase 2 dependency direction is:
+The implemented Phase 4 dependency direction is:
 
 ```text
-apps/desktop → packages/ai → packages/contracts
+apps/desktop → packages/ai → packages/skills → packages/contracts
+packages/ai → packages/contracts
 apps/desktop → packages/contracts
 apps/api     → packages/contracts
 packages/skills → packages/contracts
 packages/test-fixtures → packages/contracts
 ```
 
-Trusted Electron main composes the AI task for the approved direct-provider topology. The React renderer imports only shared types and must not import provider adapters, SDKs, prompts, Fastify, or the skill registry. The credential is injected into the adapter; `packages/ai` imports neither Electron nor Fastify. If it later needs skill or memory data, prefer an injected narrow interface over importing an application composition root or storage adapter.
+Trusted Electron main composes the AI task for the approved direct-provider topology. The React renderer imports only shared types and must not import provider adapters, SDKs, prompts, Fastify, or the skill registry. The credential is injected into the adapter; `packages/ai` imports neither Electron nor Fastify. `packages/ai` calls the narrow `CommunicationSkillPlanner` boundary backed by `packages/skills`; it does not absorb registry ownership. Future memory must enter through a similarly narrow approved interface, not an application composition root or storage adapter.
 
 ## Phase 0 toolchain and build
 
@@ -224,13 +233,31 @@ An optional shortcut follows the same sequence by requesting the same capture ca
 
 Phase 2 selects the direct path: renderer → authorized preload/main IPC → provider-neutral task → isolated OpenAI adapter. `apps/api` receives neither crop nor credential. A future server path must justify the additional trust boundary; the desktop path preserves adapter isolation, trusted key access, request bounds, output validation, and safe errors.
 
-The Phase 2 path makes one understanding call and no repair, coaching, skill, or response call. Invalid, refused, or incomplete output becomes a recoverable error. Phase 3 consumes the validated observation contract without re-extracting the screenshot. A deterministic draft-aware policy fixes one `AgentAction`; local choice, clarification, and no-reply decisions need no wording call, while rewrite/complete/reply actions use one provider-neutral text-generation call through an isolated OpenAI adapter. A user choice can require one follow-up wording call using the same in-memory context.
+The Phase 2 path makes one understanding call and no repair, coaching, skill, or response call. Invalid, refused, or incomplete output becomes a recoverable error. Phase 3 consumes the validated observation contract without re-extracting the screenshot. A deterministic draft-aware policy fixes one `AgentAction`; local choice, clarification, and no-reply decisions need no wording call. For rewrite/complete/reply actions, Phase 4 derives a bounded skill context from already visible evidence, deterministically selects zero to four skills, and supplies only the composed principles/avoidances to the provider-neutral text-generation call through an isolated OpenAI adapter. The adapter asks for an action-specific root-object wording payload, reattaches the policy-owned action, intent, confidence, and ambiguity locally, then validates the complete internal decision. A user choice can require one follow-up wording call using the same in-memory context after its explicit intent is selected; a retry after failure preserves and reuses that exact selection instead of returning to pre-choice policy.
 
 Phase 3 adds fixed authorized coaching and clipboard IPC methods. The sandboxed renderer sends strict `ConversationAnalysis` plus at most one bounded selection; Electron main retains credentials, prevents overlapping coaching calls, validates every provider result, and writes clipboard text only after an explicit user action. No screenshot, conversation, generated message, or key enters `apps/api`, logs, or persistent storage.
 
+## Phase 4 skill-guided coaching flow
+
+```mermaid
+flowchart TD
+    A["Validated Phase 2 ConversationAnalysis"] --> B["Phase 3 deterministic AgentAction"]
+    B -->|"SUGGEST_ACTIONS / ASK_CLARIFICATION / NO_REPLY_NEEDED"| C["Local Phase 3 result; no skills"]
+    B -->|"REWRITE_DRAFT / COMPLETE_DRAFT / SUGGEST_REPLY"| D["Deterministic SkillContext"]
+    D --> E["ACTIVE + language + action + situation + intent filters"]
+    E --> F["Stable score/order + conflict filtering"]
+    F --> G["0–4 selected skill references"]
+    G --> H["Bounded principles + avoid CommunicationPlan"]
+    H --> I["Provider action-specific root-object wording schema"]
+    I --> J["Locally reattach policy action, intent, confidence, ambiguity"]
+    J --> K["Validate complete internal CoachingDecision"]
+```
+
+`SkillContext` uses the fixed action, visible messages/draft, selected intent, normalized situation/intent tags, language/code-switching, and material ambiguity. It contains no relationship, identity, avatar, contact history, temporal history, or memory input. Selection and composition are deterministic and in-memory; selected skills are not written as user history. Development inspection may expose only structured IDs, versions, and concise reasons, never hidden reasoning or conversation content.
+
 ## Core domain shape
 
-Names are illustrative until Phase 0 defines the actual schemas.
+The action vocabulary below is implemented. The broader confidence shape illustrates later domains and does not authorize relationship, identity, or memory work in Phase 4.
 
 ```ts
 type AgentAction =
@@ -257,11 +284,11 @@ interface Hypothesis<T> {
 }
 ```
 
-The long-term system should keep these layers separate:
+The system keeps these layers separate:
 
 1. **Extracted observations (Phase 2):** visible text, message grouping/order, draft, names, UI cues, language, speaker assignment, warnings, and extraction confidence.
-2. **Inferred (later approved milestone):** situation, intents, emotion, identity hypothesis, and any separately approved relationship hypothesis.
-3. **Decided:** selected action, communication plan, skills, reply choices, or clarification.
+2. **Inferred/normalized for current approved behavior:** Phase 3 user intent/action uncertainty plus Phase 4 deterministic situation/intent tags derived from current visible evidence. Identity, memory, and any relationship hypothesis remain later approved work.
+3. **Decided:** explicit Phase 3 action, then selected skill references/communication plan where wording is needed, followed by reply choices or clarification.
 
 That separation prevents an inference such as “likely manager” from being stored or presented as an observed fact.
 
@@ -289,6 +316,8 @@ See `docs/product-behavior.md` for the decision policy.
 - **Invalid credentials, insufficient provider credits, rate limits, unavailable models, timeouts, or unsupported capabilities:** map the provider-specific failure to a safe internal error with a useful provider-neutral user message.
 - **Model lacks vision:** stop before transmission and explain that the selected model cannot analyze screenshots.
 - **Invalid structured model output:** Phase 2 returns a retryable error without a repair call; never pass malformed data to the UI.
+- **No applicable communication skill:** use generic Phase 3 generation with a `NONE` plan; do not force irrelevant guidance.
+- **Request-scoped skill selection failure:** preserve the Phase 3 action, mark the plan `FAILED`, and use generic Phase 3 generation; registry validation defects remain explicit startup/test failures.
 - **Unsupported/uncertain language:** use universal skills and preserve the visible language when possible.
 - **Ambiguous speaker ownership:** avoid claims tied to identity and choose actions or one clarification if the difference is material.
 - **Unsafe or impossible request:** return a safe alternative without leaking provider internals.
@@ -298,7 +327,7 @@ See `docs/product-behavior.md` for the decision policy.
 The following have intentional seams but no MVP implementation:
 
 - PostgreSQL-backed memory repositories;
-- pgvector/hybrid retrieval for a large skill catalog;
+- semantic/hybrid retrieval, reranking, and pgvector for a large skill catalog;
 - local avatar/identity matching;
 - durable encrypted user/contact/interaction memory;
 - offline Skill Factory services and review tooling;

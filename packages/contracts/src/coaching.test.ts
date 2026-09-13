@@ -3,6 +3,10 @@ import { describe, expect, it } from "vitest";
 import {
   CoachingDecisionSchema,
   CoachingRequestSchema,
+  RewriteOrCompletionOutputJsonSchema,
+  RewriteOrCompletionOutputSchema,
+  SuggestedReplyOutputJsonSchema,
+  SuggestedReplyOutputSchema,
   type ConversationAnalysis,
 } from "./index.js";
 
@@ -130,6 +134,50 @@ describe("Phase 3 coaching contracts", () => {
         ambiguity: { material: true, reason: null },
         question: "What do you want to do?",
         options: ["Accept", "Decline"],
+      }).success,
+    ).toBe(false);
+  });
+
+  it("publishes action-specific root-object schemas for provider wording", () => {
+    expect(RewriteOrCompletionOutputJsonSchema).toMatchObject({
+      type: "object",
+      required: ["primary", "alternatives"],
+      additionalProperties: false,
+    });
+    expect(SuggestedReplyOutputJsonSchema).toMatchObject({
+      type: "object",
+      required: ["replies"],
+      additionalProperties: false,
+    });
+    expect(JSON.stringify(RewriteOrCompletionOutputJsonSchema)).not.toContain('"oneOf"');
+    expect(JSON.stringify(RewriteOrCompletionOutputJsonSchema)).not.toContain('"anyOf"');
+    expect(JSON.stringify(SuggestedReplyOutputJsonSchema)).not.toContain('"oneOf"');
+    expect(JSON.stringify(SuggestedReplyOutputJsonSchema)).not.toContain('"anyOf"');
+  });
+
+  it("keeps provider wording outputs strict and free of policy-owned fields", () => {
+    expect(
+      RewriteOrCompletionOutputSchema.safeParse({
+        primary: "Testing is taking longer, so it will probably be tomorrow.",
+        alternatives: [],
+      }).success,
+    ).toBe(true);
+    expect(
+      SuggestedReplyOutputSchema.safeParse({
+        replies: [{ label: "Natural", text: "Thanks—I’ll take a look." }],
+      }).success,
+    ).toBe(true);
+    expect(
+      RewriteOrCompletionOutputSchema.safeParse({
+        action: "REWRITE_DRAFT",
+        primary: "Testing is taking longer.",
+        alternatives: [],
+      }).success,
+    ).toBe(false);
+    expect(
+      SuggestedReplyOutputSchema.safeParse({
+        replies: [{ label: "Natural", text: "Thanks." }],
+        relationship: "manager",
       }).success,
     ).toBe(false);
   });

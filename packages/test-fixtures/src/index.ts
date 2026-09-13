@@ -20,25 +20,21 @@ export const invalidCoachingDecisionFixture: unknown = {
 };
 
 export const validSkillFixture = {
-  id: "concise-status-update",
+  id: "status_update",
   name: "Concise status update",
   description: "A synthetic definition used only to validate the Phase 0 skill boundary.",
-  kind: "ATOMIC",
-  status: "APPROVED",
   languages: ["universal"],
-  domains: ["professional"],
-  relationships: ["professional"],
-  situations: ["status-update"],
+  situations: ["status_request"],
+  intents: ["provide_status"],
+  actions: ["REWRITE_DRAFT", "COMPLETE_DRAFT", "SUGGEST_REPLY"],
   useWhen: ["A concise update is appropriate."],
   doNotUseWhen: ["The user has no status information."],
   principles: ["State known facts clearly."],
   avoid: ["Do not invent progress or dates."],
-  requiredContext: ["known-status"],
-  optionalContext: ["known-timeline"],
   compatibleSkills: [],
   conflictingSkills: [],
-  dependsOn: [],
   version: 1,
+  status: "ACTIVE",
 } satisfies SkillDefinition;
 
 export interface ConversationFixtureMessage {
@@ -65,6 +61,17 @@ export interface CoachingEvaluationFixture {
   importantConstraints: string[];
 }
 
+export interface SkillSelectionEvaluationFixture {
+  id: string;
+  categories: string[];
+  request: import("@ai-message-coach/contracts").CoachingRequest;
+  expectedAction: import("@ai-message-coach/contracts").AgentAction;
+  expectedSkills: string[];
+  acceptableSkills: string[];
+  forbiddenSkills: string[];
+  importantConstraints: string[];
+}
+
 interface ScenarioSeed {
   slug: string;
   title: string;
@@ -83,15 +90,18 @@ interface ScenarioSeed {
 const language = (
   primary: string,
   options: Partial<LanguageObservation> = {},
-): LanguageObservation => ({
-  primary,
-  secondary: null,
-  script: "NOT_APPLICABLE",
-  codeSwitching: false,
-  supportedForLanguageSpecificSkills: primary === "en" || primary === "zh",
-  confidence: 0.98,
-  ...options,
-});
+): LanguageObservation => {
+  const primarySubtag = primary.split("-", 1)[0]?.toLowerCase();
+  return {
+    primary,
+    secondary: null,
+    script: "NOT_APPLICABLE",
+    codeSwitching: false,
+    supportedForLanguageSpecificSkills: primarySubtag === "en" || primarySubtag === "zh",
+    confidence: 0.98,
+    ...options,
+  };
+};
 
 const scenarioSeeds: ScenarioSeed[] = [
   {
@@ -616,6 +626,234 @@ export const coachingEvaluationFixtures: CoachingEvaluationFixture[] = [
     input: coachingInput("ko", "자료를 보내 주세요", null, { language: language("ko") }),
     expectedAction: "SUGGEST_REPLY",
     importantConstraints: ["match visible language when supported"],
+  },
+];
+
+const coachingById = new Map(coachingEvaluationFixtures.map((fixture) => [fixture.id, fixture]));
+const skillFixture = (
+  id: string,
+  sourceId: string,
+  expectedSkills: string[],
+  options: Partial<Omit<SkillSelectionEvaluationFixture, "id" | "request" | "expectedSkills">> = {},
+): SkillSelectionEvaluationFixture => {
+  const source = coachingById.get(sourceId);
+  if (!source) throw new Error(`Missing coaching fixture: ${sourceId}`);
+  return {
+    id,
+    categories: [],
+    request: { analysis: source.input, selection: null },
+    expectedAction: source.expectedAction,
+    expectedSkills,
+    acceptableSkills: [],
+    forbiddenSkills: [],
+    importantConstraints: source.importantConstraints,
+    ...options,
+  };
+};
+
+export const skillSelectionEvaluationFixtures: SkillSelectionEvaluationFixture[] = [
+  skillFixture("apology-mistake", "incomplete-apology", ["apology", "acknowledge_mistake"], {
+    categories: ["apology", "mistake"],
+    acceptableSkills: ["en.professional_conciseness"],
+    forbiddenSkills: ["emotional_validation"],
+  }),
+  {
+    id: "status-request",
+    categories: ["status"],
+    request: {
+      analysis: coachingInput("status", "Can you share a progress update?", null),
+      selection: null,
+    },
+    expectedAction: "SUGGEST_REPLY",
+    expectedSkills: ["status_update"],
+    acceptableSkills: ["en.professional_conciseness"],
+    forbiddenSkills: ["apology", "emotional_validation"],
+    importantConstraints: ["do not invent progress"],
+  },
+  skillFixture(
+    "missed-commitment",
+    "clear-draft-uncertain-tomorrow",
+    ["acknowledge_mistake", "status_update", "expectation_setting"],
+    {
+      categories: ["status", "missed-commitment"],
+      acceptableSkills: ["apology", "en.professional_conciseness"],
+      forbiddenSkills: ["emotional_validation"],
+    },
+  ),
+  skillFixture("professional-status", "professional-neutral", ["status_update"], {
+    categories: ["status", "english"],
+    acceptableSkills: [
+      "expectation_setting",
+      "en.professional_conciseness",
+      "decline",
+      "en.direct_but_polite",
+    ],
+    forbiddenSkills: ["apology"],
+  }),
+  skillFixture("invitation-before-choice", "invitation-choices", [], {
+    categories: ["choice", "zero-skill"],
+    forbiddenSkills: ["decline", "planning"],
+  }),
+  skillFixture("clarification-no-skill", "isolated-okay", [], {
+    categories: ["clarification", "zero-skill"],
+    forbiddenSkills: ["clarification"],
+  }),
+  skillFixture("conversation-close", "closed-thanks", [], {
+    categories: ["no-reply", "zero-skill"],
+    forbiddenSkills: ["reassurance"],
+  }),
+  skillFixture(
+    "simplified-status",
+    "simplified-draft",
+    ["status_update", "zh.professional_formality"],
+    {
+      categories: ["chinese-simplified", "status"],
+      acceptableSkills: ["expectation_setting", "zh.natural_conciseness"],
+      forbiddenSkills: ["en.professional_conciseness"],
+    },
+  ),
+  skillFixture("traditional-invitation", "traditional-invitation", [], {
+    categories: ["chinese-traditional", "choice", "zero-skill"],
+    forbiddenSkills: ["en.casual_naturalness"],
+  }),
+  skillFixture("mixed-planning", "mixed-draft", ["planning", "zh.code_switching"], {
+    categories: ["mixed-language", "planning"],
+    acceptableSkills: ["zh.natural_conciseness", "en.casual_naturalness"],
+    forbiddenSkills: ["en.professional_conciseness"],
+  }),
+  skillFixture("korean-universal", "other-language", [], {
+    categories: ["other-language", "zero-skill"],
+    acceptableSkills: ["request"],
+    forbiddenSkills: ["en.professional_conciseness", "zh.natural_conciseness"],
+  }),
+  {
+    id: "regional-english-status",
+    categories: ["english", "regional-language-tag", "status"],
+    request: {
+      analysis: coachingInput("regional-en", "Can you share a progress update?", null, {
+        language: language("en-US"),
+      }),
+      selection: null,
+    },
+    expectedAction: "SUGGEST_REPLY",
+    expectedSkills: ["status_update", "en.professional_conciseness"],
+    acceptableSkills: [],
+    forbiddenSkills: ["zh.professional_formality"],
+    importantConstraints: ["treat en-US as English for skill routing"],
+  },
+  {
+    id: "regional-traditional-status",
+    categories: ["chinese-traditional", "regional-language-tag", "status"],
+    request: {
+      analysis: coachingInput("regional-zh", "進度呢？", null, {
+        language: language("zh-Hant", { script: "TRADITIONAL" }),
+      }),
+      selection: null,
+    },
+    expectedAction: "SUGGEST_REPLY",
+    expectedSkills: ["status_update", "zh.professional_formality"],
+    acceptableSkills: ["zh.natural_conciseness"],
+    forbiddenSkills: ["en.professional_conciseness"],
+    importantConstraints: ["treat zh-Hant as Chinese for skill routing"],
+  },
+  {
+    id: "unsupported-primary-code-switching",
+    categories: ["other-language", "code-switching", "language-safety"],
+    request: {
+      analysis: coachingInput("unsupported-mixed", "Any status update? 진행 상황 부탁해요.", null, {
+        language: language("ko-KR", {
+          secondary: "en-US",
+          codeSwitching: true,
+          supportedForLanguageSpecificSkills: false,
+        }),
+      }),
+      selection: null,
+    },
+    expectedAction: "SUGGEST_REPLY",
+    expectedSkills: ["status_update"],
+    acceptableSkills: [],
+    forbiddenSkills: [
+      "en.professional_conciseness",
+      "zh.professional_formality",
+      "zh.code_switching",
+    ],
+    importantConstraints: ["unsupported primary languages use universal skills only"],
+  },
+  skillFixture("clear-refusal", "clear-refusal", ["decline"], {
+    categories: ["decline", "intent-preservation"],
+    acceptableSkills: ["en.direct_but_polite", "en.casual_naturalness"],
+    forbiddenSkills: ["reassurance"],
+  }),
+  skillFixture("uncertain-draft", "low-draft-confidence", [], {
+    categories: ["clarification", "zero-skill"],
+    forbiddenSkills: ["expectation_setting"],
+  }),
+  skillFixture("unknown-speaker", "unknown-obvious", [], {
+    categories: ["unknown-speaker"],
+    expectedAction: "ASK_CLARIFICATION",
+    acceptableSkills: [],
+    forbiddenSkills: ["apology", "request"],
+  }),
+  {
+    id: "repeated-pressure-boundary",
+    categories: ["boundary", "pressure"],
+    request: {
+      analysis: coachingInput(
+        "boundary",
+        "I already asked twice. You need to do this now.",
+        "I can't keep taking on extra work.",
+      ),
+      selection: null,
+    },
+    expectedAction: "REWRITE_DRAFT",
+    expectedSkills: ["boundary_setting"],
+    acceptableSkills: ["de_escalation", "en.direct_but_polite"],
+    forbiddenSkills: ["apology"],
+    importantConstraints: ["preserve the boundary", "do not invent fault"],
+  },
+  {
+    id: "emotional-support",
+    categories: ["emotional-support"],
+    request: {
+      analysis: coachingInput("emotional", "I got terrible news and feel really upset.", null),
+      selection: null,
+    },
+    expectedAction: "SUGGEST_REPLY",
+    expectedSkills: ["emotional_validation"],
+    acceptableSkills: ["reassurance"],
+    forbiddenSkills: ["planning"],
+    importantConstraints: ["do not diagnose", "do not guarantee an outcome"],
+  },
+  {
+    id: "decline-after-action",
+    categories: ["decline", "continuation"],
+    request: {
+      analysis: coachingInput("decline-action", "Want to come tonight?", null),
+      selection: {
+        kind: "ACTION",
+        id: "decline",
+        label: "Decline",
+        intent: "Decline without inventing a reason.",
+      },
+    },
+    expectedAction: "SUGGEST_REPLY",
+    expectedSkills: ["decline"],
+    acceptableSkills: ["en.direct_but_polite", "en.casual_naturalness"],
+    forbiddenSkills: ["reassurance"],
+    importantConstraints: ["preserve refusal", "do not invent a reason"],
+  },
+  {
+    id: "simple-planning",
+    categories: ["planning"],
+    request: {
+      analysis: coachingInput("planning", "What time should we meet tomorrow?", null),
+      selection: null,
+    },
+    expectedAction: "SUGGEST_REPLY",
+    expectedSkills: ["planning"],
+    acceptableSkills: ["en.casual_naturalness"],
+    forbiddenSkills: ["emotional_validation", "de_escalation"],
+    importantConstraints: ["do not invent a time or place"],
   },
 ];
 

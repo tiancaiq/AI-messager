@@ -19,6 +19,10 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@ai-message-coach/contracts": "workspace:*"
+    "@ai-message-coach/contracts": "workspace:*",
+    "@ai-message-coach/skills": "workspace:*"
+  },
+  "devDependencies": {
+    "@ai-message-coach/test-fixtures": "workspace:*"
   }
 }

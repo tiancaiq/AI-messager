@@ -1,6 +1,7 @@
 import type {
   CaptureDisplay,
   CoachingDecision,
+  CoachingSelection,
   ConversationAnalysis,
   ProviderConfiguration,
 } from "@ai-message-coach/contracts";
@@ -35,8 +36,13 @@ export type CaptureState =
   | { status: "PREVIEW"; preview: CropPreviewResource }
   | { status: "ANALYZING"; preview: CropPreviewResource }
   | { status: "ANALYSIS_ERROR"; preview: CropPreviewResource; message: string }
-  | { status: "DECIDING"; result: AnalysisResultResource }
-  | { status: "COACHING_ERROR"; result: AnalysisResultResource; message: string }
+  | { status: "DECIDING"; result: AnalysisResultResource; selection: CoachingSelection | null }
+  | {
+      status: "COACHING_ERROR";
+      result: AnalysisResultResource;
+      selection: CoachingSelection | null;
+      message: string;
+    }
   | { status: "COACHING_RESULT"; result: CoachingResultResource }
   | { status: "CAPTURE_ERROR"; message: string };
 
@@ -56,7 +62,7 @@ export type CaptureEvent =
   | { type: "COACHING_SUCCEEDED"; decision: CoachingDecision }
   | { type: "COACHING_FAILED"; message: string }
   | { type: "RETRY_COACHING" }
-  | { type: "CONTINUE_COACHING" };
+  | { type: "CONTINUE_COACHING"; selection: CoachingSelection };
 
 export const initialCaptureState: CaptureState = { status: "IDLE" };
 
@@ -90,7 +96,9 @@ export function captureReducer(state: CaptureState, event: CaptureEvent): Captur
         ? { status: "ANALYZING", preview: state.preview }
         : state;
     case "ANALYSIS_SUCCEEDED":
-      return state.status === "ANALYZING" ? { status: "DECIDING", result: event.result } : state;
+      return state.status === "ANALYZING"
+        ? { status: "DECIDING", result: event.result, selection: null }
+        : state;
     case "ANALYSIS_FAILED":
       return state.status === "ANALYZING"
         ? { status: "ANALYSIS_ERROR", preview: state.preview, message: event.message }
@@ -101,17 +109,23 @@ export function captureReducer(state: CaptureState, event: CaptureEvent): Captur
         : state;
     case "COACHING_FAILED":
       return state.status === "DECIDING"
-        ? { status: "COACHING_ERROR", result: state.result, message: event.message }
+        ? {
+            status: "COACHING_ERROR",
+            result: state.result,
+            selection: state.selection,
+            message: event.message,
+          }
         : state;
     case "RETRY_COACHING":
       return state.status === "COACHING_ERROR"
-        ? { status: "DECIDING", result: state.result }
+        ? { status: "DECIDING", result: state.result, selection: state.selection }
         : state;
     case "CONTINUE_COACHING":
       return state.status === "COACHING_RESULT"
         ? {
             status: "DECIDING",
             result: { analysis: state.result.analysis, provider: state.result.provider },
+            selection: event.selection,
           }
         : state;
     case "RETAKE":

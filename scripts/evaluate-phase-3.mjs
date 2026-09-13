@@ -1,5 +1,15 @@
-import { OpenAiCoachingAdapter, coachConversation } from "@ai-message-coach/ai";
-import { coachingEvaluationFixtures } from "@ai-message-coach/test-fixtures";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
+
+import { OpenAiCoachingAdapter, coachConversation } from "../packages/ai/dist/index.js";
+import { coachingEvaluationFixtures } from "../packages/test-fixtures/dist/index.js";
+
+const repositoryRoot = resolve(import.meta.dirname, "..");
+const localEnvironmentPath = resolve(repositoryRoot, ".env.local");
+
+if (existsSync(localEnvironmentPath)) {
+  process.loadEnvFile(localEnvironmentPath);
+}
 
 const limitArgument = process.argv.indexOf("--limit");
 const limit =

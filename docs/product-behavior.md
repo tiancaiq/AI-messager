@@ -20,20 +20,20 @@ Manual region selection is acceptable for initial setup and remains available as
 
 ## Inputs the coach may use
 
-Within the explicitly captured and locally selected conversation region, the coach may analyze:
+Within the explicitly captured and locally selected conversation region, future approved versions of the coach may analyze:
 
 - visible message text, order, timestamps, and grouping;
 - likely ownership of visible messages;
 - text currently typed in the compose box;
 - visible username/display name and avatar as weak identity signals;
 - conversation and draft language, including English/Chinese code-switching;
-- likely relationship, situation, intentions, and emotional cues.
+- likely situation, intentions, and emotional cues; relationship inference requires its own separately approved milestone.
 
 Phase 2 implements only visible extraction: message text/order and likely ownership, compose-box draft, visible contact signals, language/script/code-switching, warnings, and extraction confidence. It must not output relationship predictions or roles, situation/intent/emotion hypotheses, actions, skills, clarifying questions, or reply text. The broader items above describe possible later coaching behavior and do not authorize adding them to Phase 2.
 
 The capture should include both visible conversation history and text currently typed in the compose box whenever they are visible. The draft is a high-value direct signal for choosing between rewriting, completing, suggesting a reply, offering actions, or asking one necessary question.
 
-The coach may later use trusted, relevant, fresh local memory only after the applicable identity and relevance gates pass. Absence from captured context is not proof of absence in the relationship.
+Phase 4 uses only current visible observations and the explicit Phase 3 action/selection to derive small deterministic skill tags. It does not predict a relationship, resolve identity, or use memory. The coach may later use trusted, relevant, fresh local memory only after the applicable identity and relevance gates pass. Absence from captured context is not proof of absence in the relationship.
 
 ## Actions
 
@@ -168,6 +168,16 @@ Phase 3 consumes the validated Phase 2 `ConversationAnalysis` without looking at
 
 Clarification requires both uncertain intent and a material effect on the response. Relationship uncertainty alone never triggers a question or relationship guess. Basic generation preserves uncertainty, refusal, commitments, language, and natural code-switching and must not invent facts. Results require explicit review and Copy; there is no insertion or sending.
 
+## Phase 4 skill-guided wording
+
+Phase 4 begins only after Phase 3 fixes an explicit action. It derives understandable situation/intent tags from the current visible messages, draft, selected action/answer, language context, warnings, and material ambiguity; relationship, identity, and memory are not inputs. It then deterministically selects zero to four eligible `ACTIVE` skills and composes only their bounded communication principles and avoidances for generation.
+
+Skills answer how to communicate an already supported intent. They cannot change what the user decided, replace the Phase 3 action, invent facts, strengthen uncertainty into a promise, or turn a refusal into acceptance. Provider output must retain the exact Phase 3 action, intent/confidence, and ambiguity metadata; bounded lexical guards also reject high-signal refusal reversal, hardened uncertainty, negative-to-positive commitments, and unsupported date/number anchors. These checks are defense-in-depth, not proof of general semantic equivalence. A legitimate no-skill result uses generic Phase 3 generation; a request-scoped skill-engine failure is distinct and may use the same safe fallback.
+
+Language routing is automatic: English may use universal + English-specific skills; Simplified or Traditional Chinese may use universal + Chinese-specific skills; mixed English/Chinese may use both supported families and preserve natural code-switching; other languages use universal skills only. Users do not manually select communication skills.
+
+`SUGGEST_ACTIONS`, `ASK_CLARIFICATION`, and `NO_REPLY_NEEDED` do not force skill composition. When a user chooses Accept, Decline, Maybe, or another offered action, that explicit intent enters the existing Phase 3 continuation before skills can guide the resulting reply.
+
 The floating panel should lead with a recommended result and make alternatives easy to compare. It should reveal enough context to catch a misread—such as an inferred “professional update” label—without exposing internal reasoning.
 
 Every generated message remains editable and reviewable. Copying is explicit. Automatic sending is prohibited. If a future approved milestone supports insertion, insertion must still be an explicit user action and must not trigger send.
@@ -175,7 +185,9 @@ Every generated message remains editable and reviewable. Copying is explicit. Au
 ## Behavior examples
 
 - Draft: “sry testing taking longer probably tomorrow”; professional project context → rewrite immediately with accountability, current status, and a cautious tomorrow estimate. Do not ask who the recipient is if professional framing is already clear.
+- The same draft may select `acknowledge_mistake`, `status_update`, `expectation_setting`, and `en.professional_conciseness`; their guidance must retain “probably” rather than promise tomorrow.
 - No draft; “Are you coming tonight?” → show action choices or a direct reply if prior visible text makes the answer obvious.
+- After the user explicitly chooses Decline, `decline` may guide wording, but no planning or reassurance skill may reverse the refusal.
 - Other person closes with “Thanks, that answers it” → `NO_REPLY_NEEDED`, perhaps with an optional brief acknowledgment.
 - Ambiguous “Can you take care of it?” where the captured context does not reveal what “it” is → ask what task they mean only if a response would otherwise make a commitment with unknown scope.
 
@@ -192,8 +204,16 @@ Fixture-based evaluation should measure:
 - language and code-switch detection;
 - relationship granularity without overclaiming;
 - no-reply precision;
-- schema validity and privacy-safe failures.
+- schema validity and privacy-safe failures;
+- expected/acceptable/forbidden skill selection;
+- skill relevance precision and expected-skill recall;
+- unnecessary, forbidden, conflicting, or language-ineligible skill rates;
+- bounded-set and strict scenario pass rates.
 
-Phase 2 evaluation uses only speaker/message-order extraction, draft/contact extraction, language/script/code-switch detection, warning behavior, schema validity, and privacy-safe failures. Phase 3 adds action accuracy, unnecessary/missed clarification, intent preservation, hallucinated-fact, and language-match checks. Skill, identity, and relationship metrics remain deferred.
+Phase 2 evaluation uses only speaker/message-order extraction, draft/contact extraction, language/script/code-switch detection, warning behavior, schema validity, and privacy-safe failures. Phase 3 adds action accuracy, unnecessary/missed clarification, intent preservation, hallucinated-fact, and language-match checks. Phase 4 adds exact-ID skill recall/relevance, forbidden/unnecessary/conflict rates, language eligibility, bounded selection, repeatability, and no-skill cases. Identity and relationship metrics remain deferred.
+
+Provider-generated coaching payloads contain wording only. The application reattaches the exact policy-owned action, intent, confidence, and ambiguity locally before validating the complete result. If a provider request fails after the user selects an action or clarification answer, Try again preserves that exact selection rather than returning to the earlier choices.
+
+Deterministic skill-selection success does not prove better generated prose. Live human-reviewed comparison must separately assess intent preservation, appropriateness, clarity, unsupported facts, communication-goal fit, and tone. Authenticated access and one production screenshot-analysis path have succeeded through the current user-controlled local proxy, but the paired coaching comparison has not been completed or reviewed; no skill-guided quality improvement is claimed yet.
 
 Quality is not just eloquence. A polished response based on the wrong person, goal, or commitment is a failure.

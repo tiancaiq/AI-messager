@@ -132,6 +132,46 @@ describe("conversation analysis contracts", () => {
     ).toBe(true);
   });
 
+  it("derives language-specific skill support from the primary language subtag", () => {
+    for (const primary of ["en-US", "zh-Hans-CN", "zh-Hant"] as const) {
+      expect(
+        ConversationAnalysisSchema.safeParse({
+          ...validAnalysis,
+          language: {
+            ...validAnalysis.language,
+            primary,
+            supportedForLanguageSpecificSkills: true,
+          },
+        }).success,
+      ).toBe(true);
+    }
+
+    expect(
+      ConversationAnalysisSchema.safeParse({
+        ...validAnalysis,
+        language: {
+          ...validAnalysis.language,
+          primary: "ko-KR",
+          secondary: "en-US",
+          codeSwitching: true,
+          supportedForLanguageSpecificSkills: false,
+        },
+      }).success,
+    ).toBe(true);
+    expect(
+      ConversationAnalysisSchema.safeParse({
+        ...validAnalysis,
+        language: {
+          ...validAnalysis.language,
+          primary: "ko-KR",
+          secondary: "en-US",
+          codeSwitching: true,
+          supportedForLanguageSpecificSkills: true,
+        },
+      }).success,
+    ).toBe(false);
+  });
+
   it("validates bounded in-memory PNG requests", () => {
     expect(
       ConversationImageRequestSchema.safeParse({

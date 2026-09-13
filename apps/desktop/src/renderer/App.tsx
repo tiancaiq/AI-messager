@@ -487,15 +487,9 @@ export function App() {
   }, [releaseObjectUrl, state]);
 
   const requestCoaching = useCallback(
-    async (
-      analysis: ConversationAnalysis,
-      selection: CoachingSelection | null,
-      retry = false,
-    ): Promise<void> => {
+    async (analysis: ConversationAnalysis, selection: CoachingSelection | null): Promise<void> => {
       if (coachingInFlightReference.current) return;
       coachingInFlightReference.current = true;
-      if (retry) dispatch({ type: "RETRY_COACHING" });
-      else if (selection !== null) dispatch({ type: "CONTINUE_COACHING" });
       setCopyStatus(undefined);
       try {
         const bridge = window.messageCoach;
@@ -519,7 +513,7 @@ export function App() {
 
   useEffect(() => {
     if (state.status === "DECIDING" && !coachingInFlightReference.current) {
-      void requestCoaching(state.result.analysis, null);
+      void requestCoaching(state.result.analysis, state.selection);
     }
   }, [requestCoaching, state]);
 
@@ -699,7 +693,7 @@ export function App() {
             <button
               className="button button-primary"
               type="button"
-              onClick={() => void requestCoaching(state.result.analysis, null, true)}
+              onClick={() => dispatch({ type: "RETRY_COACHING" })}
             >
               Try again
             </button>
@@ -736,7 +730,7 @@ export function App() {
           decision={state.result.decision}
           copyStatus={copyStatus}
           onCopy={(text) => void copyMessage(text)}
-          onSelect={(selection) => void requestCoaching(state.result.analysis, selection)}
+          onSelect={(selection) => dispatch({ type: "CONTINUE_COACHING", selection })}
         />
         <details className="analysis-details">
           <summary>Inspect extracted conversation</summary>

@@ -3,7 +3,7 @@
 Status: implemented — live provider evaluation pending
 Owner: Codex
 Started: 2026-08-11
-Updated: 2026-08-12
+Updated: 2026-08-23
 Roadmap milestone: [Phase 2 — Screenshot conversation understanding](../../docs/roadmap.md#phase-2--screenshot-conversation-understanding)
 
 ## Outcome
@@ -45,6 +45,7 @@ Relationship-like fields are forbidden at the contract boundary. Strict schemas 
 - No provider SDK is installed. Node/Electron provides `fetch`, so the first adapter can stay dependency-light and isolate the OpenAI wire shape without leaking SDK types.
 - A user-approved OpenAI project key exists only in ignored local `.env.local`; no key is tracked or available to the renderer.
 - Official OpenAI documentation confirms that current GPT models accept image input through the Responses API and that strict structured output is requested with `text.format.type = "json_schema"`.
+- Authenticated OpenAI access and one user-authorized production screenshot analysis succeeded through the user's existing local proxy. Representative extraction-quality evaluation remains pending, and the proxy must remain configured and running on this host.
 
 ## Assumptions and decisions
 
@@ -57,8 +58,8 @@ Relationship-like fields are forbidden at the contract boundary. Strict schemas 
 - The contract contains no relationship, situation, intent, skill, response, or action field. Strict additional-property rejection makes accidental provider expansion fail safely.
 - The crop request is bounded to PNG, positive dimensions, and 20 MiB encoded bytes before transmission. Phase 1's full display image never crosses the provider boundary.
 - The crop Blob remains available only during preview, an active analysis, or an explicit retry after failure. Success, Cancel, recapture, reload, and unmount revoke its URL and release the Blob reference. Temporary byte copies are zeroed after IPC resolves.
-- `.env.local` is a development credential mechanism, not production storage. The development/start helpers load it into the Electron main environment. OS-protected save/replace/delete UI remains a Phase 3 requirement.
-- Synthetic fixture definitions are source-controlled, but real conversations and captured user screenshots are prohibited. Live evaluation is opt-in, credentialed, and outside default tests.
+- `.env.local` is a development credential mechanism, not production storage. The development/start helpers load it into the Electron main environment. OS-protected save/replace/delete UI remains a production-release requirement in a separately approved credential/settings milestone.
+- Synthetic fixture definitions are source-controlled. Real conversations and captured user screenshots are prohibited from repository fixtures and artifacts; one-off live tests require explicit user authorization, ephemeral handling, and deletion after the run. Live evaluation is opt-in, credentialed, and outside default tests.
 
 ## Contracts and data flow
 
@@ -125,7 +126,7 @@ Runtime QA flow:
 
 - [x] The existing Phase 1 crop is passed directly into analysis without recapture.
 - [x] Core conversation-understanding logic is provider-neutral and imports no provider SDK/wire type.
-- [ ] One OpenAI vision adapter works through direct trusted desktop-to-provider HTTPS. Deterministic wire tests pass; live verification is blocked by this host's outbound connection timeout before an HTTP response.
+- [x] One OpenAI vision adapter works through direct trusted desktop-to-provider HTTPS. Deterministic wire tests pass, and one user-authorized production screenshot analysis succeeded through the existing local proxy.
 - [x] The key remains in trusted Electron main and only configured/model/capability status reaches the renderer.
 - [x] Visible messages, explicit order, USER/OTHER/UNKNOWN, draft/no-draft, visible contact observations, language/script/code-switching, warnings, and independent confidence values are validated.
 - [x] Relationship prediction, relationship advice, relationship memory, role labels, situation/intent, coaching actions, skills, and response generation are absent and rejected at strict boundaries.
@@ -163,7 +164,7 @@ Source/bundle review additionally checks for renderer Electron imports, provider
 - Screenshot UI variation, low resolution, occlusion, unusual bubble layouts, and dense group chats can cause extraction errors. UNKNOWN and warnings are required instead of forced guesses.
 - A strict schema prevents malformed downstream data but cannot prove extracted text is correct. Live evaluation remains necessary and results are model/version dependent.
 - Base64 encoding temporarily amplifies the selected crop inside trusted main memory. It is request-scoped, never logged, and released after `fetch` completes.
-- Development `.env.local` is not production credential storage. Phase 3 must add OS-protected lifecycle controls before distribution.
+- Development `.env.local` is not production credential storage. OS-protected lifecycle controls remain a production-release requirement in a separately approved credential/settings milestone.
 - OpenAI receives the selected crop directly and bills the user project. Provider retention/data controls must be reviewed before production use.
 - Windows, mixed-DPI, multi-monitor, and packaged-app capture remain unverified release follow-ups from Phase 1.
 - Rollback removes Phase 2 schemas/AI/service/UI/eval additions and restores PREVIEW→READY. There is no database, persisted screenshot, migration, or application-server content path.
@@ -182,7 +183,8 @@ Source/bundle review additionally checks for renderer Electron imports, provider
 - 2026-08-11: Opt-in live evaluation rasterizes synthetic SVGs to temporary PNGs, removes the temporary directory, and logs only scenario IDs/aggregate checks. The current host timed out connecting to `api.openai.com:443` even in an approved unsandboxed credential-free curl check, so no HTTP response, authentication result, quota result, model-access result, or valid live extraction was obtained.
 - 2026-08-11: Recovered the Electron 43.3.0 app bundle from its checksum-verified local cache after the network installer stalled, confirmed `electron --version`, and completed a clean production-shell startup smoke before stopping it with SIGINT.
 - 2026-08-12: Re-reviewed the complete Phase 2 diff against `ae31abaa3470d13e3f31d0ac767d9f2d6e5a9e6b` and confirmed it remains observation-only. Re-ran formatting, lint, typecheck, 14 test files/71 tests, production build, API health, Electron 43.3.0 production startup, and desktop/mobile renderer QA; all local checks pass. Live OpenAI evaluation and controlled Windows validation remain pending as documented.
+- 2026-08-23: The user's existing local proxy enabled authenticated OpenAI access, and one explicitly authorized production screenshot analysis completed successfully. The screenshot was tightly cropped, not logged or persisted, and temporary artifacts were deleted. This verifies the live adapter path, not representative extraction quality; the synthetic live matrix and Windows validation remain pending.
 
 ## Completion record
 
-Phase 2 is implemented as the observation-only repository baseline. Deterministic/unit/integration verification, local UI/runtime verification, API health, and production startup pass. Live extraction quality is not verified because outbound `api.openai.com:443` times out before HTTP on this host. No key, image, prompt, extracted text, or provider response was logged; the attempted synthetic requests failed at transport. Re-run `pnpm eval:phase2 -- --limit 6` from a host that can reach the API and record the representative fixture results before marking live provider evaluation complete. Windows DPI/multi-monitor/capture-exclusion validation remains a separate pending release follow-up.
+Phase 2 is implemented as the observation-only repository baseline. Deterministic/unit/integration verification, local UI/runtime verification, API health, and production startup pass. Authenticated OpenAI access and one user-authorized production screenshot analysis succeeded through the current local proxy without logging or persisting the key, image, prompt, extracted text, or provider response. Representative extraction quality is not yet verified. With the proxy configured and running, rerun `pnpm eval:phase2 -- --limit 6` and record the representative fixture results before marking live provider evaluation complete. Windows DPI/multi-monitor/capture-exclusion validation remains a separate pending release follow-up.

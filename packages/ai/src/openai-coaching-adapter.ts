@@ -1,9 +1,14 @@
 import {
-  CoachingDecisionJsonSchema,
   CoachingDecisionSchema,
+  RewriteOrCompletionOutputJsonSchema,
+  RewriteOrCompletionOutputSchema,
+  SuggestedReplyOutputJsonSchema,
+  SuggestedReplyOutputSchema,
+  type AgentAction,
   type CoachingDecisionResult,
   type CoachingErrorCode,
   type CoachingRequest,
+  type CommunicationGuidance,
   type ProviderConfiguration,
 } from "@ai-message-coach/contracts";
 
@@ -28,16 +33,72 @@ function failure(code: CoachingErrorCode, message: string): CoachingDecisionResu
   return { ok: false, error: { code, message } };
 }
 
-function schema(): Record<string, unknown> {
-  const value = { ...(CoachingDecisionJsonSchema as Record<string, unknown>) };
-  delete value.$schema;
-  return value;
+function schema(value: unknown): Record<string, unknown> {
+  const schemaValue = { ...(value as Record<string, unknown>) };
+  delete schemaValue.$schema;
+  return schemaValue;
 }
 
-function safeConversation(request: CoachingRequest, policy: CoachingPolicyDecision): string {
+function isProviderGeneratedAction(
+  action: AgentAction,
+): action is "REWRITE_DRAFT" | "COMPLETE_DRAFT" | "SUGGEST_REPLY" {
+  return action === "REWRITE_DRAFT" || action === "COMPLETE_DRAFT" || action === "SUGGEST_REPLY";
+}
+
+function outputFormat(action: AgentAction): { name: string; schema: Record<string, unknown> } {
+  if (action === "REWRITE_DRAFT" || action === "COMPLETE_DRAFT") {
+    return {
+      name: "coaching_message",
+      schema: schema(RewriteOrCompletionOutputJsonSchema),
+    };
+  }
+  if (action === "SUGGEST_REPLY") {
+    return {
+      name: "coaching_replies",
+      schema: schema(SuggestedReplyOutputJsonSchema),
+    };
+  }
+  throw new Error("The fixed coaching action does not require provider generation.");
+}
+
+function decisionFromModelOutput(
+  output: unknown,
+  policy: CoachingPolicyDecision,
+): CoachingDecisionResult {
+  const fixedDecision = {
+    action: policy.action,
+    userIntent: policy.userIntent,
+    actionConfidence: policy.actionConfidence,
+    ambiguity: policy.ambiguity,
+  };
+  const candidate =
+    policy.action === "REWRITE_DRAFT" || policy.action === "COMPLETE_DRAFT"
+      ? RewriteOrCompletionOutputSchema.safeParse(output)
+      : policy.action === "SUGGEST_REPLY"
+        ? SuggestedReplyOutputSchema.safeParse(output)
+        : undefined;
+
+  if (candidate === undefined || !candidate.success)
+    return failure("INVALID_RESPONSE", "The provider returned an invalid coaching result.");
+
+  const decision = CoachingDecisionSchema.safeParse({ ...fixedDecision, ...candidate.data });
+  return decision.success
+    ? { ok: true, decision: decision.data }
+    : failure("INVALID_RESPONSE", "The provider returned an invalid coaching result.");
+}
+
+function safeConversation(
+  request: CoachingRequest,
+  policy: CoachingPolicyDecision,
+  communicationGuidance: CommunicationGuidance,
+): string {
   return JSON.stringify({
-    requestedAction: policy.action,
-    userIntent: policy.userIntent.value,
+    fixedDecision: {
+      action: policy.action,
+      userIntent: policy.userIntent,
+      actionConfidence: policy.actionConfidence,
+      ambiguity: policy.ambiguity,
+    },
     selectedIntent:
       request.selection === null
         ? null
@@ -52,28 +113,36 @@ function safeConversation(request: CoachingRequest, policy: CoachingPolicyDecisi
     draft: request.analysis.draft.text,
     language: request.analysis.language,
     warnings: request.analysis.warnings,
+    communicationGuidance,
   });
 }
 
 export function buildOpenAiCoachingRequest(
   request: CoachingRequest,
   policy: CoachingPolicyDecision,
+  communicationGuidance: CommunicationGuidance,
   modelId: string,
 ): Record<string, unknown> {
+  const format = outputFormat(policy.action);
   return {
     model: modelId,
     store: false,
     instructions: COACHING_INSTRUCTIONS,
     input: [
-      { role: "user", content: [{ type: "input_text", text: safeConversation(request, policy) }] },
+      {
+        role: "user",
+        content: [
+          { type: "input_text", text: safeConversation(request, policy, communicationGuidance) },
+        ],
+      },
     ],
     max_output_tokens: 3_000,
     text: {
       format: {
         type: "json_schema",
-        name: "coaching_decision",
+        name: format.name,
         strict: true,
-        schema: schema(),
+        schema: format.schema,
       },
     },
   };
@@ -158,15 +227,23 @@ export class OpenAiCoachingAdapter implements CoachingTextGenerator {
   async generateCoachingDecision(
     request: CoachingRequest,
     policy: CoachingPolicyDecision,
+    communicationGuidance: CommunicationGuidance,
   ): Promise<CoachingDecisionResult> {
     if (!this.#apiKey) return failure("NOT_CONFIGURED", "Configure an API key, then try again.");
+    if (!isProviderGeneratedAction(policy.action))
+      return failure("INVALID_RESPONSE", "The coaching action did not require provider output.");
     let response: Response;
     try {
       response = await this.#fetch(RESPONSES_URL, {
         method: "POST",
         headers: { Authorization: `Bearer ${this.#apiKey}`, "Content-Type": "application/json" },
         body: JSON.stringify(
-          buildOpenAiCoachingRequest(request, policy, this.configuration.modelId),
+          buildOpenAiCoachingRequest(
+            request,
+            policy,
+            communicationGuidance,
+            this.configuration.modelId,
+          ),
         ),
         signal: AbortSignal.timeout(this.#timeoutMs),
       });
@@ -192,9 +269,6 @@ export class OpenAiCoachingAdapter implements CoachingTextGenerator {
     } catch {
       return failure("INVALID_RESPONSE", "The provider returned an invalid coaching result.");
     }
-    const decision = CoachingDecisionSchema.safeParse(json);
-    return decision.success
-      ? { ok: true, decision: decision.data }
-      : failure("INVALID_RESPONSE", "The provider returned an invalid coaching result.");
+    return decisionFromModelOutput(json, policy);
   }
 }

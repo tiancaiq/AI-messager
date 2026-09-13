@@ -44,8 +44,11 @@ const success: CoachingDecisionResult = {
   ok: true,
   decision: {
     action: "REWRITE_DRAFT",
-    userIntent: { value: "Agree to review.", confidence: 0.9 },
-    actionConfidence: 0.9,
+    userIntent: {
+      value: "Improve the visible draft while preserving its meaning.",
+      confidence: 0.9,
+    },
+    actionConfidence: 0.97,
     ambiguity: { material: false, reason: null },
     primary: "Yes, I can review it.",
     alternatives: [],

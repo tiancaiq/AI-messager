@@ -129,40 +129,65 @@ Implementation landed on 2026-08-10 and native macOS signoff completed on 2026-0
 
 See the [Phase 2 execution plan](../.agent/plans/phase-2.md).
 
-Implementation, deterministic verification, local UI/runtime verification, API health, and production startup are complete. Live OpenAI extraction evaluation remains pending because the current host cannot reach `api.openai.com:443`; Windows DPI, multi-monitor, and capture-exclusion validation remains a separate release follow-up. Live extraction quality is not yet verified.
+Implementation, deterministic verification, local UI/runtime verification, API health, and production startup are complete. Authenticated OpenAI access and one user-authorized production screenshot analysis succeeded through the current user-controlled local proxy. Representative synthetic live extraction evaluation and extraction-quality review remain pending; Windows DPI, multi-monitor, and capture-exclusion validation remains a separate release follow-up.
 
-## Phase 3 — deterministic coaching policy and secure BYOK MVP
+## Phase 3 — deterministic coaching policy and secure BYOK MVP (implemented)
 
 **Outcome:** consume the validated Phase 2 context to decide whether to rewrite, complete, suggest a reply, offer action choices, ask one necessary clarification, or recommend no reply, then present an editable result without automatic sending.
 
-Implementation is active under the [Phase 3 execution plan](../.agent/plans/phase-3.md). The approved boundary is basic draft-aware decision and generation only: relationship reasoning, identity/memory, and the Communication Skill Engine are deferred. Live coaching quality remains pending while `api.openai.com:443` is unreachable from the current host.
+Implementation is complete and committed at `a67a36ff3202a2ee1c790b9da8ad66f2f47f624e`; see the [Phase 3 execution plan](../.agent/plans/phase-3.md). The delivered boundary is basic draft-aware decision and generation only: relationship reasoning, identity/memory, and the Communication Skill Engine are absent from the Phase 3 baseline. A live coaching request reached OpenAI and exposed an incompatible root-union output schema; the local Phase 4 work replaces it with action-specific root-object wording schemas. Post-fix final-reply generation and coaching-quality review remain pending.
 
-**In scope:** observation/inference/decision separation; draft-aware deterministic action policy; clarification gate; provider-neutral response task; small approved skill registry; language eligibility; one-call normal path; minimal provider/model settings; OS-protected credentials where practical; connection testing; response/action/clarification/no-reply UI; editable result and copy; representative English/Chinese evaluation; packaging for controlled Windows testing; and end-to-end privacy/failure review.
+**In scope:** observation/inference/decision separation; draft-aware deterministic action policy; clarification gate; provider-neutral response task; one-call normal path; response/action/clarification/no-reply UI; editable result and copy; representative English/Chinese deterministic evaluation; and end-to-end privacy/failure review.
 
-**Out of scope:** relationship prediction unless separately proposed and approved, additional providers, multiple simultaneous task models, custom/local endpoints, durable personal/contact memory, identity recognition, insertion/sending, app-specific integrations, vector databases, iOS, and Skill Factory.
+**Out of scope:** communication skills, relationship prediction, additional providers, multiple simultaneous task models, custom/local endpoints, durable personal/contact memory, identity recognition, production credential storage/settings, insertion/sending, app-specific integrations, vector databases, iOS, and Skill Factory.
 
 **Acceptance criteria:**
 
 - Validated Phase 2 context drives every `AgentAction` and its material decision boundaries without re-extracting the screenshot.
 - Clear contexts do not ask unnecessary questions; at most one clarification is reserved for materially divergent low-confidence paths.
 - Draft-aware, empty-draft, action-choice, clarification, and no-reply flows satisfy the behavior matrix.
-- The user can configure the supported provider/model with their own credential and understand capabilities and billing.
-- Stored credentials remain OS-protected where practical, never return to the renderer, and never appear in logs or plaintext settings.
+- Development provider configuration remains in trusted Electron main; only safe configured/model/capability status reaches the renderer and no credential appears in logs or tracked settings.
 - A user can review, edit, and copy a result; no screenshot is persisted and the coach never sends automatically.
-- Lint, typecheck, unit/integration/e2e tests, build, packaging, and controlled Windows acceptance checks pass.
+- Lint, typecheck, deterministic unit/integration tests, production build, API health, Browser QA, and practical Electron startup pass on the current macOS host.
 
-Completion of Phase 3 is the MVP decision point: assess whether users can get context-aware help without explaining the conversation before expanding scope.
+Phase 3's deterministic/unit/integration and local runtime verification pass. Provider transport and authentication work through the existing local proxy, but post-fix final-reply generation and live review of wording quality, intent preservation, hallucinated-fact rate, and language match remain pending. Controlled Windows DPI/multi-monitor capture validation remains pending.
+
+## Phase 4 — initial Communication Skill Engine
+
+**Outcome:** preserve the explicit Phase 3 action, then deterministically select and compose a small set of approved communication skills that can guide provider-neutral wording.
+
+Phase 4 is implemented locally and intentionally uncommitted under the [Phase 4 execution plan](../.agent/plans/phase-4.md). It proves a small reviewed registry and deterministic selection; it does not claim live response-quality improvement or implement large-catalog infrastructure.
+
+**In scope:** strict Zod-first skill/context/selection/plan contracts; 21 source-controlled `ACTIVE` atomic skills (14 universal, 3 English, 4 Chinese); deterministic context tags from visible Phase 2/3 evidence; status/language/action/situation/intent eligibility; zero-to-four bounded selection; stable ordering; lightweight compatibility and deterministic conflict filtering; compact provider-neutral principles/avoidances; integration after Phase 3 action selection; exact-ID synthetic fixtures; selection metrics; and generic generation fallback for request-scoped skill failure.
+
+**Out of scope:** relationship prediction, relationship memory, identity/avatar recognition, contact/user history, persistence, playbooks/skill graphs, 1,000+ skills, model-authored or runtime-mutated skills, embeddings, vector search, PostgreSQL, RAG, Skill Factory, extra provider adapters, multi-agent runtime architecture, insertion/sending, app-specific integrations, and iOS.
+
+**Acceptance criteria:**
+
+- The Phase 3 baseline remains a clean commit and its six explicit actions are unchanged.
+- Strict shared schemas validate skill definitions, context, selections, versions, states, and composed plans.
+- The 21-skill registry is manually approved, atomic, source-controlled, and provider-independent.
+- `ACTIVE` status, language, action, situation, and intent filters are deterministic and repeatable.
+- English uses universal + `en`; Chinese uses universal + `zh`; mixed English/Chinese may use both supported families; other languages use universal only.
+- Runtime supports legitimate zero-skill results and never selects more than four skills.
+- Conflicting skills are not composed, while compatible combinations remain lightweight metadata.
+- Only bounded principles/avoidances reach generation; full definitions and skill IDs do not enter provider prompts.
+- Skills cannot change the Phase 3 action or user's visible intent, refusal, uncertainty, facts, or commitments.
+- Selection evaluation reports expected recall, relevance precision, forbidden/unnecessary/conflict rates, language eligibility, bounded-set rate, and strict scenario pass rate.
+- The existing coaching/copy UI remains functional without manual user skill selection, and retry after a user choice preserves that exact selection.
+- Deterministic verification, build, API health, practical Electron startup, and Browser QA pass.
+- Post-fix live final-reply confirmation, live model comparison, and controlled Windows validation remain explicitly pending.
 
 ## Post-MVP milestones (not approved for implementation)
 
 Order these only after MVP evidence identifies the need:
 
-1. **Evaluation and calibration hardening** — larger reviewed datasets, confidence calibration, regression tracking, and prompt/model version comparisons.
+1. **Evaluation and calibration hardening** — larger reviewed datasets, confidence calibration, skill-selection calibration, regression tracking, and prompt/model version comparisons.
 2. **Additional providers and advanced routing** — second and third major adapters, shared conformance tests, then optional compatible/local endpoints and per-task model selection only where measured needs justify them.
 3. **Generate capture automation** — remembered confirmed regions with reset controls, followed by active-window awareness and automatic conversation-region detection only as evaluation justifies each step.
 4. **User-controlled memory** — user preferences first; candidate/confirmation/staleness controls; deletion; encrypted durable storage.
 5. **Conservative contact identity and memory** — multi-signal local-first matching, very-high-confidence gate, ambiguity UI, and temporal role handling.
-6. **Large-catalog skill retrieval** — hybrid/semantic retrieval and pgvector only after measured scale or relevance failures warrant it.
+6. **Large-catalog skill retrieval** — metadata plus hybrid/semantic retrieval, reranking, and pgvector only after measured scale or relevance failures warrant it.
 7. **Skill Factory** — offline generation, deduplication, evaluation, approval, versioning, and deprecation workflow.
 8. **Optional explicit insertion** — only after a separate safety review; still no automatic send.
 9. **iOS client** — SwiftUI app and Share Extension, followed later by a UIKit custom keyboard if platform constraints and user value justify it.
@@ -171,4 +196,4 @@ App-specific messaging integrations and automatic sending remain outside the pla
 
 ## Next recommended work
 
-Complete and evaluate the active Phase 3 draft-aware coaching baseline without adding relationship reasoning or skills. Then prepare an approved Phase 4 plan for the first Communication Skill Engine. Separately, run live Phase 2/3 provider evaluation from a reachable host and controlled Windows checks at 100% and 125% scaling with a second monitor where available.
+After Phase 4 review, keep the current user-controlled proxy configured and running, rerun the existing Phase 2/3 provider evaluations, and complete a human-reviewed Phase 3-generic-versus-Phase 4-skill-guided comparison. Use those results to calibrate the small registry and selection rules before proposing another implementation milestone. Separately, complete controlled Windows checks at 100% and 125% scaling with a second monitor where available. Do not begin relationship, identity, memory, large-catalog retrieval, or Skill Factory work without a separately approved milestone.

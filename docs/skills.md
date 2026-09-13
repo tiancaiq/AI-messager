@@ -1,151 +1,188 @@
 # Communication skills
 
-## Purpose
+## Phase 4 purpose and boundary
 
-Skills encode reusable communication knowledge that can guide a response without stuffing every known technique into a model prompt. They are structured, versioned, language-aware, and selected for the current situation.
+Phase 4 implements a small Communication Skill Engine that answers one question after Phase 3 has chosen an action:
 
-The current conversation dominates skill selection. Historical success may be a weak prior, never a reason to ignore visible evidence.
+> What communication principles are appropriate for this exact visible situation?
 
-## Atomic skills and composite playbooks
+Skills are structured communication knowledge, not tools or model functions. The engine cannot choose or replace the explicit Phase 3 `AgentAction`, invent a user decision, or turn a refusal into acceptance. It modifies how a supported intent is communicated.
 
-**Atomic skills** express one reusable communication operation, such as apologizing, validating emotion, setting a boundary, giving status, declining, reassuring, de-escalating, negotiating, or resetting expectations.
+The implemented registry is deliberately small: 21 manually approved, source-controlled atomic skills. Phase 4 has no playbooks, relationship or identity inputs, memory/history, runtime authoring, embeddings, vector database, semantic retrieval, RAG, Skill Factory, or persistence.
 
-**Composite playbooks** describe a recurring composition of atomic skills. For example:
+## Strict shared contract
 
-- missed deadline with a manager: professional accountability + status update + expectation reset + deadline negotiation;
-- friend upset about a cancellation: emotional validation + apology + relationship repair.
-
-A playbook references and configures atomic skills; it should not copy their full content. Create a new atomic skill only when it adds a distinct principle or behavior. Do not multiply skills for every relationship/situation pairing when metadata and composition can express the difference.
-
-## Registry contract
-
-The registry's final Zod schema will live in `packages/contracts`. A skill should contain at least:
+`packages/contracts` owns strict Zod schemas and infers the TypeScript types. The implemented definition is conceptually:
 
 ```ts
-interface SkillDefinition {
+type SkillLanguage = "universal" | "en" | "zh";
+type SkillStatus = "ACTIVE" | "INACTIVE";
+
+type SkillDefinition = {
   id: string;
   name: string;
   description: string;
-
-  kind: "ATOMIC" | "PLAYBOOK";
-  status: "APPROVED" | "ACTIVE" | "DEPRECATED";
-  languages: ("universal" | "en" | "zh-Hans" | "zh-Hant")[];
-  domains: string[];
-  relationships: string[];
-  situations: string[];
-
+  languages: SkillLanguage[];
+  situations: SkillSituationTag[];
+  intents: SkillIntentTag[];
+  actions: AgentAction[];
   useWhen: string[];
   doNotUseWhen: string[];
   principles: string[];
   avoid: string[];
-
-  requiredContext: string[];
-  optionalContext: string[];
   compatibleSkills: string[];
   conflictingSkills: string[];
-  dependsOn: string[];
-
   version: number;
-}
+  status: SkillStatus;
+};
 ```
 
-Production definitions will also need provenance/review metadata and evaluation references. Content should be concise enough for selected skills to fit comfortably in the response prompt.
+IDs use stable lowercase names, optionally namespaced with `en.` or `zh.`. Every initial definition is version `1`. `ACTIVE` means the checked-in definition is manually approved for runtime; `INACTIVE` definitions are excluded. Runtime cannot create, mutate, or publish skills.
 
-IDs are stable across versions. A substantive behavior change increments `version`; deprecation preserves history rather than silently replacing the meaning of an existing version.
+The schema rejects unknown fields, duplicate metadata values, non-positive versions, invalid IDs, self-references, and references marked both compatible and conflicting. Registry initialization also rejects duplicate IDs and references to missing skills.
 
-## Language policy
+## Initial atomic registry
 
-- `universal` skills may be used for every language.
-- `en` skills require English relevance.
-- `zh-Hans` and `zh-Hant` skills require Chinese relevance; shared Chinese guidance should not be duplicated merely for script conversion.
-- Mixed English/Chinese conversations may select relevant supported skills from both families.
-- Other languages receive universal skills only.
+The 14 universal skills provide reusable communication operations:
 
-Language-specific skills capture genuinely language- or culture-dependent behavior, not translations of universal principles. Current conversation and draft language take priority over stored preferences.
+- `apology`
+- `acknowledge_mistake`
+- `emotional_validation`
+- `reassurance`
+- `boundary_setting`
+- `de_escalation`
+- `decline`
+- `ask_for_help`
+- `follow_up`
+- `status_update`
+- `expectation_setting`
+- `planning`
+- `clarification`
+- `request`
 
-## Provider independence
+The three English-specific skills modify style and convention rather than duplicate the universal operations:
 
-Skills describe communication behavior, not model-vendor behavior. Definitions, registry validation, selection, conflict resolution, composition, and the Skill Factory operate on internal contracts and must not encode assumptions such as “only works with provider/model X.”
+- `en.professional_conciseness`
+- `en.casual_naturalness`
+- `en.direct_but_polite`
 
-If retrieval, reranking, composition, or evaluation uses a model, it calls a provider-neutral AI task interface. Provider adapters handle model-specific request formats and capabilities. Adding or replacing a provider must not require rewriting skill content or the language policy.
+The four Chinese-specific skills likewise compose with universal skills:
 
-## Runtime retrieval
+- `zh.politeness_calibration`
+- `zh.professional_formality`
+- `zh.natural_conciseness`
+- `zh.code_switching`
 
-The long-term pipeline is:
+There are no English or Chinese copies of universal skills such as apology. Simplified and Traditional Chinese share the `zh` family; existing Phase 2 language observations preserve script and wording context for generation.
+
+## Selection context and language policy
+
+`packages/ai` deterministically derives a bounded `SkillContext` from data already available to Phase 3: the fixed action, current user-intent evidence, visible messages/draft, normalized situation and intent tags, language/code-switching, draft presence, and material ambiguity. It does not infer relationship, identity, contact history, or memory for skill selection.
+
+Language eligibility is:
+
+- English: `universal` plus `en`.
+- Simplified or Traditional Chinese: `universal` plus `zh`.
+- Mixed English/Chinese: eligible supported families present in the language context, including `zh.code_switching` where applicable.
+- Other or unknown languages: `universal` only.
+
+BCP 47 regional and script tags are routed by their primary subtag, so `en-US`, `zh-Hans`, and `zh-Hant` retain the corresponding supported modifiers. Code-switching expands eligibility only when the primary language is English or Chinese; an unsupported primary language remains universal-only even if a secondary language is English or Chinese.
+
+An unsupported language is not rejected. The generator may preserve or produce that language, but English- and Chinese-specific communication conventions are filtered out.
+
+## Deterministic selection
+
+The Phase 4 pipeline is:
 
 ```text
-approved catalog
-→ language and domain metadata filter
-→ relationship and situation filter
-→ semantic/hybrid retrieval
-→ about 20 candidates
-→ rerank
-→ about 3–6 selected skills
-→ dependency/conflict resolution
-→ communication plan
-→ response
+fixed Phase 3 AgentAction
+→ deterministic SkillContext
+→ ACTIVE status
+→ language and action eligibility
+→ situation and intent eligibility
+→ deterministic score and ID tie-break
+→ conflict filtering
+→ zero to four selected skills
 ```
 
-For the MVP, the catalog is intentionally small. Deterministic metadata filtering plus model reranking or selection is sufficient. Do not add embeddings, pgvector, or a dedicated retrieval service until catalog scale and measured retrieval failures justify them.
+Intent matches rank above situation matches; applicable language-specific modifiers receive a small deterministic preference. Selection is stable and bounded. A legitimate result may contain zero skills: the engine does not force guidance where it would not materially help.
 
-Retrieval requirements:
+`SUGGEST_ACTIONS`, `ASK_CLARIFICATION`, and `NO_REPLY_NEEDED` produce no communication plan. If the user chooses an action, the existing Phase 3 continuation fixes that intent first; skill selection can then guide the resulting `SUGGEST_REPLY` wording.
 
-1. Query from current observed/inferred context, not identity guesses presented as facts.
-2. Filter out non-applicable language-specific skills before semantic ranking.
-3. Exclude every skill not approved for runtime use.
-4. Honor `doNotUseWhen`, required context, dependencies, and conflicts.
-5. Prefer the smallest coherent composition that covers the communication plan.
-6. Record skill IDs and versions in privacy-safe evaluation traces, without raw message content.
+Compatibility and conflict metadata remain lightweight. Compatibility records useful combinations, while a candidate that conflicts in either direction with a higher-ranked selected skill is skipped. This is not a dependency graph or playbook engine.
 
-When skills conflict, explicit safety/avoidance constraints outrank preference, a more context-specific applicable rule outranks a generic one, and the planner should omit a nonessential skill rather than force an incoherent merge.
+## Composition and provider boundary
 
-## Initial MVP registry
+Selection produces references with exact IDs, versions, and short observable reasons. Composition deduplicates and bounds the selected skills' `principles` and `avoid` guidance in a strict `CommunicationPlan`:
 
-The first registry should be small enough to review manually and broad enough for evaluation fixtures. A reasonable initial set is:
+```ts
+type CommunicationPlan = {
+  status: "SELECTED" | "NONE" | "FAILED";
+  selectedSkills: SelectedSkill[]; // at most four
+  principles: string[]; // at most twelve
+  avoid: string[]; // at most twelve
+};
+```
 
-- apology/accountability;
-- concise status update;
-- expectation reset and deadline negotiation;
-- emotional validation;
-- reassurance;
-- polite decline;
-- boundary setting;
-- asking for details/help;
-- conflict de-escalation;
-- relationship repair;
-- professional tone (English and Chinese where behavior differs);
-- concise action/choice framing.
+`NONE` is a valid no-skill outcome. `FAILED` identifies an engine failure so it is distinguishable from no applicable skill. Registry defects fail validation explicitly; a request-scoped selection failure may safely fall back to generic Phase 3 generation.
 
-This is a proposed coverage set, not permission to implement it during the architecture-foundation milestone. Phase 2 should add only the skills needed by its approved fixtures.
+Only composed principles and avoidances reach the provider-facing generation prompt. The provider does not receive the registry, full skill definitions, selection reasons, or selected skill IDs. Skill definitions contain no provider-specific model or SDK instructions, and `packages/skills` imports no provider adapter.
 
-## Skill quality and tests
+## Intent and action integrity
 
-Each active skill needs:
-
-- schema validation and referential-integrity checks;
-- positive and negative usage fixtures;
-- conflict/dependency tests where applicable;
-- language eligibility tests;
-- evaluations for instruction adherence, usefulness, invented claims, and undesirable side effects;
-- an accountable review/approval record.
-
-Test skill selection separately from final prose quality. A good response produced through the wrong, ineligible skill can hide a retrieval defect.
-
-## Skill Factory (future, offline)
-
-The Skill Factory is a governed authoring and evaluation system, not part of normal response generation. Its lifecycle is:
+Phase 3 and Phase 4 remain separate, inspectable stages:
 
 ```text
-DRAFT → GENERATED → EVALUATING → APPROVED → ACTIVE → DEPRECATED
+ConversationAnalysis
+→ explicit AgentAction
+→ selected skill IDs/versions/reasons
+→ compact CommunicationPlan
+→ provider-neutral generation
+→ result whose action must still match Phase 3
 ```
 
-It may analyze scenario coverage, propose candidate skills, detect overlap, run evaluations, and recommend:
+The generator receives the fixed action and visible intent together with only compact `principles` and `avoid` guidance. Output validation requires the exact Phase 3 action, intent/confidence, and ambiguity metadata and rejects high-signal refusal reversal, hardened uncertainty, negative-to-positive commitments, and unsupported date/number anchors. These bounded lexical checks do not prove general semantic equivalence or detect every possible invented fact; live human review remains necessary. Skills may improve concision, empathy, boundaries, or language convention, but may not add unsupported facts, causes, commitments, dates, certainty, or decisions.
 
-- `NEW`;
-- `MERGE`;
-- `EXTEND_EXISTING`;
-- `REJECT_DUPLICATE`.
+Normal users do not manually choose skills. Development tests and the evaluation harness make structured selected IDs, versions, and reasons inspectable without exposing hidden reasoning or raw conversation content.
 
-No generated skill may enter runtime merely because a model created it. Promotion requires schema validation, deduplication, evaluation thresholds, review, and an auditable version change. The factory should work on minimized or synthetic evaluation data where possible.
+## Evaluation
 
-The factory is intentionally deferred until runtime behavior, registry schema, evaluation methodology, and real coverage gaps are understood. Building it before those inputs exist would automate an unstable target.
+Synthetic Phase 4 cases declare exact `expectedSkills`, `acceptableSkills`, and `forbiddenSkills`. Coverage includes apology/mistake, status request, missed commitment, boundary pressure, emotional support, decline after action selection, planning, conversation close, clarification, invitation before choice, English, Simplified/Traditional Chinese, mixed English/Chinese, regional language tags, unsupported-primary code switching, Korean/other language, uncertainty, and conflict handling.
+
+The deterministic harness reports:
+
+- expected-skill recall;
+- relevance precision;
+- forbidden-skill rate;
+- unnecessary-skill rate;
+- conflict rate;
+- language-eligibility accuracy;
+- bounded-set rate;
+- strict scenario pass rate.
+
+Language eligibility is checked against an evaluator-owned oracle instead of reusing the production routing helper. Because the initial production registry has no semantically justified conflict declarations, the harness reports that declared-pair count explicitly and runs a separate synthetic bidirectional-conflict probe; a zero production conflict rate alone is not treated as conflict-coverage evidence. Deterministic mode does not load `.env.local`; provider configuration is loaded only for the explicit `--live` path.
+
+Selection correctness is tested separately from final prose quality. Strict shapes and exact skill IDs cannot prove that generated wording is more appropriate, clearer, better toned, or free from subtle intent drift. Authenticated access and one production screenshot-analysis path have succeeded through the current user-controlled local proxy, but human-reviewed live comparison of Phase 3 generic generation and Phase 4 skill-guided generation remains pending; no quality improvement is claimed yet.
+
+Run `pnpm eval:phase4` for the credential-free deterministic matrix. With the current user-controlled proxy configured and running, `pnpm eval:phase4 -- --live --limit 6 --review-output /tmp/phase4-review.json` performs paired generic/guided calls. Standard output remains content-free; the explicitly requested mode-0600 artifact contains only synthetic fixture results for temporary human scoring and should be deleted after review.
+
+## Explicit scalability path
+
+Phase 4 proves the small-registry design only:
+
+```text
+Phase 4
+small approved registry
++ deterministic filtering/ranking
+
+Later, after measured relevance or scale failures
+large approved registry
++ metadata filtering
++ semantic/hybrid retrieval
++ reranking
+
+Still later, after a separate approval
+offline governed Skill Factory
+```
+
+Large-catalog retrieval may eventually justify embeddings or pgvector. A future Skill Factory may propose and evaluate changes, but no generated skill may become active without validation, evaluation, and review. Neither future system is part of Phase 4.

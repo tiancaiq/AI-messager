@@ -3,7 +3,7 @@
 Status: implemented — live provider evaluation pending
 Owner: Codex
 Started: 2026-08-12
-Updated: 2026-08-12
+Updated: 2026-08-23
 Roadmap milestone: [Phase 3 — deterministic coaching policy and secure BYOK MVP](../../docs/roadmap.md#phase-3--deterministic-coaching-policy-and-secure-byok-mvp)
 
 ## Outcome
@@ -22,7 +22,7 @@ Out of scope: screenshot re-analysis, relationship prediction, identity resoluti
 - `ConversationAnalysis` is strict, observation-only, and already reaches the renderer after the selected crop is analyzed once.
 - The foundational `AgentAction` enum already contains the six approved actions, but the unused Phase 0 result placeholder has relationship and skill confidence fields and must not become the Phase 3 boundary.
 - Trusted Electron main owns provider access; the sandboxed renderer receives only fixed validated IPC methods and never receives credentials.
-- Default deterministic verification has 14 test files/71 tests. Live OpenAI calls remain blocked because this host cannot reach `api.openai.com:443`.
+- Default deterministic verification has 14 test files/71 tests. Authenticated OpenAI access now works through the user's existing local proxy. A live coaching request reached OpenAI but could not generate a reply because its root-union response schema was rejected; the uncommitted Phase 4 work replaces that schema with action-specific root objects. Post-fix live generation and human review remain pending.
 
 ## Assumptions and decisions
 
@@ -58,7 +58,7 @@ Conversation analyses and generated messages remain session-only. They are not l
 4. Add single-flight coaching and clipboard services plus authorized fixed IPC/preload methods.
 5. Extend the explicit renderer reducer and UI through DECIDING, choices, clarification, result, no-reply, retry, and copy states while retaining a collapsible Phase 2 inspection view.
 6. Update architecture, product, privacy, provider, roadmap, and README only where Phase 3 changes implemented behavior.
-7. Run formatting, lint, typecheck, deterministic tests, production build, API health, Browser QA, Electron startup, privacy/source review, and acceptance review. Keep live evaluation pending while the network blocker remains.
+7. Run formatting, lint, typecheck, deterministic tests, production build, API health, Browser QA, Electron startup, privacy/source review, and acceptance review. Keep live quality evaluation pending until the provider path and generated wording are both reviewed.
 
 ## Tests and evaluation
 
@@ -112,7 +112,9 @@ git diff --check
 - 2026-08-12: Added strict action-discriminated coaching/request/error/copy contracts, deterministic action policy, provider-neutral generation orchestration, one isolated OpenAI text adapter, single-flight main service, fixed IPC/preload methods, explicit renderer states, and explicit clipboard copy.
 - 2026-08-12: Added 14 coaching evaluation scenarios and deterministic coverage for all six actions, unnecessary-question and missed-question boundaries, draft preservation risks, language variants, continuation without recapture, provider normalization, state recovery, and copy failure.
 - 2026-08-12: Final local verification passes: Prettier, ESLint, all workspace typechecks, 19 test files/110 tests, production build, `git diff --check`, API health, production Electron startup, desktop/mobile Browser QA, safe capture failure recovery, and privacy/source review. The Browser console had no warnings or errors.
+- 2026-08-23: Authenticated OpenAI access and production screenshot understanding succeeded through the user's existing local proxy. The first live coaching request reached OpenAI and exposed an incompatible root-union Structured Outputs schema. The local Phase 4 work now uses action-specific wording-only root objects, reconstructs policy metadata locally, and preserves an explicit action/clarification selection across provider failure and retry. Post-fix live reply generation and human wording review remain pending because the proxy was not running during the rerun.
+- 2026-08-23: Corrected the repository-level Phase 3 evaluator to import built workspace packages by relative path and load ignored `.env.local`, matching the working Phase 2 harness. The documented command now runs and reports only safe scenario/action/error metadata; the post-fix attempt returned `PROVIDER_ERROR` before HTTP while the local proxy was not running.
 
 ## Completion record
 
-Phase 3 is implemented as a draft-aware basic coaching baseline. It consumes Phase 2 structured analysis directly, chooses one explicit validated action, generates basic wording only when needed, reuses in-memory context for choices/clarification, and supports explicit Copy without insertion or sending. Deterministic/unit/integration and local runtime verification pass. Live coaching wording quality, intent preservation, hallucinated-fact rate, and language match are not verified because this host cannot reach `api.openai.com:443`; rerun `pnpm eval:phase3 -- --limit 6` from a reachable host and review generated wording before marking live provider evaluation complete. Windows DPI/multi-monitor capture validation also remains pending. Phase 4 was not started.
+Phase 3 is implemented as a draft-aware basic coaching baseline. It consumes Phase 2 structured analysis directly, chooses one explicit validated action, generates basic wording only when needed, reuses in-memory context for choices/clarification, and supports explicit Copy without insertion or sending. Deterministic/unit/integration and local runtime verification pass. Provider transport and authentication work through the existing local proxy, but post-fix final-reply generation and live review of wording quality, intent preservation, hallucinated-fact rate, and language match remain pending. With the proxy configured and running, rerun `pnpm eval:phase3 -- --limit 6` and review generated wording before marking live provider evaluation complete. Windows DPI/multi-monitor capture validation also remains pending. Phase 4 had not started at the time this committed baseline was completed.
