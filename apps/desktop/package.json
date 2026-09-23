@@ -9,15 +9,19 @@
   ],
   "scripts": {
     "build": "pnpm run build:main && pnpm run build:preload && vite build",
-    "build:main": "vite build --config vite.main.config.ts",
+    "build:main": "vite build --config vite.main.config.ts && node scripts/stage-sqlcipher-native.mjs",
     "build:preload": "vite build --config vite.preload.config.ts",
     "dev": "node scripts/dev.mjs",
+    "debug:memory-gui": "pnpm run build:main && node scripts/open-memory-debug-gui.mjs",
+    "debug:memory-snapshot": "pnpm run build:main && node scripts/create-memory-debug-snapshot.mjs",
     "start": "node scripts/start.mjs",
+    "test:native-memory": "pnpm --filter @ai-message-coach/contracts build && pnpm run build && node scripts/run-native-memory-gate.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@ai-message-coach/ai": "workspace:*",
     "@ai-message-coach/contracts": "workspace:*",
+    "@appthreat/sqlite3": "9.0.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },

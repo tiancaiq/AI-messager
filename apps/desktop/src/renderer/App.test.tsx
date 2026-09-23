@@ -9,6 +9,10 @@ describe("desktop capture entry", () => {
 
     expect(markup).toContain("<h1>AI Message Coach</h1>");
     expect(markup).toContain(">Generate</button>");
+    expect(markup).toContain("Local preferences");
+    expect(markup).toContain("not applied to coaching yet");
+    expect(markup).not.toContain("Local Memory Inspector");
+    expect(markup).not.toContain("Contacts and identities");
   });
 
   it("renders validated observations without a coaching result", () => {

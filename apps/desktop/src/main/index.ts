@@ -7,9 +7,11 @@ import {
   COPY_COACHING_TEXT_CHANNEL,
   CONVERSATION_ANALYSIS_CHANNEL,
   CONVERSATION_CAPTURE_CHANNEL,
+  DESKTOP_DEVELOPMENT_RENDERER_URL,
   ConversationImageRequestSchema,
   CoachingRequestSchema,
   CopyCoachingTextRequestSchema,
+  isDesktopDevelopmentRendererUrl,
   PROVIDER_CONFIGURATION_CHANNEL,
   type ConversationAnalysisResult,
   type CoachingDecisionResult,
@@ -21,6 +23,16 @@ import { app, BrowserWindow, clipboard, ipcMain } from "electron";
 import { createConversationCaptureService } from "./conversation-capture.js";
 import { createConversationAnalysisService } from "./conversation-analysis.js";
 import { copyCoachingText, createCoachingService } from "./coaching.js";
+import { LocalMemoryCoordinator } from "./local-memory/coordinator.js";
+import {
+  createDevelopmentMemoryDebugSnapshot,
+  removeDevelopmentMemoryDebugSnapshot,
+} from "./local-memory/debug-snapshot.js";
+import { openDevelopmentMemorySnapshotInLetos } from "./local-memory/letos-debug-gui.js";
+import {
+  registerLocalMemoryHandlers,
+  registerLocalMemoryInspectorHandler,
+} from "./local-memory/ipc.js";
 
 app.enableSandbox();
 
@@ -44,6 +56,11 @@ const coachingService = createCoachingService(
       : { modelId: process.env.OPENAI_TEXT_MODEL }),
   }),
 );
+const localMemory = new LocalMemoryCoordinator();
+const developmentMemoryDebugSnapshotMode =
+  process.defaultApp && process.env.AI_MESSAGE_COACH_MEMORY_DEBUG_SNAPSHOT === "1";
+const developmentMemoryDebugGuiMode =
+  process.defaultApp && process.env.AI_MESSAGE_COACH_MEMORY_DEBUG_GUI === "1";
 
 const invalidCaptureRequest: ConversationCaptureResult = {
   ok: false,
@@ -143,16 +160,14 @@ function getDevelopmentUrl(): string | undefined {
     return undefined;
   }
 
-  const url = new URL(value);
-
-  if (url.href !== "http://127.0.0.1:5173/") {
+  if (!isDesktopDevelopmentRendererUrl(value)) {
     throw new Error("The desktop development renderer URL is not allowlisted.");
   }
 
-  return url.href;
+  return DESKTOP_DEVELOPMENT_RENDERER_URL;
 }
 
-async function createWindow(): Promise<void> {
+async function createWindow(developmentUrl: string | undefined): Promise<void> {
   const window = new BrowserWindow({
     backgroundColor: "#05091c",
     height: 800,
@@ -176,8 +191,6 @@ async function createWindow(): Promise<void> {
   window.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
   window.webContents.on("will-navigate", (event) => event.preventDefault());
 
-  const developmentUrl = getDevelopmentUrl();
-
   if (developmentUrl !== undefined) {
     await window.loadURL(developmentUrl);
     return;
@@ -186,17 +199,77 @@ async function createWindow(): Promise<void> {
   await window.loadFile(join(__dirname, "../renderer/index.html"));
 }
 
+async function runDevelopmentMemoryDebugSnapshot(): Promise<void> {
+  const snapshot = await createDevelopmentMemoryDebugSnapshot(localMemory);
+  localMemory.close();
+  process.stdout.write(
+    [
+      "Encrypted local-memory debug snapshot created.",
+      `Database: ${snapshot.databasePath}`,
+      `Passphrase: ${snapshot.passphrase}`,
+      `Schema version: ${snapshot.schemaVersion}`,
+      "SQLiteStudio/SQLite3MultipleCiphers: choose SQLCipher compatibility 4 and open read-only.",
+      "The passphrase belongs only to this temporary snapshot; it is not the application key.",
+      process.stdin.isTTY
+        ? "Press Enter when finished to delete the snapshot."
+        : "Delete the containing temporary directory when finished.",
+      "",
+    ].join("\n"),
+  );
+
+  if (!process.stdin.isTTY) {
+    app.quit();
+    return;
+  }
+
+  process.stdin.resume();
+  await new Promise<void>((resolve) => process.stdin.once("data", () => resolve()));
+  await removeDevelopmentMemoryDebugSnapshot(snapshot);
+  process.stdout.write("Temporary encrypted snapshot deleted.\n");
+  app.quit();
+}
+
+async function runDevelopmentMemoryDebugGui(): Promise<void> {
+  const snapshot = await createDevelopmentMemoryDebugSnapshot(localMemory);
+  localMemory.close();
+  try {
+    await openDevelopmentMemorySnapshotInLetos(snapshot);
+  } finally {
+    await removeDevelopmentMemoryDebugSnapshot(snapshot);
+    process.stdout.write("Temporary encrypted snapshot and Letos profile deleted.\n");
+  }
+  app.quit();
+}
+
 app
   .whenReady()
   .then(async () => {
+    if (developmentMemoryDebugGuiMode) {
+      await runDevelopmentMemoryDebugGui();
+      return;
+    }
+    if (developmentMemoryDebugSnapshotMode) {
+      await runDevelopmentMemoryDebugSnapshot();
+      return;
+    }
+    const developmentUrl = getDevelopmentUrl();
     registerCaptureHandler();
     registerAnalysisHandlers();
     registerCoachingHandlers();
-    await createWindow();
+    registerLocalMemoryHandlers(localMemory, (event) =>
+      isAuthorizedRenderer(event.sender, event.senderFrame),
+    );
+    if (developmentUrl !== undefined && !app.isPackaged) {
+      registerLocalMemoryInspectorHandler(localMemory, (event) =>
+        isAuthorizedRenderer(event.sender, event.senderFrame),
+      );
+    }
+    await createWindow(developmentUrl);
+    void localMemory.initialize();
 
     app.on("activate", () => {
       if (BrowserWindow.getAllWindows().length === 0) {
-        void createWindow();
+        void createWindow(developmentUrl);
       }
     });
   })
@@ -211,3 +284,5 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
+
+app.once("before-quit", () => localMemory.close());

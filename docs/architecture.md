@@ -4,14 +4,14 @@
 
 AI Message Coach must answer one MVP question: can it look at the conversation currently visible on a user's screen and help them say the right thing without first making them explain everything?
 
-The architecture optimizes for that proof, sensitive-data minimization, and clear future seams. It does not optimize yet for many services, thousands of skills, durable personal memory, or multiple client platforms.
+The implemented architecture optimizes for that proof, sensitive-data minimization, and clear future seams. DATA-00 specifies the local Data + Memory direction; DATA-01 adds protected persistence; DATA-02 adds internal contact/identity persistence and reversible association lifecycle APIs; MEM-00 adds a typed assertion/evidence foundation; and DATA-03 adds internal relationship-history specializations without production data-entry UI or automatic acquisition. Observation-driven population, summaries, profiles, and coaching retrieval remain unimplemented. Multiple services, thousands of skills, and multiple client platforms are not current optimization targets.
 
 Key constraints:
 
 - Windows desktop is first; iOS is a future client.
 - An explicitly triggered conversation-capture capability is the universal context interface; screen capture is an internal implementation detail.
 - The Generate button is the primary user-facing trigger. Shortcuts and future quick actions are optional callers of the same capability.
-- The MVP uses a small number of model calls: normally one, at most a second after necessary clarification.
+- Prefer one normal model call. The implemented staged path currently uses one extraction call followed by a wording call when needed; this is a documented gap from the preferred budget, not permission to add calls silently. DATA-00 adds no runtime calls. Future background memory tasks need their own bounded usage policy and never add a foreground extraction call.
 - Users bring credentials for a supported provider and pay that provider directly; provider costs are not bundled with Message Coach.
 - Core coaching logic is provider-neutral. Model eligibility is determined by capabilities, not provider names.
 - Direct encrypted communication from the trusted desktop process to the selected provider is preferred when practical so private conversations do not unnecessarily cross application-operated infrastructure.
@@ -322,14 +322,66 @@ See `docs/product-behavior.md` for the decision policy.
 - **Ambiguous speaker ownership:** avoid claims tied to identity and choose actions or one clarification if the difference is material.
 - **Unsafe or impossible request:** return a safe alternative without leaking provider internals.
 
+## Data + Memory boundaries (DATA-00)
+
+Status: completed DATA-00 architecture contract, DATA-01 protected-preference foundation, DATA-02 internal contact directory, MEM-00 assertion/evidence foundation, and DATA-03 internal relationship history. The [memory contract](memory.md) owns domain and lifecycle semantics; the [roadmap](roadmap.md#data--memory-roadmap) assigns later bounded milestones. Outstanding live-quality and Windows capture checks remain separate.
+
+One installed app has one LocalUserContext and one local SQLite store. There is no Message Coach account, cloud service, multi-profile authentication, or synchronization. A random local context ID is internal ownership metadata, not login identity. Durable records and references stay within that store/context.
+
+### Module and trust ownership
+
+| Boundary | Responsibility |
+|---|---|
+| apps/desktop trusted main | Composition root, active local context, main-owned observation provenance, narrow memory-control IPC, storage/key lifecycle, scheduling and cancellation |
+| Trusted desktop persistence adapter | One implemented utility process with SQLCipher access, schema-v6 migrations, foreign keys, transactions, settings/directory/memory revisions, bounded keyset pages/history, atomic association/assertion/relationship transitions, and dependency-aware deletion; no domain prompts |
+| React/preload | Validated edit/delete/settings operations and safe status, plus a development-only fixed read-only inspector; never keys, database handles, arbitrary queries, or authoritative observed facts supplied by renderer |
+| packages/contracts | Zod-first preference, contact-directory, typed assertion/evidence/decision, inspector, renderer, and private worker protocols; later schemas are added only with their producers/consumers |
+| packages/ai | Provider-neutral memory task ports, model-facing prompts, validated proposals and reasoning/retrieval policy; no SQLite/Electron/Fastify/provider SDK dependency in core |
+| packages/skills | Approved task-specific memory skill definitions, validation, selection/composition alongside existing governance; no second registry or new coaching action enum |
+| apps/api | No role in the local memory path; not a proxy or credential owner |
+
+Do not create new packages/services until an approved caller needs them. The eventual memory port follows the existing narrow skill-planner pattern. The desktop composes it; reasoning cannot import the storage adapter. Any CPU-heavy or synchronous database work must use a trusted execution mechanism that preserves UI responsiveness; merely returning a promise is insufficient. Worker/thread choice is an implementation detail, not a new service boundary.
+
+### Foreground and background contract
+
+Validated main-owned ConversationAnalysis feeds foreground coaching and a bounded non-waiting MemoryObservation handoff. Foreground may read a bounded already committed snapshot under a deadline; it never awaits current acquisition/extraction/storage and falls back to current context when memory is unavailable. Late background completion does not replace a shown reply.
+
+The background path reads only relevant compact state, computes a validated proposal, and commits effects plus a replay receipt atomically after checking revisions and deletion generations. It has finite queue, byte, token, call, retry, and time budgets. Raw-text-bearing queue entries are ephemeral; best-effort loss before commit is acceptable. No provider request runs inside a database write transaction. No full-history prompt, autonomous retrieval loop, raw disk spool, or background continuous capture is permitted.
+
+The existing extraction schema lacks stable message/account IDs, timestamps, and per-message participant attribution. Unknowns remain unknown until separately approved observation extensions. The existing wording prompt and factual-anchor guards must change together at MEM-05; memory cannot weaken explicit action, intent, refusal, uncertainty, or commitment safeguards.
+
+### Storage decision and implementation gate
+
+Select encrypted SQLite for real local structured memory, with SQLCipher the preferred engine and a random database key protected by the OS through trusted desktop code. Normal SQLite with filesystem permissions alone does not satisfy the durable-memory privacy requirement. A local store fits SQLite's device-local, low-writer-concurrency purpose; no PostgreSQL or network filesystem database is planned. See [SQLite deployment guidance](https://www.sqlite.org/whentouse.html).
+
+DATA-01 selected the free SQLCipher Community 4.17.0 engine with OpenSSL 3.6.4 and the BSD-3-Clause `@appthreat/sqlite3` 9.0.2 wrapper. The reviewed Windows x64 Node-API 10 artifact passed Electron 43.3.0 main/utility-process and relocated-layout checks, correct/wrong/no-key behavior, cipher integrity, encrypted database and rollback-journal inspection, and compile/runtime memory-only temporary storage. The build stages only the reviewed hash and verifies `cipher_version`, provider, and compile options again before schema access. SQLCipher is an encryption-enabled SQLite build, not a capability assumed of every SQLite binding; failure of any check leaves local memory unavailable, never plaintext. See the [artifact provenance](../apps/desktop/native/README.md) and [SQLCipher design](https://www.zetetic.net/sqlcipher/design/).
+
+The Local Memory Inspector is a development diagnostic, not a second adapter or production feature. Main requires an unpackaged app at the exact allowlisted desktop development URL; preload independently requires Electron's default development-app mode and that same marker, and the renderer renders by capability. Packaged and production-bundle sessions therefore have no inspector handler or bridge method. Its strict section/page request is serialized by the normal coordinator and executed by the existing utility process as fixed read-only statements. The validated response includes availability, schema version, the development database path, local context IDs/revisions, the explicit-preference projection, and one bounded page of contacts, identities, associations, assertions, evidence, links, decisions, or relationship contexts. Assertion/evidence pages may be filtered to relationship predicates with revision- and filter-bound cursors. It includes no key material, SQL, mutation, or plaintext copy. Summary, profile, and receipt sections remain absent. Production also has no contact-directory or generic-assertion IPC/preload method; both lifecycles are trusted-main/utility internals only.
+
+For deeper development inspection, `pnpm --filter @ai-message-coach/desktop debug:memory-snapshot` launches the normal unpackaged Electron entry in a dedicated no-window mode. It obtains the live key only through the existing main key-custody and coordinator path, then asks the same utility process to `ATTACH` a new database with an independently generated passphrase and copy data with SQLCipher's `sqlcipher_export()`. The resulting OS-temporary SQLCipher-v4 snapshot is marked read-only and is the only file given to SQLiteStudio/Letos; the live database path, wrapped key, and raw application key are never returned to the external tool. Pressing Enter removes the generated temporary directory. Packaged builds cannot enter this mode because it requires Electron's development-app marker.
+
+`pnpm --filter @ai-message-coach/desktop debug:memory-gui` is the Windows Letos wrapper around the same export. Main detects the installed Letos executable, requires its SQLite3MultipleCiphers plugin, and creates a disposable portable Letos configuration beside the snapshot. That temporary configuration registers only the snapshot with the `sqlcipher` cipher, compatibility/legacy 4, and `query_only`; it contains the independently generated snapshot password but never the application key. Letos is launched without a database path or password in its process arguments, the normal Letos profile is not read or changed, and both the portable profile and snapshot are removed after Letos exits. No renderer, IPC, storage-worker, production encryption, or live-store path changes are involved.
+
+Main owns OS-protected key custody; the renderer receives status only. Provider API keys are separate from the database and ordinary memory records. OS-user protection is the MVP threat boundary; no independently unlocked application vault or recovery account. Losing access to the OS-protected key can lose access to local memory until a separately approved recovery/export mechanism exists. Windows OS protection does not protect against all other applications running as the same OS user; see [Electron safeStorage](https://www.electronjs.org/docs/latest/api/safe-storage).
+
+Schema v2 binds the OS-wrapped envelope's random store ID to the encrypted singleton context. Versions 1–3 migrate transactionally through v4; v4-to-v5 rebuilds the constrained assertion/evidence/link/decision tables, verifies foreign keys before commit, and adds contact-owned immutable relationship-context and relationship assertion/evidence/decision subtype tables. V5-to-v6 adds a constrained transition-decision/evidence dependency for temporal ends. It attributes an old v5 end only if the latest transition has exactly one timestamp-matched linked source; otherwise it invalidates the unsupported end and historical applicability rather than laundering uncertainty into a fact. The old explicit-preference table becomes one confirmed assertion with migration-labelled evidence and is removed, while settings/directory state, IDs, references, and timestamps are preserved. A newer schema, corrupt database, missing/wrong key, or mismatched store ID is preserved and reported unavailable. A timed-out dispatched mutation retires its utility process and blocks later mutation until a status refresh has reopened the database and returned authoritative state. Inaccessible-storage recovery is a separate explicit confirmation: after the worker exits, it writes a reset marker, deletes only enumerated database/sidecar/envelope files, removes the marker last, and creates a new empty encrypted store. A crash leaves the marker and the store unavailable until the same bounded reset resumes. Normal clear-all remains an in-database generation-changing transaction and does not rotate the key. Application schema v6 does not change SQLCipher compatibility version 4.
+
+DATA-03 stores relationship values only as typed child fields of canonical assertion/evidence rows. The child rows cannot exist without their parent; evidence links and decisions still reference those same canonical IDs. The worker atomically creates a context with its first proposal or requires explicit reuse, checks contact revision, per-scope version/episode limits, predicate-aware positive/negative support, and exact correction reach before changes. Separate role/category claims and episode IDs permit coexistence; one active accepted version of the same proposition/episode is checked under the single serialized writer. Factual correction rejects a false claim rather than superseding it as true history; an explicit transition preserves acceptance and source-linked end uncertainty through its own evidence dependency. Removing temporal evidence recomputes the surviving end or makes it unknown without discarding independently supported role acceptance. Unsupported positive role truth is downgraded to a rejected/unknown anchor if necessary to preserve its scoped correction. Partial-time overlap remains unresolved unless provably disjoint. Relationship acquisition remains synthetic-only until a later observation/review milestone authorizes real provenance.
+
+The bounded internal as-of read evaluates applicable rejection/factual-correction scopes before returning a relationship's effective applicability. Current-reach corrections apply from the decision time forward, while an earlier provable validity interval remains queryable; interval/all-history corrections are conservative at overlap. The v5→v6 migration reclassifies only a uniquely attributable old transition link from generic `SUPPORTS` to `CONTEXTUALIZES`, then invokes the existing unsupported-evidence cleanup in the same encrypted transaction. A formerly confirmed role with no independent positive support is not retained as trusted history. This does not create a second relationship reader or change renderer access.
+
+Native loading supports development/relocated layouts and rewrites an `app.asar` native path to `app.asar.unpacked`; a future distributor must configure `dist/native/**` for unpacking. Installer creation, signing, and update delivery remain release responsibilities outside DATA-01.
+
+Useful structured knowledge and history may remain indefinitely. Freshness/relevance/applicability filter retrieval rather than delete records for age. UI corrections override inference; deleting sources removes dependent summary/profile influence and invalidates in-flight work. See [privacy controls](privacy.md#local-memory-storage-data-00).
+
 ## Deferred architecture
 
 The following have intentional seams but no MVP implementation:
 
-- PostgreSQL-backed memory repositories;
+- cloud storage, PostgreSQL-backed repositories, accounts, multi-profile, and synchronization (not part of the local Data + Memory roadmap);
 - semantic/hybrid retrieval, reranking, and pgvector for a large skill catalog;
 - local avatar/identity matching;
-- durable encrypted user/contact/interaction memory;
+- automatic acquisition, interaction summaries, profiles, and coaching retrieval beyond the implemented encrypted contact/assertion/relationship store;
 - offline Skill Factory services and review tooling;
 - iOS, Share Extension, and custom keyboard clients;
 - application-specific messaging integrations;

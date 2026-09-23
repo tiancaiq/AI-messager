@@ -347,6 +347,194 @@ button {
   color: #8dddc5;
 }
 
+.memory-settings {
+  width: min(100%, 34rem);
+  margin-top: 1.25rem;
+  border: 1px solid rgb(170 176 255 / 20%);
+  background: rgb(8 13 38 / 72%);
+  border-radius: 0.9rem;
+  text-align: left;
+}
+
+.memory-inspector {
+  width: min(100%, 68rem);
+  margin-top: 1rem;
+  border: 1px solid rgb(126 213 184 / 26%);
+  background: rgb(5 24 30 / 78%);
+  border-radius: 0.9rem;
+  text-align: left;
+}
+
+.memory-inspector summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  color: #b9f2df;
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.development-badge {
+  padding: 0.25rem 0.45rem;
+  background: rgb(83 193 157 / 13%);
+  border-radius: 999px;
+  color: #8dddc5;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.memory-inspector-body {
+  display: grid;
+  gap: 1rem;
+  padding: 0 1rem 1rem;
+}
+
+.memory-inspector-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.memory-inspector-heading p {
+  margin: 0 0 0.2rem;
+}
+
+.memory-inspector-heading .button {
+  min-height: 2.35rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+}
+
+.memory-inspector-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.memory-inspector-facts div {
+  min-width: 0;
+  padding: 0.65rem;
+  background: rgb(255 255 255 / 4%);
+  border-radius: 0.6rem;
+}
+
+.memory-inspector-facts div:last-child {
+  grid-column: 1 / -1;
+}
+
+.memory-inspector-facts dt {
+  margin-bottom: 0.25rem;
+  color: #8f97bc;
+  font-size: 0.68rem;
+}
+
+.memory-inspector-facts dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.memory-inspector-facts code,
+.memory-inspector-table-wrap {
+  color: #e7e9f7;
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 0.72rem;
+}
+
+.memory-inspector-section h3 {
+  margin: 0 0 0.55rem;
+  color: #e7e9f7;
+  font-size: 0.86rem;
+}
+
+.memory-inspector-table-wrap {
+  overflow-x: auto;
+}
+
+.memory-inspector-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.memory-inspector-table-wrap th,
+.memory-inspector-table-wrap td {
+  padding: 0.55rem;
+  border-bottom: 1px solid rgb(170 176 255 / 12%);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.memory-inspector-table-wrap th {
+  color: #8f97bc;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
+.memory-settings summary {
+  padding: 0.85rem 1rem;
+  color: #c9cdff;
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.memory-settings-body {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0 1rem 1rem;
+}
+
+.memory-settings-body label {
+  color: #b7bdd6;
+  font-size: 0.82rem;
+}
+
+.memory-settings-body select {
+  min-height: 2.6rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgb(170 176 255 / 28%);
+  background: #11183b;
+  border-radius: 0.65rem;
+  color: #f7f8ff;
+  font: inherit;
+}
+
+.memory-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.memory-actions .button {
+  min-height: 2.35rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+}
+
+.button-danger {
+  border-color: rgb(255 150 164 / 32%);
+  background: rgb(104 30 45 / 72%);
+}
+
+.memory-status,
+.memory-disclosure {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.memory-status {
+  color: #8dddc5;
+}
+
+.memory-disclosure {
+  color: #8f97bc;
+}
+
 .provider-note,
 .phase-boundary-note {
   margin: 0;

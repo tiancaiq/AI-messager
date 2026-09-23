@@ -9,6 +9,8 @@ import type {
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 
 import { CaptureSelection } from "./CaptureSelection.js";
+import { LocalMemoryInspector } from "./LocalMemoryInspector.js";
+import { LocalMemorySettings } from "./LocalMemorySettings.js";
 import {
   captureReducer,
   initialCaptureState,
@@ -281,6 +283,8 @@ export function App() {
     typeof window === "undefined"
       ? "AI Message Coach"
       : (window.messageCoach?.appInfo.name ?? "AI Message Coach");
+  const inspectorAvailable =
+    typeof window !== "undefined" && window.messageCoach?.inspectLocalMemory !== undefined;
 
   const releaseObjectUrl = useCallback((imageUrl: string | undefined): void => {
     if (imageUrl === undefined || !objectUrlsReference.current.delete(imageUrl)) {
@@ -765,6 +769,8 @@ export function App() {
                 providerConfiguration.configured ? "configured" : "not configured"
               }`}
         </p>
+        <LocalMemorySettings />
+        {inspectorAvailable ? <LocalMemoryInspector /> : null}
       </section>
     </main>
   );

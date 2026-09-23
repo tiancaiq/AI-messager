@@ -1,0 +1,10 @@
+diff --git a/binding.gyp b/binding.gyp
+--- a/binding.gyp
++++ b/binding.gyp
+@@ -43,4 +43,5 @@
+             "conditions": [
+               [ "OS=='linux'", {"libraries+":["-Wl,-rpath=<@(sqlite)/lib"]} ],
+-              [ "OS!='win'", {"libraries+":["-L<@(sqlite)/lib"]} ]
++              [ "OS!='win'", {"libraries+":["-L<@(sqlite)/lib"]} ],
++              [ "OS=='win'", {"libraries+":["-lcrypt32", "-lws2_32", "-ladvapi32", "-luser32", "-lbcrypt"]} ]
+             ],

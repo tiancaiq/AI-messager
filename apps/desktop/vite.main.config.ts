@@ -6,8 +6,14 @@ export default defineConfig({
   build: {
     emptyOutDir: true,
     lib: {
-      entry: resolve(import.meta.dirname, "src/main/index.ts"),
-      fileName: () => "index.cjs",
+      entry: {
+        index: resolve(import.meta.dirname, "src/main/index.ts"),
+        "local-memory/storage-utility": resolve(
+          import.meta.dirname,
+          "src/main/local-memory/storage-utility.ts",
+        ),
+      },
+      fileName: (_format, entryName) => `${entryName}.cjs`,
       formats: ["cjs"],
     },
     outDir: "dist/main",

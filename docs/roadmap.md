@@ -4,6 +4,8 @@
 
 This roadmap is sequential. Begin a milestone only when the previous milestone's acceptance criteria pass and the next milestone has an approved execution plan where `.agent/PLANS.md` requires one.
 
+The user authorized and completed DATA-00 through DATA-02 on `DB` on 2026-09-14, selecting the free SQLCipher Community route after rejecting an AGPL binding, and authorized MEM-00 and DATA-03 on 2026-09-15. This does not close pending Phase 2–4 live-quality or Windows capture checks or authorize later memory milestones. The bounded local Data + Memory sequence below replaces the former unspecified memory direction.
+
 Do not pull future infrastructure into an earlier phase for convenience. A small interface at a real call site is enough to preserve a future seam. Each milestone ends with lint, typecheck, tests, build, acceptance review, documentation updates, and a completion report.
 
 ## Capture UX direction
@@ -156,7 +158,7 @@ Phase 3's deterministic/unit/integration and local runtime verification pass. Pr
 
 **Outcome:** preserve the explicit Phase 3 action, then deterministically select and compose a small set of approved communication skills that can guide provider-neutral wording.
 
-Phase 4 is implemented locally and intentionally uncommitted under the [Phase 4 execution plan](../.agent/plans/phase-4.md). It proves a small reviewed registry and deterministic selection; it does not claim live response-quality improvement or implement large-catalog infrastructure.
+Phase 4 is implemented and committed at `a77f476` under the [Phase 4 execution plan](../.agent/plans/phase-4.md). That plan preserves its historical local completion record. The implementation proves a small reviewed registry and deterministic selection; it does not claim live response-quality improvement or implement large-catalog infrastructure.
 
 **In scope:** strict Zod-first skill/context/selection/plan contracts; 21 source-controlled `ACTIVE` atomic skills (14 universal, 3 English, 4 Chinese); deterministic context tags from visible Phase 2/3 evidence; status/language/action/situation/intent eligibility; zero-to-four bounded selection; stable ordering; lightweight compatibility and deterministic conflict filtering; compact provider-neutral principles/avoidances; integration after Phase 3 action selection; exact-ID synthetic fixtures; selection metrics; and generic generation fallback for request-scoped skill failure.
 
@@ -178,15 +180,72 @@ Phase 4 is implemented locally and intentionally uncommitted under the [Phase 4 
 - Deterministic verification, build, API health, practical Electron startup, and Browser QA pass.
 - Post-fix live final-reply confirmation, live model comparison, and controlled Windows validation remain explicitly pending.
 
-## Post-MVP milestones (not approved for implementation)
+## Data + Memory roadmap
+
+DATA-00 through DATA-03 and MEM-00 are complete. Later rows remain proposed implementation milestones requiring their own execution plans and acceptance review. The [memory contract](memory.md) is the source of truth for domain semantics and acceptance scenarios M01–M21. [Architecture](architecture.md#data--memory-boundaries-data-00) and [privacy](privacy.md#local-memory-storage-data-00) specify module and security boundaries.
+
+Locked direction: local, single-user, no Message Coach account, SQLite-oriented, offline-capable, asynchronous, incremental, bounded-context. Useful structured knowledge may remain indefinitely; raw capture/text remain temporary. Correction/deletion starts with the first real stored data, not at the end of the roadmap.
+
+| Milestone | Goal and scope | Dependencies | Acceptance criteria | Out of scope |
+|---|---|---|---|---|
+| DATA-00 — final architecture contract | Documentation of local ownership, entities, time/evidence, bounded async flow, storage, correction/deletion, budgets, and phase sequence | User-approved local architecture direction | Explicit local scope; no age-only purge; named limits/overflow; deterministic race/history scenarios; documented DATA-01 gate; documentation-only verification recorded | Runtime schemas, source/config/dependency changes, SQL, database, commits |
+| DATA-01 — protected local foundation | SQLite lifecycle, OS-protected database key, transactions/revisions/reset; explicit user-preference save/read/edit/delete vertical slice | DATA-00; synthetic native/encryption compatibility check before real-data persistence | Preference survives restart; unavailable/wrong key fails safely; no plaintext fallback/content logs; clear/delete works; storage failure preserves coaching | Contacts, inference, queues, provider settings expansion, background model calls |
+| DATA-02 — contacts and identity associations | Internal contact/identity persistence and lifecycle APIs; unresolved/candidate/confirmed link states; bounded development inspection; no production data-entry UI | DATA-01 | Same-name identities stay separate; weak similarity never merges; production renderer has no directory mutation surface | Observation-driven population, avatar recognition, automatic cross-platform merge, messaging integrations |
+| MEM-00 — assertion/evidence foundation | Typed propositions, provenance, acceptance/correction/rejection, temporal scope, basic inspection/delete | DATA-01; DATA-02 for contact records | Candidates never become trusted silently; correction outranks guesses; deletion removes exclusive evidence/derived influence | Model extraction, open-ended predicate graph |
+| DATA-03 — relationship history | Broad/specific directed relationships, contextual coexistence, historical intervals | DATA-02, MEM-00 | Old manager remains historical; simultaneous friend/manager allowed; no invented end dates | Autonomous relationship prediction |
+| MEM-01 — observation and async handoff | Main-owned bounded observation, in-memory scheduling, receipts, revision/generation checks, deterministic fixture processor | DATA-01, DATA-02, MEM-00 | Delayed work never blocks coaching; replay has one effect; correction/delete defeats late results; overflow/offline/shutdown bounded | Persistent raw queue, extra provider calls |
+| MEM-02 — structured interaction summaries | Minimal episodes/participants, bounded summary items, coverage/provenance, correction/deletion | MEM-01 | Unknown time stays unknown; group ambiguity fails safely; summary authority inherited | Transcript archive, unbounded narratives |
+| MEM-03 — incremental memory skills | Small approved task-specific skills; bounded relevant state; validated proposals; capability/usage limits | MEM-02, MEM-00; DATA-03 when affecting relationships | Limits enforced; no full-history prompt; invalid output writes nothing; no double-counting derived evidence | Autonomous retrieval agent, repair loops, automatic high-risk confirmation |
+| MEM-04 — contextual communication habits | Features, separable contributions, dimension profiles and reset | MEM-01; DATA-03 for relationship scope | Single-message overfit prevented; other/generated/duplicate messages excluded; contact deletion removes broader profile influence | Personality inference, style-based identity matching |
+| MEM-05 — bounded coaching retrieval | Committed-memory reader, identity/time/relevance gates, budgets/deadlines, prompt and output-guard integration | Relevant prior assertion/summary/profile slices | Fixed context/call limits as history grows; disabled/unavailable fallback; no candidate/stale-role leakage or invented commitments | Vectors, full-history context, habit-driven intent changes |
+| MEM-06 — compaction and historical projections | Incremental context summaries, compact features, semantic expiration, inactive/stale handling | MEM-02–05 | Meaningful history/corrections/negation survive compaction; bounded input; no confidence laundering | Age-based mass deletion, full-history model recomputation |
+| MEM-07 — lifecycle/resource audit | Cross-feature inspection, disk pressure, growth metrics, interruption/deletion/privacy audit | Implemented prior slices | Every record has controls; no resurrection/hidden derived influence; bounds preserve coaching; content-free logs | Cloud backup/sync, deferring basic deletion until this phase |
+
+### DATA-00 deliverables
+
+- [Execution plan](../.agent/plans/data-00.md) with assumptions, acceptance review, and exact verification results.
+- [Memory specification](memory.md) with conceptual input/output/lifecycle boundaries, not runtime code.
+- Aligned architecture, privacy, roadmap, and README documentation.
+
+Completion means the architecture contract is recorded and reviewable, not that a database, encryption binding, memory model, or runtime skill has been implemented. Numerical ceilings must be finite and calibrated by the milestone enabling each caller; absence of a selected production value is never permission for unlimited behavior.
+
+### DATA-01 first-slice implementation gate
+
+The DATA-01 plan names SQLCipher Community 4.17.0, OpenSSL 3.6.4, and `@appthreat/sqlite3` 9.0.2 for Windows x64 Electron 43.3.0. The reviewed native artifact passed the synthetic development and relocated-layout gate before the real preference path was enabled. Main owns async safeStorage key custody; a bounded utility process owns SQL; runtime cipher verification fails closed. Other operating systems and architectures remain unsupported for durable memory until separately gated.
+
+The first records are the singleton local context and explicit user preferences with UI save/read/edit/delete/reset. Do not pre-create contact, relationship, summary, profile, or queue tables. Future runtime contracts stay Zod-first in packages/contracts and are added only before their actual producers/consumers. No provider call is required for DATA-01.
+
+Every implementation milestone runs `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm build`, plus focused synthetic boundary tests and the applicable privacy review. Live-provider evaluation is separate and opt-in. Existing Phase 2–4 quality and Windows release checks remain separate obligations.
+
+### DATA-02 contact-directory slice
+
+DATA-02 extends the encrypted store to schema v3 with internal contacts, platform identities, and reversible association lifecycle state. Composite foreign keys keep every reference inside the single local context, while a partial unique index permits at most one current confirmed contact for an identity. Display labels and identifiers are not uniqueness keys. Fixed coordinator/utility operations create, confirm, reject, revoke, reassign, or reconsider links, but production registers no contact-directory IPC/preload/UI surface and no current producer invokes them. Future observation/memory work owns automatic population and provenance. Identity-defining fields are immutable once saved and require a replacement identity rather than silent retargeting.
+
+Directory requests retain the DATA-01 4 KiB request, eight-command queue, 250 ms lock, and two-second operation bounds. Responses are limited to 16 KiB; reads use revision-bound keyset pages of at most 20 complete records, and an identity retains at most 100 association records in this slice. Clear-all resets both settings and directory revisions with a new dataset generation. No screenshot recognition, message attribution, relationship assertion, model call, or coaching retrieval was added.
+
+### MEM-00 assertion/evidence slice
+
+MEM-00 migrates the encrypted store to schema v4 and replaces the old preference table with one canonical typed assertion/evidence/decision representation. The predicate family is intentionally limited to reply-length preference values. Assertions distinguish candidate/confirmed/rejected acceptance, active/superseded lifecycle, current/historical/unknown applicability, exact subject scope, and temporal precision including end-exclusive ranges. Evidence has allowlisted provenance, separate nullable extraction/attribution/predicate confidence, and no raw-content field. Adding evidence never confirms a candidate; confirmation, rejection, reconsideration, and replacement are distinct trusted internal transitions.
+
+Generic lifecycle operations remain coordinator/utility internals with 4 KiB requests, 16 KiB pages, 20-record keyset pagination, eight links in either direction, and 100-version/decision capacity failures. The production renderer has no generic memory mutation capability. Preference save/read/delete keeps its existing fixed UI and IPC while writing the canonical tables. Contact deletion and association revocation/reassignment atomically remove dependent evidence and assertions that lose all support; clear-all removes memory and directory state and changes generation. The development inspector adds only read-only assertion/evidence/link/decision pages, and encrypted debug snapshots remain independently keyed. No automatic acquisition, relationship history, summaries, model call, or coaching retrieval was added.
+
+### DATA-03 contextual relationship-history slice
+
+DATA-03 migrates the same encrypted store through schema v6 and adds `RELATIONSHIP_CATEGORY` and `RELATIONSHIP_ROLE` assertion specializations. Broad professional/personal categories and ten bounded roles are independently proposed, evidenced, reviewed, and corrected. Directional manager/client/professor roles identify their holder; symmetric roles use one representation. Contact-owned immutable general/unknown/organization/project contexts and explicit episode IDs permit friend, coworker, teammate, and manager claims to coexist without name-based merging or one-role-per-contact uniqueness. Both validity boundaries may be unknown; year/month/date/instant precision, exact end-exclusive and within-period ends preserve uncertainty. Rejection, historical transition, factual correction, and reconsideration have distinct atomic effects and scoped current/interval/all-history correction reach. V6 binds temporal ends to transition evidence and retains scoped correction constraints when former positive role support is removed. Negative evidence of the exact proposition does not turn another compatible role into a contradiction. The fixed 4 KiB/16 KiB transport, 20-row revision/filter-bound pages, eight links, 100 decisions/versions per scope, and 100 episodes/contact remain enforced.
+
+Fresh/v1/v2/v3/v4/v5 encrypted stores reach v6 without changing SQLCipher compatibility 4, key custody, or the production preference projection. The Windows x64 Electron/Node 24 native gate verifies encrypted migration, directed coexistence, historical retention, temporal-evidence deletion, correction bypass prevention after source deletion, separately re-keyed snapshots, restart, and deletion with synthetic fixtures; SQLite-level tests cover rollback, time overlap, evidence dependencies, and capacity. Old v5 temporal ends with ambiguous or missing evidence linkage become unknown rather than remaining unsupported known dates. The development inspector remains read-only with predicate filtering and context pages. Production has no relationship entry, generic memory IPC, automatic source, or coaching reader. See the [DATA-03 execution plan](../.agent/plans/data-03.md).
+
+The final DATA-03 recheck also requires correction-aware as-of reads and migration of uniquely identified v5 transition links to contextual-only support. A current-only rejection must not be overridden by old exact bounds at the current query time, though a provably earlier interval may still read as applicable. Deleting an original role source after migration must not leave the transition source as the sole positive role evidence. The native gate covers both with synthetic encrypted fixtures.
+
+## Other post-MVP milestones (not approved for implementation)
 
 Order these only after MVP evidence identifies the need:
 
 1. **Evaluation and calibration hardening** — larger reviewed datasets, confidence calibration, skill-selection calibration, regression tracking, and prompt/model version comparisons.
 2. **Additional providers and advanced routing** — second and third major adapters, shared conformance tests, then optional compatible/local endpoints and per-task model selection only where measured needs justify them.
 3. **Generate capture automation** — remembered confirmed regions with reset controls, followed by active-window awareness and automatic conversation-region detection only as evaluation justifies each step.
-4. **User-controlled memory** — user preferences first; candidate/confirmation/staleness controls; deletion; encrypted durable storage.
-5. **Conservative contact identity and memory** — multi-signal local-first matching, very-high-confidence gate, ambiguity UI, and temporal role handling.
+4. **User-controlled memory** — covered by the bounded DATA/MEM sequence above, beginning with explicit preferences and controls.
+5. **Conservative contact identity and memory** — covered by DATA-02, MEM-00, and DATA-03, not a parallel subsystem.
 6. **Large-catalog skill retrieval** — metadata plus hybrid/semantic retrieval, reranking, and pgvector only after measured scale or relevance failures warrant it.
 7. **Skill Factory** — offline generation, deduplication, evaluation, approval, versioning, and deprecation workflow.
 8. **Optional explicit insertion** — only after a separate safety review; still no automatic send.
@@ -194,6 +253,10 @@ Order these only after MVP evidence identifies the need:
 
 App-specific messaging integrations and automatic sending remain outside the plan unless the product strategy is explicitly revised; automatic sending requires changing a foundational product invariant.
 
+Cloud sync, PostgreSQL memory hosting, Message Coach accounts, multi-device storage, vector memory search, aggressive identity merging, unbounded ingestion, full-history prompts, natural-language deletion commands, and large autonomous memory agents are explicitly deferred. Indefinite retention does not authorize raw archives or unbounded resource use.
+
 ## Next recommended work
 
-After Phase 4 review, keep the current user-controlled proxy configured and running, rerun the existing Phase 2/3 provider evaluations, and complete a human-reviewed Phase 3-generic-versus-Phase 4-skill-guided comparison. Use those results to calibrate the small registry and selection rules before proposing another implementation milestone. Separately, complete controlled Windows checks at 100% and 125% scaling with a second monitor where available. Do not begin relationship, identity, memory, large-catalog retrieval, or Skill Factory work without a separately approved milestone.
+DATA-00 through DATA-03 and MEM-00 are complete on `DB`. The next dependency-ordered memory milestone is MEM-01 observation/handoff; it remains unapproved and requires its own execution plan and acceptance review. DATA-03 alone does not enable real conversation provenance, automatic relationship population, or coaching personalization.
+
+In the existing coaching track, keep the user-controlled proxy configured for explicit live evaluation, rerun Phase 2/3 evaluations, and complete human-reviewed generic-versus-skill-guided comparison. Separately complete Windows 100%/125% DPI and second-monitor validation. These pending gates remain visible and are not closed by documentation work. Large-catalog retrieval and Skill Factory remain unapproved.

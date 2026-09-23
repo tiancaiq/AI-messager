@@ -3,6 +3,13 @@ import {
   AppInfoSchema,
   COACHING_REQUEST_CHANNEL,
   COPY_COACHING_TEXT_CHANNEL,
+  LOCAL_MEMORY_CLEAR_CHANNEL,
+  LOCAL_MEMORY_DELETE_CHANNEL,
+  LOCAL_MEMORY_INSPECT_CHANNEL,
+  LOCAL_MEMORY_READ_CHANNEL,
+  LOCAL_MEMORY_RESET_UNAVAILABLE_CHANNEL,
+  LOCAL_MEMORY_SAVE_CHANNEL,
+  LOCAL_MEMORY_STATUS_CHANNEL,
   CONVERSATION_ANALYSIS_CHANNEL,
   CONVERSATION_CAPTURE_CHANNEL,
   ConversationAnalysisResultSchema,
@@ -12,6 +19,15 @@ import {
   CoachingRequestSchema,
   CopyCoachingTextRequestSchema,
   CopyCoachingTextResultSchema,
+  ClearLocalMemoryRequestSchema,
+  DeleteMessageLengthRequestSchema,
+  LocalMemoryResultSchema,
+  LocalMemoryInspectorResultSchema,
+  LocalMemoryInspectorRequestSchema,
+  LocalMemoryStatusSchema,
+  ResetUnavailableLocalMemoryRequestSchema,
+  SaveMessageLengthRequestSchema,
+  isDesktopDevelopmentRendererUrl,
   PROVIDER_CONFIGURATION_CHANNEL,
   ProviderConfigurationSchema,
   type ConversationAnalysisResult,
@@ -20,6 +36,14 @@ import {
   type CoachingDecisionResult,
   type CoachingRequest,
   type CopyCoachingTextResult,
+  type ClearLocalMemoryRequest,
+  type DeleteMessageLengthRequest,
+  type LocalMemoryResult,
+  type LocalMemoryInspectorResult,
+  type LocalMemoryInspectorRequest,
+  type LocalMemoryStatus,
+  type ResetUnavailableLocalMemoryRequest,
+  type SaveMessageLengthRequest,
   type ProviderConfiguration,
 } from "@ai-message-coach/contracts";
 import { contextBridge, ipcRenderer } from "electron";
@@ -47,6 +71,15 @@ const invalidCopyResponse: CopyCoachingTextResult = {
   ok: false,
   error: { message: "The copy response could not be validated." },
 };
+const invalidMemoryResult: LocalMemoryResult = {
+  ok: false,
+  error: { code: "INVALID_REQUEST", message: "The local memory response was not accepted." },
+};
+const invalidMemoryStatus: LocalMemoryStatus = {
+  available: false,
+  error: invalidMemoryResult.error,
+};
+const invalidInspectorResult: LocalMemoryInspectorResult = invalidMemoryResult;
 
 const unavailableProviderConfiguration: ProviderConfiguration = {
   providerId: "openai",
@@ -105,13 +138,90 @@ async function copyCoachingText(text: string): Promise<CopyCoachingTextResult> {
   return result.success ? result.data : invalidCopyResponse;
 }
 
-const bridge = Object.freeze({
+async function getLocalMemoryStatus(): Promise<LocalMemoryStatus> {
+  const parsed = LocalMemoryStatusSchema.safeParse(
+    await ipcRenderer.invoke(LOCAL_MEMORY_STATUS_CHANNEL),
+  );
+  return parsed.success ? parsed.data : invalidMemoryStatus;
+}
+
+async function readLocalMemory(): Promise<LocalMemoryResult> {
+  const parsed = LocalMemoryResultSchema.safeParse(
+    await ipcRenderer.invoke(LOCAL_MEMORY_READ_CHANNEL),
+  );
+  return parsed.success ? parsed.data : invalidMemoryResult;
+}
+
+async function saveMessageLength(request: SaveMessageLengthRequest): Promise<LocalMemoryResult> {
+  const validated = SaveMessageLengthRequestSchema.safeParse(request);
+  if (!validated.success) return invalidMemoryResult;
+  const parsed = LocalMemoryResultSchema.safeParse(
+    await ipcRenderer.invoke(LOCAL_MEMORY_SAVE_CHANNEL, validated.data),
+  );
+  return parsed.success ? parsed.data : invalidMemoryResult;
+}
+
+async function deleteMessageLength(
+  request: DeleteMessageLengthRequest,
+): Promise<LocalMemoryResult> {
+  const validated = DeleteMessageLengthRequestSchema.safeParse(request);
+  if (!validated.success) return invalidMemoryResult;
+  const parsed = LocalMemoryResultSchema.safeParse(
+    await ipcRenderer.invoke(LOCAL_MEMORY_DELETE_CHANNEL, validated.data),
+  );
+  return parsed.success ? parsed.data : invalidMemoryResult;
+}
+
+async function clearLocalMemory(request: ClearLocalMemoryRequest): Promise<LocalMemoryResult> {
+  const validated = ClearLocalMemoryRequestSchema.safeParse(request);
+  if (!validated.success) return invalidMemoryResult;
+  const parsed = LocalMemoryResultSchema.safeParse(
+    await ipcRenderer.invoke(LOCAL_MEMORY_CLEAR_CHANNEL, validated.data),
+  );
+  return parsed.success ? parsed.data : invalidMemoryResult;
+}
+
+async function resetUnavailableLocalMemory(
+  request: ResetUnavailableLocalMemoryRequest,
+): Promise<LocalMemoryResult> {
+  const validated = ResetUnavailableLocalMemoryRequestSchema.safeParse(request);
+  if (!validated.success) return invalidMemoryResult;
+  const parsed = LocalMemoryResultSchema.safeParse(
+    await ipcRenderer.invoke(LOCAL_MEMORY_RESET_UNAVAILABLE_CHANNEL, validated.data),
+  );
+  return parsed.success ? parsed.data : invalidMemoryResult;
+}
+
+async function inspectLocalMemory(
+  request: LocalMemoryInspectorRequest,
+): Promise<LocalMemoryInspectorResult> {
+  const validated = LocalMemoryInspectorRequestSchema.safeParse(request);
+  if (!validated.success) return invalidInspectorResult;
+  const parsed = LocalMemoryInspectorResultSchema.safeParse(
+    await ipcRenderer.invoke(LOCAL_MEMORY_INSPECT_CHANNEL, validated.data),
+  );
+  return parsed.success ? parsed.data : invalidInspectorResult;
+}
+
+const productionBridge = {
   appInfo: AppInfoSchema.parse({ name: APP_NAME }),
   analyzeConversationImage,
   copyCoachingText,
+  clearLocalMemory,
+  deleteMessageLength,
   getProviderConfiguration,
+  getLocalMemoryStatus,
+  readLocalMemory,
   requestConversationCapture,
   requestCoaching,
-});
+  resetUnavailableLocalMemory,
+  saveMessageLength,
+};
+
+const bridge = Object.freeze(
+  process.defaultApp && isDesktopDevelopmentRendererUrl(process.env.VITE_DEV_SERVER_URL)
+    ? { ...productionBridge, inspectLocalMemory }
+    : productionBridge,
+);
 
 contextBridge.exposeInMainWorld("messageCoach", bridge);
