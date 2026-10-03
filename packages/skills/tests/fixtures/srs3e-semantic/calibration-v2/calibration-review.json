@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "reviews": [
+    {
+      "id": "K01",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "Receipt of a promised mural photo is already acknowledged; no catalog communication job is needed."
+    },
+    {
+      "id": "K02",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "A simple photo reaction is social chatter, not emotional validation or reassurance."
+    },
+    {
+      "id": "K03",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The draft gives a known color fact and carries no selected request, estimate, or planning action."
+    },
+    {
+      "id": "K04",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The other party confirmed receiving the ticket and thanked the user; the thread is complete."
+    },
+    {
+      "id": "K05",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The short reaction to a book title is ordinary conversation without a supported strategy skill."
+    },
+    {
+      "id": "K06",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The score was reported, thanked, and acknowledged; a further reply is unnecessary."
+    },
+    {
+      "id": "K07",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The picnic time is already settled; this is a simple acknowledgment, not active planning."
+    },
+    {
+      "id": "K08",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "A birthday wish is not a request, commitment, emotional difficulty, or catalog modifier target."
+    },
+    {
+      "id": "K09",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The draft states a known swatch color without a future estimate or recipient action."
+    },
+    {
+      "id": "K10",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The visibly unfinished prefix completes to the already-set fountain meeting; no new coordination or commitment is needed."
+    },
+    {
+      "id": "K11",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "Accepting a cup of tea is a trivial response, not a refusal or a planning operation."
+    },
+    {
+      "id": "K12",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "Acknowledging receipt of a fabric sample is complete; it is not a follow-up or request."
+    },
+    {
+      "id": "K13",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The user owns putting badges in the wrong place and says they will correct it; no regret is chosen."
+    },
+    {
+      "id": "K14",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The user explicitly chooses to apologize for their own delay; ownership wording may coexist but is not separately required."
+    },
+    {
+      "id": "K15",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The other person explicitly expresses feeling overwhelmed and the draft recognizes the difficulty; no support fact justifies reassurance."
+    },
+    {
+      "id": "K16",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The concern has a known packed spare lantern; it supports reassurance without promising the lamp will work."
+    },
+    {
+      "id": "K17",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "One Saturday coverage request receives a decided refusal, with no repeated pressure or continuing rule."
+    },
+    {
+      "id": "K18",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The other party admits repeated late-visit asks; the user refuses tonight and sets a continuing after-ten limit. No visible heat requires de-escalation."
+    },
+    {
+      "id": "K19",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The earlier request is unresolved after a caretaker check was promised; a status ask both follows up and requests a recipient answer."
+    },
+    {
+      "id": "K20",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "This is a first-time ask for a blueprint copy, with no earlier unresolved request."
+    },
+    {
+      "id": "K21",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The draft proposes a specific rehearsal choice; it does not forecast uncertain timing or capacity."
+    },
+    {
+      "id": "K22",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The user chooses a qualified future repair estimate and no active scheduling or known present progress."
+    },
+    {
+      "id": "K23",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "Two trailheads share a name and are materially ambiguous; the user asks which one was intended. A general request remains acceptable, not required."
+    },
+    {
+      "id": "K24",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "rationale": "The chosen message reports a known present count of catalogued boxes, not an uncertain future expectation."
+    }
+  ]
+}

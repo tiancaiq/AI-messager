@@ -1,0 +1,237 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: requests_options
+definition:
+  id: ask_for_help
+  name: Ask for help
+  description: Use when the user intends to request assistance.
+  languages:
+    - universal
+  situations:
+    - request
+  intents:
+    - ask_for_help
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the user intends to request assistance.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Make the requested help and known context clear.
+  avoid:
+    - Do not invent urgency, authority, or an obligation to help.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: request
+    distinction: Asking someone to send a document without assistance framing → request.
+    caseId: H1
+  - id: clarification
+    distinction: Asking what “tomorrow” refers to → clarification.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User wants a coworker's help checking a formula.
+      visibleContext: User wants a coworker's help checking a formula.
+      userIntent: Ask for help checking a formula.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - ask_for_help
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User wants a friend's help carrying a table.
+      visibleContext: User wants a friend's help carrying a table.
+      userIntent: Ask for help carrying a table.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - ask_for_help
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User asks a tutor for help understanding a proof.
+      visibleContext: User asks a tutor for help understanding a proof.
+      userIntent: Ask for help understanding a proof.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - ask_for_help
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: User only reports a finished task.
+      visibleContext: User only reports a finished task.
+      userIntent: Report a finished task.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - ask_for_help
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Help was explicitly refused and user intends to pressure the recipient.
+      visibleContext: Help was explicitly refused and user intends to pressure the recipient.
+      userIntent: Pressure someone who already refused.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - ask_for_help
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User wants to give assistance, not request it.
+      visibleContext: User wants to give assistance, not request it.
+      userIntent: Offer assistance.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - ask_for_help
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Asking someone to send a document without assistance framing → request.
+      visibleContext: Asking someone to send a document without assistance framing → request.
+      userIntent: Ask for a document without assistance framing.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - request
+      forbidden: []
+      rationale: Asking someone to send a document without assistance framing → request.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Asking what “tomorrow” refers to → clarification.
+      visibleContext: Asking what “tomorrow” refers to → clarification.
+      userIntent: Resolve what tomorrow refers to.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - clarification
+      forbidden: []
+      rationale: Asking what “tomorrow” refers to → clarification.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText:
+        User seeks help checking one formula. “help spreadsheet” → “Could you help me check
+        this formula?”
+      visibleContext: User wants help checking one formula.
+      userIntent: Ask for help checking one formula.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: help spreadsheet
+      improved: Could you help me check this formula?
+      ledger:
+        facts:
+          - User wants help checking one formula.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: User seeks help carrying a table; no date or urgency supplied. “need you carry
+        table” → “Would you be able to help me carry the table?”
+      visibleContext: User wants help carrying a table. No date or urgency is supplied.
+      userIntent: Ask for help carrying the table.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: need you carry table
+      improved: Would you be able to help me carry the table?
+      ledger:
+        facts:
+          - User wants help carrying a table.
+          - No date or urgency is supplied.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#ask_for_help
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:6f02649adcc780b7ee1bea2a75ac8680bd807555b22b08aa8c7935a04a245945
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

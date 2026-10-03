@@ -1,0 +1,505 @@
+catalogVersion: 1
+profiles:
+  - id: apology
+    lane: ATOMIC
+    profileRevision: 1
+    job: Express proportionate regret for a supported user-caused mistake or impact.
+    useWhen:
+      - The user has chosen to apologize for an evidenced mistake or impact.
+      - The recipient's inconvenience or harm is supported without inventing their feelings.
+    whenNotUse:
+      - The user only needs to correct an error and has not chosen to express regret.
+      - Responsibility or impact belongs to another person and the user has not chosen an apology.
+    semanticTriggers:
+      - Express chosen regret for a supported impact.
+      - Apologize for a missed user commitment without adding an excuse.
+    neighbors:
+      - skillId: acknowledge_mistake
+        relationship: OVERLAPPING
+        distinction: Apology communicates regret; mistake acknowledgment names a user-owned error. Either or both may be useful.
+        coexistence: COMPATIBLE
+      - skillId: emotional_validation
+        relationship: NEAR_NEIGHBOR
+        distinction: Validation recognizes the other person's expressed experience even when the user caused no impact.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: acknowledge_mistake
+    lane: ATOMIC
+    profileRevision: 1
+    job: Name and take responsibility for an evidenced user-owned error or missed action.
+    useWhen:
+      - Visible evidence or the user's explicit account supports their ownership of a specific mistake or omission.
+      - The user intends to correct the record or own that act without shifting blame.
+    whenNotUse:
+      - Ownership is disputed, unknown, or belongs to someone else.
+      - The message only reports an externally caused delay or current progress.
+    semanticTriggers:
+      - Correct the user's own inaccurate statement.
+      - Acknowledge a user-owned missed commitment.
+    neighbors:
+      - skillId: apology
+        relationship: OVERLAPPING
+        distinction: Ownership can be stated without regret; an apology adds chosen regret for supported impact.
+        coexistence: COMPATIBLE
+      - skillId: status_update
+        relationship: NEAR_NEIGHBOR
+        distinction: A status update reports known state without assigning an unsupported fault to the user.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: emotional_validation
+    lane: ATOMIC
+    profileRevision: 1
+    job: Recognize an explicitly visible feeling or difficulty without claiming hidden emotions.
+    useWhen:
+      - The other person has expressed an upsetting experience, feeling, or difficulty.
+      - The user intends to acknowledge that expression before moving to advice or logistics.
+    whenNotUse:
+      - The visible exchange is neutral logistics without expressed distress or difficulty.
+      - The response would diagnose, infer an unspoken feeling, or endorse an unsupported accusation.
+    semanticTriggers:
+      - Acknowledge an expressed difficult experience.
+      - Recognize visible frustration or disappointment without claiming its cause as fact.
+    neighbors:
+      - skillId: reassurance
+        relationship: OVERLAPPING
+        distinction: Validation recognizes an experience; reassurance offers support grounded in a known fact or commitment.
+        coexistence: COMPATIBLE
+    reviewState: PASS
+
+  - id: reassurance
+    lane: ATOMIC
+    profileRevision: 1
+    job: Address a visible concern with truthful, grounded support.
+    useWhen:
+      - The recipient has a visible concern and the user has a known support fact or existing commitment to offer.
+      - The user intends to help the recipient feel supported without predicting an unknown outcome.
+    whenNotUse:
+      - No concern or supporting fact is available.
+      - The proposed reassurance would promise success, contradict a refusal, or create a new commitment.
+    semanticTriggers:
+      - Restate verified available support in response to a concern.
+      - Point to a known backup or existing commitment while retaining uncertainty.
+    neighbors:
+      - skillId: emotional_validation
+        relationship: OVERLAPPING
+        distinction: Validation can acknowledge sadness without any support fact; reassurance requires grounded support.
+        coexistence: COMPATIBLE
+    reviewState: PASS
+
+  - id: boundary_setting
+    lane: ATOMIC
+    profileRevision: 1
+    job: State the user's chosen continuing limit under repeated pressure.
+    useWhen:
+      - Repeated or ongoing pressure is supported by visible context or explicitly supplied by the user.
+      - The user has decided on a continuing limit governing their own participation or contact.
+    whenNotUse:
+      - A single invitation is refused without an ongoing limit.
+      - The user only communicates supported future timing, capacity, or scope.
+      - Conflict exists but the user has not chosen a continuing limit.
+    semanticTriggers:
+      - Communicate a chosen ongoing limit after repeated unwanted requests.
+      - State a continuing condition for contact or participation under sustained pressure.
+    neighbors:
+      - skillId: decline
+        relationship: OVERLAPPING
+        distinction: Decline is a specific chosen no; boundary setting additionally requires a continuing limit under repeated pressure.
+        coexistence: COMPATIBLE
+      - skillId: de_escalation
+        relationship: OVERLAPPING
+        distinction: De-escalation reduces visible heat; a civil continuing limit alone does not prove a conflict.
+        coexistence: CONDITIONAL
+      - skillId: expectation_setting
+        relationship: NEAR_NEIGHBOR
+        distinction: A timing or capacity estimate is not a repeated-pressure behavioral limit.
+        coexistence: CONDITIONAL
+    knownBoundaryIssue: Product decision pending on whether first-time personal limits should be included; current approved definition requires repeated pressure.
+    reviewState: BOUNDARY_REVIEW_REQUIRED
+
+  - id: de_escalation
+    lane: ATOMIC
+    profileRevision: 1
+    job: Reduce unnecessary heat in a visibly tense exchange without changing the user's position.
+    useWhen:
+      - Conflict or pressure is actually visible and the user wants a calmer response.
+      - Concrete non-accusatory wording can preserve the user's decision or disagreement.
+    whenNotUse:
+      - The exchange is already calm or tension is inferred only from punctuation.
+      - Calming the wording would require conceding the user's chosen limit or decision.
+    semanticTriggers:
+      - Restate a disagreement calmly in an active conflict.
+      - Remove unnecessary accusation while preserving the user's position.
+    neighbors:
+      - skillId: boundary_setting
+        relationship: OVERLAPPING
+        distinction: Boundary setting expresses a chosen continuing limit under repeated pressure; de-escalation addresses the heat of delivery.
+        coexistence: CONDITIONAL
+      - skillId: decline
+        relationship: COMPLEMENTARY
+        distinction: A refusal supplies the decision; de-escalation may make a tense refusal calmer without reversing it.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: decline
+    lane: ATOMIC
+    profileRevision: 1
+    job: Communicate the user's chosen refusal of a specific invitation, request, or option.
+    useWhen:
+      - The user has clearly decided not to accept a specific proposal or request.
+      - The response should keep the no explicit without inventing a reason or alternative.
+    whenNotUse:
+      - The user has not decided yet or has chosen to accept.
+      - The user is only asking for details before deciding.
+    semanticTriggers:
+      - Convey a decided refusal of a concrete invitation.
+      - Decline an additional task or offer without manufacturing a pretext.
+    neighbors:
+      - skillId: boundary_setting
+        relationship: OVERLAPPING
+        distinction: A one-time refusal need not be an ongoing rule; repeated pressure plus a chosen limit may support both.
+        coexistence: COMPATIBLE
+      - skillId: planning
+        relationship: COMPLEMENTARY
+        distinction: An alternative date is planning only when the user actually offered it; decline cannot invent one.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: ask_for_help
+    lane: ATOMIC
+    profileRevision: 1
+    job: Ask another person for assistance with a supported need.
+    useWhen:
+      - The user has chosen to seek another person's help with a concrete task or understanding.
+      - The requested assistance and known context can be stated without implying an obligation.
+    whenNotUse:
+      - The user merely asks someone to provide an item without assistance framing.
+      - The user offers help, reports completion, or seeks an unknown detail rather than assistance.
+    semanticTriggers:
+      - Seek collaborative help with a task.
+      - Ask someone to assist the user in understanding or carrying out something.
+    neighbors:
+      - skillId: request
+        relationship: MORE_SPECIFIC_THAN
+        distinction: Help is a particular requested action; ordinary provision of an item may need only request.
+        coexistence: COMPATIBLE
+      - skillId: clarification
+        relationship: NEAR_NEIGHBOR
+        distinction: Clarification resolves a material unknown; asking for assistance is a different chosen operation.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: follow_up
+    lane: ATOMIC
+    profileRevision: 1
+    job: Revisit a supported earlier unresolved request or thread.
+    useWhen:
+      - A prior request is visible or explicitly supplied by the user.
+      - The prior matter is unresolved and the user chooses to check its progress or disposition.
+    whenNotUse:
+      - This is the first request or the earlier request has been fully answered.
+      - The user reports their own current progress instead of checking the other party.
+      - The wording would turn silence alone into an accusation or pressure after a refusal.
+    semanticTriggers:
+      - Check the disposition of an unresolved earlier ask.
+      - Renew a previously made request without assuming neglect.
+    neighbors:
+      - skillId: request
+        relationship: MORE_SPECIFIC_THAN
+        distinction: Request can be a first ask; follow-up requires a supported earlier unresolved ask.
+        coexistence: COMPATIBLE
+      - skillId: status_update
+        relationship: NEAR_NEIGHBOR
+        distinction: Status update reports the user's known state; follow-up asks about an open thread.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: status_update
+    lane: ATOMIC
+    profileRevision: 1
+    job: Communicate supported present state or progress.
+    useWhen:
+      - The user has current factual status to report, whether prompted or volunteered.
+      - Completion, pending work, delay, or present progress is known rather than guessed.
+    whenNotUse:
+      - Status is unknown and the user wants to ask the other person for it.
+      - The message only conveys future timing or capacity, or only arranges a next step.
+    semanticTriggers:
+      - Report a known current completion state.
+      - Describe present progress or a currently pending item.
+    neighbors:
+      - skillId: expectation_setting
+        relationship: OVERLAPPING
+        distinction: Status is known present state; expectation setting communicates supported future timing or scope.
+        coexistence: COMPATIBLE
+      - skillId: planning
+        relationship: NEAR_NEIGHBOR
+        distinction: Planning coordinates future logistics rather than merely reporting the current state.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: expectation_setting
+    lane: ATOMIC
+    profileRevision: 1
+    job: Communicate supported future timing, availability, capacity, scope, or uncertainty.
+    useWhen:
+      - The user has a supported future estimate or stated availability, capacity, or scope limit.
+      - The wording can preserve the user's actual degree of certainty.
+    whenNotUse:
+      - Only current or completed progress is reported with no future estimate or limit.
+      - The message actively coordinates an arrangement but states no timing estimate or capacity constraint.
+      - A future claim would be invented or made more certain than the user's evidence.
+    semanticTriggers:
+      - State a tentative future completion estimate.
+      - Communicate a supported limit on future availability or scope.
+    neighbors:
+      - skillId: status_update
+        relationship: OVERLAPPING
+        distinction: Current progress alone is status; a supported future estimate is expectation setting, and both may coexist.
+        coexistence: COMPATIBLE
+      - skillId: planning
+        relationship: NEAR_NEIGHBOR
+        distinction: Planning coordinates a concrete arrangement; mere coordination without estimate or capacity is not expectation setting.
+        coexistence: CONDITIONAL
+      - skillId: boundary_setting
+        relationship: NEAR_NEIGHBOR
+        distinction: A continuing behavioral limit under repeated pressure is not merely an availability estimate.
+        coexistence: CONDITIONAL
+    knownBoundaryIssue: Existing planning and status_request situation metadata can admit messages without a supported future expectation; no metadata changes are authorized here.
+    reviewState: PASS
+
+  - id: planning
+    lane: ATOMIC
+    profileRevision: 1
+    job: Coordinate supported time, place, responsibilities, or concrete next steps.
+    useWhen:
+      - The user is confirming, proposing, or organizing a concrete arrangement based on supplied logistics.
+      - An agreed or tentative next step should be made clear without converting a proposal into a promise.
+    whenNotUse:
+      - The user only asks someone to perform a new task without coordinating an arrangement.
+      - The message only reports completed/current work or an unsupported future availability claim.
+    semanticTriggers:
+      - Coordinate a meeting or handoff using known logistics.
+      - Propose a concrete next step while preserving whether it is tentative or agreed.
+    neighbors:
+      - skillId: request
+        relationship: OVERLAPPING
+        distinction: A chosen ask can support a plan, but a standalone task request has no coordination job.
+        coexistence: COMPATIBLE
+      - skillId: status_update
+        relationship: NEAR_NEIGHBOR
+        distinction: Reporting completed work is status; assigning a supported next step is planning.
+        coexistence: CONDITIONAL
+      - skillId: expectation_setting
+        relationship: NEAR_NEIGHBOR
+        distinction: A future estimate or capacity limit differs from actively coordinating an arrangement.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: clarification
+    lane: ATOMIC
+    profileRevision: 1
+    job: Ask for one material missing or ambiguous detail needed for the user's chosen communication.
+    useWhen:
+      - A concrete unknown or competing reference matters to the intended exchange.
+      - The user intends to ask the other person to resolve that unknown.
+    whenNotUse:
+      - The relevant detail is already clear and the user simply wants a known action performed.
+      - The question is unrelated curiosity or would repeat what is visible.
+      - The upstream action is the coach's own clarification rather than a user message to word.
+    semanticTriggers:
+      - Distinguish between plausible referents before proceeding.
+      - Resolve one material missing detail in the recipient's message.
+    neighbors:
+      - skillId: request
+        relationship: OVERLAPPING
+        distinction: Inquiry into an unknown differs from asking for a known action; both can fit if both actions were chosen.
+        coexistence: CONDITIONAL
+      - skillId: ask_for_help
+        relationship: NEAR_NEIGHBOR
+        distinction: Help requests seek assistance; clarification asks for a missing detail.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: request
+    lane: ATOMIC
+    profileRevision: 1
+    job: Ask another person to perform, provide, change, or stop a chosen concrete action.
+    useWhen:
+      - The desired recipient action is known and the user has chosen to ask for it.
+      - The request can be stated without inventing authority, urgency, or consequences.
+    whenNotUse:
+      - No requested action has been chosen or the action is already completed and merely reported.
+      - The user is only resolving a missing detail rather than asking for a known action.
+    semanticTriggers:
+      - Seek a concrete action or item from another person.
+      - Ask the recipient to change a specific behavior the user has chosen to address.
+    neighbors:
+      - skillId: clarification
+        relationship: OVERLAPPING
+        distinction: Clarification asks about a material unknown; generic request alone need not imply ambiguity.
+        coexistence: CONDITIONAL
+      - skillId: ask_for_help
+        relationship: MORE_GENERAL_THAN
+        distinction: Assistance is a more specific requested action; a straightforward item request need not be help.
+        coexistence: COMPATIBLE
+      - skillId: follow_up
+        relationship: MORE_GENERAL_THAN
+        distinction: Follow-up adds an earlier unresolved ask; a first ask is just a request.
+        coexistence: COMPATIBLE
+      - skillId: planning
+        relationship: OVERLAPPING
+        distinction: Planning organizes known logistics; request seeks a chosen recipient action, and both may be central.
+        coexistence: COMPATIBLE
+    reviewState: PASS
+
+  - id: en.professional_conciseness
+    lane: LANGUAGE_MODIFIER
+    profileRevision: 1
+    job: Express an eligible English message in concise professional chat style.
+    useWhen:
+      - English is the eligible language and a work-oriented status, request, or follow-up needs professional brevity.
+    whenNotUse:
+      - The message is unsupported in English or the context is plainly casual personal chat.
+      - Concision would remove a required fact, uncertainty, decision, or request.
+    semanticTriggers:
+      - Make a work-chat update concise without ceremonial email framing.
+    neighbors:
+      - skillId: en.casual_naturalness
+        relationship: NEAR_NEIGHBOR
+        distinction: Casual naturalness suits informal English conversation rather than professional register.
+        coexistence: CONDITIONAL
+      - skillId: en.direct_but_polite
+        relationship: OVERLAPPING
+        distinction: Direct politeness protects a request or decision; professional concision primarily controls register and length.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: en.casual_naturalness
+    lane: LANGUAGE_MODIFIER
+    profileRevision: 1
+    job: Make an eligible English reply sound natural and brief in a casual chat.
+    useWhen:
+      - English is eligible and the interaction is an informal invitation or short personal plan.
+    whenNotUse:
+      - Professional register is explicitly needed or the primary language is ineligible.
+      - Casual wording would obscure a refusal or add unsupported familiarity.
+    semanticTriggers:
+      - Preserve conversational brevity in an informal English arrangement.
+    neighbors:
+      - skillId: en.professional_conciseness
+        relationship: NEAR_NEIGHBOR
+        distinction: Professional concision suits a work-chat update rather than an informal personal exchange.
+        coexistence: CONDITIONAL
+      - skillId: en.direct_but_polite
+        relationship: COMPLEMENTARY
+        distinction: Direct politeness keeps a chosen request or no clear even in a casual register.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: en.direct_but_polite
+    lane: LANGUAGE_MODIFIER
+    profileRevision: 1
+    job: Express an eligible English request, refusal, or limit clearly and respectfully.
+    useWhen:
+      - English is eligible and a chosen request, refusal, or limit needs clearer respectful expression.
+    whenNotUse:
+      - No request or decision has been chosen, or the message is only a progress report.
+      - Politeness would soften the user's chosen meaning into ambiguity.
+    semanticTriggers:
+      - State a chosen English request or no with respectful directness.
+    neighbors:
+      - skillId: en.professional_conciseness
+        relationship: NEAR_NEIGHBOR
+        distinction: Professional concision shapes register; direct politeness protects the decision or ask.
+        coexistence: CONDITIONAL
+      - skillId: decline
+        relationship: COMPLEMENTARY
+        distinction: Decline supplies the refusal capability; this modifier cannot make the decision for the user.
+        coexistence: COMPATIBLE
+    reviewState: PASS
+
+  - id: zh.politeness_calibration
+    lane: LANGUAGE_MODIFIER
+    profileRevision: 1
+    job: Calibrate politeness in an eligible Chinese request, refusal, or limit without changing the decision.
+    useWhen:
+      - Chinese is eligible and the chosen message benefits from ordinary chat-appropriate politeness.
+    whenNotUse:
+      - Chinese is not the eligible primary language or no request or decision is supported.
+      - Politeness would invent a reason, duty, deference, or new commitment.
+    semanticTriggers:
+      - Make a supported Chinese request or refusal respectful without obscuring it.
+    neighbors:
+      - skillId: zh.professional_formality
+        relationship: NEAR_NEIGHBOR
+        distinction: Professional formality suits work-status convention, not every polite request.
+        coexistence: CONDITIONAL
+      - skillId: decline
+        relationship: COMPLEMENTARY
+        distinction: Decline supplies the user's chosen no; politeness only changes expression.
+        coexistence: COMPATIBLE
+    reviewState: PASS
+
+  - id: zh.professional_formality
+    lane: LANGUAGE_MODIFIER
+    profileRevision: 1
+    job: Express an eligible Chinese work update or follow-up with concise professional register.
+    useWhen:
+      - Chinese is eligible and a work-oriented status, missed commitment, or follow-up needs professional convention.
+    whenNotUse:
+      - The context is casual personal planning or Chinese is ineligible.
+      - Formality would add bureaucratic filler or turn uncertainty into a promise.
+    semanticTriggers:
+      - Present a supported Chinese work-status message professionally and briefly.
+    neighbors:
+      - skillId: zh.natural_conciseness
+        relationship: NEAR_NEIGHBOR
+        distinction: Natural concision fits ordinary chat without requiring a professional register.
+        coexistence: CONDITIONAL
+      - skillId: zh.politeness_calibration
+        relationship: NEAR_NEIGHBOR
+        distinction: Politeness calibrates a chosen request or refusal; professional formality handles work register.
+        coexistence: CONDITIONAL
+    reviewState: PASS
+
+  - id: zh.natural_conciseness
+    lane: LANGUAGE_MODIFIER
+    profileRevision: 1
+    job: Keep an eligible Chinese chat reply natural, concise, and easy to act on.
+    useWhen:
+      - Chinese is eligible and an ordinary planning, invitation, or request reply is wordy or stiff.
+    whenNotUse:
+      - Chinese is ineligible or the reply needs explicit professional register.
+      - Shortening would remove a chosen action, fact, uncertainty, or intentional mixed term.
+    semanticTriggers:
+      - Remove redundant Chinese chat wording while retaining the communication job.
+    neighbors:
+      - skillId: zh.professional_formality
+        relationship: NEAR_NEIGHBOR
+        distinction: Professional formality serves an explicit work register rather than ordinary chat.
+        coexistence: CONDITIONAL
+      - skillId: zh.code_switching
+        relationship: COMPLEMENTARY
+        distinction: Code-switching preserves intentional English terms; concision independently removes redundancy.
+        coexistence: COMPATIBLE
+    reviewState: PASS
+
+  - id: zh.code_switching
+    lane: LANGUAGE_MODIFIER
+    profileRevision: 1
+    job: Preserve intentional English terms already used in an eligible Chinese conversation.
+    useWhen:
+      - Chinese is the eligible primary language and the visible conversation intentionally mixes an English term.
+    whenNotUse:
+      - The Chinese conversation has no intentional mixed term or the primary language is unsupported.
+      - A quoted identifier alone in another primary language would falsely imply Chinese code-switching.
+    semanticTriggers:
+      - Retain a supplied mixed-language term while wording the surrounding Chinese naturally.
+    neighbors:
+      - skillId: zh.natural_conciseness
+        relationship: COMPLEMENTARY
+        distinction: Natural concision shortens Chinese wording; code-switching protects the existing mixed term.
+        coexistence: COMPATIBLE
+    reviewState: PASS

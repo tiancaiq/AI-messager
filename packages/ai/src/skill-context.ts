@@ -58,6 +58,17 @@ const reassure =
   /\b(?:it's okay|you've got this|I'm here|support you)\b|(?:没关系|沒關係|我在|支持你)/iu;
 const timing =
   /\b(?:today|tomorrow|probably|maybe|later|by )\b|(?:今天|明天|可能|大概|稍后|稍後)/iu;
+const perspectiveAcknowledgementIntent =
+  /\b(?:acknowledge|recognize|recognise|understand)\b[^\n]{0,80}\b(?:interpretation|reading|how (?:it|that|the [a-z]+) (?:looked|seemed)|how (?:you|they) (?:read|saw|interpreted))\b|(?:承认|承認|理解|看见|看見|回应|回應).{0,40}(?:理解|解读|解讀|看法|看起来|看起來|显得|顯得)/iu;
+const statedPerspective =
+  /\b(?:i (?:read|saw|interpreted)\b|it (?:looked|seemed) like\b|came across as\b)\b|(?:我(?:觉得|覺得)|我(?:理解|看).{0,24}(?:是|像|表示|意味着|意味著)|看起来像|看起來像|显得|顯得)/iu;
+const constructiveFeedbackIntent =
+  /\b(?:give|share|offer|write)\b[^\n]{0,40}\b(?:constructive )?feedback\b|\b(?:address|explain)\b[^\n]{0,60}\b(?:impact|interruption|behavior|behaviour)\b|\b(?:interrupt(?:ed|ions?)|chang(?:e|ed|ing)|missing labels?)\b[^\n]{0,120}\b(?:prevent(?:ed)?|caus(?:e|ed)|made|please|next time|could you)\b|(?:给|給|提供|表达|表達|提出|写|寫).{0,32}(?:反馈|反饋|回饋|意见|意見|改进建议|改進建議)|(?:说明|說明|指出).{0,32}(?:影响|影響|打断|打斷|行为|行為)|(?:打断|打斷|改动|改動|更改|缺少|少了).{0,80}(?:导致|導致|影响|影響|请|請|下次)/iu;
+
+export interface SkillContextDerivationOptions {
+  /** Phase 8 evaluator opt-in. Default routing remains unchanged. */
+  experimentalCandidateRouting?: boolean;
+}
 
 function addIf<T>(set: Set<T>, condition: boolean, value: T): void {
   if (condition) set.add(value);
@@ -95,6 +106,7 @@ function hasUserStatus(text: string): boolean {
 export function deriveSkillContext(
   coachingRequest: CoachingRequest,
   policy: CoachingPolicyDecision,
+  options: SkillContextDerivationOptions = {},
 ): SkillContext {
   const analysis = coachingRequest.analysis;
   const selectedIntent =
@@ -164,6 +176,19 @@ export function deriveSkillContext(
   addIf(intents, !explicitSelection && planning.test(visible), "plan");
   addIf(intents, requestPattern.test(policy.userIntent.value ?? ""), "clarify");
   addIf(intents, requestPattern.test(analysis.draft.text ?? ""), "make_request");
+  if (options.experimentalCandidateRouting) {
+    addIf(
+      intents,
+      currentUserIntent.some((text) => perspectiveAcknowledgementIntent.test(text)) &&
+        otherEvidence.some((text) => statedPerspective.test(text)),
+      "acknowledge_perspective",
+    );
+    addIf(
+      intents,
+      currentUserIntent.some((text) => constructiveFeedbackIntent.test(text)),
+      "give_feedback",
+    );
+  }
 
   return {
     action: policy.action,

@@ -1,0 +1,237 @@
+recordVersion: 1
+kind: LANGUAGE_MODIFIER
+capabilityFamily: language_expression
+definition:
+  id: zh.professional_formality
+  name: Chinese professional formality
+  description: Use for Chinese status and missed-commitment messages that benefit from concise
+    professional convention.
+  languages:
+    - zh
+  situations:
+    - status_request
+    - missed_commitment
+    - follow_up
+  intents: []
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use for Chinese status and missed-commitment messages that benefit from concise
+      professional convention.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Use concise professional Chinese while preserving visible certainty and facts.
+  avoid:
+    - Avoid bureaucratic filler and unsupported commitments.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: zh.natural_conciseness
+    distinction: Casual Chinese weekend plan → natural_conciseness.
+    caseId: H1
+  - id: zh.politeness_calibration
+    distinction: Chinese refusal/request → politeness_calibration as appropriate.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Simplified Chinese draft progress update.
+      visibleContext: Simplified Chinese draft progress update.
+      userIntent: Report draft progress.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hans
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.professional_formality
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Traditional Chinese update about a missed commitment.
+      visibleContext: Traditional Chinese update about a missed commitment.
+      userIntent: Update on a missed commitment.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hant
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.professional_formality
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Chinese follow-up on visible work review.
+      visibleContext: Chinese follow-up on visible work review.
+      userIntent: Follow up on visible work review.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.professional_formality
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: English-only chat.
+      visibleContext: English-only chat.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.professional_formality
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Unsupported primary language.
+      visibleContext: Unsupported primary language.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: ko
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.professional_formality
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: No wording action is required.
+      visibleContext: No wording action is required.
+      userIntent: null
+      action: NO_REPLY_NEEDED
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.professional_formality
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Casual Chinese weekend plan → natural_conciseness.
+      visibleContext: Casual Chinese weekend plan → natural_conciseness.
+      userIntent: Coordinate a casual weekend plan.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - zh.natural_conciseness
+      forbidden: []
+      rationale: Casual Chinese weekend plan → natural_conciseness.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Chinese refusal/request → politeness_calibration as appropriate.
+      visibleContext: Chinese refusal/request → politeness_calibration as appropriate.
+      userIntent: Communicate a request or refusal.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - zh.politeness_calibration
+      forbidden: []
+      rationale: Chinese refusal/request → politeness_calibration as appropriate.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: “关于这个报告目前的情况呢就是初稿已经完成了” → “报告初稿已完成。”
+      visibleContext: The report's first draft is complete.
+      userIntent: Report that the first draft is complete.
+      action: REWRITE_DRAFT
+      language:
+        primary: zh-Hans
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: 关于这个报告目前的情况呢就是初稿已经完成了
+      improved: 报告初稿已完成。
+      ledger:
+        facts:
+          - The report's first draft is complete.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: “應該可能明天可以完成吧” → “預計明天可以完成，但還不確定。”
+      visibleContext: User estimates completion tomorrow but is uncertain.
+      userIntent: Communicate uncertain completion tomorrow.
+      action: REWRITE_DRAFT
+      language:
+        primary: zh-Hant
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: 應該可能明天可以完成吧
+      improved: 預計明天可以完成，但還不確定。
+      ledger:
+        facts:
+          - User estimates completion tomorrow but is uncertain.
+        commitments: []
+        uncertainty:
+          - Tomorrow is an estimate, not a firm commitment.
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#zhprofessional_formality
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:d02f406cb4ed7fb871516e9a7100c161b089eca8e09deef0e6d55c7050f6cff4
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

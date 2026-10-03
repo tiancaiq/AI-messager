@@ -5,5 +5,8 @@ packages:
 allowBuilds:
   electron: true
   esbuild: true
+  onnxruntime-node: false
+  protobufjs: false
+  sharp: false
 
 minimumReleaseAge: 1440

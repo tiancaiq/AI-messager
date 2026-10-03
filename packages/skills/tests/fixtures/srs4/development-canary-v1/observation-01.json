@@ -1,0 +1,47 @@
+{
+  "key": "SRS3B:R06",
+  "rawRevision": "R1",
+  "payloadSha256": "c19985e1c52f01be15b34096ce22cfbee89f18e2043b830db206c80d2dfdb706",
+  "httpStatus": 200,
+  "httpSuccess": true,
+  "providerCompletionStatus": "completed",
+  "returnedModel": "gpt-6.1-sol",
+  "serviceTier": "default",
+  "providerBodyJsonValid": true,
+  "inputTokens": 3506,
+  "outputTokens": 430,
+  "totalTokens": 3936,
+  "latencyMs": 11904,
+  "failureKind": "VALIDATION_FAILED",
+  "d2": {
+    "scenarioId": "SRS3B:R06",
+    "validatorStatus": "INVALID",
+    "firstFailedStage": "NEGATION_PREREQUISITE_EVIDENCE_VALID",
+    "failureCodes": [
+      "PREREQUISITE_EVIDENCE_INVALID"
+    ],
+    "providerResponsePresent": true,
+    "outputPresent": true,
+    "jsonParseValid": true,
+    "wireSchemaValid": true,
+    "applicationValid": false,
+    "counts": {
+      "expectedCandidateCount": 10,
+      "returnedCandidateCount": 10,
+      "missingCandidateCount": 0,
+      "extraCandidateCount": 0,
+      "duplicateCandidateCount": 0,
+      "invalidReasonCodeCount": 0,
+      "reasonPolarityMismatchCount": 0,
+      "invalidEvidenceRefCount": 0,
+      "ownershipViolationCount": 0,
+      "factGroundingViolationCount": 0,
+      "selectedCountBeforeValidation": 1
+    }
+  },
+  "v1ValidatorStatus": "INVALID",
+  "v1SelectionStatus": "FAILED",
+  "selectedIds": [],
+  "knownCostUSD": 0.013065,
+  "conservativeCostUpperBoundUSD": 0.122273
+}

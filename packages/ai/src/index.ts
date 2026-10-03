@@ -17,7 +17,11 @@ export {
   type CoachingTextGenerator,
 } from "./coaching-engine.js";
 export { decideCoachingAction, type CoachingPolicyDecision } from "./coaching-policy.js";
-export { deriveSkillContext, type CommunicationSkillPlanner } from "./skill-context.js";
+export {
+  deriveSkillContext,
+  type CommunicationSkillPlanner,
+  type SkillContextDerivationOptions,
+} from "./skill-context.js";
 export { COACHING_INSTRUCTIONS } from "./coaching-prompt.js";
 export {
   buildOpenAiCoachingRequest,

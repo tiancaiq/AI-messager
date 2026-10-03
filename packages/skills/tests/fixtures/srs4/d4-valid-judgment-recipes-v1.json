@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "contractId": "SRS-4-SUPERVISOR-CONTRACT-V2",
+  "status": "OFFLINE_FAKE_JUDGMENTS_ONLY",
+  "recipes": [
+    {
+      "id": "FIRST_REQUEST_PREREQUISITE_ABSENT",
+      "exposedKey": "SRS3B:R06",
+      "selected": ["request"],
+      "rejections": { "follow_up": "PREREQUISITE_NOT_ESTABLISHED" },
+      "expectedStatus": "SELECTED"
+    },
+    {
+      "id": "WORDING_NONE",
+      "exposedKey": "SRS3B:R26",
+      "selected": [],
+      "rejections": {
+        "follow_up": "PREREQUISITE_NOT_ESTABLISHED",
+        "planning": "INSUFFICIENT_EVIDENCE"
+      },
+      "expectedStatus": "NONE"
+    },
+    {
+      "id": "MULTI_REQUIRED_STRUCTURE",
+      "exposedKey": "SRS3B:R19",
+      "selected": ["status_update", "expectation_setting"],
+      "rejections": {},
+      "expectedStatus": "SELECTED"
+    },
+    {
+      "id": "PROVENANCE_BLOCKED_POSITIVE",
+      "exposedKey": "SRS3B:R14",
+      "selected": [],
+      "rejections": { "expectation_setting": "INSUFFICIENT_EVIDENCE" },
+      "expectedStatus": "NONE"
+    },
+    {
+      "id": "OBJECTIVE_NEGATION",
+      "exposedKey": "SRS3B:R14",
+      "selected": [],
+      "rejections": { "planning": "EXPLICITLY_NEGATED" },
+      "expectedStatus": "NONE"
+    },
+    {
+      "id": "EXPLICIT_NO_BOUNDARY",
+      "exposedKey": "SRS3B:R10",
+      "selected": [],
+      "rejections": { "boundary_setting": "EXPLICITLY_NEGATED" },
+      "expectedStatus": "NONE"
+    }
+  ]
+}

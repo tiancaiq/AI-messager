@@ -1,0 +1,236 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: recognition_support
+definition:
+  id: emotional_validation
+  name: Emotional validation
+  description: Use when the other person shares a clearly upsetting experience or feeling.
+  languages:
+    - universal
+  situations:
+    - emotional_support
+  intents:
+    - validate_emotion
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the other person shares a clearly upsetting experience or feeling.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Acknowledge the visible feeling or difficulty before advice.
+  avoid:
+    - Do not diagnose, minimize, or claim to know an unspoken feeling.
+  compatibleSkills:
+    - reassurance
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: reassurance
+    distinction: User offers a known available source of help to address worry → `reassurance`.
+    caseId: H2
+conceptualNotes:
+  - caseId: H1
+    distinction: Person states an interpretation without emotion → `perspective_acknowledgement`.
+    sourceRef: docs/skills/phase-5-registry-expansion.md#emotional_validation
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Friend explicitly says they are sad after a rejection; user wants to acknowledge it.
+      visibleContext: Friend explicitly says they are sad after a rejection; user wants to acknowledge it.
+      userIntent: Acknowledge the friend's stated sadness.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - emotional_validation
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Coworker says repeated cancellations are frustrating.
+      visibleContext: Coworker says repeated cancellations are frustrating.
+      userIntent: Acknowledge stated frustration with cancellations.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - emotional_validation
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Family member says a long wait was exhausting.
+      visibleContext: Family member says a long wait was exhausting.
+      userIntent: Acknowledge stated exhaustion.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - emotional_validation
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: Neutral scheduling message has no emotional content.
+      visibleContext: Neutral scheduling message has no emotional content.
+      userIntent: Coordinate a schedule.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - emotional_validation
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User only wants to confirm a number.
+      visibleContext: User only wants to confirm a number.
+      userIntent: Confirm a number.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - emotional_validation
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User is asked to endorse an unsupported accusation as fact.
+      visibleContext: User is asked to endorse an unsupported accusation as fact.
+      userIntent: Endorse an unsupported accusation.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - emotional_validation
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Person states an interpretation without emotion → `perspective_acknowledgement`.
+      visibleContext: Person states an interpretation without emotion → `perspective_acknowledgement`.
+      userIntent: Recognize a stated interpretation without adding emotion.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Person states an interpretation without emotion → `perspective_acknowledgement`.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: User offers a known available source of help to address worry → `reassurance`.
+      visibleContext: User offers a known available source of help to address worry → `reassurance`.
+      userIntent: Offer a known available source of help.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - reassurance
+      forbidden: []
+      rationale: User offers a known available source of help to address worry → `reassurance`.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: "Visible: “I'm disappointed I didn't get it.” “don't be sad” → “That sounds
+        disappointing.”"
+      visibleContext: "Other person said: I'm disappointed I didn't get it."
+      userIntent: Acknowledge expressed disappointment.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: don't be sad
+      improved: That sounds disappointing.
+      ledger:
+        facts:
+          - "Other person said: I'm disappointed I didn't get it."
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText:
+        "Visible: “The repeated changes have been frustrating.” “ok” → “I can see why those
+        repeated changes were frustrating.”"
+      visibleContext: Other person said the repeated changes have been frustrating.
+      userIntent: Acknowledge expressed frustration.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: ok
+      improved: I can see why those repeated changes were frustrating.
+      ledger:
+        facts:
+          - Other person said the repeated changes have been frustrating.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#emotional_validation
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:5e5a186c00510fc7d58ddc9c23d6214e02f03a30a6d2595fe453a490d9f6441d
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

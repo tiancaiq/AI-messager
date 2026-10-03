@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "dispositionId": "SRS-3E-SEMANTIC-CALIBRATION-DISPOSITION-1",
+  "configArtifactSha256": "e790268530108775e34cbae0d8c7b7489d5c96939d5ac490cc7ff81fca1f54d5",
+  "gridArtifactSha256": "d5cb69af28b6cf4d51611c58b5ee42d43ba91feea6404f43036d815a595b8a33",
+  "status": "STOP_ZERO_RECALL",
+  "challengeRunAuthorized": false,
+  "reason": "All guard-satisfying grid pairs have zero positive-case recall; no non-degenerate first-run configuration exists."
+}

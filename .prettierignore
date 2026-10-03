@@ -6,3 +6,7 @@ coverage/
 dist/
 node_modules/
 pnpm-lock.yaml
+# Preserve the exact historical capture; never regenerate it from migrated data.
+packages/skills/tests/fixtures/pre-migration.json
+# Preserve the byte-frozen, hash-bound SRS-4-D3 live canary observations.
+packages/skills/tests/fixtures/srs4/development-canary-v1/

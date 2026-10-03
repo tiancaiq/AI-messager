@@ -1,0 +1,1295 @@
+{
+  "artifactVersion": 1,
+  "date": "2026-09-23",
+  "scope": "PHASE_8B_CANDIDATE_DEFINITION_ATOMICITY_REVIEW",
+  "reviewerType": "CODEX_SEMANTIC_REVIEW",
+  "productionRegistryDigest": "sha256:c96fc9c9a5b26909ecf635bbae3ebef28abf15ed4729216cc28caf7698ad1ee3",
+  "humanExperimentPermission": "PENDING",
+  "candidateActivation": false,
+  "heldOutOrSelectionEvaluation": false,
+  "representability": {
+    "format": "PRIVATE_RESEARCH_DOSSIERS",
+    "reason": "Runtime SkillDefinition accepts ACTIVE/INACTIVE, not research DRAFT, and candidate intents are absent. Dossiers deliberately are not SkillDefinition objects or AuthoringRecords; no enum/schema/routing extension or misleading alias is needed for 8B.",
+    "allowedImports": "Private tests only. No manifest, package export, production build, engine, context derivation or prompt import.",
+    "candidateIntentProposals": [
+      "acknowledge_perspective",
+      "confirm_understanding",
+      "give_feedback"
+    ]
+  },
+  "method": "Sequential CODEX review of Phase 3 rationale, exact Phase 5 candidate cards and all 30 canonical examples, frozen 21 runtime definitions and accepted scoped 8A findings. Semantic comparison only, not selection results, held-out evidence, provider output or human candidate approval.",
+  "casesMeaning": "Every proposed context is an exposed canonical clarification/expansion, not an 8C case corpus or executable routing annotation. REVISE additions are new synthetic inputs and never retroactively ground the source. KEEP means original purpose survives review; the structured expansion still has its own revision. Expected/acceptable/forbidden describe hypothetical semantic applicability within each supplied intent, not measured runtime selection or candidate availability.",
+  "sources": {
+    "phase3": {
+      "path": "docs/skills/phase-3-capability-normalization.md",
+      "rawSha256": "ef02e41ae8d02e645bbf9af6924bb31e10f615e8b0a6d1b765dddd402b507354"
+    },
+    "phase5": {
+      "path": "docs/skills/phase-5-registry-expansion.md",
+      "rawSha256": "a3cbcdbe33a58b05f95186d3d777c2961f990a7011a1fe43e494b6d141d8a0b6"
+    },
+    "planBaseline": {
+      "path": ".agent/plans/skills-phase-8-candidate-evaluation.md",
+      "rawSha256": "480d3572912a0d028e4624ead59156dda9a16acac14205483bd9ae1aeb0f3ea6",
+      "meaning": "Pre-8B historical plan hash; this living plan is intentionally updated during 8B."
+    }
+  },
+  "candidates": [
+    {
+      "id": "perspective_acknowledgement",
+      "revision": 1,
+      "researchState": "DRAFT",
+      "decision": "CONTINUE",
+      "humanExperimentPermission": "PENDING",
+      "oneJob": "Acknowledge a recipient's explicitly stated interpretation as their interpretation, without endorsing its truth.",
+      "evidencePrerequisites": [
+        "A visible statement attributes a specific reading to the recipient; do not infer it from emotion, brevity or silence.",
+        "The user chooses recognition of that reading; rewrite input must already express or explicitly authorize that goal.",
+        "Enough visible content identifies what was interpreted, without inventing causal explanations or motives."
+      ],
+      "constraints": {
+        "ownership": "Attribute the reading to its actual speaker. The user's wording acknowledges that reading, not user-owned wrongdoing.",
+        "facts": "Do not assert that the interpretation is true or explain why it arose unless the reason is supplied.",
+        "commitments": "No apology, concession, corrective promise or checking step without separate user intent/evidence.",
+        "certainty": "Keep attributed perception separate from factual endorsement. Preserve explicit denial or uncertainty if present.",
+        "action": "Only word the already-selected action and intent. Never infer a need for acknowledgment from a closed exchange."
+      },
+      "guidance": {
+        "principles": [
+          "Recognize the other person's stated reading in plain attributed language.",
+          "Separate acknowledging that reading from endorsing disputed facts or motives.",
+          "Preserve the user's position and any separately supplied uncertainty or denial."
+        ],
+        "avoid": [
+          "Do not invent feelings, intentions, explanations or fault.",
+          "Do not turn a denial into agreement, apology or a promise.",
+          "Avoid formulaic validation, unnecessary paraphrase and unchosen questions."
+        ]
+      },
+      "guidanceChanges": [
+        "Narrow Phase 3 'interpretation or concern' to an explicitly stated interpretation; concern alone is insufficient.",
+        "Replace 'I can see why/how' as a default with attributed recognition; causal plausibility is not assumed.",
+        "Rewrite A1/A2 as openly synthetic, semantically aligned before/after pairs; retain the stance-changing historical pairs as rejected evidence."
+      ],
+      "decisionReason": "A calm attributed interpretation with no stated emotion, support fact, missing detail or heat leaves a plausible recognition job beyond current eligible single skills. CONTINUE means a reviewed hypothesis merits an experiment, not that incremental benefit is proven. The 8A quarantined perspective original proves no new atom.",
+      "falsification": [
+        "Reject or merge if current emotional_validation legitimately covers the same cases without inferring upset, or generic generation plus eligible modifiers consistently matches the benefit.",
+        "Reject if reviewers cannot distinguish mere recognition from agreement, or if the candidate increases false agreement, inferred emotion or unrequested questions.",
+        "Reject as tactic/modifier if useful cases reduce to generic paraphrase or politeness rather than recognition of an attributed interpretation."
+      ],
+      "modeApplicability": {
+        "REWRITE_DRAFT": "Preserve the supplied stance. Improve an already intended recognition; a hostile denial is not permission to change the communication goal. If denial and recognition are both intended, retain both without inventing a motive.",
+        "SUGGEST_REPLY": "Require explicit or independently reliable recognition intent plus the recipient's stated interpretation. An empty draft supplies no denial, apology or checking commitment. If the user's choice remains material and unknown, return control to the existing upstream action policy.",
+        "COMPLETE_DRAFT": "Not evaluated in 8B; no extra completion capability or eligibility is inferred."
+      },
+      "compositions": [
+        {
+          "ids": [],
+          "when": "Calm interpretation only, explicit recognition intent, no emotion or unknown.",
+          "assessment": "Generic generation with preservation constraints is the strongest uncontaminated baseline, not a deliberately weak validation-only condition."
+        },
+        {
+          "ids": ["emotional_validation"],
+          "when": "A clearly upsetting experience/feeling is actually supplied and user intends to acknowledge it.",
+          "assessment": "Frozen validation covers difficulty as well as emotion. Many Phase 5 examples overlap; candidate must add interpretation attribution beyond that existing coverage."
+        },
+        {
+          "ids": ["emotional_validation", "de_escalation"],
+          "when": "Both upset and actual conflict are supplied and acknowledged.",
+          "assessment": "Valid strong composition. Do not force either skill into a calm neutral interpretation case."
+        },
+        {
+          "ids": ["clarification", "request"],
+          "when": "There is a separate material unknown and a chosen request to resolve it.",
+          "assessment": "May accompany recognition but inquiry cannot be substituted for the user's recognition-only intent."
+        },
+        {
+          "ids": ["reassurance"],
+          "when": "A visible concern and supporting fact exist with chosen support intent.",
+          "assessment": "Support is a different job; reassurance must not dismiss the interpretation."
+        }
+      ],
+      "additionalNeighbors": [
+        {
+          "id": "apology",
+          "reason": "Requires user-intended regret for supported impact; recipient interpretation alone proves no fault."
+        },
+        {
+          "id": "acknowledge_mistake",
+          "reason": "Recipient reading does not establish a user-owned mistake."
+        },
+        {
+          "id": "planning",
+          "reason": "Known logistics can be restated without interpreting a viewpoint."
+        }
+      ],
+      "modifierRisk": "Professional/casual/polite phrasing is optional only with its existing language and intent evidence. Attributed recognition is not an English or Chinese style preference. Seven existing modifiers remain unchanged; Chinese, mixed and unsupported-language quality is unmeasured.",
+      "duplicates": "P1/A2 repeat schedule/deprioritization; P2/A1 repeat brief-reply/dismissive. P3 is the third context, not five independent contexts. The 8A replacement emotional_validation/H1 is a missing-file clarification, not evidence of a perspective atom.",
+      "examples": [
+        {
+          "id": "P1",
+          "judgment": "REVISE",
+          "finding": "Source supplies attribution/recognition but its silent change may already be a clearly upsetting experience; preserve overlap and omit invented motive.",
+          "proposed": {
+            "context": "Coworker says, 'The schedule change without a message looked like my task had been deprioritized.' User wants to acknowledge that reading; the reason for the change is not established.",
+            "intent": "Acknowledge how the coworker read the schedule change, without conceding a motive.",
+            "expected": ["perspective_acknowledgement"],
+            "acceptable": ["emotional_validation"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 191,
+            "text": "Coworker says a silent schedule change looked like deprioritization; user wants to acknowledge how it appeared without agreeing about motive.",
+            "digest": "sha256:f5d4567ccc017b59be6862deab57a3da970d964ac7e0079ce0f8d677939912dc"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:98eaa676911b2d722b526ba745ff607a4f621772c625cd4bc743d4a71901670a"
+        },
+        {
+          "id": "P2",
+          "judgment": "REVISE",
+          "finding": "A dismissive reading does not license an apology or an admission of intended dismissal.",
+          "proposed": {
+            "context": "Friend says, 'I read your short reply as dismissive.' User explicitly wants to acknowledge that interpretation without saying it was the intended meaning.",
+            "intent": "Recognize the friend's stated reading without agreeing about intent.",
+            "expected": ["perspective_acknowledgement"],
+            "acceptable": ["emotional_validation"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 191,
+            "text": "Friend says a short reply seemed dismissive; user wants to recognize that interpretation.",
+            "digest": "sha256:ccdcca1f3e7958852d9c5d8527fef64c8d22661976407fdd964c5d0ba891730c"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:3dce32fa436db3ed26f67ce8111a3765d00ead655f69433d365e283393a7990b"
+        },
+        {
+          "id": "P3",
+          "judgment": "REVISE",
+          "finding": "Separate recognition from the selected checking action; do not fabricate which price is correct.",
+          "proposed": {
+            "context": "Customer says, 'The two listed prices make the offer look inconsistent.' User wants to acknowledge this reading and asks which listing the customer means; the correct price is unknown.",
+            "intent": "Recognize the stated inconsistency and ask which listing is meant.",
+            "expected": ["perspective_acknowledgement", "clarification"],
+            "acceptable": ["request"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 191,
+            "text": "Customer says the two listed prices make the offer look inconsistent; user wants to acknowledge the reading while checking facts.",
+            "digest": "sha256:e402d06c66b8e67e137825e8c9c8ba0c0f446ab5ac6fbd18cdc4fde36d7e492c"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:477e8f0eff1df0ac302747e80aaa6b735a2ab28488dbf1c3721d70d54cca8282"
+        },
+        {
+          "id": "N1",
+          "judgment": "KEEP",
+          "finding": "Feeling-only evidence does not supply an interpretation.",
+          "proposed": {
+            "context": "Recipient says only, 'I'm sad.' User chooses to acknowledge the expressed sadness.",
+            "intent": "Acknowledge sadness without explaining its cause.",
+            "expected": ["emotional_validation"],
+            "acceptable": [],
+            "forbidden": ["perspective_acknowledgement"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 192,
+            "text": "Only “I'm sad” is visible.",
+            "digest": "sha256:b78b026690d382ac9e362ec465a217be05cb31d916b800ebc173a25dc4d25dd8"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:d544ae0ba87527f60b2cf8832d8c603ba2949097454b4e73ef1107f455186548"
+        },
+        {
+          "id": "N2",
+          "judgment": "KEEP",
+          "finding": "Unsupported secret-dislike assertion fails attribution/fact constraints; no skill can manufacture it.",
+          "proposed": {
+            "context": "Someone asks the user to claim a third person secretly dislikes the recipient. No supporting statement or observation is visible.",
+            "intent": "Do not assert the unsupported motive.",
+            "expected": [],
+            "acceptable": [],
+            "forbidden": ["perspective_acknowledgement"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 192,
+            "text": "User is asked to claim “They secretly dislike you” without evidence.",
+            "digest": "sha256:eb0bac173e044bd2d3ed94040dce344921cf19987c59a0a0ac1599419f76f51d"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:5d713cd1b4cc50bf7bdaa8dc584f1987531999faaa310ac3c39f4b9b47a598af"
+        },
+        {
+          "id": "N3",
+          "judgment": "REVISE",
+          "finding": "Make neutral logistics and fixed restatement intent explicit; no new verification question.",
+          "proposed": {
+            "context": "Both people have agreed to meet at 3 p.m. User only restates that settled time; no interpretation is expressed.",
+            "intent": "Restate the agreed 3 p.m. meeting.",
+            "expected": ["planning"],
+            "acceptable": [],
+            "forbidden": ["perspective_acknowledgement"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 192,
+            "text": "A neutral time confirmation contains no interpretation.",
+            "digest": "sha256:36aa386c09b5abee58cf830c571682fee0c69ee6bb57e3e93e65b7a3609b0bd4"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:1bbaf27986ed786133242be6f4a807a89734953e7fecc85b12c2ce9c9a6038b6"
+        },
+        {
+          "id": "H1",
+          "judgment": "KEEP",
+          "finding": "The source has an upsetting experience and explicit feeling; user wants only emotional recognition.",
+          "proposed": {
+            "context": "Recipient says, 'The cancellations made me frustrated.' User chooses only to acknowledge that feeling.",
+            "intent": "Recognize the stated frustration.",
+            "expected": ["emotional_validation"],
+            "acceptable": [],
+            "forbidden": ["perspective_acknowledgement"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 193,
+            "text": "“The cancellations made me frustrated” with intent only to recognize feeling → emotional_validation.",
+            "digest": "sha256:6403b65f7103ffc06897d614609f72bebfe9446899539e4a43b0faa7483201a7"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:0c05c19710441acb4dc3c555ccd9cbebb64e4c15ddbc784e3ce78e7dd67d4cf3"
+        },
+        {
+          "id": "H2",
+          "judgment": "REVISE",
+          "finding": "The original mixes asking a question with answering one; disambiguate speaker and intent in a new synthetic variant.",
+          "proposed": {
+            "context": "Two different prices are visible. The user does not know which applies and has chosen to ask the seller. No recipient interpretation is stated.",
+            "intent": "Ask which price applies.",
+            "expected": ["clarification"],
+            "acceptable": ["request"],
+            "forbidden": ["perspective_acknowledgement"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 193,
+            "text": "“Which price is correct?” with no interpretation to recognize → clarification or a factual answer, as supported.",
+            "digest": "sha256:7aa48cbe4084e6647691e0ca965012457f3167d1ff414e32a3bbe1136f7464cd"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:1cb362cf5a07f847639650212003fc61fc3daa55abd41a6ed1f0444e6f08642d"
+        },
+        {
+          "id": "A1",
+          "judgment": "REVISE",
+          "finding": "Original denial→recognition changes stance. New synthetic draft below already expresses the chosen recognition; it does not approve the original rewrite.",
+          "proposed": {
+            "context": "Friend says, 'I read your brief reply as dismissive.' User chooses to recognize that reading; the user's intent behind the brief reply is not established.",
+            "intent": "Acknowledge the friend's interpretation without a motive claim.",
+            "expected": ["perspective_acknowledgement"],
+            "acceptable": [],
+            "forbidden": [],
+            "draft": "I understand that dismissive is how you read my brief reply, that was your reading of it.",
+            "improved": "I understand you read my brief reply as dismissive.",
+            "ledger": {
+              "facts": ["Friend explicitly read the user's brief reply as dismissive."],
+              "commitments": [],
+              "uncertainty": [
+                "The user's original intent is not established; no denial or agreement about it is added."
+              ]
+            }
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 194,
+            "text": "Visible: friend read the brief reply as dismissive; user wants to acknowledge that reading. “you read it wrong” → “I can see how my short reply came across as dismissive.” No concession about intention is added.",
+            "digest": "sha256:e48c1b8a340935e04bab3cd9b8b439440d8c49df0facde8dd3014d7f1e8a2569"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:15aefa4abc5484ea6dce799921a8dd443c66e01d2e899658e68edc94d2d1b65b"
+        },
+        {
+          "id": "A2",
+          "judgment": "REVISE",
+          "finding": "Original 'not what it meant' loses denial and adds 'why'. New synthetic pair retains the denial explicitly and acknowledges only the stated reading.",
+          "proposed": {
+            "context": "Recipient says the changed schedule looked like their task had been deprioritized. User explicitly states that was not what they meant and also chooses to acknowledge the reading.",
+            "intent": "Acknowledge the stated reading while retaining the supplied denial of intended meaning.",
+            "expected": ["perspective_acknowledgement"],
+            "acceptable": [],
+            "forbidden": [],
+            "draft": "I understand you read the schedule change as your task being deprioritized. I didn't mean that. That was not my meaning.",
+            "improved": "I understand you read the schedule change as deprioritizing your task. That wasn't what I meant.",
+            "ledger": {
+              "facts": [
+                "Recipient read the schedule change as deprioritization.",
+                "User explicitly denies that intended meaning."
+              ],
+              "commitments": [],
+              "uncertainty": [
+                "Actual priority change is not established by the user's denial of intent."
+              ]
+            }
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 195,
+            "text": "Visible: changed schedule looked like deprioritization; no motive conceded. “not what it meant” → “I can see why the schedule change looked like your task had been deprioritized.” No promise or invented explanation follows.",
+            "digest": "sha256:8912fa8c87fa4d1eaa8a8645dd0ad1cc3190cc40149f476f0993204ce50b1f7b"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:05b470977041c0fb715e1f64bd2c2178c602a854d1508a7663dc6517bc8e1918"
+        }
+      ],
+      "sourceCard": {
+        "path": "docs/skills/phase-5-registry-expansion.md",
+        "line": 176,
+        "text": "### perspective_acknowledgement — Acknowledge a stated perspective\n\n| Field | Specification |\n| --- | --- |\n| Family / definition | recognition_support. Help the user recognize another person's stated interpretation without agreeing with disputed facts or inventing their feelings. |\n| Why existing skills cannot cover it | Validation names an emotional experience; clarification asks for unknown detail; reassurance offers grounded support. None explicitly recognizes an interpretation while withholding factual agreement. Composing them can add emotion, a question or reassurance absent from the user's goal. |\n| Relationships / situations | Coworker, friend, family, customer; misunderstanding, disagreement, explanation of a concern. |\n| Should trigger | A visible interpretation is attributed to the other person, user intends to acknowledge it, and recognition adds useful framing. Proposed semantic intent: acknowledge_perspective. |\n| Should not trigger | No expressed interpretation; only a feeling; user wants the model to assert the interpretation is true; question action fixed upstream. |\n| Principles | Identify the stated reading; tie it only to visible information; distinguish understanding from endorsement. |\n| Avoid | Invented motives, false agreement, emotion diagnosis, insincere formulaic validation. |\n| Neighbors | emotional_validation: feeling rather than interpretation. clarification: resolving missing information rather than recognizing known perspective. |\n| Compatible / potential tension | Validation when a feeling is separately stated; clarification for a separate material unknown; de-escalation for real conflict. Reassurance must not contradict a legitimate concern. No pair is inherently conflicting. |\n| Score / provenance | Phase 3 score 14/14. Thanos listening/empathy vocabulary, Wondel tactical empathy and EQ acknowledgement dimensions; independently authored, no source dialogue reuse. |\n\n- P1: Coworker says a silent schedule change looked like deprioritization; user wants to acknowledge how it appeared without agreeing about motive. P2: Friend says a short reply seemed dismissive; user wants to recognize that interpretation. P3: Customer says the two listed prices make the offer look inconsistent; user wants to acknowledge the reading while checking facts.\n- N1: Only “I'm sad” is visible. N2: User is asked to claim “They secretly dislike you” without evidence. N3: A neutral time confirmation contains no interpretation.\n- H1: “The cancellations made me frustrated” with intent only to recognize feeling → emotional_validation. H2: “Which price is correct?” with no interpretation to recognize → clarification or a factual answer, as supported.\n- A1: Visible: friend read the brief reply as dismissive; user wants to acknowledge that reading. “you read it wrong” → “I can see how my short reply came across as dismissive.” No concession about intention is added.\n- A2: Visible: changed schedule looked like deprioritization; no motive conceded. “not what it meant” → “I can see why the schedule change looked like your task had been deprioritized.” No promise or invented explanation follows.",
+        "digest": "sha256:b17073e770e1737efa4fdab0a224c1cd1a6cfae5cd7a4324cf7519c4739e551f"
+      },
+      "definitionBindings": {
+        "apology": "sha256:8221402bcdfb866433c969297014c3fbbf5aa389ab79d4a628687de6516b5f46",
+        "acknowledge_mistake": "sha256:5b651416a95e3c48749ce4619e95e008970edcd9f389449df62b79c5c9ce12ac",
+        "emotional_validation": "sha256:5e5a186c00510fc7d58ddc9c23d6214e02f03a30a6d2595fe453a490d9f6441d",
+        "reassurance": "sha256:1a2712cefd5c7580782fb244375bdc7721dd17cee9026a68640013727486ff7e",
+        "boundary_setting": "sha256:1a0f4f43e8748abea7927701881b2c953b3a0f79434d0d60bdc213d18eead59e",
+        "de_escalation": "sha256:1c8bd46ae515a8cdca6a50238e5f0ba0e4a2f9c1b71ad4779a1566c594051168",
+        "decline": "sha256:06ae122d785ae6ed915dd6fa57b3f4bec013276c53285b165cc16ed662e4bd0a",
+        "ask_for_help": "sha256:6f02649adcc780b7ee1bea2a75ac8680bd807555b22b08aa8c7935a04a245945",
+        "follow_up": "sha256:d48baec95cb149f23b14c4082a16bde90fcff16daa0ae397102d7e9efd1732ec",
+        "status_update": "sha256:0ca9ab17617c03dc373c61bed069b6f11c8b9ed6d56308dfb1dc494f00f820f9",
+        "expectation_setting": "sha256:8b14ec14f7c9efaed537fb736d4fafdd7d4721cbab3d756d1e5c7419e98d45b5",
+        "planning": "sha256:f43aeda3624c08258657f4caedff9d0ee4e5d2ecf242fa1df9eb292fde631273",
+        "clarification": "sha256:c36a893beaccbaa708d46caea9970730824b33f40edd886d473859b085ca25bb",
+        "request": "sha256:1c95d6ca98d075a39d13cf8859f654e1b8b08d7c7a9d8fde5fc33fbfa59bc341",
+        "en.professional_conciseness": "sha256:8e8866c920a71ac1370148cb9c80ad968104f03c389eee271899923c522072b2",
+        "en.casual_naturalness": "sha256:5f14e5051ba62067e21af4c02c136f9c8b3e24a0a28d6b5e348c2eef419d2d01",
+        "en.direct_but_polite": "sha256:e4f5152ad6772c5d6624f4cd5f8a60c388854b53063d122971768aa826fefda4",
+        "zh.politeness_calibration": "sha256:4d5484395f4e00eec44905ab5f2ac7be1ebc0277ac33bd9e6a78616e8949df96",
+        "zh.professional_formality": "sha256:d02f406cb4ed7fb871516e9a7100c161b089eca8e09deef0e6d55c7050f6cff4",
+        "zh.natural_conciseness": "sha256:4919bbe8c31bb790bf8bc0b077ad776d05daec6a060d020aaedca780b9484332",
+        "zh.code_switching": "sha256:fd064e6bdde7fd1076e53d29cdd170688a302c3cbb7b9e97faf1758524deb624"
+      },
+      "phase8ABindings": {
+        "approvalSetDigest": "sha256:fb25e021aa1b7a610d1a5e80846f70f02071fda4749ce3a7016c0b60d3472a91",
+        "originalSemanticReviewSha256": "16b6a2606b7b6f3724a0c3f4fce899b261709c6f88ceab4a303fdbc3efc58dec",
+        "remediationSha256": "16d5a358a1cd747428dd0f2574cf9707584a23de3a9b07625abe38947c9d9fd5",
+        "rereviewSha256": "262cf217be3e8d06feb0b8c0a24e1057607698623f70f2ea32dbde05e7ed63bc"
+      },
+      "neighborMatrixDigest": "sha256:1398595dd77dff8794d64f5e11274aee2f88633b5d8a295216ae5ff158531444",
+      "revisionDigest": "sha256:8bdfb837e2f40c81dee1304d36bf8b4ebc8b78fb23e3e66d7ed7f6f22937642c"
+    },
+    {
+      "id": "confirmation",
+      "revision": 1,
+      "researchState": "DRAFT",
+      "decision": "DEFER",
+      "humanExperimentPermission": "PENDING",
+      "oneJob": "Word the user's chosen check of one apparently understood material proposition without asserting acceptance or commitment.",
+      "evidencePrerequisites": [
+        "One proposition and its speaker are already visible; alternatives or missing scope are clarification.",
+        "User has chosen verification and gives a material reason to verify before reliance.",
+        "The upstream action is a wording action, not the coach deciding whether to ask or close."
+      ],
+      "constraints": {
+        "ownership": "Keep the offer/statement with its actual speaker. Do not turn the recipient's offer into the user's promise.",
+        "facts": "Repeat only the proposition supplied; no invented date, quantity, deliverable or interpretation.",
+        "commitments": "An offer is not an accepted agreement. A conditional plan to book is not a completed booking.",
+        "certainty": "A request for confirmation retains tentative status; cannot assert what is still being checked.",
+        "action": "No new question on a settled acknowledgment or NO_REPLY_NEEDED; never replace the existing ASK_CLARIFICATION policy."
+      },
+      "guidance": {
+        "principles": [
+          "Name the one supplied proposition the user has chosen to verify.",
+          "Keep its speaker and tentative status clear.",
+          "Ask only the selected material check before the stated reliance."
+        ],
+        "avoid": [
+          "Do not turn an offer or interpretation into an accepted commitment.",
+          "Do not invent a proposed answer for missing alternatives or scope.",
+          "Do not repeat settled trivia or add a verification question the user did not choose."
+        ]
+      },
+      "guidanceChanges": [
+        "Exclude Phase 3 'which deliverable Friday applies to': the scope is unknown and belongs to existing clarification.",
+        "Retain narrow Phase 5 material-known-proposition framing only as a proposed request tactic pending distinctness evidence.",
+        "Do not introduce confirm_understanding into the shared contract, alias it to clarify, or widen current clarification to hide overlap."
+      ],
+      "decisionReason": "Defer a separate atom before selection work: every surviving positive is already a supported request to verify a proposition. request preserves the selected action and leaves room for a truthful answer; global fact/commitment preservation supplies much of the rest. No canonical A-only/request-forbidden case exists. This is a redundancy concern, not measured equality or proof that confirmation can never add value. The two 8A quarantines did not establish a distinct candidate.",
+      "falsification": [
+        "To reopen the atom, show a material selected-verification job not adequately expressed by the current supported request baseline plus global preservation, without redefining existing skills or manufacturing uncertainty.",
+        "Reject if its only benefit is concise question phrasing/tentative language that belongs in request guidance or product preservation.",
+        "Reject if a confirmation label causes unnecessary checks, silently accepts an offer, reverses speaker ownership, or cannot be distinguished from an actual missing detail."
+      ],
+      "modeApplicability": {
+        "REWRITE_DRAFT": "Can preserve and clarify an already chosen verification question. Keep the exact proposition, speaker and tentative status. Do not change an assertion into a question unless the user explicitly chose verification.",
+        "SUGGEST_REPLY": "Needs the visible proposition, chosen check and material reliance reason. An empty draft is not permission to query every offer; settled answers may need no reply. All scoped examples remain possible with request and generic preservation.",
+        "COMPLETE_DRAFT": "Not evaluated in 8B. No independent completion skill or candidate eligibility is created."
+      },
+      "compositions": [
+        {
+          "ids": ["request"],
+          "when": "User asks the recipient to verify one visible proposition.",
+          "assessment": "Best single-skill comparator: the requested action is verification, and the current principle leaves room for a truthful response. Candidate positives are nested under this broad job."
+        },
+        {
+          "ids": ["clarification"],
+          "when": "A date, quantity, meaning or scope is actually missing.",
+          "assessment": "Use the existing missing-detail job. Do not assert an imagined Friday proposition to make a confirmation positive."
+        },
+        {
+          "ids": ["request", "planning"],
+          "when": "Verification and separately intended known logistics are both supplied.",
+          "assessment": "Two grounded operations may compose. Do not add planning merely because the question mentions a date."
+        },
+        {
+          "ids": ["request", "expectation_setting"],
+          "when": "User separately communicates their own supported conditional timing/limit.",
+          "assessment": "Preserve whose timing is being checked versus whose expectation is being stated."
+        },
+        {
+          "ids": ["request", "follow_up"],
+          "when": "A visible earlier request is deliberately revisited.",
+          "assessment": "Use only with actual earlier-request evidence; confirming is not inherently following up."
+        },
+        {
+          "ids": ["status_update"],
+          "when": "User only reports current known progress.",
+          "assessment": "Not a substitute for verification; never treat a status assertion as the same job."
+        }
+      ],
+      "additionalNeighbors": [
+        {
+          "id": "ask_for_help",
+          "reason": "A verification request need not be assistance; use only when assistance intent is independently supplied."
+        }
+      ],
+      "modifierRisk": "Question concision, politeness and professional register are expression choices. Their apparent improvement is insufficient evidence for a universal confirmation atom. No new rewrite/generate versions or language rules.",
+      "duplicates": "P1/A1 share Friday delivery and P2/A2 share seats-before-booking. P3 supplies a third domain but not a distinct operation. N1/H1 are both missing-alternative controls and cannot be counted as independent boundary discoveries.",
+      "examples": [
+        {
+          "id": "P1",
+          "judgment": "REVISE",
+          "finding": "Material selected verification is grounded, but existing request is a viable full comparator.",
+          "proposed": {
+            "context": "Colleague says, 'I can deliver Friday.' User chooses to verify that offer before scheduling dependent work; no acceptance is stated.",
+            "intent": "Ask whether the colleague is offering Friday delivery.",
+            "expected": ["request"],
+            "acceptable": ["confirmation"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 212,
+            "text": "A colleague offered Friday delivery; user wants to verify that offer before scheduling dependent work.",
+            "digest": "sha256:efbba4dfe30273936eb7801b8c540be794a2d986ed24c2c9731ea8ec5f95c76f"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:5078e62bbd699772db6d761f0dcd362cc93abba14d4c8b470e0496469537f493"
+        },
+        {
+          "id": "P2",
+          "judgment": "REVISE",
+          "finding": "Keep quantity with friend, and booking only as the user's conditional plan.",
+          "proposed": {
+            "context": "Friend proposes two seats. User chooses to verify the quantity before booking; nothing is booked yet.",
+            "intent": "Ask the friend to verify the proposed two seats before booking.",
+            "expected": ["request"],
+            "acceptable": ["confirmation"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 212,
+            "text": "Friend proposed two seats; user wants to confirm the quantity before booking.",
+            "digest": "sha256:120ec23c7e944e6f5d68cd6c306c7c282f7224d8bb6bd681ac9b9dc6ccbe1661"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:31240032ff64f2dbabc056cb4e5fa53047a45d6d958572b8e70131c462944bf3"
+        },
+        {
+          "id": "P3",
+          "judgment": "REVISE",
+          "finding": "Original 'appears to have chosen' lacks the actual proposition. New synthetic variant quotes the message without treating it as commitment.",
+          "proposed": {
+            "context": "Customer says, 'Collection should work for me.' User chooses to verify that tentative collection preference before arranging collection.",
+            "intent": "Check whether collection is the customer's intended option.",
+            "expected": ["request"],
+            "acceptable": ["confirmation"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 212,
+            "text": "Customer appears to have chosen collection; user wants to verify before arranging it.",
+            "digest": "sha256:fc7886971a19a7b220c849145471f720a84a16f44a690b41ea6402d4d81a443f"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:0af7de05c662f49b324c09fcf876c6ddd17228ef1e5400494b9fd7d7b706ed39"
+        },
+        {
+          "id": "N1",
+          "judgment": "KEEP",
+          "finding": "Unresolved alternatives mean no single proposition is available to confirm.",
+          "proposed": {
+            "context": "Recipient says, 'Thursday or Friday.' User needs the actual delivery date; neither has been chosen.",
+            "intent": "Ask which delivery date applies.",
+            "expected": ["clarification"],
+            "acceptable": ["request"],
+            "forbidden": ["confirmation"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 213,
+            "text": "“Thursday or Friday” remains unresolved; user needs the date.",
+            "digest": "sha256:4952ded1e7bc624ae0c5940187d937cb02ef9547e3f4ff1deeec74853ba43cc6"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:8dd837ef896b4424c24a3bc3f0080f46a99e4582a8fd4426936ec5dbe33ffb0a"
+        },
+        {
+          "id": "N2",
+          "judgment": "KEEP",
+          "finding": "Trivial thanks is an upstream closing control, not a wording opportunity.",
+          "proposed": {
+            "context": "The exchange ends with 'Thanks, that answers it.' No unresolved matter or chosen question is supplied.",
+            "intent": "No further reply is needed.",
+            "expected": [],
+            "acceptable": [],
+            "forbidden": ["confirmation"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 213,
+            "text": "A trivial “thanks” requires no response.",
+            "digest": "sha256:7ac97f18a21de2c27d7c9649c3b386628b373d61f2f1c70439a3c1ea09ca67d7"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:01e5f66a124ff4a2a53c1e384c9df9f49c82a01d4627a69697206f4455375553"
+        },
+        {
+          "id": "N3",
+          "judgment": "KEEP",
+          "finding": "The candidate cannot decide the upstream action; this source is a policy negative rather than a runnable wording case.",
+          "proposed": {
+            "context": "The coach lacks the user's response intent and is still choosing whether one material clarification is necessary.",
+            "intent": "Do not select a wording skill to make that upstream decision.",
+            "expected": [],
+            "acceptable": [],
+            "forbidden": ["confirmation"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 213,
+            "text": "The coach is choosing whether to ask clarification rather than wording the user's selected check.",
+            "digest": "sha256:696c5966117efaedf7b042ace8a0c7bc037cc4f95d93751b541a5398c979b705"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:3c54effa68e332ca14606b9b47573da9029a063fb8dab54d3203f6382cbca03f"
+        },
+        {
+          "id": "H1",
+          "judgment": "KEEP",
+          "finding": "Two possible rooms with no choice is clarification, not a known-proposition check.",
+          "proposed": {
+            "context": "Room A and Room B are possible. No chosen room is visible. User needs the room before going.",
+            "intent": "Ask which room to use.",
+            "expected": ["clarification"],
+            "acceptable": ["request"],
+            "forbidden": ["confirmation"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 214,
+            "text": "Two possible meeting rooms, no understood choice → clarification.",
+            "digest": "sha256:d08be6aa641b9c45f9e6cbda258d31f048fa38453da36c5e7d09dbeea78e0bb8"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:e074689d9f3e690f17a8c833b5b55323ec843d4fcd7f9ed599d57deeeac9dea5"
+        },
+        {
+          "id": "H2",
+          "judgment": "KEEP",
+          "finding": "Do not turn settled logistics into redundant verification.",
+          "proposed": {
+            "context": "Both people explicitly agreed to meet Saturday at 2 p.m. User chooses only to restate the agreed arrangement.",
+            "intent": "Restate Saturday at 2 p.m.",
+            "expected": ["planning"],
+            "acceptable": [],
+            "forbidden": ["confirmation"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 214,
+            "text": "Confirmed Saturday meeting simply restated as agreed → planning, not a new confirmation question.",
+            "digest": "sha256:d0c6eff54ef6b2bf4748f7e228b7e0d4137d45e92a119d5c31cbb88971719cf3"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:6fea8477c56869fa5108233f2a97e0aca25587aaa83e88d8324a1d693407e24a"
+        },
+        {
+          "id": "A1",
+          "judgment": "REVISE",
+          "finding": "The offer's modal force matters: 'can deliver' is not delivery acceptance. Make the material reliance reason explicit in a synthetic expansion.",
+          "proposed": {
+            "context": "Colleague says, 'I can deliver Friday.' User chooses to verify the offer before scheduling dependent work; no acceptance has occurred.",
+            "intent": "Verify the colleague's Friday delivery offer.",
+            "expected": ["request"],
+            "acceptable": ["confirmation"],
+            "forbidden": [],
+            "draft": "Friday is the delivery you're offering, right? That's the offer, Friday?",
+            "improved": "Are you offering delivery on Friday?",
+            "ledger": {
+              "facts": [
+                "Colleague offered Friday delivery.",
+                "User intends to verify before scheduling dependent work."
+              ],
+              "commitments": [],
+              "uncertainty": ["The offer is being checked; it is not an accepted commitment."]
+            }
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 215,
+            "text": "Visible offer: “I can deliver Friday”; user intends verification. “Friday is the delivery right?” → “Just confirming: you're offering delivery on Friday, correct?”",
+            "digest": "sha256:c04cc055cc17182a5377d28a1e01ea50299ff075ebdea493b2197429c1b2dec5"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:d4753663058200baa23ef084d0b628e84b2285a480a6b6f53a5e7d0df0066253"
+        },
+        {
+          "id": "A2",
+          "judgment": "REVISE",
+          "finding": "A useful preserved check, but the natural gain may be request clarity, not a new atom.",
+          "proposed": {
+            "context": "Friend proposes two seats. User wants to verify before booking; the booking is conditional and not completed.",
+            "intent": "Verify the quantity of two seats before booking.",
+            "expected": ["request"],
+            "acceptable": ["confirmation"],
+            "forbidden": [],
+            "draft": "Before I book, two seats, is two seats what you need?",
+            "improved": "Before I book, can you confirm that you need two seats?",
+            "ledger": {
+              "facts": [
+                "Friend proposed two seats.",
+                "User intends to verify quantity before booking."
+              ],
+              "commitments": [
+                "Booking remains a user-stated conditional plan; no booking is promised or completed by this message."
+              ],
+              "uncertainty": ["Quantity still requires the selected confirmation."]
+            }
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 216,
+            "text": "Visible proposal: two seats; user wants verification before booking. “two seats?” → “Before I book, can you confirm that you need two seats?” Booking is user-stated conditional intent, not a new completed action.",
+            "digest": "sha256:26f70a360bea6dc5b25541c310c7cecf93dd1ca41143cd330091619d774ab5e9"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:138d2b9eb3a20f02e2d3ca096019618208520e7250a2f1fe6df21350c5c8c408"
+        }
+      ],
+      "sourceCard": {
+        "path": "docs/skills/phase-5-registry-expansion.md",
+        "line": 197,
+        "text": "### confirmation — Verify understood information\n\n| Field | Specification |\n| --- | --- |\n| Family / definition | understanding_inquiry. Help the user verify an apparently understood, material proposition before relying on it. |\n| Why existing skills cannot cover it | Current clarification targets a missing detail; planning/status tend to state known information. Confirmation needs a tentative proposition and bounded check without converting it into a promise. Its unnecessary-question negative cases justify separate review. |\n| Relationships / situations | Coworker, friend, customer, family; handoff, booking, coordination, consequential request. |\n| Should trigger | User intends verification, one interpretation is available, and relying on it matters; proposed semantic intent confirm_understanding. |\n| Should not trigger | Information is missing between alternatives; verification is needless; user did not choose to ask; upstream ASK_CLARIFICATION/NO_REPLY_NEEDED. |\n| Principles | State the interpretation being checked; preserve tentative status; verify one material point. |\n| Avoid | Asserting an unaccepted commitment, repeating settled trivialities, adding new terms. |\n| Neighbors | clarification: uncertain/missing information. planning: arrange or state agreed logistics. |\n| Compatible / potential tension | Planning or expectation setting if separately supported; summaries are tactics. A conflicting asserted date is an evidence error, not reason for a blanket planning conflict. |\n| Score / provenance | Phase 3 score 13/14, with composition overlap acknowledged. Thanos confirmation and Wondel summarization concepts; independent examples. |\n\n- P1: A colleague offered Friday delivery; user wants to verify that offer before scheduling dependent work. P2: Friend proposed two seats; user wants to confirm the quantity before booking. P3: Customer appears to have chosen collection; user wants to verify before arranging it.\n- N1: “Thursday or Friday” remains unresolved; user needs the date. N2: A trivial “thanks” requires no response. N3: The coach is choosing whether to ask clarification rather than wording the user's selected check.\n- H1: Two possible meeting rooms, no understood choice → clarification. H2: Confirmed Saturday meeting simply restated as agreed → planning, not a new confirmation question.\n- A1: Visible offer: “I can deliver Friday”; user intends verification. “Friday is the delivery right?” → “Just confirming: you're offering delivery on Friday, correct?”\n- A2: Visible proposal: two seats; user wants verification before booking. “two seats?” → “Before I book, can you confirm that you need two seats?” Booking is user-stated conditional intent, not a new completed action.",
+        "digest": "sha256:f8a026df69dd878659f5a91ad8e98087167aad08367249a691c5d43645d8445c"
+      },
+      "definitionBindings": {
+        "apology": "sha256:8221402bcdfb866433c969297014c3fbbf5aa389ab79d4a628687de6516b5f46",
+        "acknowledge_mistake": "sha256:5b651416a95e3c48749ce4619e95e008970edcd9f389449df62b79c5c9ce12ac",
+        "emotional_validation": "sha256:5e5a186c00510fc7d58ddc9c23d6214e02f03a30a6d2595fe453a490d9f6441d",
+        "reassurance": "sha256:1a2712cefd5c7580782fb244375bdc7721dd17cee9026a68640013727486ff7e",
+        "boundary_setting": "sha256:1a0f4f43e8748abea7927701881b2c953b3a0f79434d0d60bdc213d18eead59e",
+        "de_escalation": "sha256:1c8bd46ae515a8cdca6a50238e5f0ba0e4a2f9c1b71ad4779a1566c594051168",
+        "decline": "sha256:06ae122d785ae6ed915dd6fa57b3f4bec013276c53285b165cc16ed662e4bd0a",
+        "ask_for_help": "sha256:6f02649adcc780b7ee1bea2a75ac8680bd807555b22b08aa8c7935a04a245945",
+        "follow_up": "sha256:d48baec95cb149f23b14c4082a16bde90fcff16daa0ae397102d7e9efd1732ec",
+        "status_update": "sha256:0ca9ab17617c03dc373c61bed069b6f11c8b9ed6d56308dfb1dc494f00f820f9",
+        "expectation_setting": "sha256:8b14ec14f7c9efaed537fb736d4fafdd7d4721cbab3d756d1e5c7419e98d45b5",
+        "planning": "sha256:f43aeda3624c08258657f4caedff9d0ee4e5d2ecf242fa1df9eb292fde631273",
+        "clarification": "sha256:c36a893beaccbaa708d46caea9970730824b33f40edd886d473859b085ca25bb",
+        "request": "sha256:1c95d6ca98d075a39d13cf8859f654e1b8b08d7c7a9d8fde5fc33fbfa59bc341",
+        "en.professional_conciseness": "sha256:8e8866c920a71ac1370148cb9c80ad968104f03c389eee271899923c522072b2",
+        "en.casual_naturalness": "sha256:5f14e5051ba62067e21af4c02c136f9c8b3e24a0a28d6b5e348c2eef419d2d01",
+        "en.direct_but_polite": "sha256:e4f5152ad6772c5d6624f4cd5f8a60c388854b53063d122971768aa826fefda4",
+        "zh.politeness_calibration": "sha256:4d5484395f4e00eec44905ab5f2ac7be1ebc0277ac33bd9e6a78616e8949df96",
+        "zh.professional_formality": "sha256:d02f406cb4ed7fb871516e9a7100c161b089eca8e09deef0e6d55c7050f6cff4",
+        "zh.natural_conciseness": "sha256:4919bbe8c31bb790bf8bc0b077ad776d05daec6a060d020aaedca780b9484332",
+        "zh.code_switching": "sha256:fd064e6bdde7fd1076e53d29cdd170688a302c3cbb7b9e97faf1758524deb624"
+      },
+      "phase8ABindings": {
+        "approvalSetDigest": "sha256:fb25e021aa1b7a610d1a5e80846f70f02071fda4749ce3a7016c0b60d3472a91",
+        "originalSemanticReviewSha256": "16b6a2606b7b6f3724a0c3f4fce899b261709c6f88ceab4a303fdbc3efc58dec",
+        "remediationSha256": "16d5a358a1cd747428dd0f2574cf9707584a23de3a9b07625abe38947c9d9fd5",
+        "rereviewSha256": "262cf217be3e8d06feb0b8c0a24e1057607698623f70f2ea32dbde05e7ed63bc"
+      },
+      "neighborMatrixDigest": "sha256:702ebed878d56c2b34dcd48c9074fad818a7456dad87e30e5a832ffe135c54dc",
+      "revisionDigest": "sha256:ed6d5725fe177c3301e0bad0a69891ee864df8a92b3bd1d9a7af2cbdd244740b"
+    },
+    {
+      "id": "give_constructive_feedback",
+      "revision": 1,
+      "researchState": "DRAFT",
+      "decision": "CONTINUE",
+      "humanExperimentPermission": "PENDING",
+      "oneJob": "Deliver one user-chosen piece of corrective feedback linking a supported behavior to its supported impact and the user's supplied desired change.",
+      "evidencePrerequisites": [
+        "The user's evidence identifies specific behavior and its actor; quoted or reported observations retain their source, not invented certainty.",
+        "The impact is supplied by the user or visible evidence; do not infer inconvenience, hurt or frequency.",
+        "A concrete proportionate change is already chosen by the user; the skill cannot choose discipline, demands or concessions.",
+        "The user actually intends feedback. A bare request, ordinary limit, uncertain concern or report of their own fault is insufficient."
+      ],
+      "constraints": {
+        "ownership": "Retain who acted and who experienced impact. Do not transfer another person's behavior or allegation to the user.",
+        "facts": "Keep exact supplied frequency and evidence level. A possible omission remains possible; no motive, diagnosis or character claim.",
+        "commitments": "Use only the supplied desired change. No invented deadline, punishment, authority, corrective promise or future concession.",
+        "certainty": "Do not turn a report/suspicion into established misconduct, or a subjective difficulty into a universal objective judgment.",
+        "action": "One feedback message, not the multi-turn difficult-feedback playbook. No new goal selection, required apology, negotiation or response management."
+      },
+      "guidance": {
+        "principles": [
+          "Describe the specific supported behavior, keeping its actor and evidence level clear.",
+          "Connect it to the supplied impact without diagnosing motives or identity.",
+          "Express the user's chosen actionable change proportionately; keep their decision and certainty."
+        ],
+        "avoid": [
+          "Do not invent incidents, frequency, impact, corrective demands or authority.",
+          "Do not convert a suspicion into an accusation or assign another person's fault to the user.",
+          "Avoid character attacks, humiliation, forced reconciliation and unsupported promises."
+        ]
+      },
+      "guidanceChanges": [
+        "Make the behavior/impact/change evidence prerequisite explicit rather than treating any criticism as feedback.",
+        "Reject the original H1 boundary label as gold under the frozen repeated-pressure rule; a first after-8 request can be request/expectation without boundary.",
+        "Keep H2 as a provisional-concern control; raise_concern is not a fourth candidate or an available skill ID.",
+        "Expose request and conditional de_escalation/current-status compositions as strong comparators; do not claim the canonical pairs prove non-composability."
+      ],
+      "decisionReason": "The narrow feedback message has a coherent communicative purpose across work, friendship and service/review contexts. Status is not generally the same as past behavioral evidence, and calm feedback does not always require de-escalation. The explicit behavior-impact-change relation could add value beyond request plus generic preservation. CONTINUE is provisional: request overlap is substantial and later failure to beat the strongest valid composition should reject the atom.",
+      "falsification": [
+        "Reject or merge if request plus generic preservation (and de_escalation/status only when independently applicable) provides the same specificity and safety.",
+        "Reject if feedback only works as an ordered multi-turn sequence of acknowledgment, inquiry, demand and negotiation.",
+        "Reject if desired changes or impacts are repeatedly invented, ownership/frequency is distorted, or the candidate erases a user's supported refusal or uncertainty.",
+        "Reject as stylistic if the only improvement is removing insults or making English/Chinese more polite."
+      ],
+      "modeApplicability": {
+        "REWRITE_DRAFT": "Rough wording may be made civil and specific only when the full supplied context already grounds behavior, impact and desired change. Remove insults without deleting the user's correction or adding new facts.",
+        "SUGGEST_REPLY": "Require the user's selected feedback goal and all three evidence parts. Empty draft never authorizes choosing a corrective demand, inferring harm or creating an incident. Ambiguous response goals stay with the upstream policy.",
+        "COMPLETE_DRAFT": "Not evaluated in 8B; no separate completion skill or expanded action policy."
+      },
+      "compositions": [
+        {
+          "ids": ["request"],
+          "when": "Desired change is supplied and the user asks for it.",
+          "assessment": "Always a strong nested comparator for corrective asks. Generic generation already preserves the supplied behavior and impact; the candidate must demonstrate incremental value over that baseline."
+        },
+        {
+          "ids": ["request", "de_escalation"],
+          "when": "Rough draft/visible conflict contains actual accusatory heat.",
+          "assessment": "Strong comparator for A1/A2. Calm feedback must not be weakened by forcing irrelevant de-escalation, and heated cases must not hide this overlap."
+        },
+        {
+          "ids": ["request", "status_update"],
+          "when": "User also intentionally reports a currently observable problem or progress.",
+          "assessment": "Valid for current unlabeled figures when status reporting is intended; not automatically applicable to every historical interruption or wasted trip."
+        },
+        {
+          "ids": ["request", "status_update", "de_escalation"],
+          "when": "Current status and heat are both independently present.",
+          "assessment": "Use as the strongest three-skill comparator only with those evidence conditions; fits the four-skill bound without inventing a dependency."
+        },
+        {
+          "ids": ["boundary_setting", "request"],
+          "when": "Repeated pressure plus a chosen ongoing limit and requested behavior change exist.",
+          "assessment": "Valid subset; first-time limits cannot silently broaden the frozen boundary definition."
+        },
+        {
+          "ids": ["acknowledge_mistake", "apology"],
+          "when": "The user's own mistake and independently chosen regret are supplied.",
+          "assessment": "A different ownership/job comparison, not feedback about the other person's conduct."
+        }
+      ],
+      "additionalNeighbors": [
+        {
+          "id": "expectation_setting",
+          "reason": "Supported future timing/capacity limit, not necessarily critique of another's behavior."
+        },
+        {
+          "id": "clarification",
+          "reason": "A possible omitted cost remains a missing-fact check, not proven error."
+        },
+        {
+          "id": "decline",
+          "reason": "A chosen refusal requires neither criticism nor a fabricated reason."
+        },
+        {
+          "id": "emotional_validation",
+          "reason": "A separately expressed feeling can be acknowledged without proving the other person's fault."
+        },
+        {
+          "id": "apology",
+          "reason": "No apology is implied merely by courteous corrective feedback."
+        }
+      ],
+      "modifierRisk": "Directness, dignity and concise professional wording already cross many skills. The candidate must help preserve a specific behavior-impact-change relation, not merely provide nicer wording. Chinese script/register/mixed-term handling stays with the existing modifiers; no culture-based feedback rules.",
+      "duplicates": "P1/A1 reuse two interruptions; P3/A2 reuse unlabeled figures. P2 is a third context. They are three canonical scenario families, not five independent quality trials. The two rough applications are especially confounded with de-escalation.",
+      "examples": [
+        {
+          "id": "P1",
+          "judgment": "KEEP",
+          "finding": "All three parts and actor are supplied. Nested request remains a fair comparator.",
+          "proposed": {
+            "context": "User reports that the colleague interrupted them twice and they could not finish their point. User wants to ask the colleague to let them finish.",
+            "intent": "Give feedback on the two interruptions and ask to finish before a response.",
+            "expected": ["give_constructive_feedback"],
+            "acceptable": ["request"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 233,
+            "text": "User was interrupted twice and says they could not finish; wants colleague to let them finish.",
+            "digest": "sha256:bb7514a621f8374c413244412d9b6668f7ff6f23bb6363ee8183e4226ab770bf"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:02fc4b014ea126aac7e025ffa3dba677a91d8a2e7cbcddc616a2caa1702da71f"
+        },
+        {
+          "id": "P2",
+          "judgment": "KEEP",
+          "finding": "Keep the supplied causal impact; do not add frequency or motives.",
+          "proposed": {
+            "context": "Friend changed agreed plans without telling the user, which caused the user's wasted trip. User wants earlier notice of plan changes.",
+            "intent": "Explain the unannounced change's impact and ask for earlier notice.",
+            "expected": ["give_constructive_feedback"],
+            "acceptable": ["request"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 233,
+            "text": "Friend changed agreed plans without telling user, causing a wasted trip; user wants earlier notice.",
+            "digest": "sha256:f034f4602dafd9db891232ac3b444489dac2630e77b2b72142b6b7fd8087fb76"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:e26edf38f4f5821ef41ac4829cd26c81ce88f6b0a24a5727191547c806379bb0"
+        },
+        {
+          "id": "P3",
+          "judgment": "KEEP",
+          "finding": "Preserve subjective difficulty, not an absolute claim that the author's work is bad.",
+          "proposed": {
+            "context": "User found the author's unlabeled figures difficult to review and wants the author to add labels.",
+            "intent": "Explain the review difficulty and ask for labels.",
+            "expected": ["give_constructive_feedback"],
+            "acceptable": ["request", "status_update"],
+            "forbidden": []
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 233,
+            "text": "User found unlabeled figures hard to review and wants labels added by the author.",
+            "digest": "sha256:381dd6b4fc76ba9422a3de12d133c76b7843cfd629f746669f6e362df2d5d93d"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:af8460924a8a293b3416c6e02b7d7d60f2d69a493bb3d00adf5bbaa810e622a2"
+        },
+        {
+          "id": "N1",
+          "judgment": "KEEP",
+          "finding": "An unsupported sabotage guess is not observed behavior evidence.",
+          "proposed": {
+            "context": "User guesses a coworker is sabotaging them; no supporting incident or impact is visible.",
+            "intent": "Do not turn a suspicion into an accusation or corrective demand.",
+            "expected": [],
+            "acceptable": [],
+            "forbidden": ["give_constructive_feedback"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 234,
+            "text": "User merely guesses a coworker is sabotaging them.",
+            "digest": "sha256:8542d68f9afc36c3ffc18ac152ed3835a9326e429aaed15d9cac4419f8255078"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:f5b7a1793ed6a972a23faa3933744d67f72a6475de778ce9dbaee0c7920a2264"
+        },
+        {
+          "id": "N2",
+          "judgment": "KEEP",
+          "finding": "Declining is not criticism; no behavior/impact evidence is supplied.",
+          "proposed": {
+            "context": "User has chosen not to attend tonight and wants to state that refusal. No critique or reason is supplied.",
+            "intent": "Decline tonight without inventing a reason.",
+            "expected": ["decline"],
+            "acceptable": [],
+            "forbidden": ["give_constructive_feedback"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 234,
+            "text": "User only says they cannot attend tonight.",
+            "digest": "sha256:536b7c9b3bc1185876d8d9147fba98c62cb9f16ab5e5331181f90b401ccc5ff0"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:243b67c58bbedd3010f5e60277519f7983bad53fe69b868ba79259ef956eab50"
+        },
+        {
+          "id": "N3",
+          "judgment": "KEEP",
+          "finding": "Actor ownership distinguishes self-accountability from feedback.",
+          "proposed": {
+            "context": "User entered incorrect figures and wants to acknowledge their own error. No other person's error is alleged.",
+            "intent": "Own the user's incorrect figures.",
+            "expected": ["acknowledge_mistake"],
+            "acceptable": [],
+            "forbidden": ["give_constructive_feedback"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 234,
+            "text": "User wants to acknowledge their own incorrect figures.",
+            "digest": "sha256:5a5560400aff377c74f2ced4e1cbbd352a2d7e457077bc9e23adb8b0e1c9f59d"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:cecc53a9359f4337759a37323eb57bda81b5a06e642f2d251963d5fa83f39914"
+        },
+        {
+          "id": "H1",
+          "judgment": "REVISE",
+          "finding": "Original first-limit boundary label contradicts frozen repeated-pressure eligibility. Keep it as a first-limit request/expectation contrast, not approved boundary evidence.",
+          "proposed": {
+            "context": "User wants to ask for no calls after 8 p.m. No repeated pressure, feedback explanation, incident or impact is supplied.",
+            "intent": "State the after-8 limit without inventing a feedback explanation.",
+            "expected": ["request"],
+            "acceptable": ["expectation_setting"],
+            "forbidden": ["give_constructive_feedback", "boundary_setting"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 235,
+            "text": "“Please don't call after 8 p.m.” without a feedback explanation → boundary_setting.",
+            "digest": "sha256:339f6bb8793740855f7ddabe951b59587832f0c4e770ed4f758212c2731a5f16"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:ce80c3c185fbe967b7fc0962741ae45cbafc55b5b5ef4ce1d72cfd4894f24d85"
+        },
+        {
+          "id": "H2",
+          "judgment": "REVISE",
+          "finding": "Do not route a nonexistent raise_concern atom or claim the omission is proven. Specify a chosen missing-detail question.",
+          "proposed": {
+            "context": "User says, 'I'm worried this estimate may omit travel.' Travel inclusion is unknown, and the user chooses to ask whether it is included.",
+            "intent": "Ask whether the estimate includes travel, preserving that an omission is only possible.",
+            "expected": ["clarification"],
+            "acceptable": ["request"],
+            "forbidden": ["give_constructive_feedback"]
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 235,
+            "text": "“I'm worried this estimate may omit travel” without a proven mistake → raise-concern draft or clarification, not an accusation.",
+            "digest": "sha256:f7e2796fb843208bac1883765059457dd23d44e29c5cfebd1f487da4b9305899"
+          },
+          "proposalKind": "NEW_SYNTHETIC_REVISION",
+          "proposalDigest": "sha256:0d282a6ed936f1e834c09bb6aced27db64e0d71352094be2769dbe979da2d344"
+        },
+        {
+          "id": "A1",
+          "judgment": "KEEP",
+          "finding": "Original concrete ledger supports civil specific feedback. Heat also supports de_escalation; not proof of candidate-only uplift.",
+          "proposed": {
+            "context": "User reports that the recipient interrupted them twice and they could not finish their point. User has chosen to ask to finish before the recipient responds.",
+            "intent": "Give the supplied feedback and ask to finish before a response.",
+            "expected": ["give_constructive_feedback"],
+            "acceptable": ["request", "de_escalation"],
+            "forbidden": [],
+            "draft": "you're rude, stop it",
+            "improved": "I was interrupted twice and couldn't finish my point. Please let me finish before responding.",
+            "ledger": {
+              "facts": ["Recipient interrupted user twice.", "User could not finish their point."],
+              "commitments": [],
+              "uncertainty": []
+            }
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 236,
+            "text": "Facts: two interruptions prevented user finishing; change desired: let user finish. “you're rude, stop it” → “I was interrupted twice and couldn't finish my point. Please let me finish before responding.”",
+            "digest": "sha256:a99af82da057e89e790ba8311d152a14b82c4741c987369886fda40892fc73b0"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:9e6eec8492749d1942808e8cf7bb94d96791d43c114b6b5abbca8838b04eba75"
+        },
+        {
+          "id": "A2",
+          "judgment": "KEEP",
+          "finding": "The original subjective impact and requested labels are grounded; request/de_escalation remains a strong comparator.",
+          "proposed": {
+            "context": "User found the recipient's unlabeled figures difficult to review and has chosen to request labels.",
+            "intent": "Explain the supplied review difficulty and ask for labels.",
+            "expected": ["give_constructive_feedback"],
+            "acceptable": ["request", "de_escalation", "status_update"],
+            "forbidden": [],
+            "draft": "this is a mess, label it",
+            "improved": "I found the unlabeled figures difficult to review. Could you add labels?",
+            "ledger": {
+              "facts": ["Figures lack labels.", "User found them difficult to review."],
+              "commitments": [],
+              "uncertainty": []
+            }
+          },
+          "evidenceUse": "EXPOSED_CANONICAL_REVIEW_ONLY",
+          "source": {
+            "path": "docs/skills/phase-5-registry-expansion.md",
+            "line": 237,
+            "text": "Facts: unlabeled figures made review difficult; requested change: labels. “this is a mess, label it” → “I found the unlabeled figures difficult to review. Could you add labels?”",
+            "digest": "sha256:505403c048c7f050615ed414ecd0dab217cbd0c6d1db1a45a6209d4d2c155a09"
+          },
+          "proposalKind": "STRUCTURED_CANONICAL_EXPANSION",
+          "proposalDigest": "sha256:1a2517635e579fed144c35fa74ff5c60431ff01ee94eb1050a3741f6d0992379"
+        }
+      ],
+      "sourceCard": {
+        "path": "docs/skills/phase-5-registry-expansion.md",
+        "line": 218,
+        "text": "### give_constructive_feedback — Give behavior-focused feedback\n\n| Field | Specification |\n| --- | --- |\n| Family / definition | conflict_feedback. Help the user communicate an observed behavior, supported impact and desired change without attacking identity or assuming motives. |\n| Why existing skills cannot cover it | Request + de-escalation + boundary can ask calmly for a limit yet omit the observed behavior/impact that makes feedback specific. The distinct evidence check and behavioral structure warrant a candidate; later uplift must beat composition. |\n| Relationships / situations | Coworker, friend, family, service contact; repeated interruption, review, correction, friction. |\n| Should trigger | User wants feedback, observations/impact are supported, and a concrete desired change is supplied or unambiguously expressed. Proposed semantic intent give_feedback. |\n| Should not trigger | Motive speculation, unsupported allegation, ordinary scheduling limit, no user intent to critique. |\n| Principles | Name specific observed behavior; describe supported impact without diagnosis; express the supplied actionable change respectfully. |\n| Avoid | Identity labels, humiliation, fabricated incidents, false authority, invented corrective commitments, exaggerating frequency. |\n| Neighbors | boundary_setting: communicate a limit. raise_concern: provisional risk without a behavior allegation. acknowledge_mistake: user's own fault. |\n| Compatible / potential tension | Request, boundary, de-escalation if separately needed. Apology only for independently supported user responsibility. Do not blanket-conflict feedback with validation. |\n| Score / provenance | Phase 3 score 13/14, composition overlap still to test. Wondel difficult conversations, EQ social dexterity, Tong dignity observations; concepts only, original text. |\n\n- P1: User was interrupted twice and says they could not finish; wants colleague to let them finish. P2: Friend changed agreed plans without telling user, causing a wasted trip; user wants earlier notice. P3: User found unlabeled figures hard to review and wants labels added by the author.\n- N1: User merely guesses a coworker is sabotaging them. N2: User only says they cannot attend tonight. N3: User wants to acknowledge their own incorrect figures.\n- H1: “Please don't call after 8 p.m.” without a feedback explanation → boundary_setting. H2: “I'm worried this estimate may omit travel” without a proven mistake → raise-concern draft or clarification, not an accusation.\n- A1: Facts: two interruptions prevented user finishing; change desired: let user finish. “you're rude, stop it” → “I was interrupted twice and couldn't finish my point. Please let me finish before responding.”\n- A2: Facts: unlabeled figures made review difficult; requested change: labels. “this is a mess, label it” → “I found the unlabeled figures difficult to review. Could you add labels?”",
+        "digest": "sha256:81b7a8cb0c0f1b91850aeffb6a8d23145d3fae45a31286d87ba6f6e99ea4fd32"
+      },
+      "definitionBindings": {
+        "apology": "sha256:8221402bcdfb866433c969297014c3fbbf5aa389ab79d4a628687de6516b5f46",
+        "acknowledge_mistake": "sha256:5b651416a95e3c48749ce4619e95e008970edcd9f389449df62b79c5c9ce12ac",
+        "emotional_validation": "sha256:5e5a186c00510fc7d58ddc9c23d6214e02f03a30a6d2595fe453a490d9f6441d",
+        "reassurance": "sha256:1a2712cefd5c7580782fb244375bdc7721dd17cee9026a68640013727486ff7e",
+        "boundary_setting": "sha256:1a0f4f43e8748abea7927701881b2c953b3a0f79434d0d60bdc213d18eead59e",
+        "de_escalation": "sha256:1c8bd46ae515a8cdca6a50238e5f0ba0e4a2f9c1b71ad4779a1566c594051168",
+        "decline": "sha256:06ae122d785ae6ed915dd6fa57b3f4bec013276c53285b165cc16ed662e4bd0a",
+        "ask_for_help": "sha256:6f02649adcc780b7ee1bea2a75ac8680bd807555b22b08aa8c7935a04a245945",
+        "follow_up": "sha256:d48baec95cb149f23b14c4082a16bde90fcff16daa0ae397102d7e9efd1732ec",
+        "status_update": "sha256:0ca9ab17617c03dc373c61bed069b6f11c8b9ed6d56308dfb1dc494f00f820f9",
+        "expectation_setting": "sha256:8b14ec14f7c9efaed537fb736d4fafdd7d4721cbab3d756d1e5c7419e98d45b5",
+        "planning": "sha256:f43aeda3624c08258657f4caedff9d0ee4e5d2ecf242fa1df9eb292fde631273",
+        "clarification": "sha256:c36a893beaccbaa708d46caea9970730824b33f40edd886d473859b085ca25bb",
+        "request": "sha256:1c95d6ca98d075a39d13cf8859f654e1b8b08d7c7a9d8fde5fc33fbfa59bc341",
+        "en.professional_conciseness": "sha256:8e8866c920a71ac1370148cb9c80ad968104f03c389eee271899923c522072b2",
+        "en.casual_naturalness": "sha256:5f14e5051ba62067e21af4c02c136f9c8b3e24a0a28d6b5e348c2eef419d2d01",
+        "en.direct_but_polite": "sha256:e4f5152ad6772c5d6624f4cd5f8a60c388854b53063d122971768aa826fefda4",
+        "zh.politeness_calibration": "sha256:4d5484395f4e00eec44905ab5f2ac7be1ebc0277ac33bd9e6a78616e8949df96",
+        "zh.professional_formality": "sha256:d02f406cb4ed7fb871516e9a7100c161b089eca8e09deef0e6d55c7050f6cff4",
+        "zh.natural_conciseness": "sha256:4919bbe8c31bb790bf8bc0b077ad776d05daec6a060d020aaedca780b9484332",
+        "zh.code_switching": "sha256:fd064e6bdde7fd1076e53d29cdd170688a302c3cbb7b9e97faf1758524deb624"
+      },
+      "phase8ABindings": {
+        "approvalSetDigest": "sha256:fb25e021aa1b7a610d1a5e80846f70f02071fda4749ce3a7016c0b60d3472a91",
+        "originalSemanticReviewSha256": "16b6a2606b7b6f3724a0c3f4fce899b261709c6f88ceab4a303fdbc3efc58dec",
+        "remediationSha256": "16d5a358a1cd747428dd0f2574cf9707584a23de3a9b07625abe38947c9d9fd5",
+        "rereviewSha256": "262cf217be3e8d06feb0b8c0a24e1057607698623f70f2ea32dbde05e7ed63bc"
+      },
+      "neighborMatrixDigest": "sha256:fe1df32bcb98bf9dd2145a67f3907bce4f692d1a487ee7a72ac862184c3b8f57",
+      "revisionDigest": "sha256:71569642d70e5a2876e6289153fb28ebaf11a25da481cc94ae3919012b4ec350"
+    }
+  ],
+  "neighborMatrix": [
+    {
+      "candidate": "perspective_acknowledgement",
+      "existing": "emotional_validation",
+      "contrasts": {
+        "candidateOnly": "A calm recipient explicitly reads 'version two' as the second attachment; user only recognizes that reading, no upset/feeling supplied.",
+        "existingOnly": "Only explicit sadness is recognized; no interpretation is supplied.",
+        "ambiguous": "'That seems unfair' may be a reading and an upsetting experience; user intent/evidence must separate or retain overlap.",
+        "bothValid": "Recipient explicitly states a reading and frustration; user independently chooses to acknowledge both.",
+        "neitherValid": "Neutral agreed pickup time, user only restates logistics."
+      },
+      "conclusion": "Frozen validation includes upsetting experience/difficulty, so perspective is not distinct merely because no emotion word appears.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "perspective_acknowledgement",
+      "existing": "reassurance",
+      "contrasts": {
+        "candidateOnly": "Known reading with chosen recognition but no concern/support fact.",
+        "existingOnly": "Concern about attending alone plus user-supplied attendance support; no interpretation.",
+        "ambiguous": "'You will be there, right?' could be concern or verification; do not infer recognition intent.",
+        "bothValid": "Recipient states a reading and a separate worry with grounded support; user chooses both recognition and support.",
+        "neitherValid": "Settled logistics, no reading or concern."
+      },
+      "conclusion": "Recognition cannot manufacture a support fact or dismiss a concern.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "perspective_acknowledgement",
+      "existing": "clarification",
+      "contrasts": {
+        "candidateOnly": "Explicit known reading, recognition-only intent, no missing detail.",
+        "existingOnly": "Two report names plausible; user asks which, no recipient reading.",
+        "ambiguous": "'You mean version two?' lacks enough speaker/intent context to classify.",
+        "bothValid": "Acknowledge supplied reading, then ask a separate unknown file name, only if both user-chosen.",
+        "neitherValid": "Known progress report only."
+      },
+      "conclusion": "Do not append a question to make recognition useful.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "perspective_acknowledgement",
+      "existing": "de_escalation",
+      "contrasts": {
+        "candidateOnly": "Calm interpretation is explicitly recognized without heat.",
+        "existingOnly": "Heated numerical disagreement; user only wants a civil disagreement and joint check.",
+        "ambiguous": "A terse accusation may express both a reading and heat; do not invent intent to acknowledge.",
+        "bothValid": "Stated interpretation plus independently supplied heated wording; user chooses recognition and calmer delivery.",
+        "neitherValid": "Neutral completed-task status."
+      },
+      "conclusion": "Reducing heat need not agree with a viewpoint; recognizing a viewpoint need not reduce heat.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "confirmation",
+      "existing": "clarification",
+      "contrasts": {
+        "candidateOnly": "One stated Friday offer, selected verification before reliance; under the narrow frozen missing-detail definition no actual missing alternative.",
+        "existingOnly": "Thursday/Friday unresolved; no candidate proposition may be invented.",
+        "ambiguous": "Friday mentioned but deliverable scope unknown: clarification, not positive confirmation; missing evidence can remain unclassified.",
+        "bothValid": "Check supplied Friday offer and ask a separate missing pickup address if both are explicitly chosen.",
+        "neitherValid": "Settled receipt of thanks."
+      },
+      "conclusion": "Phase 3's which-deliverable positive is not clean confirmation; accepted 8A replacements leave this original distinction unproven.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "confirmation",
+      "existing": "request",
+      "contrasts": {
+        "candidateOnly": "Not established: a selected request to verify a proposition is already a supported request. Do not invent an exclusive A-positive/B-forbidden label.",
+        "existingOnly": "Ask to send a known file; no proposition is checked.",
+        "ambiguous": "'Confirm it' lacks a visible proposition and material reason; could mean commit rather than verify.",
+        "bothValid": "Verify the supplied Friday offer and separately request the packing list; no extra ask is inferred.",
+        "neitherValid": "No reply after settled thanks."
+      },
+      "conclusion": "Strong nested duplication is the primary DEFER reason. The two-job contrast does not prove a new atom.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "confirmation",
+      "existing": "planning",
+      "contrasts": {
+        "candidateOnly": "Selected check of an offer before reliance, with no arrangement being made by that message.",
+        "existingOnly": "Restate settled Saturday/library agreement without a check.",
+        "ambiguous": "An apparent agreement with unclear settledness cannot be labeled exclusive from date words alone.",
+        "bothValid": "Check a supplied offer and separately state a previously agreed next step.",
+        "neitherValid": "Only an emotional acknowledgment."
+      },
+      "conclusion": "A date in a question is not enough to add planning or convert an offer to agreement.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "give_constructive_feedback",
+      "existing": "request",
+      "contrasts": {
+        "candidateOnly": "Not established for a corrective ask: its chosen actionable change is a supported request. The hypothesized extra value is the behavior-impact relation, not exclusion of request.",
+        "existingOnly": "Ask for a file without critique, incident or impact.",
+        "ambiguous": "'Fix this' lacks incident, impact and chosen scope; do not fabricate them.",
+        "bothValid": "Give evidence-grounded feedback and separately request a copy of an existing record, only if both intended.",
+        "neitherValid": "No reply to a closing."
+      },
+      "conclusion": "Nested request overlap is substantial; compare the strongest request baseline before any later approval.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "give_constructive_feedback",
+      "existing": "de_escalation",
+      "contrasts": {
+        "candidateOnly": "Calm supported behavior-impact-change feedback; no heat.",
+        "existingOnly": "Heated refusal with no feedback incident/impact; user wants civil wording while retaining no.",
+        "ambiguous": "Angry adjective alone supplies heat but no factual incident; cannot become feedback.",
+        "bothValid": "Supported corrective feedback in an accusatory draft with chosen calmer delivery.",
+        "neitherValid": "Neutral agreed logistics."
+      },
+      "conclusion": "Both rough canonical applications are confounded with de-escalation; later distinctness needs calm cases.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "give_constructive_feedback",
+      "existing": "boundary_setting",
+      "contrasts": {
+        "candidateOnly": "One supported unannounced plan change, impact and desired notice; no repeated-pressure limit.",
+        "existingOnly": "Repeated loan requests after a clear no; user only restates no lending, no feedback explanation.",
+        "ambiguous": "First after-8 limit with no repetition fails the frozen boundary prerequisite; use request/expectation if intended.",
+        "bothValid": "Repeated interruptions after a limit plus supported impact, selected feedback and restatement of the continuing limit.",
+        "neitherValid": "Simple progress report."
+      },
+      "conclusion": "Do not inherit the Phase 5 H1 boundary shortcut; first-limit acceptance was explicitly withheld in 8A.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "give_constructive_feedback",
+      "existing": "acknowledge_mistake",
+      "contrasts": {
+        "candidateOnly": "Recipient's supported conduct, user impact and desired change.",
+        "existingOnly": "User owns their incorrect figures and wants to acknowledge that error.",
+        "ambiguous": "Actor of 'wrong figures' is unknown: no transfer of fault.",
+        "bothValid": "User owns a distinct missed deadline and separately gives evidence-grounded feedback about recipient conduct.",
+        "neitherValid": "No fault in a neutral scheduling exchange."
+      },
+      "conclusion": "Preserve separate actors; politeness is not permission to take blame.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    },
+    {
+      "candidate": "give_constructive_feedback",
+      "existing": "status_update",
+      "contrasts": {
+        "candidateOnly": "Past interruption impact and chosen correction, with no current-progress reporting goal.",
+        "existingOnly": "Draft completed/review pending, report only.",
+        "ambiguous": "Current missing labels can support both feedback and status if both intended; do not force exclusivity.",
+        "bothValid": "Report current unlabeled figures and give supported review-impact feedback with selected request for labels.",
+        "neitherValid": "Known invitation declined without explanation."
+      },
+      "conclusion": "Status may cover current-state examples; it is not a compulsory proxy for every historical behavior.",
+      "evidenceUse": "SCHEMATIC_BOUNDARY_ANALYSIS_NOT_SELECTION_CASES"
+    }
+  ],
+  "limitations": [
+    "No candidate is human-approved for experiment or activation.",
+    "English canonical examples only; no Simplified/Traditional Chinese, mixed or unsupported-language empirical quality inference.",
+    "Canonical scenarios repeat: three families per candidate, ten rows each. Thirty rows are not thirty independent contexts.",
+    "No 8C corpus, routing repair, held-out labels, model calls, selection metrics or uplift measurements.",
+    "Hypothesized modifier compatibility does not bypass the existing four-skill/12-rule budgets or language eligibility."
+  ],
+  "dossierSetDigest": "sha256:b128bee62053be1856076f4a0d82695efba8074f8ecced3dcf22db73dfa401b9"
+}

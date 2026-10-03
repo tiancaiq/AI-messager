@@ -1,0 +1,242 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: decisions_limits
+definition:
+  id: decline
+  name: Decline
+  description: Use when the user clearly intends to refuse or decline.
+  languages:
+    - universal
+  situations:
+    - invitation
+    - request
+  intents:
+    - decline
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the user clearly intends to refuse or decline.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Preserve the refusal and make it clear without inventing a reason.
+  avoid:
+    - Do not turn a refusal into acceptance or an unsupported future commitment.
+  compatibleSkills:
+    - boundary_setting
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: boundary_setting
+    distinction: Repeated request plus ongoing limit → boundary may also apply.
+    caseId: H1
+  - id: planning
+    distinction: User cannot do Tuesday but explicitly offers Friday → planning/alternative wording
+      must preserve that conditional choice.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User chooses not to attend a friend's party.
+      visibleContext: User chooses not to attend a friend's party.
+      userIntent: Decline the party invitation.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - decline
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User refuses an extra work assignment.
+      visibleContext: User refuses an extra work assignment.
+      userIntent: Refuse an extra assignment.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - decline
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User declines a service upgrade.
+      visibleContext: User declines a service upgrade.
+      userIntent: Decline the service upgrade.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - decline
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: User chose accept.
+      visibleContext: User chose accept.
+      userIntent: Accept.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - decline
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User is still deciding.
+      visibleContext: User is still deciding.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - decline
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User wants details before choosing.
+      visibleContext: User wants details before choosing.
+      userIntent: Ask for details before deciding.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - decline
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Repeated request plus ongoing limit → boundary may also apply.
+      visibleContext: Repeated request plus ongoing limit → boundary may also apply.
+      userIntent: State an ongoing limit on repeated requests.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - boundary_setting
+      forbidden: []
+      rationale: Repeated request plus ongoing limit → boundary may also apply.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: User cannot do Tuesday but explicitly offers Friday → planning/alternative wording
+        must preserve that conditional choice.
+      visibleContext: User cannot do Tuesday but explicitly offers Friday → planning/alternative
+        wording must preserve that conditional choice.
+      userIntent: Decline Tuesday while explicitly offering Friday.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - planning
+      forbidden: []
+      rationale: User cannot do Tuesday but explicitly offers Friday → planning/alternative wording
+        must preserve that conditional choice.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: User refuses; no reason given. “nah not going” → “Thanks for inviting me, but I
+        won't be coming.”
+      visibleContext: User refuses the invitation. No reason or alternative is supplied.
+      userIntent: Decline the invitation without supplying a reason.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: nah not going
+      improved: Thanks for inviting me, but I won't be coming.
+      ledger:
+        facts:
+          - User refuses the invitation.
+          - No reason or alternative is supplied.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: User cannot accept another task. “can't take this” → “I can't take on this
+        additional task.”
+      visibleContext: User cannot accept an additional task.
+      userIntent: Refuse the additional task.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: can't take this
+      improved: I can't take on this additional task.
+      ledger:
+        facts:
+          - User cannot accept an additional task.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#decline
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:06ae122d785ae6ed915dd6fa57b3f4bec013276c53285b165cc16ed662e4bd0a
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

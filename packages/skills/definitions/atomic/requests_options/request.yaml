@@ -1,0 +1,238 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: requests_options
+definition:
+  id: request
+  name: Clear request
+  description: Use when the user wants to make a supported request.
+  languages:
+    - universal
+  situations:
+    - request
+  intents:
+    - make_request
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the user wants to make a supported request.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - State the requested action clearly and leave room for a truthful response.
+  avoid:
+    - Do not invent authority, urgency, or consequences.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: ask_for_help
+    distinction: Explicit need for assistance carrying something → ask for help.
+    caseId: H1
+  - id: follow_up
+    distinction: Visible earlier unanswered agenda request → follow-up.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User wants a coworker to send the agenda.
+      visibleContext: User wants a coworker to send the agenda.
+      userIntent: Ask for the agenda.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - request
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User asks a friend to return a book.
+      visibleContext: User asks a friend to return a book.
+      userIntent: Ask for the book to be returned.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - request
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User asks a service provider to email a receipt.
+      visibleContext: User asks a service provider to email a receipt.
+      userIntent: Ask for an emailed receipt.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - request
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: User has no chosen requested action.
+      visibleContext: User has no chosen requested action.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - request
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User wants to test whether silence makes someone reach out.
+      visibleContext: User wants to test whether silence makes someone reach out.
+      userIntent: Test whether silence makes the other person reach out.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - request
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User is reporting, not requesting, a completed action.
+      visibleContext: User is reporting, not requesting, a completed action.
+      userIntent: Report a completed action.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - request
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Explicit need for assistance carrying something → ask for help.
+      visibleContext: Explicit need for assistance carrying something → ask for help.
+      userIntent: Request assistance carrying an object.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - ask_for_help
+      forbidden: []
+      rationale: Explicit need for assistance carrying something → ask for help.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Visible earlier unanswered agenda request → follow-up.
+      visibleContext: Visible earlier unanswered agenda request → follow-up.
+      userIntent: Follow up on an unanswered agenda request.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - follow_up
+      forbidden: []
+      rationale: Visible earlier unanswered agenda request → follow-up.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText:
+        User wants the agenda; no deadline supplied. “send agenda” → “Could you send me the
+        agenda?”
+      visibleContext: User wants the agenda. No deadline is supplied.
+      userIntent: Ask for the agenda without adding a deadline.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: send agenda
+      improved: Could you send me the agenda?
+      ledger:
+        facts:
+          - User wants the agenda.
+          - No deadline is supplied.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText:
+        User wants more frequent calls and has chosen to ask. “you should know I want calls”
+        → “I'd like us to call more often. Would you be open to that?”
+      visibleContext: User wants more frequent calls and has chosen to ask.
+      userIntent: Ask about more frequent calls.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: you should know I want calls
+      improved: I'd like us to call more often. Would you be open to that?
+      ledger:
+        facts:
+          - User wants more frequent calls and has chosen to ask.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#request
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:1c95d6ca98d075a39d13cf8859f654e1b8b08d7c7a9d8fde5fc33fbfa59bc341
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

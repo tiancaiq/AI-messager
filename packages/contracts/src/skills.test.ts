@@ -4,6 +4,7 @@ import {
   CommunicationGuidanceSchema,
   CommunicationPlanSchema,
   SkillDefinitionSchema,
+  SkillIntentTagSchema,
 } from "./skills.js";
 
 const validSkill = {
@@ -46,6 +47,12 @@ describe("Phase 4 skill contracts", () => {
 
   it("accepts a strict atomic versioned definition", () => {
     expect(SkillDefinitionSchema.parse(validSkill)).toEqual(validSkill);
+  });
+
+  it("represents the two authorized Phase 8 experiment intents", () => {
+    expect(SkillIntentTagSchema.parse("acknowledge_perspective")).toBe("acknowledge_perspective");
+    expect(SkillIntentTagSchema.parse("give_feedback")).toBe("give_feedback");
+    expect(SkillIntentTagSchema.safeParse("confirm_understanding").success).toBe(false);
   });
 
   it("rejects speculative relationship metadata and invalid versions", () => {

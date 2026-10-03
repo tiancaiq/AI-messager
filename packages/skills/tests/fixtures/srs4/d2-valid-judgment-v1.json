@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "caseKey": "SRS3B:R06",
+  "expectedSelection": ["request"],
+  "judgment": {
+    "candidateDecisions": [
+      {
+        "skillId": "acknowledge_mistake",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      },
+      {
+        "skillId": "ask_for_help",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      },
+      {
+        "skillId": "clarification",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      },
+      {
+        "skillId": "decline",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      },
+      {
+        "skillId": "expectation_setting",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      },
+      {
+        "skillId": "follow_up",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      },
+      {
+        "skillId": "planning",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      },
+      {
+        "skillId": "reassurance",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      },
+      {
+        "skillId": "request",
+        "decision": "SELECT",
+        "reasonCodes": ["DIRECTLY_SUPPORTED"],
+        "evidence": [{ "ref": "USER_HISTORY:0", "use": "USER_FACT" }]
+      },
+      {
+        "skillId": "status_update",
+        "decision": "REJECT",
+        "reasonCodes": ["NO_MATERIAL_JOB"],
+        "evidence": []
+      }
+    ]
+  }
+}

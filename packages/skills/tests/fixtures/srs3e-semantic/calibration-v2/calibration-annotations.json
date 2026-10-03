@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "annotations": [
+    { "id": "K01", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K02", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K03", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K04", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K05", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K06", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K07", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K08", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K09", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K10", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K11", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    { "id": "K12", "required": [], "acceptable": [], "forbidden": [], "strictNone": true },
+    {
+      "id": "K13",
+      "required": ["acknowledge_mistake"],
+      "acceptable": [],
+      "forbidden": ["apology"],
+      "strictNone": false
+    },
+    {
+      "id": "K14",
+      "required": ["apology"],
+      "acceptable": ["acknowledge_mistake"],
+      "forbidden": [],
+      "strictNone": false
+    },
+    {
+      "id": "K15",
+      "required": ["emotional_validation"],
+      "acceptable": [],
+      "forbidden": ["reassurance"],
+      "strictNone": false
+    },
+    {
+      "id": "K16",
+      "required": ["reassurance"],
+      "acceptable": ["emotional_validation"],
+      "forbidden": [],
+      "strictNone": false
+    },
+    {
+      "id": "K17",
+      "required": ["decline"],
+      "acceptable": [],
+      "forbidden": ["boundary_setting"],
+      "strictNone": false
+    },
+    {
+      "id": "K18",
+      "required": ["boundary_setting", "decline"],
+      "acceptable": [],
+      "forbidden": ["de_escalation"],
+      "strictNone": false
+    },
+    {
+      "id": "K19",
+      "required": ["follow_up", "request"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false
+    },
+    {
+      "id": "K20",
+      "required": ["request"],
+      "acceptable": [],
+      "forbidden": ["follow_up"],
+      "strictNone": false
+    },
+    {
+      "id": "K21",
+      "required": ["planning"],
+      "acceptable": [],
+      "forbidden": ["expectation_setting"],
+      "strictNone": false
+    },
+    {
+      "id": "K22",
+      "required": ["expectation_setting"],
+      "acceptable": [],
+      "forbidden": ["planning", "status_update"],
+      "strictNone": false
+    },
+    {
+      "id": "K23",
+      "required": ["clarification"],
+      "acceptable": ["request"],
+      "forbidden": [],
+      "strictNone": false
+    },
+    {
+      "id": "K24",
+      "required": ["status_update"],
+      "acceptable": [],
+      "forbidden": ["expectation_setting"],
+      "strictNone": false
+    }
+  ]
+}

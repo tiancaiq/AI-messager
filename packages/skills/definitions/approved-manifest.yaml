@@ -1,0 +1,65 @@
+manifestVersion: 1
+entries:
+  - id: apology
+    source: atomic/accountability_repair/apology.yaml
+    recordDigest: sha256:74bee81e6905fdb71ff810271d022f7d1882f1d155bed0034fb8d6d71c81c162
+  - id: acknowledge_mistake
+    source: atomic/accountability_repair/acknowledge_mistake.yaml
+    recordDigest: sha256:ffb29f9f090754579133b9786131a4d1e68324b9b0cbf53345120e348343fee0
+  - id: emotional_validation
+    source: atomic/recognition_support/emotional_validation.yaml
+    recordDigest: sha256:35a63c098fd7f9e57ec5e67847a71130634b2c1c900acd6ee22c671d2e2f3be9
+  - id: reassurance
+    source: atomic/recognition_support/reassurance.yaml
+    recordDigest: sha256:c8a95b7ace1c4676625e56050382fd2a551e56738ac90138238e7597dbf0461b
+  - id: boundary_setting
+    source: atomic/decisions_limits/boundary_setting.yaml
+    recordDigest: sha256:8f1672bd98756fa6c238b1dc7644acd43b8ffc977c34f628c4b9bddf10609604
+  - id: de_escalation
+    source: atomic/conflict_feedback/de_escalation.yaml
+    recordDigest: sha256:ff531cfbdedb91d8ab90def452a1b8b83f8cf2d17264abf60158f485b50b7e19
+  - id: decline
+    source: atomic/decisions_limits/decline.yaml
+    recordDigest: sha256:123552ba65c5a0055db3843d644e0b080d823b4bcbe91c64a274e22a74f755ce
+  - id: ask_for_help
+    source: atomic/requests_options/ask_for_help.yaml
+    recordDigest: sha256:b51b4e3e6e414412f3458eadd5e650a951d18c4ff88fe69d56b5c3894f0cddfe
+  - id: follow_up
+    source: atomic/coordination/follow_up.yaml
+    recordDigest: sha256:2ad69924347ae157ceb8e6c860a0736bcfd13cce706f198d5caafbf41cc222f1
+  - id: status_update
+    source: atomic/coordination/status_update.yaml
+    recordDigest: sha256:931f2b5503624ccb208469324c19afa3dcd7eda4ae28d8f60f6930fa61587552
+  - id: expectation_setting
+    source: atomic/coordination/expectation_setting.yaml
+    recordDigest: sha256:ec6c1a83337d3b98de2df3703dc02caf998bd1479bf769a2a383380e721b7b9f
+  - id: planning
+    source: atomic/coordination/planning.yaml
+    recordDigest: sha256:1688f75f35005277924ae6b128ca77baa2d9f895c7e5d867601b6c8b6c5a5f22
+  - id: clarification
+    source: atomic/understanding_inquiry/clarification.yaml
+    recordDigest: sha256:8d04a20507bc23e20e8dc4445c99eace8e34ddc6c0b45bce46ae1f4c8697ce4a
+  - id: request
+    source: atomic/requests_options/request.yaml
+    recordDigest: sha256:d91c888bffd8b59a2c5ec1656e54adb177e202710612e285ba601b12339ed484
+  - id: en.professional_conciseness
+    source: modifiers/en/professional_conciseness.yaml
+    recordDigest: sha256:4f439a9bf774c79c7a7bd43a1ffd25c4e969384801f53567dc631c51fae71bdd
+  - id: en.casual_naturalness
+    source: modifiers/en/casual_naturalness.yaml
+    recordDigest: sha256:9f5e61f97fb79e8c44726bc574351a133d7c4b1022a7cc719347f792af6e8fc5
+  - id: en.direct_but_polite
+    source: modifiers/en/direct_but_polite.yaml
+    recordDigest: sha256:89355c43baf8284ef536144377061e6f3fa51f4762d1b3cfb3499139ff05709a
+  - id: zh.politeness_calibration
+    source: modifiers/zh/politeness_calibration.yaml
+    recordDigest: sha256:d20a9ce57f1c6e3d81cad6fc2fc0a292ccee5d4f3c39a974060405215d058f0a
+  - id: zh.professional_formality
+    source: modifiers/zh/professional_formality.yaml
+    recordDigest: sha256:e2ffc97c096020838642ddf6109fde9291c32032ffbe9ebc1bb292b8d75eb369
+  - id: zh.natural_conciseness
+    source: modifiers/zh/natural_conciseness.yaml
+    recordDigest: sha256:07c3693fcb2683e645773928743697ea22824f66ddee5b1bf2358c5efa369f5d
+  - id: zh.code_switching
+    source: modifiers/zh/code_switching.yaml
+    recordDigest: sha256:fd248a1ea380e7734fec22e58ab5c7cee5e3e44b013f89aaf8cad3a26cb0bf64

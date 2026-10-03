@@ -21,6 +21,8 @@ Key constraints:
 
 ## Logical engines, not microservices
 
+The communication research Phase 7 registry migration adds a build-time boundary inside `packages/skills`: YAML authoring records and an explicit revision-bound approval manifest are validated by private tooling, then projected into committed static TypeScript. The runtime export continues to validate and freeze the same 21 definitions using the existing shared schema. The selector, context derivation and provider contracts are unchanged. Authoring examples, taxonomy, provenance, approval envelopes and the YAML parser remain outside the production dependency graph. Runtime approval may carry forward only for exact baseline definitions; the separately pending review of canonical examples has no runtime effect. See [skills authoring and packaging](skills.md#phase-7-authoring-and-packaging) and the [Phase 7 record](skills/phase-7-registry-migration.md).
+
 The long-term system has five logical engines:
 
 1. **Context Engine** — extracts visible conversation observations. Phase 2 stops at messages/order/ownership, draft, visible contact signals, language, warnings, and extraction confidence; later inference work requires its own approved scope.

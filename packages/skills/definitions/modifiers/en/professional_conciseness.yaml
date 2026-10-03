@@ -1,0 +1,240 @@
+recordVersion: 1
+kind: LANGUAGE_MODIFIER
+capabilityFamily: language_expression
+definition:
+  id: en.professional_conciseness
+  name: English professional conciseness
+  description: Use for English status, request, or follow-up wording that benefits from concise
+    professional convention.
+  languages:
+    - en
+  situations:
+    - status_request
+    - missed_commitment
+    - follow_up
+    - request
+  intents: []
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use for English status, request, or follow-up wording that benefits from concise
+      professional convention.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Use concise professional English without turning a chat message into an email.
+  avoid:
+    - Avoid ceremonial greetings, corporate filler, and unnecessary formality.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: en.casual_naturalness
+    distinction: Brief personal weekend planning → en.casual_naturalness.
+    caseId: H1
+  - id: en.direct_but_polite
+    distinction: Preserving refusal clarity → en.direct_but_polite, possibly both only when supported.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: English progress update to a coworker.
+      visibleContext: English progress update to a coworker.
+      userIntent: Report progress in a professional chat.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.professional_conciseness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: English document request in a professional chat.
+      visibleContext: English document request in a professional chat.
+      userIntent: Request a document.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.professional_conciseness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: English follow-up on a visible review request.
+      visibleContext: English follow-up on a visible review request.
+      userIntent: Follow up on a visible review request.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.professional_conciseness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: Unsupported primary language.
+      visibleContext: Unsupported primary language.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: ko
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.professional_conciseness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Chinese-only message.
+      visibleContext: Chinese-only message.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.professional_conciseness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Upstream NO_REPLY_NEEDED.
+      visibleContext: Upstream NO_REPLY_NEEDED.
+      userIntent: null
+      action: NO_REPLY_NEEDED
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.professional_conciseness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Brief personal weekend planning → en.casual_naturalness.
+      visibleContext: Brief personal weekend planning → en.casual_naturalness.
+      userIntent: Coordinate a personal weekend plan.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - en.casual_naturalness
+      forbidden: []
+      rationale: Brief personal weekend planning → en.casual_naturalness.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Preserving refusal clarity → en.direct_but_polite, possibly both only when supported.
+      visibleContext: Preserving refusal clarity → en.direct_but_polite, possibly both only when supported.
+      userIntent: Communicate a clear refusal.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - en.direct_but_polite
+      forbidden: []
+      rationale: Preserving refusal clarity → en.direct_but_polite, possibly both only when supported.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText:
+        “I would like to take this opportunity to inform you that the draft is ready” → “The
+        draft is ready.”
+      visibleContext: The draft is ready.
+      userIntent: Report that the draft is ready.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: I would like to take this opportunity to inform you that the draft is ready
+      improved: The draft is ready.
+      ledger:
+        facts:
+          - The draft is ready.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: “I was just wondering if it would be possible for you to send the agenda” → “Could
+        you send the agenda?”
+      visibleContext: User wants the agenda.
+      userIntent: Ask for the agenda.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: I was just wondering if it would be possible for you to send the agenda
+      improved: Could you send the agenda?
+      ledger:
+        facts:
+          - User wants the agenda.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#enprofessional_conciseness
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:8e8866c920a71ac1370148cb9c80ad968104f03c389eee271899923c522072b2
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

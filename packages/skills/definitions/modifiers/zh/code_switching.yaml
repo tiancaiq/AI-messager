@@ -1,0 +1,241 @@
+recordVersion: 1
+kind: LANGUAGE_MODIFIER
+capabilityFamily: language_expression
+definition:
+  id: zh.code_switching
+  name: Chinese code switching
+  description: Use when the visible Chinese context intentionally mixes English terms.
+  languages:
+    - zh
+  situations:
+    - planning
+    - status_request
+    - request
+  intents: []
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the visible Chinese context intentionally mixes English terms.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Preserve natural English terms already used in the Chinese conversation where appropriate.
+  avoid:
+    - Do not force the entire message into one language or add new jargon.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: zh.natural_conciseness
+    distinction: Natural short Chinese without mixed terms → natural_conciseness.
+    caseId: H1
+conceptualNotes:
+  - caseId: H2
+    distinction: Quoted identifier in otherwise unsupported language → preserve identifier
+      generally, but do not select Chinese modifier.
+    sourceRef: docs/skills/phase-5-registry-expansion.md#zhcode_switching
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Chinese primary status chat uses “PR.”
+      visibleContext: Chinese primary status chat uses “PR.”
+      userIntent: Report status while retaining PR.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hans
+        secondary: en
+        codeSwitching: true
+      expected:
+        - zh.code_switching
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Chinese planning chat uses “demo.”
+      visibleContext: Chinese planning chat uses “demo.”
+      userIntent: Coordinate the demo.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hans
+        secondary: en
+        codeSwitching: true
+      expected:
+        - zh.code_switching
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Supported mixed request already uses “design review.”
+      visibleContext: Supported mixed request already uses “design review.”
+      userIntent: Request a design review.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hans
+        secondary: en
+        codeSwitching: true
+      expected:
+        - zh.code_switching
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: Pure Chinese without intentional English terms.
+      visibleContext: Pure Chinese without intentional English terms.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.code_switching
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: English-only context without code-switching.
+      visibleContext: English-only context without code-switching.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.code_switching
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Korean primary with Chinese secondary, even when mixed.
+      visibleContext: Korean primary with Chinese secondary, even when mixed.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: ko
+        secondary: zh
+        codeSwitching: true
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.code_switching
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Natural short Chinese without mixed terms → natural_conciseness.
+      visibleContext: Natural short Chinese without mixed terms → natural_conciseness.
+      userIntent: Use natural concise Chinese.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - zh.natural_conciseness
+      forbidden: []
+      rationale: Natural short Chinese without mixed terms → natural_conciseness.
+      category: NEIGHBOR
+    - id: H2
+      sourceText:
+        Quoted identifier in otherwise unsupported language → preserve identifier generally,
+        but do not select Chinese modifier.
+      visibleContext: Quoted identifier in otherwise unsupported language → preserve identifier
+        generally, but do not select Chinese modifier.
+      userIntent: Preserve a quoted identifier in an unsupported language.
+      action: SUGGEST_REPLY
+      language:
+        primary: ko
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale:
+        Quoted identifier in otherwise unsupported language → preserve identifier generally,
+        but do not select Chinese modifier.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: “这个 PR 我已经看过了，没发现问题” → “这个 PR 我看过了，没发现问题。”
+      visibleContext: User reviewed the PR. User found no problems.
+      userIntent: Report review of the PR and findings.
+      action: REWRITE_DRAFT
+      language:
+        primary: zh-Hans
+        secondary: en
+        codeSwitching: true
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: 这个 PR 我已经看过了，没发现问题
+      improved: 这个 PR 我看过了，没发现问题。
+      ledger:
+        facts:
+          - User reviewed the PR.
+          - User found no problems.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: “我們的 demo 時間還沒有確認下來” → “demo 時間還沒確認。”
+      visibleContext: The demo time has not been confirmed.
+      userIntent: Report the unconfirmed demo time.
+      action: REWRITE_DRAFT
+      language:
+        primary: zh-Hant
+        secondary: en
+        codeSwitching: true
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: 我們的 demo 時間還沒有確認下來
+      improved: demo 時間還沒確認。
+      ledger:
+        facts:
+          - The demo time has not been confirmed.
+        commitments: []
+        uncertainty:
+          - The demo time is unconfirmed.
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#zhcode_switching
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:fd064e6bdde7fd1076e53d29cdd170688a302c3cbb7b9e97faf1758524deb624
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

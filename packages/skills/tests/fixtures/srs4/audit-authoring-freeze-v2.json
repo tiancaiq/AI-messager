@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 3,
+  "freezeId": "SRS-4-AUDIT-AUTHORING-R2",
+  "status": "AUTHORING_FROZEN_MODEL_SEMANTIC_REVIEW_APPROVED_UNSCORED",
+  "evidenceUse": "EXPOSED_AUDIT_UNSCORED",
+  "reviewerType": "CHATGPT_MODEL_SEMANTIC_REVIEW",
+  "decisionSource": "USER_RELAYED_REVIEW_RESULT",
+  "qualifiedHumanApproval": false,
+  "reviewBinding": "R1_MODEL_58_APPROVE_6_REVISE;R2_MODEL_6_APPROVE_0_REVISE_0_QUARANTINE",
+  "providerCallsAuthorized": false,
+  "auditScored": false,
+  "challengeRead": false,
+  "frozenB": {
+    "config": "4f3f94e0b2089c9bb7a8e8c3a83c697b7df3d9f3c4c0c14b4c00ac0d4518327b",
+    "trace": "3da194a50d46c33c26b5dcaa2f59ce7d33eb03d4352e5eefc706d9241e6ed214",
+    "profiles": "b061bf17a04e696ad78af45016e6803a96f79f0e617fcb2800a4a591fbc33d1c"
+  },
+  "sourcePaths": {
+    "rawR1": "packages/test-fixtures/src/srs4-audit-raw.ts",
+    "annotationsR1": "packages/skills/tests/srs4-audit-annotations.ts",
+    "rawR2": "packages/test-fixtures/src/srs4-audit-raw-r2.ts",
+    "annotationsR2": "packages/skills/tests/srs4-audit-annotations-r2.ts",
+    "independentReviewR1": "packages/skills/tests/srs4-audit-independent-review-r1.ts",
+    "independentReviewR2": "packages/skills/tests/srs4-audit-independent-review-r2.ts",
+    "freezeR1": "packages/skills/tests/fixtures/srs4/audit-authoring-freeze-v1.json"
+  },
+  "sourceSha256": {
+    "rawR1": "580652b4ef9a5271a3c675b4a4dab43435081fce86727a756917baf9fd6512cd",
+    "annotationsR1": "4581822f96411d80c0282a8590b2917313945b16176b0b84a4400a05051d6304",
+    "rawR2": "477019208fcfef97e133f46ea0aba26c6faeb91bcf42b01557f1d0f3df259106",
+    "annotationsR2": "d51f2d90068f2bcb6a536258ce432dc7fbc0de3c100c9c92601178a65ad827b9",
+    "independentReviewR1": "9a49e618ec12402df14944ad331e73c326347bae1e008e4e7bf0892cc3701159",
+    "independentReviewR2": "decc5e6f43daa450db01797001f5c3285e838d1fdd2ad1009aaa94c38116f9ea",
+    "freezeR1": "232a7e5815fe44ecc51c40cef903590d89163e42be76bcab7995c434b4325844"
+  },
+  "coverage": {
+    "cases": 64,
+    "single": 24,
+    "multi": 16,
+    "wordingNone": 16,
+    "structural": 8,
+    "positiveModes": { "REWRITE_DRAFT": 18, "SUGGEST_REPLY": 18, "COMPLETE_DRAFT": 4 },
+    "requiredOccurrences": 56,
+    "forbiddenOccurrences": 65,
+    "perSkillRequired": {
+      "apology": 4,
+      "acknowledge_mistake": 4,
+      "ask_for_help": 3,
+      "boundary_setting": 4,
+      "clarification": 4,
+      "de_escalation": 4,
+      "decline": 3,
+      "emotional_validation": 4,
+      "expectation_setting": 5,
+      "follow_up": 3,
+      "planning": 5,
+      "reassurance": 3,
+      "request": 6,
+      "status_update": 4
+    },
+    "independentReviewed": 0,
+    "quarantined": 0,
+    "approvedR1": 58,
+    "revisedR1": 6,
+    "approvedR2": 6,
+    "semanticApproved": 64,
+    "modelReviewed": 64,
+    "humanApproved": 0,
+    "revisedR2PendingConfirmation": 0
+  },
+  "gate": "CLOSED_NO_LIVE_PROVIDER_OR_AUDIT_SCORING_AUTHORIZATION",
+  "remainingGates": ["HUMAN_BOUNDARY_REVIEW", "PROVIDER_KEY_BUDGET_APPROVAL"]
+}

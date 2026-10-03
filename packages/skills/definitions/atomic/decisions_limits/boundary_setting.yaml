@@ -1,0 +1,240 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: decisions_limits
+definition:
+  id: boundary_setting
+  name: Boundary setting
+  description: Use when the user intends to set a limit under repeated pressure.
+  languages:
+    - universal
+  situations:
+    - pressure
+    - conflict
+  intents:
+    - set_boundary
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the user intends to set a limit under repeated pressure.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - State the limit clearly and focus on what the user can or cannot do.
+  avoid:
+    - Do not apologize for a reasonable boundary unless the context separately supports an
+      apology.
+  compatibleSkills:
+    - de_escalation
+    - decline
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: decline
+    distinction: One invitation refused without an ongoing limit → decline.
+    caseId: H1
+  - id: expectation_setting
+    distinction: Known delivery estimate without a behavioral limit → expectation setting.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User wants repeated late-night nonurgent work calls to stop.
+      visibleContext: User wants repeated late-night nonurgent work calls to stop.
+      userIntent: Stop repeated late nonurgent work calls.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - boundary_setting
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Friend repeatedly asks for money; user has decided not to lend.
+      visibleContext: Friend repeatedly asks for money; user has decided not to lend.
+      userIntent: State the decision not to lend money.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - boundary_setting
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Family member keeps sharing user photos; user wants prior consent.
+      visibleContext: Family member keeps sharing user photos; user wants prior consent.
+      userIntent: Require consent before sharing user photos.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - boundary_setting
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: User has made no choice about the limit.
+      visibleContext: User has made no choice about the limit.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - boundary_setting
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User asks which time a task is due.
+      visibleContext: User asks which time a task is due.
+      userIntent: Ask the due time.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - boundary_setting
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User wants only a neutral progress update.
+      visibleContext: User wants only a neutral progress update.
+      userIntent: Give a neutral progress update.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - boundary_setting
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: One invitation refused without an ongoing limit → decline.
+      visibleContext: One invitation refused without an ongoing limit → decline.
+      userIntent: Refuse one invitation.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - decline
+      forbidden: []
+      rationale: One invitation refused without an ongoing limit → decline.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Known delivery estimate without a behavioral limit → expectation setting.
+      visibleContext: Known delivery estimate without a behavioral limit → expectation setting.
+      userIntent: Communicate a known delivery estimate.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - expectation_setting
+      forbidden: []
+      rationale: Known delivery estimate without a behavioral limit → expectation setting.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: "User's limit: no nonurgent work calls after 8 p.m. “stop calling late” → “Please
+        keep nonurgent work calls before 8 p.m.”"
+      visibleContext: User's limit is no nonurgent work calls after 8 p.m.
+      userIntent: State the no-calls-after-8 limit.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: stop calling late
+      improved: Please keep nonurgent work calls before 8 p.m.
+      ledger:
+        facts:
+          - User's limit is no nonurgent work calls after 8 p.m.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: "User's choice: no more lending. “quit asking me for cash” → “I'm not able to lend
+        you money. Please stop asking.”"
+      visibleContext: User has decided not to lend more money. User wants the repeated requests to stop.
+      userIntent: State no more lending and ask the recipient to stop requesting money.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: quit asking me for cash
+      improved: I'm not able to lend you money. Please stop asking.
+      ledger:
+        facts:
+          - User has decided not to lend more money.
+          - User wants the repeated requests to stop.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#boundary_setting
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:1a0f4f43e8748abea7927701881b2c953b3a0f79434d0d60bdc213d18eead59e
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

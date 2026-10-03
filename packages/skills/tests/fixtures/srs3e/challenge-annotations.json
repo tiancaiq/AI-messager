@@ -1,0 +1,653 @@
+{
+  "schemaVersion": 1,
+  "annotations": [
+    {
+      "id": "C01",
+      "lane": "CAPABILITY",
+      "required": ["apology"],
+      "acceptable": ["acknowledge_mistake"],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C02",
+      "lane": "CAPABILITY",
+      "required": ["apology", "acknowledge_mistake"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C03",
+      "lane": "CAPABILITY",
+      "required": ["acknowledge_mistake"],
+      "acceptable": [],
+      "forbidden": ["apology"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C04",
+      "lane": "CAPABILITY",
+      "required": ["acknowledge_mistake"],
+      "acceptable": [],
+      "forbidden": ["apology"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C05",
+      "lane": "CAPABILITY",
+      "required": ["emotional_validation", "reassurance"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C06",
+      "lane": "CAPABILITY",
+      "required": ["emotional_validation"],
+      "acceptable": [],
+      "forbidden": ["reassurance"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C07",
+      "lane": "CAPABILITY",
+      "required": ["reassurance"],
+      "acceptable": ["emotional_validation"],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C08",
+      "lane": "CAPABILITY",
+      "required": ["reassurance"],
+      "acceptable": ["emotional_validation"],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C09",
+      "lane": "CAPABILITY",
+      "required": ["boundary_setting", "de_escalation"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C10",
+      "lane": "CAPABILITY",
+      "required": ["boundary_setting", "decline"],
+      "acceptable": [],
+      "forbidden": ["de_escalation"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C11",
+      "lane": "CAPABILITY",
+      "required": ["de_escalation"],
+      "acceptable": [],
+      "forbidden": ["boundary_setting"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C12",
+      "lane": "CAPABILITY",
+      "required": ["de_escalation"],
+      "acceptable": [],
+      "forbidden": ["boundary_setting"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C13",
+      "lane": "CAPABILITY",
+      "required": ["decline"],
+      "acceptable": [],
+      "forbidden": ["boundary_setting", "de_escalation"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C14",
+      "lane": "CAPABILITY",
+      "required": ["decline"],
+      "acceptable": [],
+      "forbidden": ["boundary_setting", "planning"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C15",
+      "lane": "CAPABILITY",
+      "required": ["ask_for_help"],
+      "acceptable": ["request"],
+      "forbidden": ["clarification"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C16",
+      "lane": "CAPABILITY",
+      "required": ["ask_for_help"],
+      "acceptable": ["request"],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C17",
+      "lane": "CAPABILITY",
+      "required": ["follow_up", "request"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C18",
+      "lane": "CAPABILITY",
+      "required": ["follow_up"],
+      "acceptable": ["request"],
+      "forbidden": ["status_update"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C19",
+      "lane": "CAPABILITY",
+      "required": ["status_update", "expectation_setting"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C20",
+      "lane": "CAPABILITY",
+      "required": ["status_update"],
+      "acceptable": [],
+      "forbidden": ["expectation_setting", "planning", "request", "emotional_validation"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C21",
+      "lane": "CAPABILITY",
+      "required": ["expectation_setting"],
+      "acceptable": [],
+      "forbidden": ["status_update", "planning"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C22",
+      "lane": "CAPABILITY",
+      "required": ["expectation_setting"],
+      "acceptable": [],
+      "forbidden": ["planning"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C23",
+      "lane": "CAPABILITY",
+      "required": ["planning", "request"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C24",
+      "lane": "CAPABILITY",
+      "required": ["planning", "expectation_setting"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C25",
+      "lane": "CAPABILITY",
+      "required": ["clarification"],
+      "acceptable": ["request"],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C26",
+      "lane": "CAPABILITY",
+      "required": ["clarification"],
+      "acceptable": ["request"],
+      "forbidden": ["ask_for_help"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C27",
+      "lane": "CAPABILITY",
+      "required": ["request"],
+      "acceptable": [],
+      "forbidden": ["ask_for_help", "follow_up", "clarification"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C28",
+      "lane": "CAPABILITY",
+      "required": ["request"],
+      "acceptable": [],
+      "forbidden": ["boundary_setting"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C29",
+      "lane": "CAPABILITY",
+      "required": ["acknowledge_mistake"],
+      "acceptable": [],
+      "forbidden": ["apology"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C30",
+      "lane": "CAPABILITY",
+      "required": ["apology"],
+      "acceptable": [],
+      "forbidden": ["acknowledge_mistake"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C31",
+      "lane": "CAPABILITY",
+      "required": ["emotional_validation"],
+      "acceptable": [],
+      "forbidden": ["reassurance"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C32",
+      "lane": "CAPABILITY",
+      "required": ["reassurance"],
+      "acceptable": ["emotional_validation"],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": ["reassurance"],
+      "shouldRankAbove": [["reassurance", "emotional_validation"]]
+    },
+    {
+      "id": "C33",
+      "lane": "CAPABILITY",
+      "required": ["decline"],
+      "acceptable": [],
+      "forbidden": ["boundary_setting"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C34",
+      "lane": "CAPABILITY",
+      "required": ["de_escalation"],
+      "acceptable": [],
+      "forbidden": ["boundary_setting", "acknowledge_mistake"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C35",
+      "lane": "CAPABILITY",
+      "required": ["boundary_setting", "decline"],
+      "acceptable": [],
+      "forbidden": ["de_escalation"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C36",
+      "lane": "CAPABILITY",
+      "required": ["request"],
+      "acceptable": [],
+      "forbidden": ["ask_for_help"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C37",
+      "lane": "CAPABILITY",
+      "required": ["request"],
+      "acceptable": [],
+      "forbidden": ["follow_up"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C38",
+      "lane": "CAPABILITY",
+      "required": ["status_update"],
+      "acceptable": [],
+      "forbidden": ["expectation_setting"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C39",
+      "lane": "CAPABILITY",
+      "required": ["planning", "request"],
+      "acceptable": [],
+      "forbidden": ["expectation_setting", "decline"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C40",
+      "lane": "CAPABILITY",
+      "required": ["status_update"],
+      "acceptable": [],
+      "forbidden": ["planning", "expectation_setting"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C41",
+      "lane": "CAPABILITY",
+      "required": ["clarification"],
+      "acceptable": ["request"],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": ["clarification"],
+      "shouldRankAbove": [["clarification", "request"]]
+    },
+    {
+      "id": "C42",
+      "lane": "CAPABILITY",
+      "required": ["request"],
+      "acceptable": [],
+      "forbidden": ["clarification"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C43",
+      "lane": "CAPABILITY",
+      "required": ["clarification"],
+      "acceptable": ["request"],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C44",
+      "lane": "CAPABILITY",
+      "required": ["boundary_setting"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C45",
+      "lane": "CAPABILITY",
+      "required": ["status_update"],
+      "acceptable": [],
+      "forbidden": ["expectation_setting"],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C46",
+      "lane": "CAPABILITY",
+      "required": ["planning"],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": false,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C47",
+      "lane": "CAPABILITY",
+      "required": [],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": true,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C48",
+      "lane": "CAPABILITY",
+      "required": [],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": true,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C49",
+      "lane": "CAPABILITY",
+      "required": [],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": true,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C50",
+      "lane": "CAPABILITY",
+      "required": [],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": true,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C51",
+      "lane": "CAPABILITY",
+      "required": [],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": true,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "C52",
+      "lane": "CAPABILITY",
+      "required": [],
+      "acceptable": [],
+      "forbidden": [],
+      "strictNone": true,
+      "primary": [],
+      "shouldRankAbove": []
+    },
+    {
+      "id": "M01",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["status_update"],
+      "requiredModifiers": ["en.professional_conciseness"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["en.casual_naturalness"]
+    },
+    {
+      "id": "M02",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["planning"],
+      "requiredModifiers": ["en.casual_naturalness"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["en.professional_conciseness"]
+    },
+    {
+      "id": "M03",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["planning"],
+      "requiredModifiers": ["en.casual_naturalness"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["en.professional_conciseness"]
+    },
+    {
+      "id": "M04",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["status_update"],
+      "requiredModifiers": ["en.professional_conciseness"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["en.casual_naturalness"]
+    },
+    {
+      "id": "M05",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["decline"],
+      "requiredModifiers": ["en.direct_but_polite"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": []
+    },
+    {
+      "id": "M06",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["status_update"],
+      "requiredModifiers": ["en.professional_conciseness"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["en.direct_but_polite"]
+    },
+    {
+      "id": "M07",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["request"],
+      "requiredModifiers": ["zh.politeness_calibration"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.professional_formality"]
+    },
+    {
+      "id": "M08",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["status_update"],
+      "requiredModifiers": ["zh.professional_formality"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.politeness_calibration"]
+    },
+    {
+      "id": "M09",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["status_update"],
+      "requiredModifiers": ["zh.professional_formality"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.natural_conciseness"]
+    },
+    {
+      "id": "M10",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["planning"],
+      "requiredModifiers": ["zh.natural_conciseness"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.professional_formality"]
+    },
+    {
+      "id": "M11",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["planning"],
+      "requiredModifiers": ["zh.natural_conciseness"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.professional_formality"]
+    },
+    {
+      "id": "M12",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["planning"],
+      "requiredModifiers": ["zh.code_switching"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.natural_conciseness"]
+    },
+    {
+      "id": "M13",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["request"],
+      "requiredModifiers": ["zh.code_switching"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.natural_conciseness"]
+    },
+    {
+      "id": "M14",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["planning"],
+      "requiredModifiers": ["zh.natural_conciseness"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.code_switching"]
+    },
+    {
+      "id": "M15",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["request"],
+      "requiredModifiers": ["en.direct_but_polite"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": []
+    },
+    {
+      "id": "M16",
+      "lane": "MODIFIER",
+      "underlyingCapabilities": ["decline"],
+      "requiredModifiers": ["zh.politeness_calibration"],
+      "acceptableModifiers": [],
+      "forbiddenModifiers": ["zh.professional_formality"]
+    }
+  ]
+}

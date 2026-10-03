@@ -1,0 +1,181 @@
+{
+  "artifactVersion": 1,
+  "source": "SRS-3F-A_AUTHORING_ONLY_NO_DETECTOR_IMPORT",
+  "reviewState": "PROVISIONAL_CODEX_REVIEW",
+  "skills": [
+    {
+      "skillId": "apology",
+      "operations": [
+        {
+          "id": "EXPRESS_REGRET",
+          "link": "DIRECT",
+          "rationale": "Expressing chosen regret is the core communication job."
+        },
+        {
+          "id": "OWN_ERROR",
+          "link": "CONDITIONAL",
+          "rationale": "Some apologies also name an evidenced user-owned mistake."
+        }
+      ],
+      "mappingEntryDigest": "sha256:44fe0764cd95c0cc93e50d120d0ec2e395d8b1e86b2982e147ddc2c1a3b20082"
+    },
+    {
+      "skillId": "acknowledge_mistake",
+      "operations": [
+        {
+          "id": "OWN_ERROR",
+          "link": "DIRECT",
+          "rationale": "Taking responsibility for a supported mistake is the core job."
+        }
+      ],
+      "mappingEntryDigest": "sha256:9317b1755e8b644f325cf7b7517423fec682e1d57e0f84a73907ab6828e7d23f"
+    },
+    {
+      "skillId": "emotional_validation",
+      "operations": [
+        {
+          "id": "RESPOND_TO_CONCERN",
+          "link": "DIRECT",
+          "rationale": "Recognizing an expressed difficulty is one form of response."
+        }
+      ],
+      "mappingEntryDigest": "sha256:9d5bbe9fb681901bed04a1b8d2687bbc52f21590c242ad2e37089a1910a37b72"
+    },
+    {
+      "skillId": "reassurance",
+      "operations": [
+        {
+          "id": "RESPOND_TO_CONCERN",
+          "link": "DIRECT",
+          "rationale": "Grounded support can address a stated concern."
+        }
+      ],
+      "mappingEntryDigest": "sha256:a6ad1b87750550cb1496c07005a243b8d57b6403f7e3204bd677a246fd221330"
+    },
+    {
+      "skillId": "boundary_setting",
+      "operations": [
+        {
+          "id": "STATE_CONTINUING_LIMIT",
+          "link": "DIRECT",
+          "rationale": "An ongoing limit is the relevant communication job when pressure is repeated."
+        },
+        {
+          "id": "REDUCE_TENSION",
+          "link": "CONDITIONAL",
+          "rationale": "A boundary may also be phrased to lower visible heat."
+        }
+      ],
+      "mappingEntryDigest": "sha256:8b4e881118484a887afd04d02b0022513939183a9b50a07c4132254953984876"
+    },
+    {
+      "skillId": "de_escalation",
+      "operations": [
+        {
+          "id": "REDUCE_TENSION",
+          "link": "DIRECT",
+          "rationale": "Lowering visible conflict is the core job."
+        }
+      ],
+      "mappingEntryDigest": "sha256:45949814af4e55deb8b18bbfc456e2ecc869d85149ebb66779872d33765ad9c1"
+    },
+    {
+      "skillId": "decline",
+      "operations": [
+        {
+          "id": "REFUSE_OPTION",
+          "link": "DIRECT",
+          "rationale": "Declining a concrete option is the core job."
+        }
+      ],
+      "mappingEntryDigest": "sha256:1541853194a3e1070e027a9af48e44e97cbd5d5b0d26575798314f7c736c0c9a"
+    },
+    {
+      "skillId": "ask_for_help",
+      "operations": [
+        {
+          "id": "SEEK_ACTION",
+          "link": "DIRECT",
+          "rationale": "Asking another person to help is a form of requested action."
+        }
+      ],
+      "mappingEntryDigest": "sha256:1d5d557dfb7522a7a6eac95ad24da40e69c169ef2b25522983cf17e642bc2d15"
+    },
+    {
+      "skillId": "follow_up",
+      "operations": [
+        {
+          "id": "REVISIT_OPEN_THREAD",
+          "link": "DIRECT",
+          "rationale": "An unresolved earlier task makes the current request a follow-up."
+        },
+        {
+          "id": "SEEK_ACTION",
+          "link": "CONDITIONAL",
+          "rationale": "Some follow-ups also request a concrete action."
+        }
+      ],
+      "mappingEntryDigest": "sha256:201e85a657aaecac266ba864d085e5105f7a7f80abc0e7476c7a2c4f61dc8ad7"
+    },
+    {
+      "skillId": "status_update",
+      "operations": [
+        {
+          "id": "REPORT_CURRENT_STATE",
+          "link": "DIRECT",
+          "rationale": "Reporting supported current progress is the core job."
+        }
+      ],
+      "mappingEntryDigest": "sha256:0294706db74f60ee73158a2ab99ba2eb78cd2c59ffa086cdb43de29fbf50174e"
+    },
+    {
+      "skillId": "expectation_setting",
+      "operations": [
+        {
+          "id": "COORDINATE_FUTURE",
+          "link": "DIRECT",
+          "rationale": "Setting supported future timing or capacity is the core job."
+        }
+      ],
+      "mappingEntryDigest": "sha256:9c9415a0bee3b742d10f9f09c7ac4d262d1d548078ccfa0b15e2f34869a356d9"
+    },
+    {
+      "skillId": "planning",
+      "operations": [
+        {
+          "id": "COORDINATE_FUTURE",
+          "link": "DIRECT",
+          "rationale": "Organizing next steps is a future-coordination job."
+        }
+      ],
+      "mappingEntryDigest": "sha256:b8c626b28efde76a4889b0b63f291c52c9352ae118148806adba3fd6a824d9f7"
+    },
+    {
+      "skillId": "clarification",
+      "operations": [
+        {
+          "id": "SEEK_INFORMATION",
+          "link": "DIRECT",
+          "rationale": "Resolving a missing detail is the core job."
+        }
+      ],
+      "mappingEntryDigest": "sha256:bc15486676e24cbbfd405f01971e632c15bfd4033949e687c24913f08efa0ff5"
+    },
+    {
+      "skillId": "request",
+      "operations": [
+        {
+          "id": "SEEK_ACTION",
+          "link": "DIRECT",
+          "rationale": "Asking for a concrete deliverable or action is the core job."
+        },
+        {
+          "id": "SEEK_INFORMATION",
+          "link": "CONDITIONAL",
+          "rationale": "Some requests seek a fact rather than a task."
+        }
+      ],
+      "mappingEntryDigest": "sha256:8dbeb5a16d61629d9adacfeba0243c79aa19a2e9b95eea04b542f8441b90add3"
+    }
+  ]
+}

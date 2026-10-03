@@ -1,0 +1,906 @@
+{
+  "schemaVersion": 1,
+  "phase": "SRS-3E_CHALLENGE_PREPARATION",
+  "split": "EXPOSED_DEVELOPMENT",
+  "heldOut": "NOT_AUTHORED",
+  "reviewerType": "CODEX_SEMANTIC_REVIEW_WITH_NATIVE_QUARANTINE",
+  "counts": {
+    "total": 68,
+    "capability": 52,
+    "modifier": 16,
+    "acceptedEnglishCapability": 48,
+    "acceptedEnglishCapabilityPositive": 42,
+    "quarantinedLanguage": 13,
+    "strictNone": 6,
+    "multiSkill": 10,
+    "surfaceNovelEnglishPositive": 42,
+    "modes": {
+      "COMPLETE_DRAFT": 3,
+      "NO_REPLY_NEEDED": 1,
+      "REWRITE_DRAFT": 34,
+      "SUGGEST_REPLY": 30
+    },
+    "settings": { "PERSONAL": 29, "SERVICE": 16, "WORK": 23 },
+    "languages": {
+      "CODE_SWITCHING": 3,
+      "ENGLISH": 55,
+      "SIMPLIFIED_CHINESE": 7,
+      "TRADITIONAL_CHINESE": 3
+    },
+    "draftRealism": { "ALREADY_DECENT": 3, "NORMAL": 17, "ROUGH": 17 },
+    "decisions": { "PASS": 55, "QUARANTINE": 13 }
+  },
+  "strictNone": ["C47", "C48", "C49", "C50", "C51", "C52"],
+  "multiSkill": ["C02", "C05", "C09", "C10", "C17", "C19", "C23", "C24", "C35", "C39"],
+  "capabilityCoverage": [
+    {
+      "skillId": "apology",
+      "positive": ["C01", "C02", "C30"],
+      "negative": ["C03", "C04", "C29"],
+      "hardNeighbor": ["C29"],
+      "multiSkill": ["C02"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "SERVICE"],
+      "draftRealism": ["NORMAL"]
+    },
+    {
+      "skillId": "acknowledge_mistake",
+      "positive": ["C02", "C03", "C04", "C29"],
+      "negative": ["C30", "C34"],
+      "hardNeighbor": ["C30"],
+      "multiSkill": ["C02"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "SERVICE", "WORK"],
+      "draftRealism": ["NORMAL", "ROUGH"]
+    },
+    {
+      "skillId": "emotional_validation",
+      "positive": ["C05", "C06", "C31"],
+      "negative": ["C20"],
+      "hardNeighbor": ["C32"],
+      "multiSkill": ["C05"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "WORK"],
+      "draftRealism": ["ALREADY_DECENT", "NORMAL"]
+    },
+    {
+      "skillId": "reassurance",
+      "positive": ["C05", "C07", "C08", "C32"],
+      "negative": ["C06", "C31"],
+      "hardNeighbor": ["C31"],
+      "multiSkill": ["C05"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "SERVICE"],
+      "draftRealism": ["NORMAL"]
+    },
+    {
+      "skillId": "boundary_setting",
+      "positive": ["C09", "C10", "C35", "C44"],
+      "negative": ["C11", "C12", "C13", "C14", "C28", "C33", "C34"],
+      "hardNeighbor": ["C33", "C34"],
+      "multiSkill": ["C09", "C10", "C35"],
+      "modes": ["COMPLETE_DRAFT", "REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH", "TRADITIONAL_CHINESE"],
+      "settings": ["PERSONAL", "WORK"],
+      "draftRealism": ["ROUGH"]
+    },
+    {
+      "skillId": "de_escalation",
+      "positive": ["C09", "C11", "C12", "C34"],
+      "negative": ["C10", "C13", "C35"],
+      "hardNeighbor": ["C34"],
+      "multiSkill": ["C09"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "SERVICE", "WORK"],
+      "draftRealism": ["NORMAL", "ROUGH"]
+    },
+    {
+      "skillId": "decline",
+      "positive": ["C10", "C13", "C14", "C33", "C35"],
+      "negative": ["C39"],
+      "hardNeighbor": ["C35"],
+      "multiSkill": ["C10", "C35"],
+      "modes": ["COMPLETE_DRAFT", "REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "SERVICE", "WORK"],
+      "draftRealism": ["ALREADY_DECENT", "NORMAL", "ROUGH"]
+    },
+    {
+      "skillId": "ask_for_help",
+      "positive": ["C15", "C16"],
+      "negative": ["C26", "C27", "C36"],
+      "hardNeighbor": ["C36"],
+      "multiSkill": [],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "WORK"],
+      "draftRealism": ["ROUGH"]
+    },
+    {
+      "skillId": "follow_up",
+      "positive": ["C17", "C18"],
+      "negative": ["C27", "C37"],
+      "hardNeighbor": ["C37"],
+      "multiSkill": ["C17"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["SERVICE"],
+      "draftRealism": ["NORMAL"]
+    },
+    {
+      "skillId": "status_update",
+      "positive": ["C19", "C20", "C38", "C40", "C45"],
+      "negative": ["C18", "C21"],
+      "hardNeighbor": ["C40"],
+      "multiSkill": ["C19"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["CODE_SWITCHING", "ENGLISH"],
+      "settings": ["PERSONAL", "WORK"],
+      "draftRealism": ["NORMAL", "ROUGH"]
+    },
+    {
+      "skillId": "expectation_setting",
+      "positive": ["C19", "C21", "C22", "C24"],
+      "negative": ["C20", "C38", "C39", "C40", "C45"],
+      "hardNeighbor": ["C38", "C39"],
+      "multiSkill": ["C19", "C24"],
+      "modes": ["COMPLETE_DRAFT", "REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "SERVICE", "WORK"],
+      "draftRealism": ["NORMAL", "ROUGH"]
+    },
+    {
+      "skillId": "planning",
+      "positive": ["C23", "C24", "C39", "C46"],
+      "negative": ["C14", "C20", "C21", "C22", "C40"],
+      "hardNeighbor": ["C39", "C40"],
+      "multiSkill": ["C23", "C24", "C39"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH", "SIMPLIFIED_CHINESE"],
+      "settings": ["PERSONAL", "WORK"],
+      "draftRealism": ["ROUGH"]
+    },
+    {
+      "skillId": "clarification",
+      "positive": ["C25", "C26", "C41", "C43"],
+      "negative": ["C15", "C27", "C42"],
+      "hardNeighbor": ["C42"],
+      "multiSkill": [],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH", "SIMPLIFIED_CHINESE"],
+      "settings": ["PERSONAL", "SERVICE"],
+      "draftRealism": ["NORMAL", "ROUGH"]
+    },
+    {
+      "skillId": "request",
+      "positive": ["C17", "C23", "C27", "C28", "C36", "C37", "C39", "C42"],
+      "negative": ["C20"],
+      "hardNeighbor": ["C41"],
+      "multiSkill": ["C17", "C23", "C39"],
+      "modes": ["REWRITE_DRAFT", "SUGGEST_REPLY"],
+      "languages": ["ENGLISH"],
+      "settings": ["PERSONAL", "SERVICE", "WORK"],
+      "draftRealism": ["NORMAL", "ROUGH"]
+    }
+  ],
+  "modifierCoverage": [
+    {
+      "skillId": "en.professional_conciseness",
+      "positive": ["M01", "M04", "M06"],
+      "negativeOrNeighbor": ["M02", "M03"]
+    },
+    {
+      "skillId": "en.casual_naturalness",
+      "positive": ["M02", "M03"],
+      "negativeOrNeighbor": ["M01", "M04"]
+    },
+    {
+      "skillId": "en.direct_but_polite",
+      "positive": ["M05", "M15"],
+      "negativeOrNeighbor": ["M06"]
+    },
+    {
+      "skillId": "zh.politeness_calibration",
+      "positive": ["M07", "M16"],
+      "negativeOrNeighbor": ["M08"]
+    },
+    {
+      "skillId": "zh.professional_formality",
+      "positive": ["M08", "M09"],
+      "negativeOrNeighbor": ["M07", "M10", "M11", "M16"]
+    },
+    {
+      "skillId": "zh.natural_conciseness",
+      "positive": ["M10", "M11", "M14"],
+      "negativeOrNeighbor": ["M09", "M12", "M13"]
+    },
+    { "skillId": "zh.code_switching", "positive": ["M12", "M13"], "negativeOrNeighbor": ["M14"] }
+  ],
+  "novelty": [
+    {
+      "id": "C01",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C02",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.029,
+      "maxSelectedGoalBigramJaccard": 0.053,
+      "closestSource": "SRS3DA/D19",
+      "closestGoalSource": "PHASE8/acknowledge_mistake/P3",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C03",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.021,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS25/T3",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C04",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.053,
+      "closestSource": "NONE",
+      "closestGoalSource": "PHASE8/acknowledge_mistake/P3",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C05",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C06",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.083,
+      "closestSource": "NONE",
+      "closestGoalSource": "PHASE8/zh.natural_conciseness/P2",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C07",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.02,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3B/R18",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C08",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.017,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "PHASE8/reassurance/A1",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C09",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.016,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3B/R09",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C10",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.038,
+      "maxSelectedGoalBigramJaccard": 0.067,
+      "closestSource": "PHASE8/en.direct_but_polite/A1",
+      "closestGoalSource": "SRS3DA/D30",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C11",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.015,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "PHASE8/de_escalation/A1",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C12",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C13",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C14",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.053,
+      "maxSelectedGoalBigramJaccard": 0.105,
+      "closestSource": "PHASE8/de_escalation/A2",
+      "closestGoalSource": "SRS3DA/D68",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C15",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C16",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C17",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C18",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C19",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.038,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3DA/D58",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C20",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.056,
+      "closestSource": "NONE",
+      "closestGoalSource": "SRS3DA/D26",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C21",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C22",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.029,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3DA/D61",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C23",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.022,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3B/R21",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C24",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C25",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C26",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C27",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C28",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.043,
+      "closestSource": "NONE",
+      "closestGoalSource": "SRS3B/R10",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C29",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.037,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3DA/D52",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C30",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C31",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.048,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3DA/D53",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C32",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C33",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C34",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C35",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C36",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.056,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3DA/D01",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C37",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.083,
+      "closestSource": "NONE",
+      "closestGoalSource": "SRS3DA/D06",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C38",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C39",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C40",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.071,
+      "closestSource": "NONE",
+      "closestGoalSource": "SRS3DA/D26",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C41",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C42",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.056,
+      "maxSelectedGoalBigramJaccard": 0.286,
+      "closestSource": "SRS3DA/D01",
+      "closestGoalSource": "PHASE8/request/P1",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C43",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C44",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C45",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C46",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C47",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.091,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3DA/D11",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C48",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.067,
+      "closestSource": "NONE",
+      "closestGoalSource": "SRS3B/R26",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C49",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C50",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C51",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "C52",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M01",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.026,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "PHASE8/follow_up/P3",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M02",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.02,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "PHASE8/request/A2",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M03",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M04",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.067,
+      "closestSource": "NONE",
+      "closestGoalSource": "SRS3DA/D26",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M05",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M06",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0.083,
+      "closestSource": "NONE",
+      "closestGoalSource": "SRS3DA/D26",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M07",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M08",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M09",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M10",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M11",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M12",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M13",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M14",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M15",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0.045,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "SRS3DA/D36",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    },
+    {
+      "id": "M16",
+      "exactDuplicate": false,
+      "exactSelectedGoalDuplicate": false,
+      "maxTrigramJaccard": 0,
+      "maxSelectedGoalBigramJaccard": 0,
+      "closestSource": "NONE",
+      "closestGoalSource": "NONE",
+      "surfaceNovel": true
+    }
+  ]
+}

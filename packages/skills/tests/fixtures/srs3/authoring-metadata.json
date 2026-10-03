@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "phase": "SRS-3B",
+  "split": "EXPOSED_DEVELOPMENT",
+  "rawSetSha256": "efce60f7eef73609fcdf1c4080d21e93dba43c57c1d59873c0549306bf3cbdcf",
+  "cases": [
+    { "id": "R01", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "ROUGH" },
+    { "id": "R02", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R03", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "NORMAL" },
+    { "id": "R04", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R05", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "ROUGH" },
+    { "id": "R06", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R07", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "ROUGH" },
+    { "id": "R08", "revision": "R1", "boundaryExplicitness": "EXPLICIT" },
+    { "id": "R09", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "NORMAL" },
+    { "id": "R10", "revision": "R1", "boundaryExplicitness": "EXPLICIT" },
+    {
+      "id": "R11",
+      "revision": "R1",
+      "boundaryExplicitness": "IMPLICIT",
+      "draftRealism": "ALREADY_DECENT"
+    },
+    { "id": "R12", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R13", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "ROUGH" },
+    { "id": "R14", "revision": "R1", "boundaryExplicitness": "EXPLICIT" },
+    { "id": "R15", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "ROUGH" },
+    { "id": "R16", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    {
+      "id": "R17",
+      "revision": "R1",
+      "boundaryExplicitness": "IMPLICIT",
+      "draftRealism": "ALREADY_DECENT"
+    },
+    { "id": "R18", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R19", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "ROUGH" },
+    { "id": "R20", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R21", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "NORMAL" },
+    { "id": "R22", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "NORMAL" },
+    { "id": "R23", "revision": "R2", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R24", "revision": "R2", "boundaryExplicitness": "IMPLICIT", "draftRealism": "ROUGH" },
+    { "id": "R25", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R26", "revision": "R1", "boundaryExplicitness": "EXPLICIT" },
+    {
+      "id": "R27",
+      "revision": "R1",
+      "boundaryExplicitness": "IMPLICIT",
+      "draftRealism": "ALREADY_DECENT"
+    },
+    { "id": "R28", "revision": "R1", "boundaryExplicitness": "EXPLICIT" },
+    { "id": "R29", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    { "id": "R30", "revision": "R2", "boundaryExplicitness": "EXPLICIT" },
+    { "id": "R31", "revision": "R1", "boundaryExplicitness": "IMPLICIT", "draftRealism": "NORMAL" },
+    { "id": "R32", "revision": "R1", "boundaryExplicitness": "IMPLICIT" },
+    {
+      "id": "R33",
+      "revision": "R1",
+      "boundaryExplicitness": "IMPLICIT",
+      "draftRealism": "ALREADY_DECENT"
+    },
+    { "id": "R34", "revision": "R1", "boundaryExplicitness": "IMPLICIT", "draftRealism": "NORMAL" },
+    { "id": "R35", "revision": "R1", "boundaryExplicitness": "EXPLICIT" },
+    {
+      "id": "R36",
+      "revision": "R1",
+      "boundaryExplicitness": "IMPLICIT",
+      "draftRealism": "ALREADY_DECENT"
+    },
+    { "id": "R37", "revision": "R1", "boundaryExplicitness": "EXPLICIT" },
+    { "id": "R38", "revision": "R1", "boundaryExplicitness": "IMPLICIT", "draftRealism": "NORMAL" },
+    { "id": "R39", "revision": "R2", "boundaryExplicitness": "IMPLICIT" },
+    {
+      "id": "R40",
+      "revision": "R1",
+      "boundaryExplicitness": "IMPLICIT",
+      "draftRealism": "ALREADY_DECENT"
+    },
+    { "id": "R41", "revision": "R2", "boundaryExplicitness": "EXPLICIT" }
+  ]
+}

@@ -1,0 +1,247 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: recognition_support
+definition:
+  id: reassurance
+  name: Reassurance
+  description: Use when grounded reassurance would support a visible concern.
+  languages:
+    - universal
+  situations:
+    - emotional_support
+  intents:
+    - reassure
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when grounded reassurance would support a visible concern.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Offer grounded support without promising outcomes you cannot know.
+  avoid:
+    - Do not guarantee that everything will be fine.
+  compatibleSkills:
+    - emotional_validation
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: emotional_validation
+    distinction: Only acknowledge sadness, with no support fact → validation.
+    caseId: H1
+conceptualNotes:
+  - caseId: H2
+    distinction: Support another's effort without a worry or evidential reassurance → possible
+      encouragement, not automatic reassurance.
+    sourceRef: docs/skills/phase-5-registry-expansion.md#reassurance
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Friend worries about attending alone; user confirms they will accompany them and
+        wants to reassure.
+      visibleContext:
+        Friend worries about attending alone; user confirms they will accompany them and
+        wants to reassure.
+      userIntent: Reassure the friend using the user's existing commitment to accompany them.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - reassurance
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Coworker worries about lost work; a verified backup exists.
+      visibleContext: Coworker worries about lost work; a verified backup exists.
+      userIntent: Reassure using the verified backup.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - reassurance
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Family member worries about a form; user has already offered to review it together.
+      visibleContext: Family member worries about a form; user has already offered to review it together.
+      userIntent: Reassure using the existing offer to review together.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - reassurance
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: User has no evidence to promise success.
+      visibleContext: User has no evidence to promise success.
+      userIntent: Promise success without evidence.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - reassurance
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Neutral message has no concern.
+      visibleContext: Neutral message has no concern.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - reassurance
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Reassurance would contradict user's refusal to help.
+      visibleContext: Reassurance would contradict user's refusal to help.
+      userIntent: Preserve the user's refusal to help.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - reassurance
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Only acknowledge sadness, with no support fact → validation.
+      visibleContext: Only acknowledge sadness, with no support fact → validation.
+      userIntent: Acknowledge sadness without adding a support fact.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - emotional_validation
+      forbidden: []
+      rationale: Only acknowledge sadness, with no support fact → validation.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Support another's effort without a worry or evidential reassurance → possible
+        encouragement, not automatic reassurance.
+      visibleContext: Support another's effort without a worry or evidential reassurance → possible
+        encouragement, not automatic reassurance.
+      userIntent: Support effort without a stated worry.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Support another's effort without a worry or evidential reassurance → possible
+        encouragement, not automatic reassurance.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText:
+        "Facts: friend is worried; user has committed to attending too. “don't worry” → “You
+        won't have to go alone—I'll be there with you.”"
+      visibleContext: Friend is worried about attending alone. User has committed to attending too.
+      userIntent: Reassure using the existing attendance commitment.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: don't worry
+      improved: You won't have to go alone—I'll be there with you.
+      ledger:
+        facts:
+          - Friend is worried about attending alone.
+          - User has committed to attending too.
+        commitments:
+          - User will attend with the friend; this commitment already exists.
+        uncertainty: []
+    - id: A2
+      sourceText: "Fact: backup exists, recovery outcome unknown. “everything is fine” → “We have a
+        backup to work from, although we still need to check what can be restored.”"
+      visibleContext: A backup exists. Recovery outcome has not been established.
+      userIntent: Reassure using the known backup without guaranteeing recovery.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: everything is fine
+      improved: We have a backup to work from, although we still need to check what can be restored.
+      ledger:
+        facts:
+          - A backup exists.
+          - Recovery outcome has not been established.
+        commitments: []
+        uncertainty:
+          - What can be restored still needs to be checked.
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#reassurance
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:1a2712cefd5c7580782fb244375bdc7721dd17cee9026a68640013727486ff7e
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

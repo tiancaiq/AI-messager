@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "split": "DEVELOPMENT",
+  "sources": [
+    {
+      "id": "PHASE4_REGRESSION",
+      "path": "packages/test-fixtures/src/index.ts",
+      "caseCount": 21,
+      "scenarioGroupCount": 21,
+      "evidenceUse": "PRODUCTION_PARITY"
+    },
+    {
+      "id": "APPROVED_CANONICAL",
+      "path": "packages/skills/definitions",
+      "caseCount": 210,
+      "scenarioGroupCount": 21,
+      "evidenceUse": "EXPOSED_AUTHORING_BOUNDARY_EVIDENCE"
+    },
+    {
+      "id": "PHASE8_CANDIDATE",
+      "path": "packages/test-fixtures/src/phase8-candidate-experiment.ts",
+      "caseCount": 32,
+      "scenarioGroupCount": 16,
+      "evidenceUse": "EXPOSED_CANDIDATE_DEVELOPMENT_EVIDENCE"
+    }
+  ],
+  "proposedSrs2SourceIds": ["PHASE4_REGRESSION", "APPROVED_CANONICAL", "PHASE8_CANDIDATE"],
+  "sampleAnnotations": [
+    {
+      "id": "missed-commitment",
+      "scenarioFamily": "missed-commitment",
+      "split": "DEVELOPMENT",
+      "source": {
+        "path": "packages/test-fixtures/src/index.ts",
+        "fixtureId": "missed-commitment"
+      },
+      "catalog": "PRODUCTION",
+      "action": "REWRITE_DRAFT",
+      "assistanceMode": "REWRITE_DRAFT",
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "capabilities": {
+        "required": ["acknowledge_mistake", "status_update", "expectation_setting"],
+        "acceptable": ["apology"],
+        "forbidden": ["emotional_validation"]
+      },
+      "modifiers": {
+        "required": [],
+        "acceptable": ["en.professional_conciseness"],
+        "forbidden": []
+      },
+      "strictNone": false,
+      "preservation": {
+        "intent": true,
+        "facts": true,
+        "commitments": true,
+        "uncertainty": true
+      },
+      "reviewerState": "EXPOSED_DEVELOPMENT_EVIDENCE"
+    },
+    {
+      "id": "simplified-status",
+      "scenarioFamily": "status-update",
+      "split": "DEVELOPMENT",
+      "source": {
+        "path": "packages/test-fixtures/src/index.ts",
+        "fixtureId": "simplified-status"
+      },
+      "catalog": "PRODUCTION",
+      "action": "REWRITE_DRAFT",
+      "assistanceMode": "REWRITE_DRAFT",
+      "language": {
+        "primary": "zh-Hans",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "capabilities": {
+        "required": ["status_update"],
+        "acceptable": ["expectation_setting"],
+        "forbidden": []
+      },
+      "modifiers": {
+        "required": ["zh.professional_formality"],
+        "acceptable": ["zh.natural_conciseness"],
+        "forbidden": ["en.professional_conciseness"]
+      },
+      "strictNone": false,
+      "preservation": {
+        "intent": true,
+        "facts": true,
+        "commitments": true,
+        "uncertainty": true
+      },
+      "reviewerState": "EXPOSED_DEVELOPMENT_EVIDENCE"
+    },
+    {
+      "id": "mixed-planning",
+      "scenarioFamily": "planning-code-switch",
+      "split": "DEVELOPMENT",
+      "source": {
+        "path": "packages/test-fixtures/src/index.ts",
+        "fixtureId": "mixed-planning"
+      },
+      "catalog": "PRODUCTION",
+      "action": "REWRITE_DRAFT",
+      "assistanceMode": "REWRITE_DRAFT",
+      "language": {
+        "primary": "zh-Hans",
+        "secondary": "en",
+        "codeSwitching": true
+      },
+      "capabilities": {
+        "required": ["planning"],
+        "acceptable": [],
+        "forbidden": []
+      },
+      "modifiers": {
+        "required": ["zh.code_switching"],
+        "acceptable": ["zh.natural_conciseness", "en.casual_naturalness"],
+        "forbidden": ["en.professional_conciseness"]
+      },
+      "strictNone": false,
+      "preservation": {
+        "intent": true,
+        "facts": true,
+        "commitments": true,
+        "uncertainty": true
+      },
+      "reviewerState": "EXPOSED_DEVELOPMENT_EVIDENCE"
+    },
+    {
+      "id": "invitation-before-choice",
+      "scenarioFamily": "non-wording-choice",
+      "split": "DEVELOPMENT",
+      "source": {
+        "path": "packages/test-fixtures/src/index.ts",
+        "fixtureId": "invitation-before-choice"
+      },
+      "catalog": "PRODUCTION",
+      "action": "SUGGEST_ACTIONS",
+      "assistanceMode": "NON_WORDING_ACTION",
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "capabilities": {
+        "required": [],
+        "acceptable": [],
+        "forbidden": ["decline", "planning"]
+      },
+      "modifiers": {
+        "required": [],
+        "acceptable": [],
+        "forbidden": []
+      },
+      "strictNone": true,
+      "preservation": {
+        "intent": true,
+        "facts": true,
+        "commitments": true,
+        "uncertainty": true
+      },
+      "reviewerState": "EXPOSED_DEVELOPMENT_EVIDENCE"
+    },
+    {
+      "id": "perspective-positive-en-rewrite",
+      "scenarioFamily": "perspective-positive-en",
+      "split": "DEVELOPMENT",
+      "source": {
+        "path": "packages/test-fixtures/src/phase8-candidate-experiment.ts",
+        "fixtureId": "perspective_acknowledgement-positive-1-rewrite_draft"
+      },
+      "catalog": "EVALUATION_ONLY",
+      "action": "REWRITE_DRAFT",
+      "assistanceMode": "REWRITE_DRAFT",
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "capabilities": {
+        "required": ["perspective_acknowledgement"],
+        "acceptable": [],
+        "forbidden": []
+      },
+      "modifiers": {
+        "required": [],
+        "acceptable": [],
+        "forbidden": []
+      },
+      "strictNone": false,
+      "preservation": {
+        "intent": true,
+        "facts": true,
+        "commitments": true,
+        "uncertainty": true
+      },
+      "reviewerState": "EXPOSED_DEVELOPMENT_EVIDENCE"
+    }
+  ],
+  "heldOut": {
+    "status": "NOT_AUTHORED",
+    "sealed": false,
+    "groupingRule": "Author fresh scenario families only after SRS-2 behavior and thresholds are frozen; translations and paraphrases stay with their originating development family."
+  }
+}

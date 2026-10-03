@@ -1,0 +1,237 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: understanding_inquiry
+definition:
+  id: clarification
+  name: Clarification
+  description: Use when the user intends to ask for one concrete missing detail.
+  languages:
+    - universal
+  situations:
+    - request
+  intents:
+    - clarify
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the user intends to ask for one concrete missing detail.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Ask one concise question that resolves the material missing detail.
+  avoid:
+    - Do not ask multiple questions or repeat what is already visible.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: request
+    distinction: Asking recipient to send a known file → request.
+    caseId: H2
+conceptualNotes:
+  - caseId: H1
+    distinction: Apparently understood Friday deadline needs final verification → confirmation.
+    sourceRef: docs/skills/phase-5-registry-expansion.md#clarification
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: “Send the file” refers to two files; user wants to ask which.
+      visibleContext: “Send the file” refers to two files; user wants to ask which.
+      userIntent: Ask which of two files is meant.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - clarification
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: A friend says “the café,” with two plausible locations.
+      visibleContext: A friend says “the café,” with two plausible locations.
+      userIntent: Ask which café location is meant.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - clarification
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: A tutor mentions “chapter three” without specifying which of two books.
+      visibleContext: A tutor mentions “chapter three” without specifying which of two books.
+      userIntent: Ask which book's chapter three is meant.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - clarification
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: The requested detail is explicit and already understood.
+      visibleContext: The requested detail is explicit and already understood.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - clarification
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User seeks an unrelated curiosity question.
+      visibleContext: User seeks an unrelated curiosity question.
+      userIntent: Ask an unrelated curiosity question.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - clarification
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Fixed action is the coach's own ASK_CLARIFICATION; skills remain NONE.
+      visibleContext: Fixed action is the coach's own ASK_CLARIFICATION; skills remain NONE.
+      userIntent: null
+      action: ASK_CLARIFICATION
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - clarification
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Apparently understood Friday deadline needs final verification → confirmation.
+      visibleContext: Apparently understood Friday deadline needs final verification → confirmation.
+      userIntent: Verify an apparently understood Friday deadline.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Apparently understood Friday deadline needs final verification → confirmation.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Asking recipient to send a known file → request.
+      visibleContext: Asking recipient to send a known file → request.
+      userIntent: Ask the recipient to send a known file.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - request
+      forbidden: []
+      rationale: Asking recipient to send a known file → request.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: Two reports are plausible. “which report do you mean” → “Do you mean the sales
+        report or the budget report?”
+      visibleContext: The sales report and budget report are both plausible. The intended report is unknown.
+      userIntent: Ask which of two reports is meant.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: which report do you mean
+      improved: Do you mean the sales report or the budget report?
+      ledger:
+        facts:
+          - The sales report and budget report are both plausible.
+          - The intended report is unknown.
+        commitments: []
+        uncertainty:
+          - Which report is intended is unresolved.
+    - id: A2
+      sourceText: Two café branches are plausible. “which café” → “Which café location do you mean?”
+      visibleContext: Two café branches are plausible. The intended location is unknown.
+      userIntent: Ask which café branch is meant.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: which café
+      improved: Which café location do you mean?
+      ledger:
+        facts:
+          - Two café branches are plausible.
+          - The intended location is unknown.
+        commitments: []
+        uncertainty:
+          - Which café location is intended is unresolved.
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#clarification
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:c36a893beaccbaa708d46caea9970730824b33f40edd886d473859b085ca25bb
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

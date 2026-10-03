@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "gateId": "SRS-4R-A-SINGLETON-BATCH-INDEPENDENCE-V1",
+  "source": "EXPOSED_DEVELOPMENT_ONLY",
+  "caseKeys": [
+    "SRS3B:R06",
+    "SRS3B:R10",
+    "SRS3B:R14",
+    "SRS3B:R19",
+    "SRS3B:R24",
+    "SRS3B:R26",
+    "CONTROL:K21",
+    "CONTROL:K22"
+  ],
+  "requiredViews": ["BATCH_ID_ORDER", "BATCH_REVERSE_ORDER", "ALL_SINGLETONS"],
+  "acceptance": {
+    "allCandidateRowsValid": true,
+    "allApplicabilityCategoriesEqualAcrossViews": true,
+    "zeroCriticalOwnershipNegationPrerequisiteFlips": true,
+    "reasonCodeAgreementReportedSeparately": true
+  },
+  "liveProviderRunStatus": "NOT_RUN",
+  "providerCallsAuthorized": false,
+  "auditScored": false
+}

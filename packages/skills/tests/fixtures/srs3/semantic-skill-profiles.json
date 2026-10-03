@@ -1,0 +1,740 @@
+{
+  "artifactVersion": 1,
+  "source": "SRS-3D-B_AUTHORING_ONLY",
+  "reviewerType": "CODEX_SEMANTIC_REVIEW",
+  "profiles": [
+    {
+      "id": "apology",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Express proportionate regret for a supported user-caused mistake or impact.",
+      "useWhen": [
+        "The user has chosen to apologize for an evidenced mistake or impact.",
+        "The recipient's inconvenience or harm is supported without inventing their feelings."
+      ],
+      "whenNotUse": [
+        "The user only needs to correct an error and has not chosen to express regret.",
+        "Responsibility or impact belongs to another person and the user has not chosen an apology."
+      ],
+      "semanticTriggers": [
+        "Express chosen regret for a supported impact.",
+        "Apologize for a missed user commitment without adding an excuse."
+      ],
+      "neighbors": [
+        {
+          "skillId": "acknowledge_mistake",
+          "relationship": "OVERLAPPING",
+          "distinction": "Apology communicates regret; mistake acknowledgment names a user-owned error. Either or both may be useful.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "emotional_validation",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Validation recognizes the other person's expressed experience even when the user caused no impact.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:8221402bcdfb866433c969297014c3fbbf5aa389ab79d4a628687de6516b5f46",
+      "profileDigest": "sha256:34aa393ff6150f7c17419b29780c67d998c55c640367a0b3f0735ca6419a4891"
+    },
+    {
+      "id": "acknowledge_mistake",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Name and take responsibility for an evidenced user-owned error or missed action.",
+      "useWhen": [
+        "Visible evidence or the user's explicit account supports their ownership of a specific mistake or omission.",
+        "The user intends to correct the record or own that act without shifting blame."
+      ],
+      "whenNotUse": [
+        "Ownership is disputed, unknown, or belongs to someone else.",
+        "The message only reports an externally caused delay or current progress."
+      ],
+      "semanticTriggers": [
+        "Correct the user's own inaccurate statement.",
+        "Acknowledge a user-owned missed commitment."
+      ],
+      "neighbors": [
+        {
+          "skillId": "apology",
+          "relationship": "OVERLAPPING",
+          "distinction": "Ownership can be stated without regret; an apology adds chosen regret for supported impact.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "status_update",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "A status update reports known state without assigning an unsupported fault to the user.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:5b651416a95e3c48749ce4619e95e008970edcd9f389449df62b79c5c9ce12ac",
+      "profileDigest": "sha256:bd8577258d281fb34c40463818a7bfc7a0a5362bff60c9fcc2774070d770342a"
+    },
+    {
+      "id": "emotional_validation",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Recognize an explicitly visible feeling or difficulty without claiming hidden emotions.",
+      "useWhen": [
+        "The other person has expressed an upsetting experience, feeling, or difficulty.",
+        "The user intends to acknowledge that expression before moving to advice or logistics."
+      ],
+      "whenNotUse": [
+        "The visible exchange is neutral logistics without expressed distress or difficulty.",
+        "The response would diagnose, infer an unspoken feeling, or endorse an unsupported accusation."
+      ],
+      "semanticTriggers": [
+        "Acknowledge an expressed difficult experience.",
+        "Recognize visible frustration or disappointment without claiming its cause as fact."
+      ],
+      "neighbors": [
+        {
+          "skillId": "reassurance",
+          "relationship": "OVERLAPPING",
+          "distinction": "Validation recognizes an experience; reassurance offers support grounded in a known fact or commitment.",
+          "coexistence": "COMPATIBLE"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:5e5a186c00510fc7d58ddc9c23d6214e02f03a30a6d2595fe453a490d9f6441d",
+      "profileDigest": "sha256:b3fc115c2dfaee125f814cb6e49f04b9c77d114a55323a5d81cdb2d262487fc0"
+    },
+    {
+      "id": "reassurance",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Address a visible concern with truthful, grounded support.",
+      "useWhen": [
+        "The recipient has a visible concern and the user has a known support fact or existing commitment to offer.",
+        "The user intends to help the recipient feel supported without predicting an unknown outcome."
+      ],
+      "whenNotUse": [
+        "No concern or supporting fact is available.",
+        "The proposed reassurance would promise success, contradict a refusal, or create a new commitment."
+      ],
+      "semanticTriggers": [
+        "Restate verified available support in response to a concern.",
+        "Point to a known backup or existing commitment while retaining uncertainty."
+      ],
+      "neighbors": [
+        {
+          "skillId": "emotional_validation",
+          "relationship": "OVERLAPPING",
+          "distinction": "Validation can acknowledge sadness without any support fact; reassurance requires grounded support.",
+          "coexistence": "COMPATIBLE"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:1a2712cefd5c7580782fb244375bdc7721dd17cee9026a68640013727486ff7e",
+      "profileDigest": "sha256:3b37845e6b1b93c31563e9d6fdd7c70c0ccd378cd199ee89e622356a16745f27"
+    },
+    {
+      "id": "boundary_setting",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "State the user's chosen continuing limit under repeated pressure.",
+      "useWhen": [
+        "Repeated or ongoing pressure is supported by visible context or explicitly supplied by the user.",
+        "The user has decided on a continuing limit governing their own participation or contact."
+      ],
+      "whenNotUse": [
+        "A single invitation is refused without an ongoing limit.",
+        "The user only communicates supported future timing, capacity, or scope.",
+        "Conflict exists but the user has not chosen a continuing limit."
+      ],
+      "semanticTriggers": [
+        "Communicate a chosen ongoing limit after repeated unwanted requests.",
+        "State a continuing condition for contact or participation under sustained pressure."
+      ],
+      "neighbors": [
+        {
+          "skillId": "decline",
+          "relationship": "OVERLAPPING",
+          "distinction": "Decline is a specific chosen no; boundary setting additionally requires a continuing limit under repeated pressure.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "de_escalation",
+          "relationship": "OVERLAPPING",
+          "distinction": "De-escalation reduces visible heat; a civil continuing limit alone does not prove a conflict.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "expectation_setting",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "A timing or capacity estimate is not a repeated-pressure behavioral limit.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "knownBoundaryIssue": "Product decision pending on whether first-time personal limits should be included; current approved definition requires repeated pressure.",
+      "reviewState": "BOUNDARY_REVIEW_REQUIRED",
+      "sourceDefinitionDigest": "sha256:1a0f4f43e8748abea7927701881b2c953b3a0f79434d0d60bdc213d18eead59e",
+      "profileDigest": "sha256:498094fdd2c74bc370ad7f650e984c73ea6ddd6142090536869f19e47397b115"
+    },
+    {
+      "id": "de_escalation",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Reduce unnecessary heat in a visibly tense exchange without changing the user's position.",
+      "useWhen": [
+        "Conflict or pressure is actually visible and the user wants a calmer response.",
+        "Concrete non-accusatory wording can preserve the user's decision or disagreement."
+      ],
+      "whenNotUse": [
+        "The exchange is already calm or tension is inferred only from punctuation.",
+        "Calming the wording would require conceding the user's chosen limit or decision."
+      ],
+      "semanticTriggers": [
+        "Restate a disagreement calmly in an active conflict.",
+        "Remove unnecessary accusation while preserving the user's position."
+      ],
+      "neighbors": [
+        {
+          "skillId": "boundary_setting",
+          "relationship": "OVERLAPPING",
+          "distinction": "Boundary setting expresses a chosen continuing limit under repeated pressure; de-escalation addresses the heat of delivery.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "decline",
+          "relationship": "COMPLEMENTARY",
+          "distinction": "A refusal supplies the decision; de-escalation may make a tense refusal calmer without reversing it.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:1c8bd46ae515a8cdca6a50238e5f0ba0e4a2f9c1b71ad4779a1566c594051168",
+      "profileDigest": "sha256:c2a243fe26ea2f217313535ffd2d2a4e8faff85e0a92028cd05efcaae133e4cf"
+    },
+    {
+      "id": "decline",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Communicate the user's chosen refusal of a specific invitation, request, or option.",
+      "useWhen": [
+        "The user has clearly decided not to accept a specific proposal or request.",
+        "The response should keep the no explicit without inventing a reason or alternative."
+      ],
+      "whenNotUse": [
+        "The user has not decided yet or has chosen to accept.",
+        "The user is only asking for details before deciding."
+      ],
+      "semanticTriggers": [
+        "Convey a decided refusal of a concrete invitation.",
+        "Decline an additional task or offer without manufacturing a pretext."
+      ],
+      "neighbors": [
+        {
+          "skillId": "boundary_setting",
+          "relationship": "OVERLAPPING",
+          "distinction": "A one-time refusal need not be an ongoing rule; repeated pressure plus a chosen limit may support both.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "planning",
+          "relationship": "COMPLEMENTARY",
+          "distinction": "An alternative date is planning only when the user actually offered it; decline cannot invent one.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:06ae122d785ae6ed915dd6fa57b3f4bec013276c53285b165cc16ed662e4bd0a",
+      "profileDigest": "sha256:ae9685c6317357494cf361e7c5abceedb833ebab5521f34bd2596b50866921b9"
+    },
+    {
+      "id": "ask_for_help",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Ask another person for assistance with a supported need.",
+      "useWhen": [
+        "The user has chosen to seek another person's help with a concrete task or understanding.",
+        "The requested assistance and known context can be stated without implying an obligation."
+      ],
+      "whenNotUse": [
+        "The user merely asks someone to provide an item without assistance framing.",
+        "The user offers help, reports completion, or seeks an unknown detail rather than assistance."
+      ],
+      "semanticTriggers": [
+        "Seek collaborative help with a task.",
+        "Ask someone to assist the user in understanding or carrying out something."
+      ],
+      "neighbors": [
+        {
+          "skillId": "request",
+          "relationship": "MORE_SPECIFIC_THAN",
+          "distinction": "Help is a particular requested action; ordinary provision of an item may need only request.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "clarification",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Clarification resolves a material unknown; asking for assistance is a different chosen operation.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:6f02649adcc780b7ee1bea2a75ac8680bd807555b22b08aa8c7935a04a245945",
+      "profileDigest": "sha256:90677cc501317add47f86c5ef11f2a0f847bd6c8171e97513f939a1e8e6e554a"
+    },
+    {
+      "id": "follow_up",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Revisit a supported earlier unresolved request or thread.",
+      "useWhen": [
+        "A prior request is visible or explicitly supplied by the user.",
+        "The prior matter is unresolved and the user chooses to check its progress or disposition."
+      ],
+      "whenNotUse": [
+        "This is the first request or the earlier request has been fully answered.",
+        "The user reports their own current progress instead of checking the other party.",
+        "The wording would turn silence alone into an accusation or pressure after a refusal."
+      ],
+      "semanticTriggers": [
+        "Check the disposition of an unresolved earlier ask.",
+        "Renew a previously made request without assuming neglect."
+      ],
+      "neighbors": [
+        {
+          "skillId": "request",
+          "relationship": "MORE_SPECIFIC_THAN",
+          "distinction": "Request can be a first ask; follow-up requires a supported earlier unresolved ask.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "status_update",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Status update reports the user's known state; follow-up asks about an open thread.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:d48baec95cb149f23b14c4082a16bde90fcff16daa0ae397102d7e9efd1732ec",
+      "profileDigest": "sha256:dc00fb1f971011fa6c5fa3831cb6c561c474c0ee12262388805bd2c8da715d5c"
+    },
+    {
+      "id": "status_update",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Communicate supported present state or progress.",
+      "useWhen": [
+        "The user has current factual status to report, whether prompted or volunteered.",
+        "Completion, pending work, delay, or present progress is known rather than guessed."
+      ],
+      "whenNotUse": [
+        "Status is unknown and the user wants to ask the other person for it.",
+        "The message only conveys future timing or capacity, or only arranges a next step."
+      ],
+      "semanticTriggers": [
+        "Report a known current completion state.",
+        "Describe present progress or a currently pending item."
+      ],
+      "neighbors": [
+        {
+          "skillId": "expectation_setting",
+          "relationship": "OVERLAPPING",
+          "distinction": "Status is known present state; expectation setting communicates supported future timing or scope.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "planning",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Planning coordinates future logistics rather than merely reporting the current state.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:0ca9ab17617c03dc373c61bed069b6f11c8b9ed6d56308dfb1dc494f00f820f9",
+      "profileDigest": "sha256:cf485cee690301f817c1e1c939ada6172f73a27054ea84561600d62a3b178985"
+    },
+    {
+      "id": "expectation_setting",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Communicate supported future timing, availability, capacity, scope, or uncertainty.",
+      "useWhen": [
+        "The user has a supported future estimate or stated availability, capacity, or scope limit.",
+        "The wording can preserve the user's actual degree of certainty."
+      ],
+      "whenNotUse": [
+        "Only current or completed progress is reported with no future estimate or limit.",
+        "The message actively coordinates an arrangement but states no timing estimate or capacity constraint.",
+        "A future claim would be invented or made more certain than the user's evidence."
+      ],
+      "semanticTriggers": [
+        "State a tentative future completion estimate.",
+        "Communicate a supported limit on future availability or scope."
+      ],
+      "neighbors": [
+        {
+          "skillId": "status_update",
+          "relationship": "OVERLAPPING",
+          "distinction": "Current progress alone is status; a supported future estimate is expectation setting, and both may coexist.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "planning",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Planning coordinates a concrete arrangement; mere coordination without estimate or capacity is not expectation setting.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "boundary_setting",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "A continuing behavioral limit under repeated pressure is not merely an availability estimate.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "knownBoundaryIssue": "Existing planning and status_request situation metadata can admit messages without a supported future expectation; no metadata changes are authorized here.",
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:8b14ec14f7c9efaed537fb736d4fafdd7d4721cbab3d756d1e5c7419e98d45b5",
+      "profileDigest": "sha256:1910faed7225e61634073a20fb2731444a88f09d5f95d0b3a0b4dc47cdc00a57"
+    },
+    {
+      "id": "planning",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Coordinate supported time, place, responsibilities, or concrete next steps.",
+      "useWhen": [
+        "The user is confirming, proposing, or organizing a concrete arrangement based on supplied logistics.",
+        "An agreed or tentative next step should be made clear without converting a proposal into a promise."
+      ],
+      "whenNotUse": [
+        "The user only asks someone to perform a new task without coordinating an arrangement.",
+        "The message only reports completed/current work or an unsupported future availability claim."
+      ],
+      "semanticTriggers": [
+        "Coordinate a meeting or handoff using known logistics.",
+        "Propose a concrete next step while preserving whether it is tentative or agreed."
+      ],
+      "neighbors": [
+        {
+          "skillId": "request",
+          "relationship": "OVERLAPPING",
+          "distinction": "A chosen ask can support a plan, but a standalone task request has no coordination job.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "status_update",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Reporting completed work is status; assigning a supported next step is planning.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "expectation_setting",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "A future estimate or capacity limit differs from actively coordinating an arrangement.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:f43aeda3624c08258657f4caedff9d0ee4e5d2ecf242fa1df9eb292fde631273",
+      "profileDigest": "sha256:158e90cfa3ab094f1e44a24774cb6b651fe0039624f1fa0c4a394847fbe2eae0"
+    },
+    {
+      "id": "clarification",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Ask for one material missing or ambiguous detail needed for the user's chosen communication.",
+      "useWhen": [
+        "A concrete unknown or competing reference matters to the intended exchange.",
+        "The user intends to ask the other person to resolve that unknown."
+      ],
+      "whenNotUse": [
+        "The relevant detail is already clear and the user simply wants a known action performed.",
+        "The question is unrelated curiosity or would repeat what is visible.",
+        "The upstream action is the coach's own clarification rather than a user message to word."
+      ],
+      "semanticTriggers": [
+        "Distinguish between plausible referents before proceeding.",
+        "Resolve one material missing detail in the recipient's message."
+      ],
+      "neighbors": [
+        {
+          "skillId": "request",
+          "relationship": "OVERLAPPING",
+          "distinction": "Inquiry into an unknown differs from asking for a known action; both can fit if both actions were chosen.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "ask_for_help",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Help requests seek assistance; clarification asks for a missing detail.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:c36a893beaccbaa708d46caea9970730824b33f40edd886d473859b085ca25bb",
+      "profileDigest": "sha256:c59c83259186eee55e02c931e192b1e75288b24ebddb3bc435312e14ad8116ce"
+    },
+    {
+      "id": "request",
+      "lane": "ATOMIC",
+      "profileRevision": 1,
+      "job": "Ask another person to perform, provide, change, or stop a chosen concrete action.",
+      "useWhen": [
+        "The desired recipient action is known and the user has chosen to ask for it.",
+        "The request can be stated without inventing authority, urgency, or consequences."
+      ],
+      "whenNotUse": [
+        "No requested action has been chosen or the action is already completed and merely reported.",
+        "The user is only resolving a missing detail rather than asking for a known action."
+      ],
+      "semanticTriggers": [
+        "Seek a concrete action or item from another person.",
+        "Ask the recipient to change a specific behavior the user has chosen to address."
+      ],
+      "neighbors": [
+        {
+          "skillId": "clarification",
+          "relationship": "OVERLAPPING",
+          "distinction": "Clarification asks about a material unknown; generic request alone need not imply ambiguity.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "ask_for_help",
+          "relationship": "MORE_GENERAL_THAN",
+          "distinction": "Assistance is a more specific requested action; a straightforward item request need not be help.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "follow_up",
+          "relationship": "MORE_GENERAL_THAN",
+          "distinction": "Follow-up adds an earlier unresolved ask; a first ask is just a request.",
+          "coexistence": "COMPATIBLE"
+        },
+        {
+          "skillId": "planning",
+          "relationship": "OVERLAPPING",
+          "distinction": "Planning organizes known logistics; request seeks a chosen recipient action, and both may be central.",
+          "coexistence": "COMPATIBLE"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:1c95d6ca98d075a39d13cf8859f654e1b8b08d7c7a9d8fde5fc33fbfa59bc341",
+      "profileDigest": "sha256:a61ee4befcf77ae91e051add994dfde0138efc35e02031335ec1c66e5a4bdf99"
+    },
+    {
+      "id": "en.professional_conciseness",
+      "lane": "LANGUAGE_MODIFIER",
+      "profileRevision": 1,
+      "job": "Express an eligible English message in concise professional chat style.",
+      "useWhen": [
+        "English is the eligible language and a work-oriented status, request, or follow-up needs professional brevity."
+      ],
+      "whenNotUse": [
+        "The message is unsupported in English or the context is plainly casual personal chat.",
+        "Concision would remove a required fact, uncertainty, decision, or request."
+      ],
+      "semanticTriggers": ["Make a work-chat update concise without ceremonial email framing."],
+      "neighbors": [
+        {
+          "skillId": "en.casual_naturalness",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Casual naturalness suits informal English conversation rather than professional register.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "en.direct_but_polite",
+          "relationship": "OVERLAPPING",
+          "distinction": "Direct politeness protects a request or decision; professional concision primarily controls register and length.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:8e8866c920a71ac1370148cb9c80ad968104f03c389eee271899923c522072b2",
+      "profileDigest": "sha256:0ed2699642c8e0ed8911bd801c4d55522ab3f2aa77f95e365b79adabf1184640"
+    },
+    {
+      "id": "en.casual_naturalness",
+      "lane": "LANGUAGE_MODIFIER",
+      "profileRevision": 1,
+      "job": "Make an eligible English reply sound natural and brief in a casual chat.",
+      "useWhen": [
+        "English is eligible and the interaction is an informal invitation or short personal plan."
+      ],
+      "whenNotUse": [
+        "Professional register is explicitly needed or the primary language is ineligible.",
+        "Casual wording would obscure a refusal or add unsupported familiarity."
+      ],
+      "semanticTriggers": ["Preserve conversational brevity in an informal English arrangement."],
+      "neighbors": [
+        {
+          "skillId": "en.professional_conciseness",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Professional concision suits a work-chat update rather than an informal personal exchange.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "en.direct_but_polite",
+          "relationship": "COMPLEMENTARY",
+          "distinction": "Direct politeness keeps a chosen request or no clear even in a casual register.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:5f14e5051ba62067e21af4c02c136f9c8b3e24a0a28d6b5e348c2eef419d2d01",
+      "profileDigest": "sha256:d46755dac5972cafc1b1a97ece6302e93b771fd913d81dd883bccb4cc56797b8"
+    },
+    {
+      "id": "en.direct_but_polite",
+      "lane": "LANGUAGE_MODIFIER",
+      "profileRevision": 1,
+      "job": "Express an eligible English request, refusal, or limit clearly and respectfully.",
+      "useWhen": [
+        "English is eligible and a chosen request, refusal, or limit needs clearer respectful expression."
+      ],
+      "whenNotUse": [
+        "No request or decision has been chosen, or the message is only a progress report.",
+        "Politeness would soften the user's chosen meaning into ambiguity."
+      ],
+      "semanticTriggers": ["State a chosen English request or no with respectful directness."],
+      "neighbors": [
+        {
+          "skillId": "en.professional_conciseness",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Professional concision shapes register; direct politeness protects the decision or ask.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "decline",
+          "relationship": "COMPLEMENTARY",
+          "distinction": "Decline supplies the refusal capability; this modifier cannot make the decision for the user.",
+          "coexistence": "COMPATIBLE"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:e4f5152ad6772c5d6624f4cd5f8a60c388854b53063d122971768aa826fefda4",
+      "profileDigest": "sha256:6eb4d5ef08aeb99681f565bbdff15c69219d9cb433f821bdb1c592d0190d802e"
+    },
+    {
+      "id": "zh.politeness_calibration",
+      "lane": "LANGUAGE_MODIFIER",
+      "profileRevision": 1,
+      "job": "Calibrate politeness in an eligible Chinese request, refusal, or limit without changing the decision.",
+      "useWhen": [
+        "Chinese is eligible and the chosen message benefits from ordinary chat-appropriate politeness."
+      ],
+      "whenNotUse": [
+        "Chinese is not the eligible primary language or no request or decision is supported.",
+        "Politeness would invent a reason, duty, deference, or new commitment."
+      ],
+      "semanticTriggers": [
+        "Make a supported Chinese request or refusal respectful without obscuring it."
+      ],
+      "neighbors": [
+        {
+          "skillId": "zh.professional_formality",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Professional formality suits work-status convention, not every polite request.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "decline",
+          "relationship": "COMPLEMENTARY",
+          "distinction": "Decline supplies the user's chosen no; politeness only changes expression.",
+          "coexistence": "COMPATIBLE"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:4d5484395f4e00eec44905ab5f2ac7be1ebc0277ac33bd9e6a78616e8949df96",
+      "profileDigest": "sha256:483fa749cb7baeb45b343e278d66d370f17f9bc8583766a8a889d43d95579cda"
+    },
+    {
+      "id": "zh.professional_formality",
+      "lane": "LANGUAGE_MODIFIER",
+      "profileRevision": 1,
+      "job": "Express an eligible Chinese work update or follow-up with concise professional register.",
+      "useWhen": [
+        "Chinese is eligible and a work-oriented status, missed commitment, or follow-up needs professional convention."
+      ],
+      "whenNotUse": [
+        "The context is casual personal planning or Chinese is ineligible.",
+        "Formality would add bureaucratic filler or turn uncertainty into a promise."
+      ],
+      "semanticTriggers": [
+        "Present a supported Chinese work-status message professionally and briefly."
+      ],
+      "neighbors": [
+        {
+          "skillId": "zh.natural_conciseness",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Natural concision fits ordinary chat without requiring a professional register.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "zh.politeness_calibration",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Politeness calibrates a chosen request or refusal; professional formality handles work register.",
+          "coexistence": "CONDITIONAL"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:d02f406cb4ed7fb871516e9a7100c161b089eca8e09deef0e6d55c7050f6cff4",
+      "profileDigest": "sha256:b7cc97c78638ebcddedaf0b940b85e8bdee07ae1a30a6e53a25ffc18c0483d17"
+    },
+    {
+      "id": "zh.natural_conciseness",
+      "lane": "LANGUAGE_MODIFIER",
+      "profileRevision": 1,
+      "job": "Keep an eligible Chinese chat reply natural, concise, and easy to act on.",
+      "useWhen": [
+        "Chinese is eligible and an ordinary planning, invitation, or request reply is wordy or stiff."
+      ],
+      "whenNotUse": [
+        "Chinese is ineligible or the reply needs explicit professional register.",
+        "Shortening would remove a chosen action, fact, uncertainty, or intentional mixed term."
+      ],
+      "semanticTriggers": [
+        "Remove redundant Chinese chat wording while retaining the communication job."
+      ],
+      "neighbors": [
+        {
+          "skillId": "zh.professional_formality",
+          "relationship": "NEAR_NEIGHBOR",
+          "distinction": "Professional formality serves an explicit work register rather than ordinary chat.",
+          "coexistence": "CONDITIONAL"
+        },
+        {
+          "skillId": "zh.code_switching",
+          "relationship": "COMPLEMENTARY",
+          "distinction": "Code-switching preserves intentional English terms; concision independently removes redundancy.",
+          "coexistence": "COMPATIBLE"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:4919bbe8c31bb790bf8bc0b077ad776d05daec6a060d020aaedca780b9484332",
+      "profileDigest": "sha256:71137fe4b9adb0eeb27fb1bbbfa7c0b0fb94f046055eeada0bac6bf203f7aafd"
+    },
+    {
+      "id": "zh.code_switching",
+      "lane": "LANGUAGE_MODIFIER",
+      "profileRevision": 1,
+      "job": "Preserve intentional English terms already used in an eligible Chinese conversation.",
+      "useWhen": [
+        "Chinese is the eligible primary language and the visible conversation intentionally mixes an English term."
+      ],
+      "whenNotUse": [
+        "The Chinese conversation has no intentional mixed term or the primary language is unsupported.",
+        "A quoted identifier alone in another primary language would falsely imply Chinese code-switching."
+      ],
+      "semanticTriggers": [
+        "Retain a supplied mixed-language term while wording the surrounding Chinese naturally."
+      ],
+      "neighbors": [
+        {
+          "skillId": "zh.natural_conciseness",
+          "relationship": "COMPLEMENTARY",
+          "distinction": "Natural concision shortens Chinese wording; code-switching protects the existing mixed term.",
+          "coexistence": "COMPATIBLE"
+        }
+      ],
+      "reviewState": "PASS",
+      "sourceDefinitionDigest": "sha256:fd064e6bdde7fd1076e53d29cdd170688a302c3cbb7b9e97faf1758524deb624",
+      "profileDigest": "sha256:57db29c2f2a80394bbc437beab9544b24132ca07335da61d901337dae4dd6c58"
+    }
+  ]
+}

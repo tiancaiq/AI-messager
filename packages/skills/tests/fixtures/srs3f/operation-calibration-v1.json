@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "SRS-3F-A-OPERATION-CALIBRATION-1",
+  "corpusManifestSha256": "f24e7b9480392a1a991217df107b7d8b64794cf8d21a5679463f7c1c6ff01bf2",
+  "vectorArtifactSha256": "342c65c0be3dc9a0356dcb54cb2c8619476b15cca2c968a544ad2cd5344c630c",
+  "thresholdGrid": [0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5],
+  "sourcePolicies": ["PRIMARY_ONLY", "PRIMARY_WITH_CONTEXT"],
+  "selectionRule": "MAX_MICRO_F1_THEN_FEWER_ZERO_FP_THEN_HIGHER_PRECISION_THEN_HIGHER_THRESHOLD_THEN_PRIMARY_ONLY",
+  "rows": [
+    {
+      "policy": "PRIMARY_ONLY",
+      "threshold": 0.3,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 10,
+          "predicted": 21,
+          "required": 47,
+          "precision": 0.47619047619047616,
+          "recall": 0.2127659574468085,
+          "f1": 0.29411764705882354
+        },
+        "macroRecall": 0.2038961038961039,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 4 },
+          "OWN_ERROR": { "hit": 1, "total": 7, "falsePositive": 2 },
+          "REDUCE_TENSION": { "hit": 2, "total": 4, "falsePositive": 2 },
+          "REFUSE_OPTION": { "hit": 1, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 1 },
+          "RESPOND_TO_CONCERN": { "hit": 2, "total": 4, "falsePositive": 1 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 1, "total": 4, "falsePositive": 1 },
+          "SEEK_INFORMATION": { "hit": 1, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 2, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 1, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 6, "required": 38, "predicted": 12 },
+          "SUGGEST_REPLY": { "hit": 4, "required": 9, "predicted": 9 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_ONLY",
+      "threshold": 0.25,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 14,
+          "predicted": 51,
+          "required": 47,
+          "precision": 0.27450980392156865,
+          "recall": 0.2978723404255319,
+          "f1": 0.28571428571428575
+        },
+        "macroRecall": 0.2880952380952381,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 1, "total": 3, "falsePositive": 3 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 6 },
+          "OWN_ERROR": { "hit": 2, "total": 7, "falsePositive": 4 },
+          "REDUCE_TENSION": { "hit": 3, "total": 4, "falsePositive": 2 },
+          "REFUSE_OPTION": { "hit": 1, "total": 4, "falsePositive": 4 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 2 },
+          "RESPOND_TO_CONCERN": { "hit": 2, "total": 4, "falsePositive": 3 },
+          "REVISIT_OPEN_THREAD": { "hit": 1, "total": 5, "falsePositive": 2 },
+          "SEEK_ACTION": { "hit": 1, "total": 4, "falsePositive": 3 },
+          "SEEK_INFORMATION": { "hit": 1, "total": 5, "falsePositive": 4 },
+          "STATE_CONTINUING_LIMIT": { "hit": 2, "total": 5, "falsePositive": 4 }
+        },
+        "multi": { "allFound": 3, "total": 13 },
+        "zero": { "falsePositiveCases": 3, "total": 10 },
+        "ownershipCriticalProxy": 3,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 10, "required": 38, "predicted": 35 },
+          "SUGGEST_REPLY": { "hit": 4, "required": 9, "predicted": 16 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_WITH_CONTEXT",
+      "threshold": 0.3,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 11,
+          "predicted": 30,
+          "required": 47,
+          "precision": 0.36666666666666664,
+          "recall": 0.23404255319148937,
+          "f1": 0.2857142857142857
+        },
+        "macroRecall": 0.2341991341991342,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 1, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 4 },
+          "OWN_ERROR": { "hit": 1, "total": 7, "falsePositive": 3 },
+          "REDUCE_TENSION": { "hit": 2, "total": 4, "falsePositive": 2 },
+          "REFUSE_OPTION": { "hit": 1, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 2 },
+          "RESPOND_TO_CONCERN": { "hit": 2, "total": 4, "falsePositive": 2 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 1, "total": 4, "falsePositive": 2 },
+          "SEEK_INFORMATION": { "hit": 1, "total": 5, "falsePositive": 3 },
+          "STATE_CONTINUING_LIMIT": { "hit": 2, "total": 5, "falsePositive": 1 }
+        },
+        "multi": { "allFound": 1, "total": 13 },
+        "zero": { "falsePositiveCases": 1, "total": 10 },
+        "ownershipCriticalProxy": 1,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 7, "required": 38, "predicted": 19 },
+          "SUGGEST_REPLY": { "hit": 4, "required": 9, "predicted": 11 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_WITH_CONTEXT",
+      "threshold": 0.25,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 17,
+          "predicted": 74,
+          "required": 47,
+          "precision": 0.22972972972972974,
+          "recall": 0.3617021276595745,
+          "f1": 0.2809917355371901
+        },
+        "macroRecall": 0.3495670995670996,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 1, "total": 3, "falsePositive": 5 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 6 },
+          "OWN_ERROR": { "hit": 3, "total": 7, "falsePositive": 4 },
+          "REDUCE_TENSION": { "hit": 3, "total": 4, "falsePositive": 3 },
+          "REFUSE_OPTION": { "hit": 1, "total": 4, "falsePositive": 5 },
+          "REPORT_CURRENT_STATE": { "hit": 1, "total": 3, "falsePositive": 4 },
+          "RESPOND_TO_CONCERN": { "hit": 2, "total": 4, "falsePositive": 5 },
+          "REVISIT_OPEN_THREAD": { "hit": 1, "total": 5, "falsePositive": 9 },
+          "SEEK_ACTION": { "hit": 1, "total": 4, "falsePositive": 4 },
+          "SEEK_INFORMATION": { "hit": 2, "total": 5, "falsePositive": 5 },
+          "STATE_CONTINUING_LIMIT": { "hit": 2, "total": 5, "falsePositive": 7 }
+        },
+        "multi": { "allFound": 3, "total": 13 },
+        "zero": { "falsePositiveCases": 4, "total": 10 },
+        "ownershipCriticalProxy": 3,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 11, "required": 38, "predicted": 49 },
+          "SUGGEST_REPLY": { "hit": 6, "required": 9, "predicted": 25 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_ONLY",
+      "threshold": 0.2,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 25,
+          "predicted": 134,
+          "required": 47,
+          "precision": 0.1865671641791045,
+          "recall": 0.5319148936170213,
+          "f1": 0.27624309392265195
+        },
+        "macroRecall": 0.5283549783549784,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 2, "total": 3, "falsePositive": 12 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 15 },
+          "OWN_ERROR": { "hit": 3, "total": 7, "falsePositive": 10 },
+          "REDUCE_TENSION": { "hit": 3, "total": 4, "falsePositive": 6 },
+          "REFUSE_OPTION": { "hit": 2, "total": 4, "falsePositive": 8 },
+          "REPORT_CURRENT_STATE": { "hit": 2, "total": 3, "falsePositive": 7 },
+          "RESPOND_TO_CONCERN": { "hit": 2, "total": 4, "falsePositive": 8 },
+          "REVISIT_OPEN_THREAD": { "hit": 3, "total": 5, "falsePositive": 15 },
+          "SEEK_ACTION": { "hit": 2, "total": 4, "falsePositive": 8 },
+          "SEEK_INFORMATION": { "hit": 2, "total": 5, "falsePositive": 10 },
+          "STATE_CONTINUING_LIMIT": { "hit": 4, "total": 5, "falsePositive": 10 }
+        },
+        "multi": { "allFound": 6, "total": 13 },
+        "zero": { "falsePositiveCases": 6, "total": 10 },
+        "ownershipCriticalProxy": 3,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 17, "required": 38, "predicted": 92 },
+          "SUGGEST_REPLY": { "hit": 8, "required": 9, "predicted": 42 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_WITH_CONTEXT",
+      "threshold": 0.2,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 25,
+          "predicted": 134,
+          "required": 47,
+          "precision": 0.1865671641791045,
+          "recall": 0.5319148936170213,
+          "f1": 0.27624309392265195
+        },
+        "macroRecall": 0.5283549783549784,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 2, "total": 3, "falsePositive": 12 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 15 },
+          "OWN_ERROR": { "hit": 3, "total": 7, "falsePositive": 10 },
+          "REDUCE_TENSION": { "hit": 3, "total": 4, "falsePositive": 6 },
+          "REFUSE_OPTION": { "hit": 2, "total": 4, "falsePositive": 8 },
+          "REPORT_CURRENT_STATE": { "hit": 2, "total": 3, "falsePositive": 7 },
+          "RESPOND_TO_CONCERN": { "hit": 2, "total": 4, "falsePositive": 8 },
+          "REVISIT_OPEN_THREAD": { "hit": 3, "total": 5, "falsePositive": 15 },
+          "SEEK_ACTION": { "hit": 2, "total": 4, "falsePositive": 8 },
+          "SEEK_INFORMATION": { "hit": 2, "total": 5, "falsePositive": 10 },
+          "STATE_CONTINUING_LIMIT": { "hit": 4, "total": 5, "falsePositive": 10 }
+        },
+        "multi": { "allFound": 6, "total": 13 },
+        "zero": { "falsePositiveCases": 6, "total": 10 },
+        "ownershipCriticalProxy": 3,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 17, "required": 38, "predicted": 92 },
+          "SUGGEST_REPLY": { "hit": 8, "required": 9, "predicted": 42 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_WITH_CONTEXT",
+      "threshold": 0.35,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 6,
+          "predicted": 11,
+          "required": 47,
+          "precision": 0.5454545454545454,
+          "recall": 0.1276595744680851,
+          "f1": 0.2068965517241379
+        },
+        "macroRecall": 0.12207792207792206,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 1 },
+          "OWN_ERROR": { "hit": 1, "total": 7, "falsePositive": 1 },
+          "REDUCE_TENSION": { "hit": 1, "total": 4, "falsePositive": 1 },
+          "REFUSE_OPTION": { "hit": 1, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "RESPOND_TO_CONCERN": { "hit": 2, "total": 4, "falsePositive": 1 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 0, "total": 4, "falsePositive": 1 },
+          "SEEK_INFORMATION": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 1, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 0, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 3, "required": 38, "predicted": 7 },
+          "SUGGEST_REPLY": { "hit": 3, "required": 9, "predicted": 4 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_ONLY",
+      "threshold": 0.35,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 4,
+          "predicted": 5,
+          "required": 47,
+          "precision": 0.8,
+          "recall": 0.0851063829787234,
+          "f1": 0.15384615384615383
+        },
+        "macroRecall": 0.08116883116883117,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "OWN_ERROR": { "hit": 1, "total": 7, "falsePositive": 0 },
+          "REDUCE_TENSION": { "hit": 1, "total": 4, "falsePositive": 0 },
+          "REFUSE_OPTION": { "hit": 1, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "RESPOND_TO_CONCERN": { "hit": 1, "total": 4, "falsePositive": 0 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 0, "total": 4, "falsePositive": 1 },
+          "SEEK_INFORMATION": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 0, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 0, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 2, "required": 38, "predicted": 3 },
+          "SUGGEST_REPLY": { "hit": 2, "required": 9, "predicted": 2 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_WITH_CONTEXT",
+      "threshold": 0.4,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 2,
+          "predicted": 2,
+          "required": 47,
+          "precision": 1,
+          "recall": 0.0425531914893617,
+          "f1": 0.08163265306122448
+        },
+        "macroRecall": 0.03571428571428571,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "OWN_ERROR": { "hit": 1, "total": 7, "falsePositive": 0 },
+          "REDUCE_TENSION": { "hit": 1, "total": 4, "falsePositive": 0 },
+          "REFUSE_OPTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "RESPOND_TO_CONCERN": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "SEEK_INFORMATION": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 0, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 0, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 2, "required": 38, "predicted": 2 },
+          "SUGGEST_REPLY": { "hit": 0, "required": 9, "predicted": 0 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_ONLY",
+      "threshold": 0.4,
+      "metrics": {
+        "cases": 43,
+        "micro": {
+          "hit": 1,
+          "predicted": 1,
+          "required": 47,
+          "precision": 1,
+          "recall": 0.02127659574468085,
+          "f1": 0.04166666666666667
+        },
+        "macroRecall": 0.022727272727272728,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "OWN_ERROR": { "hit": 0, "total": 7, "falsePositive": 0 },
+          "REDUCE_TENSION": { "hit": 1, "total": 4, "falsePositive": 0 },
+          "REFUSE_OPTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "RESPOND_TO_CONCERN": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "SEEK_INFORMATION": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 0, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 0, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 1, "required": 38, "predicted": 1 },
+          "SUGGEST_REPLY": { "hit": 0, "required": 9, "predicted": 0 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_ONLY",
+      "threshold": 0.5,
+      "metrics": {
+        "cases": 43,
+        "micro": { "hit": 0, "predicted": 0, "required": 47, "precision": 0, "recall": 0, "f1": 0 },
+        "macroRecall": 0,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "OWN_ERROR": { "hit": 0, "total": 7, "falsePositive": 0 },
+          "REDUCE_TENSION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REFUSE_OPTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "RESPOND_TO_CONCERN": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "SEEK_INFORMATION": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 0, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 0, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 0, "required": 38, "predicted": 0 },
+          "SUGGEST_REPLY": { "hit": 0, "required": 9, "predicted": 0 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_WITH_CONTEXT",
+      "threshold": 0.5,
+      "metrics": {
+        "cases": 43,
+        "micro": { "hit": 0, "predicted": 0, "required": 47, "precision": 0, "recall": 0, "f1": 0 },
+        "macroRecall": 0,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "OWN_ERROR": { "hit": 0, "total": 7, "falsePositive": 0 },
+          "REDUCE_TENSION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REFUSE_OPTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "RESPOND_TO_CONCERN": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "SEEK_INFORMATION": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 0, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 0, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 0, "required": 38, "predicted": 0 },
+          "SUGGEST_REPLY": { "hit": 0, "required": 9, "predicted": 0 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_ONLY",
+      "threshold": 0.45,
+      "metrics": {
+        "cases": 43,
+        "micro": { "hit": 0, "predicted": 0, "required": 47, "precision": 0, "recall": 0, "f1": 0 },
+        "macroRecall": 0,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "OWN_ERROR": { "hit": 0, "total": 7, "falsePositive": 0 },
+          "REDUCE_TENSION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REFUSE_OPTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "RESPOND_TO_CONCERN": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "SEEK_INFORMATION": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 0, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 0, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 0, "required": 38, "predicted": 0 },
+          "SUGGEST_REPLY": { "hit": 0, "required": 9, "predicted": 0 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    },
+    {
+      "policy": "PRIMARY_WITH_CONTEXT",
+      "threshold": 0.45,
+      "metrics": {
+        "cases": 43,
+        "micro": { "hit": 0, "predicted": 0, "required": 47, "precision": 0, "recall": 0, "f1": 0 },
+        "macroRecall": 0,
+        "perOperation": {
+          "COORDINATE_FUTURE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "EXPRESS_REGRET": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "OWN_ERROR": { "hit": 0, "total": 7, "falsePositive": 0 },
+          "REDUCE_TENSION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REFUSE_OPTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REPORT_CURRENT_STATE": { "hit": 0, "total": 3, "falsePositive": 0 },
+          "RESPOND_TO_CONCERN": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "REVISIT_OPEN_THREAD": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "SEEK_ACTION": { "hit": 0, "total": 4, "falsePositive": 0 },
+          "SEEK_INFORMATION": { "hit": 0, "total": 5, "falsePositive": 0 },
+          "STATE_CONTINUING_LIMIT": { "hit": 0, "total": 5, "falsePositive": 0 }
+        },
+        "multi": { "allFound": 0, "total": 13 },
+        "zero": { "falsePositiveCases": 0, "total": 10 },
+        "ownershipCriticalProxy": 0,
+        "modes": {
+          "REWRITE_DRAFT": { "hit": 0, "required": 38, "predicted": 0 },
+          "SUGGEST_REPLY": { "hit": 0, "required": 9, "predicted": 0 },
+          "NO_REPLY_NEEDED": { "hit": 0, "required": 0, "predicted": 0 }
+        }
+      }
+    }
+  ],
+  "selected": { "policy": "PRIMARY_ONLY", "threshold": 0.3 }
+}

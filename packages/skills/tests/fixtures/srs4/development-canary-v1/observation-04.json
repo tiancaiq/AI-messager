@@ -1,0 +1,48 @@
+{
+  "key": "SRS3B:R26",
+  "rawRevision": "R1",
+  "payloadSha256": "9c9904a3d7398e321a9db6059417e5f192858fad0b0030df3b3173cdced381b5",
+  "httpStatus": 200,
+  "httpSuccess": true,
+  "providerCompletionStatus": "completed",
+  "returnedModel": "gpt-6.1-sol",
+  "serviceTier": "default",
+  "providerBodyJsonValid": true,
+  "inputTokens": 3292,
+  "outputTokens": 569,
+  "totalTokens": 3861,
+  "latencyMs": 9824,
+  "failureKind": "VALIDATION_FAILED",
+  "d2": {
+    "scenarioId": "SRS3B:R26",
+    "validatorStatus": "INVALID",
+    "firstFailedStage": "NEGATION_PREREQUISITE_EVIDENCE_VALID",
+    "failureCodes": [
+      "PREREQUISITE_EVIDENCE_INVALID",
+      "NEGATION_EVIDENCE_INVALID"
+    ],
+    "providerResponsePresent": true,
+    "outputPresent": true,
+    "jsonParseValid": true,
+    "wireSchemaValid": true,
+    "applicationValid": false,
+    "counts": {
+      "expectedCandidateCount": 10,
+      "returnedCandidateCount": 10,
+      "missingCandidateCount": 0,
+      "extraCandidateCount": 0,
+      "duplicateCandidateCount": 0,
+      "invalidReasonCodeCount": 0,
+      "reasonPolarityMismatchCount": 0,
+      "invalidEvidenceRefCount": 0,
+      "ownershipViolationCount": 0,
+      "factGroundingViolationCount": 0,
+      "selectedCountBeforeValidation": 0
+    }
+  },
+  "v1ValidatorStatus": "INVALID",
+  "v1SelectionStatus": "FAILED",
+  "selectedIds": [],
+  "knownCostUSD": 0.01392,
+  "conservativeCostUpperBoundUSD": 0.119667
+}

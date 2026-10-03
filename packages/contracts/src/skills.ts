@@ -31,6 +31,8 @@ export const SkillIntentTagSchema = z.enum([
   "plan",
   "clarify",
   "make_request",
+  "acknowledge_perspective",
+  "give_feedback",
 ]);
 
 const SkillIdSchema = z

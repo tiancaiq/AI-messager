@@ -1,0 +1,137 @@
+catalogVersion: 1
+reviewState: PROVISIONAL_CODEX_REVIEW
+profiles:
+  - id: SEEK_ACTION
+    revision: 1
+    job: Ask another person to do, provide, or change something the user wants.
+    positiveEvidence:
+      - The user's draft asks the recipient to take a concrete action.
+      - The selected reply goal requests help, a deliverable, or a change from the recipient.
+    whenNotUse:
+      - A message only reports a fact or acknowledges a completed action.
+      - The recipient asks the user to do something, but the user has not chosen to ask back.
+    neighbors:
+      - id: SEEK_INFORMATION
+        distinction: Seeking a fact is different from seeking a task or deliverable, though both can coexist.
+      - id: REVISIT_OPEN_THREAD
+        distinction: A first request does not revisit an outstanding thread.
+  - id: SEEK_INFORMATION
+    revision: 1
+    job: Ask for a missing detail or clarification needed by the user.
+    positiveEvidence:
+      - The user's wording asks which detail is correct or what a term means.
+      - The selected goal is to resolve an explicit unknown before acting.
+    whenNotUse:
+      - The draft asks for a deliverable rather than information.
+      - The answer is already visible and the user merely acknowledges it.
+    neighbors:
+      - id: SEEK_ACTION
+        distinction: A request to perform work is not automatically a clarification question.
+  - id: REVISIT_OPEN_THREAD
+    revision: 1
+    job: Return to an earlier visible request or task that is still unresolved.
+    positiveEvidence:
+      - The user follows up on an unanswered earlier ask.
+      - The reply goal revisits an overdue open item without inventing a new deadline.
+    whenNotUse:
+      - This is the first ask in the visible exchange.
+      - The earlier item was visibly resolved.
+    neighbors:
+      - id: SEEK_ACTION
+        distinction: An open-thread follow-up can also ask for action, but a first ask cannot be a follow-up.
+  - id: REPORT_CURRENT_STATE
+    revision: 1
+    job: Convey a supported present status or progress fact.
+    positiveEvidence:
+      - The user's draft reports what is complete, in progress, or blocked now.
+      - The reply goal states the current known state without adding future certainty.
+    whenNotUse:
+      - Only a future plan is stated, with no current-state information.
+      - The status would be inferred solely from the other person's question.
+    neighbors:
+      - id: COORDINATE_FUTURE
+        distinction: Present progress and future arrangements can coexist but are distinct claims.
+  - id: COORDINATE_FUTURE
+    revision: 1
+    job: Communicate a user-supported future arrangement, timing, capacity, or next step.
+    positiveEvidence:
+      - The user proposes a time, sequence, or feasible next step.
+      - The selected goal sets an expectation about what the user can do later.
+    whenNotUse:
+      - A date or deadline is mentioned only by the recipient.
+      - The user reports current state without choosing a next step.
+    neighbors:
+      - id: REPORT_CURRENT_STATE
+        distinction: A current status alone does not authorize a future promise.
+  - id: REFUSE_OPTION
+    revision: 1
+    job: Communicate the user's chosen refusal of a concrete proposal or request.
+    positiveEvidence:
+      - The draft clearly declines a specific invitation or option.
+      - The selected goal says the user will not accept a proposed task.
+    whenNotUse:
+      - The recipient refuses, while the user has not chosen to refuse.
+      - The user is still considering options or asking for more information.
+    neighbors:
+      - id: STATE_CONTINUING_LIMIT
+        distinction: A one-time decline is not automatically an ongoing boundary.
+  - id: STATE_CONTINUING_LIMIT
+    revision: 1
+    job: State a user-chosen continuing limit on future requests or conduct.
+    positiveEvidence:
+      - The user says a repeated request must stop.
+      - The selected goal explains an ongoing availability or contact limit.
+    whenNotUse:
+      - The user only declines a single isolated invitation.
+      - The other person states a boundary, but the user has not adopted it.
+    neighbors:
+      - id: REFUSE_OPTION
+        distinction: A refusal can be one-off; a continuing limit persists beyond this choice.
+  - id: OWN_ERROR
+    revision: 1
+    job: Name a specific mistake or omission that the user has evidence to own.
+    positiveEvidence:
+      - The user corrects their own inaccurate statement or missed action.
+      - The draft takes responsibility for a visible user-caused error.
+    whenNotUse:
+      - Responsibility belongs to the other person or is unresolved.
+      - The user merely reports a delay without owning its cause.
+    neighbors:
+      - id: EXPRESS_REGRET
+        distinction: Taking responsibility need not express regret; both can be chosen together.
+  - id: EXPRESS_REGRET
+    revision: 1
+    job: Express user-chosen regret for a supported mistake or impact.
+    positiveEvidence:
+      - The user's draft apologizes for a user-owned error or missed commitment.
+      - The selected goal explicitly asks to express regret for a supported impact.
+    whenNotUse:
+      - The user only corrects a fact and has not chosen to apologize.
+      - Regret would assert unsupported responsibility or harm.
+    neighbors:
+      - id: OWN_ERROR
+        distinction: Regret and ownership can coexist but neither entails the other.
+  - id: RESPOND_TO_CONCERN
+    revision: 1
+    job: Address a visibly expressed concern with recognition or grounded support.
+    positiveEvidence:
+      - The selected goal is to acknowledge the other person's stated difficulty.
+      - The user's draft responds supportively to a concern that is visible in the exchange.
+    whenNotUse:
+      - The exchange is neutral logistics with no stated difficulty.
+      - The response would guess an unspoken emotion or promise an unsupported outcome.
+    neighbors:
+      - id: REDUCE_TENSION
+        distinction: Support for a stated worry is not necessarily conflict de-escalation.
+  - id: REDUCE_TENSION
+    revision: 1
+    job: Lower visible conversational conflict while preserving the user's position.
+    positiveEvidence:
+      - The user chooses calmer wording after a heated exchange.
+      - The selected goal is to reset an escalating discussion without changing facts.
+    whenNotUse:
+      - The wording is simply polite and no conflict is visible.
+      - The other person is upset but the user has not chosen to engage or de-escalate.
+    neighbors:
+      - id: RESPOND_TO_CONCERN
+        distinction: Recognition of distress does not by itself imply interpersonal conflict.

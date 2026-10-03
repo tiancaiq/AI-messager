@@ -1,0 +1,1151 @@
+{
+  "schemaVersion": 1,
+  "calibrationGridId": "SRS-3E-CALIBRATION-GRID-1",
+  "calibrationManifestSha256": "bcb55ca5ee19973e974550c75a06892e58cfa8f0bc9380efcfce790eb25e0f8a",
+  "srs3bBindings": {
+    "manifestSha256": "0700162fd5b7c656c1d6134cdd3d69baa9a824eb4a01a598b7ea6d4b4c666362",
+    "rawSourceSha256": "a185d8f050e6f8dca583254ba9b0211fd843fbc24d22e4fac12354a2eb8adbe7",
+    "rawSetSha256": "efce60f7eef73609fcdf1c4080d21e93dba43c57c1d59873c0549306bf3cbdcf",
+    "annotationFileSha256": "b4b8920b27c1f025c8027f785ab6c9e3b79b07af3fea05c1af4ac810529b60d6",
+    "authoringMetadataSha256": "08597a038d350c50580cde3addb7eef14f19f8bc97257e70b4e140dab849f3b6",
+    "catalogManifestSha256": "f53d78d4866a386fd544e0cf3a9e3b76373e49e265c7fc9a180b866871a8eb72",
+    "triageSha256": "e513ec03da3c4cada5bdf3248224b72eba5385f16174ce8358063625886a3267"
+  },
+  "dSourceSha256": "6a9bc0768a95d1a514a793b56b21810b760ab5ff520ba765001b01896db4bf77",
+  "vectorArtifactSha256": "b02d4664585c29d3a0ac33e41c6827d2bd4d5d065fd7eb289182084c6dc05588",
+  "grid": [
+    {
+      "alpha": 0,
+      "threshold": 0.3,
+      "macroRecall": 0.22333333333333333,
+      "srs3bMacroRecall": 0.28,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 9,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 7,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 2.0754716981132075, "p50": 0, "p90": 6, "max": 14 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.325,
+      "macroRecall": 0.21333333333333332,
+      "srs3bMacroRecall": 0.26,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 12,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 6,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 1.6415094339622642, "p50": 0, "p90": 5, "max": 13 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.35,
+      "macroRecall": 0.18333333333333335,
+      "srs3bMacroRecall": 0.2,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 12,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 5,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 1.2075471698113207, "p50": 0, "p90": 3, "max": 12 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.375,
+      "macroRecall": 0.18333333333333335,
+      "srs3bMacroRecall": 0.2,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 12,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 5,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.9433962264150944, "p50": 0, "p90": 3, "max": 11 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.4,
+      "macroRecall": 0.18333333333333335,
+      "srs3bMacroRecall": 0.2,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 3,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.6226415094339622, "p50": 0, "p90": 2, "max": 10 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.425,
+      "macroRecall": 0.16333333333333333,
+      "srs3bMacroRecall": 0.16,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 1,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.39622641509433965, "p50": 0, "p90": 1, "max": 6 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.45,
+      "macroRecall": 0.15333333333333332,
+      "srs3bMacroRecall": 0.14,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 1,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.3018867924528302, "p50": 0, "p90": 1, "max": 5 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.475,
+      "macroRecall": 0.15333333333333332,
+      "srs3bMacroRecall": 0.14,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.2641509433962264, "p50": 0, "p90": 1, "max": 5 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.5,
+      "macroRecall": 0.05,
+      "srs3bMacroRecall": 0.1,
+      "controlMacroRecall": 0,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.1509433962264151, "p50": 0, "p90": 1, "max": 3 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.525,
+      "macroRecall": 0.03,
+      "srs3bMacroRecall": 0.06,
+      "controlMacroRecall": 0,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.11320754716981132, "p50": 0, "p90": 0, "max": 2 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.55,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.03773584905660377, "p50": 0, "p90": 0, "max": 2 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.575,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.03773584905660377, "p50": 0, "p90": 0, "max": 2 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.6,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.018867924528301886, "p50": 0, "p90": 0, "max": 1 },
+      "feasible": false
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.625,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.65,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.675,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.7,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.725,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0,
+      "threshold": 0.75,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.3,
+      "macroRecall": 0.21333333333333332,
+      "srs3bMacroRecall": 0.26,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 11,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 7,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 1.471698113207547, "p50": 0, "p90": 4, "max": 11 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.325,
+      "macroRecall": 0.2033333333333333,
+      "srs3bMacroRecall": 0.24,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 12,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 5,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 1.0943396226415094, "p50": 0, "p90": 3, "max": 10 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.35,
+      "macroRecall": 0.18333333333333335,
+      "srs3bMacroRecall": 0.2,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 13,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 5,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.7735849056603774, "p50": 0, "p90": 3, "max": 8 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.375,
+      "macroRecall": 0.18333333333333335,
+      "srs3bMacroRecall": 0.2,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 2,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.4528301886792453, "p50": 0, "p90": 2, "max": 5 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.4,
+      "macroRecall": 0.15333333333333332,
+      "srs3bMacroRecall": 0.14,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 1,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.33962264150943394, "p50": 0, "p90": 1, "max": 4 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.425,
+      "macroRecall": 0.15333333333333332,
+      "srs3bMacroRecall": 0.14,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 1,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.22641509433962265, "p50": 0, "p90": 1, "max": 2 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.45,
+      "macroRecall": 0.09166666666666667,
+      "srs3bMacroRecall": 0.1,
+      "controlMacroRecall": 0.08333333333333333,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.1509433962264151, "p50": 0, "p90": 1, "max": 2 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.475,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.07547169811320754, "p50": 0, "p90": 0, "max": 2 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.5,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.05660377358490566, "p50": 0, "p90": 0, "max": 1 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.525,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.55,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.575,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.6,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.625,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.65,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.675,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.7,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.725,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.2,
+      "threshold": 0.75,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.3,
+      "macroRecall": 0.2033333333333333,
+      "srs3bMacroRecall": 0.24,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 12,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 6,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 1.1132075471698113, "p50": 0, "p90": 4, "max": 8 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.325,
+      "macroRecall": 0.18333333333333335,
+      "srs3bMacroRecall": 0.2,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 4,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.7735849056603774, "p50": 0, "p90": 3, "max": 7 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.35,
+      "macroRecall": 0.17333333333333334,
+      "srs3bMacroRecall": 0.18,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 2,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.4528301886792453, "p50": 0, "p90": 2, "max": 5 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.375,
+      "macroRecall": 0.17333333333333334,
+      "srs3bMacroRecall": 0.18,
+      "controlMacroRecall": 0.16666666666666666,
+      "strictNonePass": 14,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 1,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.32075471698113206, "p50": 0, "p90": 1, "max": 3 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.4,
+      "macroRecall": 0.07166666666666666,
+      "srs3bMacroRecall": 0.06,
+      "controlMacroRecall": 0.08333333333333333,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 1,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.16981132075471697, "p50": 0, "p90": 1, "max": 2 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.425,
+      "macroRecall": 0.041666666666666664,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0.08333333333333333,
+      "strictNonePass": 15,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.09433962264150944, "p50": 0, "p90": 0, "max": 1 },
+      "feasible": false
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.45,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.03773584905660377, "p50": 0, "p90": 0, "max": 1 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.475,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.03773584905660377, "p50": 0, "p90": 0, "max": 1 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.5,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0.018867924528301886, "p50": 0, "p90": 0, "max": 1 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.525,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.55,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.575,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.6,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.625,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.65,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.675,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.7,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.725,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    },
+    {
+      "alpha": 0.35,
+      "threshold": 0.75,
+      "macroRecall": 0,
+      "srs3bMacroRecall": 0,
+      "controlMacroRecall": 0,
+      "strictNonePass": 16,
+      "strictNoneTotal": 16,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 14,
+      "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+      "feasible": true
+    }
+  ],
+  "selected": {
+    "alpha": 0,
+    "threshold": 0.75,
+    "macroRecall": 0,
+    "srs3bMacroRecall": 0,
+    "controlMacroRecall": 0,
+    "strictNonePass": 16,
+    "strictNoneTotal": 16,
+    "forbiddenAdmissions": 0,
+    "forbiddenTotal": 14,
+    "pool": { "mean": 0, "p50": 0, "p90": 0, "max": 0 },
+    "feasible": true
+  },
+  "dGuard": {
+    "POSITIVE": { "total": 48, "targetAdmitted": 0 },
+    "HARD_NEIGHBOR": { "total": 8, "targetAdmitted": 0 },
+    "NEGATIVE": { "total": 12, "targetAdmitted": 0 }
+  },
+  "selectedCorpusMeasures": {
+    "srs3b": {
+      "caseCount": 29,
+      "positiveCases": 25,
+      "requiredOccurrences": 32,
+      "requiredHitCount": 0,
+      "macroRecall": 0,
+      "preThresholdRecallAt3": 0.5625,
+      "preThresholdRecallAt5": 0.65625,
+      "preThresholdRecallAt10": 0.84375,
+      "strictNonePass": 4,
+      "strictNoneTotal": 4,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 5,
+      "required": [
+        {
+          "caseId": "R01",
+          "skillId": "request",
+          "preThresholdRank": 11,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R02",
+          "skillId": "clarification",
+          "preThresholdRank": 12,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R03",
+          "skillId": "request",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R04",
+          "skillId": "ask_for_help",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R05",
+          "skillId": "follow_up",
+          "preThresholdRank": 6,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R06",
+          "skillId": "request",
+          "preThresholdRank": 5,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R07",
+          "skillId": "boundary_setting",
+          "preThresholdRank": 6,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R08",
+          "skillId": "decline",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R09",
+          "skillId": "boundary_setting",
+          "preThresholdRank": 9,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R10",
+          "skillId": "de_escalation",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R11",
+          "skillId": "planning",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R12",
+          "skillId": "expectation_setting",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R13",
+          "skillId": "status_update",
+          "preThresholdRank": 5,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R13",
+          "skillId": "planning",
+          "preThresholdRank": 12,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R14",
+          "skillId": "status_update",
+          "preThresholdRank": 8,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R15",
+          "skillId": "apology",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R15",
+          "skillId": "acknowledge_mistake",
+          "preThresholdRank": 12,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R16",
+          "skillId": "acknowledge_mistake",
+          "preThresholdRank": 3,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R17",
+          "skillId": "emotional_validation",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R18",
+          "skillId": "reassurance",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R19",
+          "skillId": "status_update",
+          "preThresholdRank": 3,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R19",
+          "skillId": "expectation_setting",
+          "preThresholdRank": 5,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R20",
+          "skillId": "expectation_setting",
+          "preThresholdRank": 9,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R21",
+          "skillId": "planning",
+          "preThresholdRank": 12,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R22",
+          "skillId": "planning",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R22",
+          "skillId": "expectation_setting",
+          "preThresholdRank": 7,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R23",
+          "skillId": "status_update",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R23",
+          "skillId": "expectation_setting",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R24",
+          "skillId": "boundary_setting",
+          "preThresholdRank": 3,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R24",
+          "skillId": "de_escalation",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R25",
+          "skillId": "apology",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "R25",
+          "skillId": "acknowledge_mistake",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        }
+      ],
+      "forbidden": [
+        { "caseId": "R06", "skillId": "follow_up", "admitted": false },
+        { "caseId": "R08", "skillId": "boundary_setting", "admitted": false },
+        { "caseId": "R10", "skillId": "boundary_setting", "admitted": false },
+        { "caseId": "R12", "skillId": "planning", "admitted": false },
+        { "caseId": "R14", "skillId": "planning", "admitted": false }
+      ]
+    },
+    "controls": {
+      "caseCount": 24,
+      "positiveCases": 12,
+      "requiredOccurrences": 14,
+      "requiredHitCount": 0,
+      "macroRecall": 0,
+      "preThresholdRecallAt3": 0.2857142857142857,
+      "preThresholdRecallAt5": 0.35714285714285715,
+      "preThresholdRecallAt10": 0.7857142857142857,
+      "strictNonePass": 12,
+      "strictNoneTotal": 12,
+      "forbiddenAdmissions": 0,
+      "forbiddenTotal": 9,
+      "required": [
+        {
+          "caseId": "K13",
+          "skillId": "acknowledge_mistake",
+          "preThresholdRank": 11,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K14",
+          "skillId": "apology",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K15",
+          "skillId": "emotional_validation",
+          "preThresholdRank": 8,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K16",
+          "skillId": "reassurance",
+          "preThresholdRank": 8,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K17",
+          "skillId": "decline",
+          "preThresholdRank": 11,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K18",
+          "skillId": "boundary_setting",
+          "preThresholdRank": 2,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K18",
+          "skillId": "decline",
+          "preThresholdRank": 4,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K19",
+          "skillId": "follow_up",
+          "preThresholdRank": 14,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K19",
+          "skillId": "request",
+          "preThresholdRank": 6,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K20",
+          "skillId": "request",
+          "preThresholdRank": 8,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K21",
+          "skillId": "planning",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K22",
+          "skillId": "expectation_setting",
+          "preThresholdRank": 1,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K23",
+          "skillId": "clarification",
+          "preThresholdRank": 8,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        },
+        {
+          "caseId": "K24",
+          "skillId": "status_update",
+          "preThresholdRank": 6,
+          "topKRank": null,
+          "disappearedAt": "SEMANTIC_THRESHOLD_MISS"
+        }
+      ],
+      "forbidden": [
+        { "caseId": "K13", "skillId": "apology", "admitted": false },
+        { "caseId": "K15", "skillId": "reassurance", "admitted": false },
+        { "caseId": "K17", "skillId": "boundary_setting", "admitted": false },
+        { "caseId": "K18", "skillId": "de_escalation", "admitted": false },
+        { "caseId": "K20", "skillId": "follow_up", "admitted": false },
+        { "caseId": "K21", "skillId": "expectation_setting", "admitted": false },
+        { "caseId": "K22", "skillId": "planning", "admitted": false },
+        { "caseId": "K22", "skillId": "status_update", "admitted": false },
+        { "caseId": "K24", "skillId": "expectation_setting", "admitted": false }
+      ]
+    }
+  }
+}

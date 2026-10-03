@@ -1,0 +1,21 @@
+taxonomyVersion: 1
+families:
+  - id: accountability_repair
+    description: Own supported mistakes and impacts.
+  - id: recognition_support
+    description: Acknowledge visible experience and grounded support.
+  - id: understanding_inquiry
+    description: Resolve material missing information.
+  - id: requests_options
+    description: Seek supported action or assistance.
+  - id: decisions_limits
+    description: Communicate chosen refusals and limits.
+  - id: conflict_feedback
+    description: Reduce heat while preserving the user's position.
+  - id: coordination
+    description: Communicate known progress, timing and logistics.
+  - id: explanation_connection
+    description: Explain supported reasons and connection; currently unoccupied.
+  - id: language_expression
+    description: Expression conventions for supported English and Chinese; no
+      runtime taxonomy signal.

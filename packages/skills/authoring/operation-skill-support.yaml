@@ -1,0 +1,85 @@
+mappingVersion: 1
+reviewState: PROVISIONAL_CODEX_REVIEW
+skills:
+  - skillId: apology
+    operations:
+      - id: EXPRESS_REGRET
+        link: DIRECT
+        rationale: Expressing chosen regret is the core communication job.
+      - id: OWN_ERROR
+        link: CONDITIONAL
+        rationale: Some apologies also name an evidenced user-owned mistake.
+  - skillId: acknowledge_mistake
+    operations:
+      - id: OWN_ERROR
+        link: DIRECT
+        rationale: Taking responsibility for a supported mistake is the core job.
+  - skillId: emotional_validation
+    operations:
+      - id: RESPOND_TO_CONCERN
+        link: DIRECT
+        rationale: Recognizing an expressed difficulty is one form of response.
+  - skillId: reassurance
+    operations:
+      - id: RESPOND_TO_CONCERN
+        link: DIRECT
+        rationale: Grounded support can address a stated concern.
+  - skillId: boundary_setting
+    operations:
+      - id: STATE_CONTINUING_LIMIT
+        link: DIRECT
+        rationale: An ongoing limit is the relevant communication job when pressure is repeated.
+      - id: REDUCE_TENSION
+        link: CONDITIONAL
+        rationale: A boundary may also be phrased to lower visible heat.
+  - skillId: de_escalation
+    operations:
+      - id: REDUCE_TENSION
+        link: DIRECT
+        rationale: Lowering visible conflict is the core job.
+  - skillId: decline
+    operations:
+      - id: REFUSE_OPTION
+        link: DIRECT
+        rationale: Declining a concrete option is the core job.
+  - skillId: ask_for_help
+    operations:
+      - id: SEEK_ACTION
+        link: DIRECT
+        rationale: Asking another person to help is a form of requested action.
+  - skillId: follow_up
+    operations:
+      - id: REVISIT_OPEN_THREAD
+        link: DIRECT
+        rationale: An unresolved earlier task makes the current request a follow-up.
+      - id: SEEK_ACTION
+        link: CONDITIONAL
+        rationale: Some follow-ups also request a concrete action.
+  - skillId: status_update
+    operations:
+      - id: REPORT_CURRENT_STATE
+        link: DIRECT
+        rationale: Reporting supported current progress is the core job.
+  - skillId: expectation_setting
+    operations:
+      - id: COORDINATE_FUTURE
+        link: DIRECT
+        rationale: Setting supported future timing or capacity is the core job.
+  - skillId: planning
+    operations:
+      - id: COORDINATE_FUTURE
+        link: DIRECT
+        rationale: Organizing next steps is a future-coordination job.
+  - skillId: clarification
+    operations:
+      - id: SEEK_INFORMATION
+        link: DIRECT
+        rationale: Resolving a missing detail is the core job.
+  - skillId: request
+    operations:
+      - id: SEEK_ACTION
+        link: DIRECT
+        rationale: Asking for a concrete deliverable or action is the core job.
+      - id: SEEK_INFORMATION
+        link: CONDITIONAL
+        rationale: Some requests seek a fact rather than a task.

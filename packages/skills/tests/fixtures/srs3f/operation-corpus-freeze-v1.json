@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "SRS-3F-A-OPERATION-CORPUS-1",
+  "reviewQualification": "CODEX_SELF_REVIEW_PROVISIONAL_NOT_HUMAN_OR_INDEPENDENT",
+  "sourceSha256": {
+    "raw": "aaae07b8f21cd3903af2e6f73a6aefe921681e50533303dbc94097fbb578832b",
+    "annotations": "09641fd2e7b3e5aa16f5a7905aa96d773100d9d9ed225b4a97edd50e0160738e",
+    "corpusValidator": "3bb7aa894f503a0638d910032314f0fac6315b3727147743eb01e72f71fe1d42",
+    "operationProfiles": "b399da19360d2b8ab7a56cc4e16829505d62524fdc96f8882481cbfd594c29d8",
+    "operationSupport": "96e1a95e2882aa24de2b258ae36bf2207d417cb6ccb7fd7f1137cd39311021ba"
+  },
+  "profileArtifactSha256": "834ad277fdb684f47d5d09f6765113661cb1b409c43bcf52c185cbfcde640426",
+  "mappingArtifactSha256": "b96b7e899e085f7f705dcf231fde5411460b6ca3d6b99cd545a59385e691a17f",
+  "vectorArtifactSha256": "342c65c0be3dc9a0356dcb54cb2c8619476b15cca2c968a544ad2cd5344c630c",
+  "coverage": {
+    "total": 86,
+    "calibration": 43,
+    "audit": 43,
+    "positiveByOperation": {
+      "SEEK_ACTION": 8,
+      "SEEK_INFORMATION": 8,
+      "REVISIT_OPEN_THREAD": 8,
+      "REPORT_CURRENT_STATE": 8,
+      "COORDINATE_FUTURE": 8,
+      "REFUSE_OPTION": 8,
+      "STATE_CONTINUING_LIMIT": 8,
+      "OWN_ERROR": 15,
+      "EXPRESS_REGRET": 8,
+      "RESPOND_TO_CONCERN": 8,
+      "REDUCE_TENSION": 8
+    },
+    "pertinentNegativeByOperation": {
+      "SEEK_ACTION": 8,
+      "SEEK_INFORMATION": 8,
+      "REVISIT_OPEN_THREAD": 8,
+      "REPORT_CURRENT_STATE": 8,
+      "COORDINATE_FUTURE": 8,
+      "REFUSE_OPTION": 8,
+      "STATE_CONTINUING_LIMIT": 8,
+      "OWN_ERROR": 8,
+      "EXPRESS_REGRET": 8,
+      "RESPOND_TO_CONCERN": 8,
+      "REDUCE_TENSION": 8
+    },
+    "zero": 20,
+    "multi": 26,
+    "rewrites": 65,
+    "suggest": 16,
+    "complete": 3,
+    "nonWording": 2,
+    "distinctFamilies": 86
+  },
+  "splitRule": "ODD_ID_CALIBRATION_EVEN_ID_AUDIT_UNIQUE_FAMILIES",
+  "rawOrLabelChallengeReuse": false
+}

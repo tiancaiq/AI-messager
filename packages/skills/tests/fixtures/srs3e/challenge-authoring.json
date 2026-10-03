@@ -1,0 +1,481 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "C01",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Borrowed display furniture and displaced setup, not a missed event or file."
+    },
+    {
+      "id": "C02",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Catering allergy-column error has a new responsibility-and-impact structure."
+    },
+    {
+      "id": "C03",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Volunteer roster omission, without apology or requested assistance."
+    },
+    {
+      "id": "C04",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Permit form filed in the wrong location, not an outdated link or number."
+    },
+    {
+      "id": "C05",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Storm-stay reassurance uses a verified generator and existing shelter offer."
+    },
+    {
+      "id": "C06",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Renovation fatigue is expressed difficulty without a future-support fact."
+    },
+    {
+      "id": "C07",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Plant-care concern is supported by a third party's existing watering agreement."
+    },
+    {
+      "id": "C08",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Ticketed alternate transport supports concern without guaranteeing arrival."
+    },
+    {
+      "id": "C09",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Doorway parcel intrusion creates repeated-pressure limit and visible tension."
+    },
+    {
+      "id": "C10",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Caption access requirement combines today's refusal and ongoing meeting rule."
+    },
+    {
+      "id": "C11",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Lobby camera dispute asks for evidence rather than admitting ownership."
+    },
+    {
+      "id": "C12",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Restaurant double-charge dispute centers calm correction, not a figure argument."
+    },
+    {
+      "id": "C13",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ALREADY_DECENT",
+      "hardNeighborFor": [],
+      "freshnessNote": "One-time petition refusal carries no continuing rule."
+    },
+    {
+      "id": "C14",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Single delivery slot declined without an invented replacement slot."
+    },
+    {
+      "id": "C15",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Transfer-platform assistance differs from formula, proof or physical carrying."
+    },
+    {
+      "id": "C16",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Printer-jam assistance requires a person's help, not simple file transfer."
+    },
+    {
+      "id": "C17",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Open venue ramp-width inquiry differs from reservation and agenda follow-ups."
+    },
+    {
+      "id": "C18",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Interpreter scheduling remains unresolved after referral to a separate team."
+    },
+    {
+      "id": "C19",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Seedlings' current growth and conditional transplant form a personal-domain pair."
+    },
+    {
+      "id": "C20",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Exhibit lighting and offline audio are present-state facts without ETA."
+    },
+    {
+      "id": "C21",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Supplier's earliest tile window is not a calendar coordination proposal."
+    },
+    {
+      "id": "C22",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Partial pre-boarding call capacity is completed from an authentic fragment."
+    },
+    {
+      "id": "C23",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Cleanup meeting logistics and bag request combine distinct coordination jobs."
+    },
+    {
+      "id": "C24",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Rehearsal choice depends on an acoustic test with uncertain confirmation."
+    },
+    {
+      "id": "C25",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Locker code conflict is one material unknown, not a two-file request."
+    },
+    {
+      "id": "C26",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Recurring-transfer referent ambiguity is distinct from plans and venues."
+    },
+    {
+      "id": "C27",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Compact cabinet-code ask has no assistance or earlier-ask presupposition."
+    },
+    {
+      "id": "C28",
+      "role": "DIRECT_POSITIVE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Building-buzzer behavior change is a concrete service request."
+    },
+    {
+      "id": "C29",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": ["apology"],
+      "freshnessNote": "Archived guide mislabel is factual ownership with no regret."
+    },
+    {
+      "id": "C30",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": null,
+      "hardNeighborFor": ["acknowledge_mistake"],
+      "freshnessNote": "Door-holding inconvenience supports regret without a discrete error."
+    },
+    {
+      "id": "C31",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": "ALREADY_DECENT",
+      "hardNeighborFor": ["reassurance"],
+      "freshnessNote": "Shift alarm fatigue is visible difficulty but has no support fact."
+    },
+    {
+      "id": "C32",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": null,
+      "hardNeighborFor": ["emotional_validation"],
+      "freshnessNote": "Confirmed ride grounds reassurance; recognition may coexist but is secondary."
+    },
+    {
+      "id": "C33",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": ["boundary_setting"],
+      "freshnessNote": "Single ladder loan refusal does not create a continuing limit."
+    },
+    {
+      "id": "C34",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": null,
+      "hardNeighborFor": ["boundary_setting", "de_escalation"],
+      "freshnessNote": "Heated key accusation lacks user fault or a chosen continuing limit."
+    },
+    {
+      "id": "C35",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": ["decline"],
+      "freshnessNote": "Repeated caption pressure supports both today's no and ongoing access rule."
+    },
+    {
+      "id": "C36",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": ["ask_for_help"],
+      "freshnessNote": "Transfer an existing archive list without collaborative assistance."
+    },
+    {
+      "id": "C37",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": null,
+      "hardNeighborFor": ["follow_up"],
+      "freshnessNote": "First allergen-sheet ask has no previous unresolved request."
+    },
+    {
+      "id": "C38",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": ["expectation_setting"],
+      "freshnessNote": "Projector current state has no supported future estimate."
+    },
+    {
+      "id": "C39",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": ["planning", "expectation_setting"],
+      "freshnessNote": "Choose and ask about a kitchen time without a separate capacity estimate."
+    },
+    {
+      "id": "C40",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": null,
+      "hardNeighborFor": ["status_update", "planning"],
+      "freshnessNote": "Installed signage is solely completed state, not future coordination."
+    },
+    {
+      "id": "C41",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": ["request"],
+      "freshnessNote": "Two pass types make resolving reference more specific than generic asking."
+    },
+    {
+      "id": "C42",
+      "role": "HARD_NEIGHBOR",
+      "draftRealism": null,
+      "hardNeighborFor": ["clarification"],
+      "freshnessNote": "Known map is simply requested; no missing reference remains."
+    },
+    {
+      "id": "C43",
+      "role": "LANGUAGE_STRUCTURE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Contract-date ambiguity is a fresh Chinese capability case; native review pending."
+    },
+    {
+      "id": "C44",
+      "role": "LANGUAGE_STRUCTURE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Repeated charger use supports narrow continuing limit; native review pending."
+    },
+    {
+      "id": "C45",
+      "role": "LANGUAGE_STRUCTURE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Webinar slide/caption state contains intentional mixed terminology; native review pending."
+    },
+    {
+      "id": "C46",
+      "role": "LANGUAGE_STRUCTURE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Station-gate meetup is Chinese coordination; native review pending."
+    },
+    {
+      "id": "C47",
+      "role": "STRICT_NONE",
+      "draftRealism": "ALREADY_DECENT",
+      "hardNeighborFor": [],
+      "freshnessNote": "Ordinary acknowledgement without a useful capability operation."
+    },
+    {
+      "id": "C48",
+      "role": "STRICT_NONE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Rainbow reaction is social chatter without a catalog job."
+    },
+    {
+      "id": "C49",
+      "role": "STRICT_NONE",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Location of router sticker is neutral information, not a progress update."
+    },
+    {
+      "id": "C50",
+      "role": "STRICT_NONE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Already-settled exchange needs only closure acknowledgement."
+    },
+    {
+      "id": "C51",
+      "role": "STRICT_NONE",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Umbrella identification is trivial completion, not clarification."
+    },
+    {
+      "id": "C52",
+      "role": "STRICT_NONE",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "System notice fixes a non-wording no-reply action."
+    },
+    {
+      "id": "M01",
+      "role": "MODIFIER",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Professional accessibility checklist update needs brevity, not an email frame."
+    },
+    {
+      "id": "M02",
+      "role": "MODIFIER",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Noodles-after-walk invitation is informal English, not work register."
+    },
+    {
+      "id": "M03",
+      "role": "MODIFIER",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Night-market acceptance is casual English despite ceremonial source phrasing."
+    },
+    {
+      "id": "M04",
+      "role": "MODIFIER",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Security-audit approval update calls for concise professional tone."
+    },
+    {
+      "id": "M05",
+      "role": "MODIFIER",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Optional installation refusal must remain explicit while respectful."
+    },
+    {
+      "id": "M06",
+      "role": "MODIFIER",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Badge arrival is status only, not direct-request/refusal expression."
+    },
+    {
+      "id": "M07",
+      "role": "MODIFIER",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Repair-record request needs polite Chinese without new demand; native review pending."
+    },
+    {
+      "id": "M08",
+      "role": "MODIFIER",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Formal work-status Chinese differs from calibrated request politeness; native review pending."
+    },
+    {
+      "id": "M09",
+      "role": "MODIFIER",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Equipment-check status needs work convention rather than casual compression; native review pending."
+    },
+    {
+      "id": "M10",
+      "role": "MODIFIER",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Used-book outing is casual planning, not professional Chinese; native review pending."
+    },
+    {
+      "id": "M11",
+      "role": "MODIFIER",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "River meeting can be concise without changing accepted time; native review pending."
+    },
+    {
+      "id": "M12",
+      "role": "MODIFIER",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Existing spec-review term stays mixed while coordinating later invitation; native review pending."
+    },
+    {
+      "id": "M13",
+      "role": "MODIFIER",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Sprint-board term is already intentional in Chinese request; native review pending."
+    },
+    {
+      "id": "M14",
+      "role": "MODIFIER",
+      "draftRealism": null,
+      "hardNeighborFor": [],
+      "freshnessNote": "Pure Chinese book-return plan should not acquire English terms; native review pending."
+    },
+    {
+      "id": "M15",
+      "role": "MODIFIER",
+      "draftRealism": "ROUGH",
+      "hardNeighborFor": [],
+      "freshnessNote": "Trailhead helmet request needs respectful direct English without changing the ask."
+    },
+    {
+      "id": "M16",
+      "role": "MODIFIER",
+      "draftRealism": "NORMAL",
+      "hardNeighborFor": [],
+      "freshnessNote": "Traditional Chinese workshop refusal is a chosen no with expression-only politeness; native review pending."
+    }
+  ]
+}

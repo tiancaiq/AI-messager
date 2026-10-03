@@ -1,0 +1,246 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: accountability_repair
+definition:
+  id: acknowledge_mistake
+  name: Acknowledge mistake
+  description: Use when visible context supports that the user made or missed something.
+  languages:
+    - universal
+  situations:
+    - mistake
+    - missed_commitment
+  intents:
+    - acknowledge_mistake
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when visible context supports that the user made or missed something.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Name the supported mistake or delay without defensiveness.
+  avoid:
+    - Do not shift blame or add an unsupported explanation.
+  compatibleSkills:
+    - apology
+    - status_update
+    - expectation_setting
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: apology
+    distinction: User expresses regret without any identified mistake, for a supported impact →
+      apology may fit.
+    caseId: H1
+  - id: status_update
+    distinction: User merely reports an externally caused delay → `status_update`.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User confirms they entered 42 instead of 24 in a report.
+      visibleContext: User confirms they entered 42 instead of 24 in a report.
+      userIntent: Acknowledge entering 42 instead of 24.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - acknowledge_mistake
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User forgot a friend's request and wants to acknowledge it.
+      visibleContext: User forgot a friend's request and wants to acknowledge it.
+      userIntent: Acknowledge forgetting the request.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - acknowledge_mistake
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User gave a sibling the wrong address and wants to correct the record.
+      visibleContext: User gave a sibling the wrong address and wants to correct the record.
+      userIntent: Correct the wrong address the user supplied.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - acknowledge_mistake
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: A customer made the error.
+      visibleContext: A customer made the error.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - acknowledge_mistake
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Fault is disputed and user denies responsibility.
+      visibleContext: Fault is disputed and user denies responsibility.
+      userIntent: Deny responsibility for disputed fault.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - acknowledge_mistake
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User gives an ordinary progress report with no error.
+      visibleContext: User gives an ordinary progress report with no error.
+      userIntent: Report progress without an error.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - acknowledge_mistake
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: User expresses regret without any identified mistake, for a supported impact →
+        apology may fit.
+      visibleContext: User expresses regret without any identified mistake, for a supported impact →
+        apology may fit.
+      userIntent: Express regret for a supported impact.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - apology
+      forbidden: []
+      rationale: User expresses regret without any identified mistake, for a supported impact →
+        apology may fit.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: User merely reports an externally caused delay → `status_update`.
+      visibleContext: User merely reports an externally caused delay → `status_update`.
+      userIntent: Report an externally caused delay.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - status_update
+      forbidden: []
+      rationale: User merely reports an externally caused delay → `status_update`.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText:
+        "Fact: user entered the wrong total. “the total got mixed up by me” → “I entered the
+        wrong total.”"
+      visibleContext: User entered the wrong total.
+      userIntent: Own the incorrect total.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: the total got mixed up by me
+      improved: I entered the wrong total.
+      ledger:
+        facts:
+          - User entered the wrong total.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText:
+        "Fact: user promised yesterday's call and forgot. “didn't call, forgot” → “I forgot
+        the call I promised yesterday.”"
+      visibleContext: User promised a call yesterday and forgot it.
+      userIntent: Own forgetting the promised call.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: didn't call, forgot
+      improved: I forgot the call I promised yesterday.
+      ledger:
+        facts:
+          - User promised a call yesterday and forgot it.
+        commitments:
+          - The call was promised for yesterday; no new call is promised.
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#acknowledge_mistake
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:5b651416a95e3c48749ce4619e95e008970edcd9f389449df62b79c5c9ce12ac
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

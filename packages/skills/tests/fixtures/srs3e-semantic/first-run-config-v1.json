@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "configId": "SRS-3E-SEMANTIC-FIRST-RUN-1",
+  "reviewState": "PENDING_HUMAN_PRE_CHALLENGE_REVIEW",
+  "challengeRunAuthorized": false,
+  "model": {
+    "packageVersion": "3.8.1",
+    "repository": "Xenova/all-MiniLM-L6-v2",
+    "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+    "dtype": "int8",
+    "device": "cpu",
+    "dimensions": 384,
+    "pooling": "mean",
+    "normalize": true,
+    "tokenLimit": 256,
+    "modelFiles": {
+      "config.json": "7135149f7cffa1a573466c6e4d8423ed73b62fd2332c575bf738a0d033f70df7",
+      "tokenizer_config.json": "9261e7d79b44c8195c1cada2b453e55b00aeb81e907a6664974b4d7776172ab3",
+      "tokenizer.json": "da0e79933b9ed51798a3ae27893d3c5fa4a201126cef75586296df9b4d2c62a0",
+      "onnx/model_int8.onnx": "afdb6f1a0e45b715d0bb9b11772f032c399babd23bfc31fed1c170afc848bdb1"
+    }
+  },
+  "profileArtifactSha256": "b061bf17a04e696ad78af45016e6803a96f79f0e617fcb2800a4a591fbc33d1c",
+  "positiveVectorArtifactSha256": "b02d4664585c29d3a0ac33e41c6827d2bd4d5d065fd7eb289182084c6dc05588",
+  "calibrationGridSha256": "d5cb69af28b6cf4d51611c58b5ee42d43ba91feea6404f43036d815a595b8a33",
+  "calibrationManifestSha256": "bcb55ca5ee19973e974550c75a06892e58cfa8f0bc9380efcfce790eb25e0f8a",
+  "srs3bBindings": {
+    "manifestSha256": "0700162fd5b7c656c1d6134cdd3d69baa9a824eb4a01a598b7ea6d4b4c666362",
+    "rawSourceSha256": "a185d8f050e6f8dca583254ba9b0211fd843fbc24d22e4fac12354a2eb8adbe7",
+    "rawSetSha256": "efce60f7eef73609fcdf1c4080d21e93dba43c57c1d59873c0549306bf3cbdcf",
+    "annotationFileSha256": "b4b8920b27c1f025c8027f785ab6c9e3b79b07af3fea05c1af4ac810529b60d6",
+    "authoringMetadataSha256": "08597a038d350c50580cde3addb7eef14f19f8bc97257e70b4e140dab849f3b6",
+    "catalogManifestSha256": "f53d78d4866a386fd544e0cf3a9e3b76373e49e265c7fc9a180b866871a8eb72",
+    "triageSha256": "e513ec03da3c4cada5bdf3248224b72eba5385f16174ce8358063625886a3267"
+  },
+  "sourceSerialization": "SOURCE_AWARE_NFC_WHITESPACE_V1",
+  "positiveSerialization": "PROFILE_POSITIVE_FRAGMENT_NFC_V1_FLOAT7",
+  "aggregation": "MAX_COSINE_PER_SOURCE_THEN_PRIMARY_CONTEXT_ALPHA",
+  "negativePenalty": false,
+  "hardGates": [
+    "PRODUCTION_ONLY",
+    "ACTIVE",
+    "FIXED_ACTION",
+    "LANGUAGE",
+    "CODE_SWITCH_PREREQUISITE",
+    "ATOMIC_LANE"
+  ],
+  "tieRule": "HIGHER_SCORE_THEN_SKILL_ID",
+  "topK": 10,
+  "alpha": 0,
+  "threshold": 0.75
+}

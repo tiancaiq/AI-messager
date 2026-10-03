@@ -1,0 +1,236 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: coordination
+definition:
+  id: planning
+  name: Planning
+  description: Use for simple visible coordination of time, place, or next steps.
+  languages:
+    - universal
+  situations:
+    - planning
+    - invitation
+  intents:
+    - plan
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use for simple visible coordination of time, place, or next steps.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Make known logistics and the next coordination step easy to understand.
+  avoid:
+    - Do not add unsupported times, places, or availability.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: request
+    distinction: Ask someone to start a new task → request.
+    caseId: H1
+conceptualNotes:
+  - caseId: H2
+    distinction: Check whether an apparent agreement is accurate → confirmation candidate.
+    sourceRef: docs/skills/phase-5-registry-expansion.md#planning
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Friends have agreed to Saturday at 2 p.m.; user summarizes the plan.
+      visibleContext: Friends have agreed to Saturday at 2 p.m.; user summarizes the plan.
+      userIntent: Restate the agreed Saturday plan.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - planning
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Coworkers have agreed who sends and who reviews a draft.
+      visibleContext: Coworkers have agreed who sends and who reviews a draft.
+      userIntent: Restate agreed sender and reviewer roles.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - planning
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Family members coordinate a pickup with supplied place/time.
+      visibleContext: Family members coordinate a pickup with supplied place/time.
+      userIntent: Coordinate pickup using supplied logistics.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - planning
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: User has not decided whether to attend.
+      visibleContext: User has not decided whether to attend.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - planning
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User only reports completed work.
+      visibleContext: User only reports completed work.
+      userIntent: Report completed work.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - planning
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User explicitly refuses all offered times.
+      visibleContext: User explicitly refuses all offered times.
+      userIntent: Refuse all offered times.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - planning
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Ask someone to start a new task → request.
+      visibleContext: Ask someone to start a new task → request.
+      userIntent: Request a new task.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - request
+      forbidden: []
+      rationale: Ask someone to start a new task → request.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Check whether an apparent agreement is accurate → confirmation candidate.
+      visibleContext: Check whether an apparent agreement is accurate → confirmation candidate.
+      userIntent: Verify an apparent agreement.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Check whether an apparent agreement is accurate → confirmation candidate.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: "Agreed plan: Saturday, 2 p.m., library. “sat 2 library then” → “See you at the
+        library on Saturday at 2 p.m.”"
+      visibleContext: Meeting is agreed for Saturday at 2 p.m. at the library.
+      userIntent: Restate the agreed library meeting.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: sat 2 library then
+      improved: See you at the library on Saturday at 2 p.m.
+      ledger:
+        facts:
+          - Meeting is agreed for Saturday at 2 p.m. at the library.
+        commitments:
+          - The Saturday library meeting at 2 p.m. is already agreed.
+        uncertainty: []
+    - id: A2
+      sourceText: User proposes, not commits to, 3 p.m. “maybe meet 3?” → “Would 3 p.m. work for you?”
+      visibleContext: User proposes 3 p.m.; the time is not agreed.
+      userIntent: Propose 3 p.m. without committing.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: maybe meet 3?
+      improved: Would 3 p.m. work for you?
+      ledger:
+        facts:
+          - User proposes 3 p.m.; the time is not agreed.
+        commitments: []
+        uncertainty:
+          - 3 p.m. is a proposal, not a confirmed time.
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#planning
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:f43aeda3624c08258657f4caedff9d0ee4e5d2ecf242fa1df9eb292fde631273
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

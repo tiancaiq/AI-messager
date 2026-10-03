@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "SRS-4-DEV-CANARY-1",
+  "status": "FROZEN_APPROVED_FIVE_REQUEST_CANARY",
+  "evidenceUse": "EXPOSED_DEVELOPMENT_ONLY",
+  "purpose": "OUTPUT_CONTRACT_VALIDITY_ONLY",
+  "spendAuthorization": {
+    "source": "USER_EXPLICIT_2026-10-03",
+    "approvedCapUSD": 1,
+    "plannedRequests": 5
+  },
+  "credentialSourceCategory": "EXISTING_IGNORED_SKILLS_WORKTREE_ENV_LOCAL_USER_APPROVED_REUSE",
+  "provider": {
+    "api": "OPENAI_RESPONSES",
+    "requestedModel": "gpt-6.1-sol",
+    "modelAvailability": "NOT_LIVE_VERIFIED",
+    "reasoning": { "mode": "standard", "effort": "medium" },
+    "serviceTier": "OMITTED_DEFAULT_STANDARD_ASSUMED",
+    "responseFormat": {
+      "type": "json_schema",
+      "name": "srs4_supervisor_judgment_v1",
+      "strict": true,
+      "schemaSha256": "ce169cf806505ea4d271b07a23bed5a38f030d5a2f3b8dba50d75a6d4359d59f"
+    },
+    "promptId": "SRS-4-OFFLINE-PROMPT-DRAFT-1",
+    "systemInstructionsSha256": "d6eed396a2188bcb01c56ff9f261cbb61f36effde2893c9b84f98a56f4939d1e",
+    "candidateOrder": "SKILL_ID_ASC_NOT_SEMANTIC_RANK",
+    "scoreVisibleToModel": false,
+    "tools": [],
+    "store": false,
+    "temperature": "OMITTED",
+    "topP": "OMITTED",
+    "seed": "OMITTED_UNVERIFIED",
+    "maxOutputTokens": 8192,
+    "timeoutMs": 60000,
+    "automaticRetries": 0
+  },
+  "caseBindings": [
+    {
+      "key": "SRS3B:R06",
+      "rawRevision": "R1",
+      "action": "SUGGEST_REPLY",
+      "candidateCount": 10,
+      "payloadSha256": "c19985e1c52f01be15b34096ce22cfbee89f18e2043b830db206c80d2dfdb706",
+      "payloadBytes": 15117
+    },
+    {
+      "key": "SRS3B:R10",
+      "rawRevision": "R1",
+      "action": "SUGGEST_REPLY",
+      "candidateCount": 10,
+      "payloadSha256": "bea5851d5e44649d45d7ee34164e00c22c4b82309ba41462737c6b82fd506081",
+      "payloadBytes": 14388
+    },
+    {
+      "key": "SRS3B:R14",
+      "rawRevision": "R1",
+      "action": "SUGGEST_REPLY",
+      "candidateCount": 10,
+      "payloadSha256": "d186f3affd5973a7d1e01c3806d58f2864dc86f59b704ecb63e6fb96d8e5a12b",
+      "payloadBytes": 14687
+    },
+    {
+      "key": "SRS3B:R26",
+      "rawRevision": "R1",
+      "action": "SUGGEST_REPLY",
+      "candidateCount": 10,
+      "payloadSha256": "9c9904a3d7398e321a9db6059417e5f192858fad0b0030df3b3173cdced381b5",
+      "payloadBytes": 14075
+    },
+    {
+      "key": "SRS3B:R13",
+      "rawRevision": "R2",
+      "action": "REWRITE_DRAFT",
+      "candidateCount": 10,
+      "payloadSha256": "062f16e37fb9a1cae70eed5a4ec021466fadd20bc3ed3f55fce70c119854ab85",
+      "payloadBytes": 13407
+    }
+  ],
+  "costEstimate": {
+    "method": "ONE_TOKEN_PER_UTF8_BYTE_PLUS_1024_PER_REQUEST_FULL_OUTPUT_CAP",
+    "totalPayloadBytes": 71674,
+    "estimatedInputTokenEnvelope": 76794,
+    "maxOutputTokensForRun": 40960,
+    "priceUSDPerMillionTokens": { "inputOrCacheWrite": 2.5, "output": 10 },
+    "estimatedMaximumUSD": 0.601585,
+    "pricingSource": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "caveat": "Estimate, not a provider-enforced hard cap."
+  },
+  "sourcePaths": {
+    "v1Config": "packages/skills/tests/fixtures/srs4/development-live-config-v1.json",
+    "d2Freeze": "packages/skills/tests/fixtures/srs4/output-contract-diagnostic-v1.json",
+    "v1Validator": "packages/skills/tests/srs4-supervisor.ts",
+    "v1Prompt": "packages/skills/tests/srs4-supervisor-prompt.ts",
+    "v1Development": "packages/skills/tests/srs4-development.ts",
+    "d2Diagnostic": "packages/skills/tests/srs4-output-contract-diagnostic.ts",
+    "bConfig": "packages/skills/tests/fixtures/srs3f/semantic-topk-proposed-config-v1.json",
+    "bTrace": "packages/skills/tests/fixtures/srs3f/semantic-topk-exposed-v1.json",
+    "semanticProfiles": "packages/skills/tests/fixtures/srs3/semantic-skill-profiles.json",
+    "auditR2Freeze": "packages/skills/tests/fixtures/srs4/audit-authoring-freeze-v2.json",
+    "d3ConfigBuilder": "packages/skills/tests/srs4-development-canary-config.ts"
+  },
+  "sourceSha256": {
+    "v1Config": "3b4ecfe80979486c454009d48bdba640becc8f59c642fff11b759dfd6168f93a",
+    "d2Freeze": "504503dc937f425d090dfab231f6919379b2a1d70a4d3747911ab7a712c5b540",
+    "v1Validator": "3ff83c44abe310908ea0cad16764ecb78a0efe1b7de82215cc7dadbda8824977",
+    "v1Prompt": "3e05fcfd50796489061a1a819f5d021ba792e846bc4487f2b321ee5bceb14001",
+    "v1Development": "4e35fd500d51b0ce47a364a1a04576dea602a25eda52840d656b1a58a1855eb4",
+    "d2Diagnostic": "db80e3aa535dc15825b3b5134e209e60d2fd5d1a47d1ccf3a6b68bc74820cd99",
+    "bConfig": "4f3f94e0b2089c9bb7a8e8c3a83c697b7df3d9f3c4c0c14b4c00ac0d4518327b",
+    "bTrace": "3da194a50d46c33c26b5dcaa2f59ce7d33eb03d4352e5eefc706d9241e6ed214",
+    "semanticProfiles": "b061bf17a04e696ad78af45016e6803a96f79f0e617fcb2800a4a591fbc33d1c",
+    "auditR2Freeze": "3297a3577ed7110e01a2629e023bf2371238559543c3c49350dbc28c727fa319",
+    "d3ConfigBuilder": "3a9a61c6bdece881eec78c1640d969828c95c467a23329c4de1c0049fa8c52e0"
+  },
+  "contractSha256": {
+    "wireJsonSchema": "ce169cf806505ea4d271b07a23bed5a38f030d5a2f3b8dba50d75a6d4359d59f",
+    "serializerFunction": "ea096625f9636048f0259e16d95cdc76acfde2b0707eae032159e6f841b70e55",
+    "candidateProjectionFunction": "b2938af5efe3f44f68f19241eb5b81f9e788d12256c1e0c3282ab181cfbfd8be",
+    "validatorFunction": "ca79c86060b0f7c7e0ec8adb4d79c53315c6175a7114553f3ebfc531ba58ed77",
+    "promptInstructions": "d6eed396a2188bcb01c56ff9f261cbb61f36effde2893c9b84f98a56f4939d1e",
+    "reasonCodeSchema": "53417c510ce6a73cbe3580d77cfa57b3b1d34d2759a22b375be48ff8a2f33d73",
+    "diagnosticStageSchema": "63f7898ed5762101b0046bff62fe5e1dccc1888a438a25f6e3313f3ca3a32949",
+    "diagnosticFailureCodeSchema": "bb9594acc7a3aa116f031dd7433506e07fa01e48612fb095620af95964a641ba",
+    "diagnosticRecordSchema": "7afc75f1d8caf0083bbce03c71308ab3c33781c8b77c1d678de44c63d865e26e"
+  },
+  "v1ConfigSha256": "3b4ecfe80979486c454009d48bdba640becc8f59c642fff11b759dfd6168f93a",
+  "d2FreezeSha256": "504503dc937f425d090dfab231f6919379b2a1d70a4d3747911ab7a712c5b540",
+  "auditScored": false,
+  "protectedChallengeRead": false,
+  "productionChanged": false,
+  "automaticRetries": 0
+}

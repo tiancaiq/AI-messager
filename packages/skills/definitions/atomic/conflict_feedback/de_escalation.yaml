@@ -1,0 +1,239 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: conflict_feedback
+definition:
+  id: de_escalation
+  name: De-escalation
+  description: Use when visible conflict benefits from calm, non-accusatory wording.
+  languages:
+    - universal
+  situations:
+    - conflict
+    - pressure
+  intents:
+    - de_escalate
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when visible conflict benefits from calm, non-accusatory wording.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Use calm, concrete language and avoid escalating accusations.
+  avoid:
+    - Do not concede the user’s decision merely to reduce tension.
+  compatibleSkills:
+    - boundary_setting
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: boundary_setting
+    distinction: Civil statement of a limit → boundary, no need to invent conflict.
+    caseId: H1
+conceptualNotes:
+  - caseId: H2
+    distinction: Resolving a multi-step dispute → a playbook, not just de-escalation.
+    sourceRef: docs/skills/phase-5-registry-expansion.md#de_escalation
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Coworker conflict; user wants to disagree calmly about recorded figures.
+      visibleContext: Coworker conflict; user wants to disagree calmly about recorded figures.
+      userIntent: Disagree calmly about recorded figures.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - de_escalation
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Heated family discussion; user wants a calm restatement of their limit.
+      visibleContext: Heated family discussion; user wants a calm restatement of their limit.
+      userIntent: Calmly restate the user's limit.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - de_escalation
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Friend dispute over plans; user wants to ask about a discrepancy without accusation.
+      visibleContext: Friend dispute over plans; user wants to ask about a discrepancy without accusation.
+      userIntent: Ask about a discrepancy without accusation.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - de_escalation
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: Calm neutral coordination.
+      visibleContext: Calm neutral coordination.
+      userIntent: Coordinate calmly.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - de_escalation
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User wants the model to force agreement through guilt.
+      visibleContext: User wants the model to force agreement through guilt.
+      userIntent: Force agreement through guilt.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - de_escalation
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Supposed conflict is inferred solely from punctuation.
+      visibleContext: Supposed conflict is inferred solely from punctuation.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - de_escalation
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Civil statement of a limit → boundary, no need to invent conflict.
+      visibleContext: Civil statement of a limit → boundary, no need to invent conflict.
+      userIntent: State a limit civilly.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - boundary_setting
+      forbidden: []
+      rationale: Civil statement of a limit → boundary, no need to invent conflict.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Resolving a multi-step dispute → a playbook, not just de-escalation.
+      visibleContext: Resolving a multi-step dispute → a playbook, not just de-escalation.
+      userIntent: Resolve a multi-step dispute.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Resolving a multi-step dispute → a playbook, not just de-escalation.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: User disputes a total and wants joint checking. “your numbers are nonsense, check
+        them” → “I don't think these totals match. Can we check the figures together?”
+      visibleContext: User disputes the total. User wants to check the figures together.
+      userIntent: Dispute the total and request joint checking.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: your numbers are nonsense, check them
+      improved: I don't think these totals match. Can we check the figures together?
+      ledger:
+        facts:
+          - User disputes the total.
+          - User wants to check the figures together.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText:
+        User declines an extra shift despite pressure. “stop being ridiculous, I said no” →
+        “I understand this is difficult, but I can't take the extra shift.”
+      visibleContext: User has refused the extra shift. The recipient is applying pressure.
+      userIntent: Maintain refusal of the extra shift despite pressure.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: stop being ridiculous, I said no
+      improved: I understand this is difficult, but I can't take the extra shift.
+      ledger:
+        facts:
+          - User has refused the extra shift.
+          - The recipient is applying pressure.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#de_escalation
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:1c8bd46ae515a8cdca6a50238e5f0ba0e4a2f9c1b71ad4779a1566c594051168
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

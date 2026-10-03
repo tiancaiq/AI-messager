@@ -1,0 +1,238 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: coordination
+definition:
+  id: follow_up
+  name: Follow up
+  description: Use for a supported follow-up on an earlier visible request.
+  languages:
+    - universal
+  situations:
+    - follow_up
+  intents:
+    - follow_up
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use for a supported follow-up on an earlier visible request.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Refer to the visible request concisely and make the next step clear.
+  avoid:
+    - Do not imply blame from a lack of response alone.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: request
+    distinction: First request for the report → request.
+    caseId: H1
+  - id: status_update
+    distinction: User shares their own review progress → status update.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Earlier draft review request is visible; user wants a status check.
+      visibleContext: Earlier draft review request is visible; user wants a status check.
+      userIntent: Check the earlier draft-review request.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - follow_up
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Earlier invitation is visible; user wants to check attendance.
+      visibleContext: Earlier invitation is visible; user wants to check attendance.
+      userIntent: Check attendance after a visible invitation.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - follow_up
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Earlier repair appointment request is visible; user asks for an update.
+      visibleContext: Earlier repair appointment request is visible; user asks for an update.
+      userIntent: Ask for an update on the appointment request.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - follow_up
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: No earlier request is visible or user-supplied.
+      visibleContext: No earlier request is visible or user-supplied.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - follow_up
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Earlier request was answered fully.
+      visibleContext: Earlier request was answered fully.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - follow_up
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Recipient declined and user wants to guilt them into changing their mind.
+      visibleContext: Recipient declined and user wants to guilt them into changing their mind.
+      userIntent: Guilt the recipient into reversing a refusal.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - follow_up
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: First request for the report → request.
+      visibleContext: First request for the report → request.
+      userIntent: Request the report for the first time.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - request
+      forbidden: []
+      rationale: First request for the report → request.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: User shares their own review progress → status update.
+      visibleContext: User shares their own review progress → status update.
+      userIntent: Report the user's own review progress.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - status_update
+      forbidden: []
+      rationale: User shares their own review progress → status update.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText:
+        Visible earlier report-review request. “why haven't you replied” → “Following up on
+        my report-review request—have you had a chance to look?”
+      visibleContext: An earlier request to review the report is visible. There is no evidence that
+        silence means blame or neglect.
+      userIntent: Follow up on the report-review request.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: why haven't you replied
+      improved: Following up on my report-review request—have you had a chance to look?
+      ledger:
+        facts:
+          - An earlier request to review the report is visible.
+          - There is no evidence that silence means blame or neglect.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: Visible earlier appointment request. “any news” → “Is there an update on the
+        appointment I requested?”
+      visibleContext: An earlier appointment request is visible.
+      userIntent: Follow up on the appointment request.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: any news
+      improved: Is there an update on the appointment I requested?
+      ledger:
+        facts:
+          - An earlier appointment request is visible.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#follow_up
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:d48baec95cb149f23b14c4082a16bde90fcff16daa0ae397102d7e9efd1732ec
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

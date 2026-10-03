@@ -15,10 +15,17 @@
     }
   },
   "scripts": {
-    "build": "node ../../scripts/clean-package.mjs && tsc -p tsconfig.build.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "build": "pnpm registry:check && node ../../scripts/clean-package.mjs && tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.authoring.json",
+    "registry:generate": "node --conditions=development --import tsx authoring/cli.ts --write",
+    "registry:check": "node --conditions=development --import tsx authoring/cli.ts --check"
   },
   "dependencies": {
     "@ai-message-coach/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@huggingface/transformers": "3.8.1",
+    "yaml": "2.9.1",
+    "zod": "4.4.3"
   }
 }

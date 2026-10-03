@@ -1,0 +1,504 @@
+{
+  "experimentId": "SRS-4-DEV-LIVE-1",
+  "configSha256": "3b4ecfe80979486c454009d48bdba640becc8f59c642fff11b759dfd6168f93a",
+  "approvedCapUSD": 8,
+  "estimatedMaximumUSD": 6.0251,
+  "callsCompleted": 50,
+  "structuralBypasses": 3,
+  "fatalStop": null,
+  "modelRequested": "gpt-6.1-sol",
+  "returnedModels": ["gpt-6.1-sol"],
+  "totalInputTokens": 167694,
+  "totalOutputTokens": 27102,
+  "knownCostUSD": 0.690255,
+  "conservativeCostUpperBoundUSD": 6.02512,
+  "latencyMs": {
+    "total": 455842,
+    "max": 12580
+  },
+  "sevenForbiddenRegressions": [
+    {
+      "key": "SRS3B:R06",
+      "skillId": "follow_up",
+      "selected": false,
+      "evaluated": true
+    },
+    {
+      "key": "SRS3B:R10",
+      "skillId": "boundary_setting",
+      "selected": false,
+      "evaluated": true
+    },
+    {
+      "key": "SRS3B:R14",
+      "skillId": "planning",
+      "selected": false,
+      "evaluated": true
+    },
+    {
+      "key": "CONTROL:K20",
+      "skillId": "follow_up",
+      "selected": false,
+      "evaluated": true
+    },
+    {
+      "key": "CONTROL:K21",
+      "skillId": "expectation_setting",
+      "selected": false,
+      "evaluated": true
+    },
+    {
+      "key": "CONTROL:K22",
+      "skillId": "status_update",
+      "selected": false,
+      "evaluated": true
+    },
+    {
+      "key": "CONTROL:K22",
+      "skillId": "planning",
+      "selected": false,
+      "evaluated": true
+    }
+  ],
+  "metrics": {
+    "scenarios": 53,
+    "positive": 37,
+    "requiredTotal": 46,
+    "requiredAvailable": 38,
+    "requiredProvenanceBlocked": 13,
+    "requiredGroundedAvailable": 25,
+    "requiredGroundedSelected": 0,
+    "requiredSelected": 0,
+    "fullyRetrievablePositive": 29,
+    "fullyGroundedRetrievablePositive": 18,
+    "allRequiredSelectedWhenFullyGrounded": 0,
+    "allRequiredSelectedPositive": 0,
+    "allRequiredSelectedWhenFullyRetrievable": 0,
+    "atLeastOneRequiredSelectedPositive": 0,
+    "positiveReturnedNone": 0,
+    "multiPositive": 9,
+    "multiFullyRetrievable": 6,
+    "multiFullyGroundedRetrievable": 4,
+    "multiAllSelectedWhenFullyGrounded": 0,
+    "multiAllSelectedWhenFullyRetrievable": 0,
+    "multiAtLeastOneAvailableSelected": 0,
+    "wordingNoneTotal": 13,
+    "wordingNoneCorrect": 0,
+    "structuralTotal": 3,
+    "structuralCorrect": 3,
+    "forbiddenAvailable": 12,
+    "forbiddenSelected": 0,
+    "forbiddenRank1Selected": 0,
+    "supportedLabeledSelected": 0,
+    "forbiddenLabeledSelected": 0,
+    "unlabeledSelected": 0,
+    "unlabeledSelectionIds": [],
+    "failed": 50,
+    "selectedCountDistribution": {
+      "0": 53,
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    },
+    "perSkill": {
+      "request": {
+        "requiredAvailable": 4,
+        "requiredSelected": 0,
+        "forbiddenRejected": 0
+      },
+      "clarification": {
+        "requiredAvailable": 1,
+        "requiredSelected": 0,
+        "forbiddenRejected": 0
+      },
+      "ask_for_help": {
+        "requiredAvailable": 1,
+        "requiredSelected": 0,
+        "forbiddenRejected": 0
+      },
+      "follow_up": {
+        "requiredAvailable": 1,
+        "requiredSelected": 0,
+        "forbiddenRejected": 2
+      },
+      "boundary_setting": {
+        "requiredAvailable": 4,
+        "requiredSelected": 0,
+        "forbiddenRejected": 3
+      },
+      "decline": {
+        "requiredAvailable": 2,
+        "requiredSelected": 0,
+        "forbiddenRejected": 0
+      },
+      "de_escalation": {
+        "requiredAvailable": 2,
+        "requiredSelected": 0,
+        "forbiddenRejected": 0
+      },
+      "planning": {
+        "requiredAvailable": 3,
+        "requiredSelected": 0,
+        "forbiddenRejected": 3
+      },
+      "expectation_setting": {
+        "requiredAvailable": 6,
+        "requiredSelected": 0,
+        "forbiddenRejected": 1
+      },
+      "status_update": {
+        "requiredAvailable": 5,
+        "requiredSelected": 0,
+        "forbiddenRejected": 1
+      },
+      "apology": {
+        "requiredAvailable": 3,
+        "requiredSelected": 0,
+        "forbiddenRejected": 1
+      },
+      "acknowledge_mistake": {
+        "requiredAvailable": 2,
+        "requiredSelected": 0,
+        "forbiddenRejected": 0
+      },
+      "emotional_validation": {
+        "requiredAvailable": 2,
+        "requiredSelected": 0,
+        "forbiddenRejected": 0
+      },
+      "reassurance": {
+        "requiredAvailable": 2,
+        "requiredSelected": 0,
+        "forbiddenRejected": 1
+      }
+    },
+    "byAction": {
+      "REWRITE_DRAFT": {
+        "scenarios": 27,
+        "requiredTotal": 27,
+        "requiredAvailable": 20,
+        "requiredProvenanceBlocked": 0,
+        "requiredGroundedAvailable": 20,
+        "requiredGroundedSelected": 0,
+        "requiredSelected": 0,
+        "wordingNoneTotal": 7,
+        "wordingNoneCorrect": 0
+      },
+      "SUGGEST_REPLY": {
+        "scenarios": 22,
+        "requiredTotal": 19,
+        "requiredAvailable": 18,
+        "requiredProvenanceBlocked": 13,
+        "requiredGroundedAvailable": 5,
+        "requiredGroundedSelected": 0,
+        "requiredSelected": 0,
+        "wordingNoneTotal": 5,
+        "wordingNoneCorrect": 0
+      },
+      "NO_REPLY_NEEDED": {
+        "scenarios": 3,
+        "requiredTotal": 0,
+        "requiredAvailable": 0,
+        "requiredProvenanceBlocked": 0,
+        "requiredGroundedAvailable": 0,
+        "requiredGroundedSelected": 0,
+        "requiredSelected": 0,
+        "wordingNoneTotal": 0,
+        "wordingNoneCorrect": 0
+      },
+      "COMPLETE_DRAFT": {
+        "scenarios": 1,
+        "requiredTotal": 0,
+        "requiredAvailable": 0,
+        "requiredProvenanceBlocked": 0,
+        "requiredGroundedAvailable": 0,
+        "requiredGroundedSelected": 0,
+        "requiredSelected": 0,
+        "wordingNoneTotal": 1,
+        "wordingNoneCorrect": 0
+      }
+    },
+    "requiredDiagnostics": [
+      {
+        "key": "SRS3B:R01",
+        "skillId": "request",
+        "rank": null,
+        "stage": "RETRIEVAL_TOP10_MISS"
+      },
+      {
+        "key": "SRS3B:R02",
+        "skillId": "clarification",
+        "rank": null,
+        "stage": "RETRIEVAL_TOP10_MISS"
+      },
+      {
+        "key": "SRS3B:R03",
+        "skillId": "request",
+        "rank": 2,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R04",
+        "skillId": "ask_for_help",
+        "rank": 2,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R05",
+        "skillId": "follow_up",
+        "rank": 6,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R06",
+        "skillId": "request",
+        "rank": 5,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R07",
+        "skillId": "boundary_setting",
+        "rank": 6,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R08",
+        "skillId": "decline",
+        "rank": 1,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R09",
+        "skillId": "boundary_setting",
+        "rank": 9,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R10",
+        "skillId": "de_escalation",
+        "rank": 1,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R11",
+        "skillId": "planning",
+        "rank": 2,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R12",
+        "skillId": "expectation_setting",
+        "rank": 2,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "SRS3B:R13",
+        "skillId": "status_update",
+        "rank": 5,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R13",
+        "skillId": "planning",
+        "rank": null,
+        "stage": "RETRIEVAL_TOP10_MISS"
+      },
+      {
+        "key": "SRS3B:R14",
+        "skillId": "status_update",
+        "rank": 8,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "SRS3B:R15",
+        "skillId": "apology",
+        "rank": 2,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R15",
+        "skillId": "acknowledge_mistake",
+        "rank": null,
+        "stage": "RETRIEVAL_TOP10_MISS"
+      },
+      {
+        "key": "SRS3B:R16",
+        "skillId": "acknowledge_mistake",
+        "rank": 3,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "SRS3B:R17",
+        "skillId": "emotional_validation",
+        "rank": 2,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R18",
+        "skillId": "reassurance",
+        "rank": 1,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "SRS3B:R19",
+        "skillId": "status_update",
+        "rank": 3,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R19",
+        "skillId": "expectation_setting",
+        "rank": 5,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R20",
+        "skillId": "expectation_setting",
+        "rank": 9,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "SRS3B:R21",
+        "skillId": "planning",
+        "rank": null,
+        "stage": "RETRIEVAL_TOP10_MISS"
+      },
+      {
+        "key": "SRS3B:R22",
+        "skillId": "planning",
+        "rank": 1,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R22",
+        "skillId": "expectation_setting",
+        "rank": 7,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R23",
+        "skillId": "status_update",
+        "rank": 1,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "SRS3B:R23",
+        "skillId": "expectation_setting",
+        "rank": 2,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "SRS3B:R24",
+        "skillId": "boundary_setting",
+        "rank": 3,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R24",
+        "skillId": "de_escalation",
+        "rank": 1,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "SRS3B:R25",
+        "skillId": "apology",
+        "rank": 1,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "SRS3B:R25",
+        "skillId": "acknowledge_mistake",
+        "rank": 2,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "CONTROL:K13",
+        "skillId": "acknowledge_mistake",
+        "rank": null,
+        "stage": "RETRIEVAL_TOP10_MISS"
+      },
+      {
+        "key": "CONTROL:K14",
+        "skillId": "apology",
+        "rank": 1,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "CONTROL:K15",
+        "skillId": "emotional_validation",
+        "rank": 8,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "CONTROL:K16",
+        "skillId": "reassurance",
+        "rank": 8,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "CONTROL:K17",
+        "skillId": "decline",
+        "rank": null,
+        "stage": "RETRIEVAL_TOP10_MISS"
+      },
+      {
+        "key": "CONTROL:K18",
+        "skillId": "boundary_setting",
+        "rank": 2,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "CONTROL:K18",
+        "skillId": "decline",
+        "rank": 4,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "CONTROL:K19",
+        "skillId": "follow_up",
+        "rank": null,
+        "stage": "RETRIEVAL_TOP10_MISS"
+      },
+      {
+        "key": "CONTROL:K19",
+        "skillId": "request",
+        "rank": 6,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "CONTROL:K20",
+        "skillId": "request",
+        "rank": 8,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "CONTROL:K21",
+        "skillId": "planning",
+        "rank": 1,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "CONTROL:K22",
+        "skillId": "expectation_setting",
+        "rank": 1,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      },
+      {
+        "key": "CONTROL:K23",
+        "skillId": "clarification",
+        "rank": 8,
+        "stage": "SUPERVISOR_REQUIRED_MISS"
+      },
+      {
+        "key": "CONTROL:K24",
+        "skillId": "status_update",
+        "rank": 6,
+        "stage": "PROVENANCE_GROUNDING_BLOCKED"
+      }
+    ]
+  },
+  "auditScored": false,
+  "protectedChallengeRead": false,
+  "productionChanged": false
+}

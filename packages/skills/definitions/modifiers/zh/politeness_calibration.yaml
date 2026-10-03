@@ -1,0 +1,238 @@
+recordVersion: 1
+kind: LANGUAGE_MODIFIER
+capabilityFamily: language_expression
+definition:
+  id: zh.politeness_calibration
+  name: Chinese politeness calibration
+  description: Use for Chinese requests, declines, and boundaries that need natural calibrated politeness.
+  languages:
+    - zh
+  situations:
+    - request
+    - pressure
+    - conflict
+    - invitation
+  intents: []
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use for Chinese requests, declines, and boundaries that need natural calibrated politeness.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Use natural Chinese politeness appropriate to a chat without changing the decision.
+  avoid:
+    - Avoid excessive honorifics or indirectness that obscures intent.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: zh.professional_formality
+    distinction: Chinese progress report → professional_formality.
+    caseId: H1
+  - id: decline
+    distinction: User refuses an invitation → decline handles decision; politeness cannot invent a reason.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Simplified Chinese request for a document.
+      visibleContext: Simplified Chinese request for a document.
+      userIntent: Request a document.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hans
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.politeness_calibration
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Traditional Chinese invitation refusal.
+      visibleContext: Traditional Chinese invitation refusal.
+      userIntent: Decline the invitation.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hant
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.politeness_calibration
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Chinese boundary wording under pressure.
+      visibleContext: Chinese boundary wording under pressure.
+      userIntent: State a boundary under pressure.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.politeness_calibration
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: English-only chat.
+      visibleContext: English-only chat.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.politeness_calibration
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Unsupported primary language even with a Chinese secondary term.
+      visibleContext: Unsupported primary language even with a Chinese secondary term.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: ko
+        secondary: zh
+        codeSwitching: true
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.politeness_calibration
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Upstream ASK_CLARIFICATION.
+      visibleContext: Upstream ASK_CLARIFICATION.
+      userIntent: null
+      action: ASK_CLARIFICATION
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.politeness_calibration
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Chinese progress report → professional_formality.
+      visibleContext: Chinese progress report → professional_formality.
+      userIntent: Report progress.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - zh.professional_formality
+      forbidden: []
+      rationale: Chinese progress report → professional_formality.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: User refuses an invitation → decline handles decision; politeness cannot invent a reason.
+      visibleContext: User refuses an invitation → decline handles decision; politeness cannot invent a reason.
+      userIntent: Communicate a chosen refusal.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - decline
+      forbidden: []
+      rationale: User refuses an invitation → decline handles decision; politeness cannot invent a reason.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: “把文件发来” → “请把文件发给我。”
+      visibleContext: User wants the file.
+      userIntent: Request the file.
+      action: REWRITE_DRAFT
+      language:
+        primary: zh-Hans
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: 把文件发来
+      improved: 请把文件发给我。
+      ledger:
+        facts:
+          - User wants the file.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText:
+        “我不去了” → “謝謝邀請，不過我不去了。” Script changes here follow the stated Traditional Chinese
+        target, not the modifier inferring a locale.
+      visibleContext: User has decided not to attend. Traditional Chinese is the stated target script.
+      userIntent: Decline the invitation using the stated Traditional Chinese target.
+      action: REWRITE_DRAFT
+      language:
+        primary: zh-Hant
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: 我不去了
+      improved: 謝謝邀請，不過我不去了。
+      ledger:
+        facts:
+          - User has decided not to attend.
+          - Traditional Chinese is the stated target script.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#zhpoliteness_calibration
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:4d5484395f4e00eec44905ab5f2ac7be1ebc0277ac33bd9e6a78616e8949df96
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

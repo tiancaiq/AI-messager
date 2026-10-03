@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "freezeId": "SRS-4-AUDIT-AUTHORING-R1",
+  "status": "AUTHORING_FROZEN_INDEPENDENT_REVIEW_PENDING",
+  "evidenceUse": "EXPOSED_AUDIT_UNSCORED",
+  "providerCallsAuthorized": false,
+  "auditScored": false,
+  "challengeRead": false,
+  "frozenB": {
+    "config": "4f3f94e0b2089c9bb7a8e8c3a83c697b7df3d9f3c4c0c14b4c00ac0d4518327b",
+    "trace": "3da194a50d46c33c26b5dcaa2f59ce7d33eb03d4352e5eefc706d9241e6ed214",
+    "profiles": "b061bf17a04e696ad78af45016e6803a96f79f0e617fcb2800a4a591fbc33d1c"
+  },
+  "sourcePaths": {
+    "raw": "packages/test-fixtures/src/srs4-audit-raw.ts",
+    "annotations": "packages/skills/tests/srs4-audit-annotations.ts",
+    "authorReview": "packages/skills/tests/srs4-audit-author-review.ts"
+  },
+  "sourceSha256": {
+    "raw": "580652b4ef9a5271a3c675b4a4dab43435081fce86727a756917baf9fd6512cd",
+    "annotations": "4581822f96411d80c0282a8590b2917313945b16176b0b84a4400a05051d6304",
+    "authorReview": "9c8f92f583a1a72376b5078326589fc3250ab427869092d841cd944e5bb7891f"
+  },
+  "coverage": {
+    "cases": 64,
+    "single": 24,
+    "multi": 16,
+    "wordingNone": 16,
+    "structural": 8,
+    "positiveModes": { "REWRITE_DRAFT": 18, "SUGGEST_REPLY": 18, "COMPLETE_DRAFT": 4 },
+    "requiredOccurrences": 56,
+    "forbiddenOccurrences": 70,
+    "perSkillRequired": {
+      "apology": 4,
+      "acknowledge_mistake": 4,
+      "ask_for_help": 3,
+      "boundary_setting": 4,
+      "clarification": 4,
+      "de_escalation": 4,
+      "decline": 3,
+      "emotional_validation": 4,
+      "expectation_setting": 5,
+      "follow_up": 3,
+      "planning": 5,
+      "reassurance": 3,
+      "request": 6,
+      "status_update": 4
+    },
+    "independentReviewed": 0,
+    "quarantined": 0
+  },
+  "gate": "CLOSED_UNTIL_INDEPENDENT_REVIEW_AND_SEPARATE_PROVIDER_KEY_BUDGET_APPROVAL"
+}

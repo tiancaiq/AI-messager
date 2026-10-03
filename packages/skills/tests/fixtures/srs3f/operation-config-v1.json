@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "SRS-3F-A-OPERATION-DETECTOR-CALIBRATED-1",
+  "config": {
+    "id": "SRS-3F-A-OPERATION-DETECTOR-CALIBRATED-1",
+    "threshold": 0.3,
+    "sourcePolicy": "PRIMARY_ONLY",
+    "modelDigest": "sha256:61f8e66e82b3ca78947067f5544dc4c78bc42cccc8f1c9f5906d429e46181a31",
+    "profileArtifactSha256": "834ad277fdb684f47d5d09f6765113661cb1b409c43bcf52c185cbfcde640426"
+  },
+  "selectionEvidenceSha256": "d31f3a78b394f8a74ee24b39b0e2c31d0f086187a452839f2186ad249ff8a2fb",
+  "corpusManifestSha256": "f24e7b9480392a1a991217df107b7d8b64794cf8d21a5679463f7c1c6ff01bf2",
+  "vectorArtifactSha256": "342c65c0be3dc9a0356dcb54cb2c8619476b15cca2c968a544ad2cd5344c630c",
+  "reviewQualification": "CODEX_SELF_REVIEW_PROVISIONAL_NOT_HUMAN_OR_INDEPENDENT",
+  "auditRunAuthorized": true,
+  "candidateFusionAuthorized": false
+}

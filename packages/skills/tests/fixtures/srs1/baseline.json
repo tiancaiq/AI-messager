@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-24",
+  "branch": "skills",
+  "head": "a77f476b532c6ddd81eadbca835b312425fd4f1c",
+  "excludedSrs1OwnedPaths": [
+    ".agent/plans/skills-srs-1-foundation.md",
+    "docs/skills/srs-1-baseline-trace-foundation.md",
+    "packages/skills/tests/srs1-foundation.ts",
+    "packages/skills/tests/srs1-foundation.test.ts",
+    "packages/skills/tests/fixtures/srs1/"
+  ],
+  "workspace": {
+    "fileCount": 194,
+    "contentMapDigest": "sha256:463abb977f91ba1216fbef656f9a240a3b9051a7efd7c2af89418f7325a008a9"
+  },
+  "production": {
+    "definitionCount": 21,
+    "atomicCount": 14,
+    "modifierCount": 7,
+    "canonicalExampleCount": 210,
+    "registryDigest": "sha256:c96fc9c9a5b26909ecf635bbae3ebef28abf15ed4729216cc28caf7698ad1ee3",
+    "manifestRawSha256": "f53d78d4866a386fd544e0cf3a9e3b76373e49e265c7fc9a180b866871a8eb72",
+    "generatedRegistryRawSha256": "69308570286570725609e80bcd961932da1092db2d68bad157e815616cef275d",
+    "baselineApprovalsRawSha256": "1e8e512b4e81feb5b1d7d6221ade824eb344206dd6500774124e28b313cd033a"
+  },
+  "phase7": {
+    "preMigrationPath": "packages/skills/tests/fixtures/pre-migration.json",
+    "preMigrationRawSha256": "2ad6c08e5133788303a4a97ecb756ade431f1f8fd9c3a896cc675b5e79a9cc89",
+    "frozenIntegrationPlanCount": 21,
+    "frozenDirectPlanCount": 132,
+    "frozenPlanCount": 153
+  },
+  "phase8": {
+    "packages/skills/tests/fixtures/phase8/source-snapshot.json": "ac4c199fa64d691b9430a324e5377d45a060f6783abe92050ede09fc3d84c95d",
+    "packages/skills/tests/fixtures/phase8/codex-semantic-review.json": "16b6a2606b7b6f3724a0c3f4fce899b261709c6f88ceab4a303fdbc3efc58dec",
+    "packages/skills/tests/fixtures/phase8/weak-invalid-remediation.json": "16d5a358a1cd747428dd0f2574cf9707584a23de3a9b07625abe38947c9d9fd5",
+    "packages/skills/tests/fixtures/phase8/weak-invalid-rereview.json": "262cf217be3e8d06feb0b8c0a24e1057607698623f70f2ea32dbde05e7ed63bc",
+    "packages/skills/tests/fixtures/phase8/focused-human-approval.json": "a755dba45b4e522981de9246672d4b37f49b38316d564ec4e475b87d294c8c2a",
+    "packages/skills/tests/fixtures/phase8/candidate-dossiers.json": "b49f859bd85d85fb3abe0c44a19cae2484e4e297becc57a6bbf720dc16c50f57",
+    "packages/skills/tests/fixtures/phase8/candidate-experiment-results.json": "69262192969b3c321dabbdc32711e77bb806f20b26ad3a6bf094c3d058b47674"
+  },
+  "heldOut": {
+    "status": "NOT_AUTHORED",
+    "sealed": false
+  }
+}

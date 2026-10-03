@@ -1,0 +1,1093 @@
+{
+  "schemaVersion": 1,
+  "reviews": [
+    {
+      "id": "C01",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user admits taking the reserved table and chooses regret for displaced setup. Ownership may coexist; no separate ranked winner or invented feeling is asserted."
+    },
+    {
+      "id": "C02",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The wrong allergy-list column is explicitly user-sent and caused a held order. Owning that error and apologizing are both supported; neither outranks the other."
+    },
+    {
+      "id": "C03",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user directly owns a roster omission and a correction. The draft expresses no regret, so apology is excluded without suppressing factual ownership."
+    },
+    {
+      "id": "C04",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The selected goal owns misfiling a permit form; the reviewer is not blamed. No regret was chosen and moving the file is an existing user intention, not a fabricated deadline."
+    },
+    {
+      "id": "C05",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The other person explicitly says they are anxious; an existing stay offer and working generator ground support. Both recognition and reassurance are useful with no guaranteed outcome."
+    },
+    {
+      "id": "C06",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The other person describes weeks of tiring noise. The goal acknowledges that difficulty, while no support fact or end date licenses reassurance."
+    },
+    {
+      "id": "C07",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "A visible plant-care worry has a previously agreed watering arrangement. Reassurance can restate that agreement without promising plant survival; validation remains possible but not forced."
+    },
+    {
+      "id": "C08",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The alternate bus is already on the ticket. It supports reassurance about available transport, not a guarantee of arrival; visible concern could also be recognized."
+    },
+    {
+      "id": "C09",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The other party announces another unwanted doorway parcel after repeated discussion and speaks sharply. A continuing no-parcels rule and calmer delivery are both supported."
+    },
+    {
+      "id": "C10",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The other party acknowledges earlier caption requests and presses for an exception. Today's refusal and the future caption rule are chosen; the exchange is not visibly heated enough to require de-escalation."
+    },
+    {
+      "id": "C11",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "An explicit parcel accusation creates heat but not proven user ownership or a continuing limit. Checking camera timing preserves the denial and calms delivery without conceding blame."
+    },
+    {
+      "id": "C12",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The bill contains two identical charges according to the selected goal, and the service response is accusatory. Calm factual correction is supported; no continuing boundary is chosen."
+    },
+    {
+      "id": "C13",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user refuses this one petition signature clearly. No ongoing rule or conflict is visible, so boundary and de-escalation are excluded."
+    },
+    {
+      "id": "C14",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user declines the offered delivery slot without choosing another slot. Adding planning or an ongoing limit would fabricate a user decision."
+    },
+    {
+      "id": "C15",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user asks for help interpreting a bus-transfer platform, not a missing referent. Generic request is acceptable; assistance is the specific central job."
+    },
+    {
+      "id": "C16",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The other person has relevant printer experience and the user chooses to ask for help. No duty, urgency or unsupported repair result is inferred."
+    },
+    {
+      "id": "C17",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "A visible earlier ramp-width ask remains unresolved after facilities referral. The draft revisits it and explicitly asks for the result, so follow-up and request coexist without blame."
+    },
+    {
+      "id": "C18",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The prior interpreter request was referred but not confirmed. The selected goal checks booking disposition; it does not report the user's own status or presume neglect."
+    },
+    {
+      "id": "C19",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Sprouting is known present state; transplanting is conditional on dry beds. Both status and uncertain future expectation are grounded and neither merits a forced primary."
+    },
+    {
+      "id": "C20",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Working lights and offline audio are current known states. Neither the visible question nor the user's goal supplies an estimate, plan or new request."
+    },
+    {
+      "id": "C21",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The supplier's earliest midweek tile window is supported and unconfirmed. It is future expectation rather than completed status or scheduling an arrangement."
+    },
+    {
+      "id": "C22",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "A partial nonempty draft and explicit continuation goal support COMPLETE_DRAFT. A short pre-boarding call is chosen; longer discussion after landing has no invented exact time."
+    },
+    {
+      "id": "C23",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user proposes an east-gate meeting and asks the helper to bring bags. Planning and request are distinct chosen operations with no justified pairwise winner."
+    },
+    {
+      "id": "C24",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The rehearsal slot is to be chosen only after venue confirmation, which may arrive Wednesday. Planning and cautious expectation coexist; no exact booking is fabricated."
+    },
+    {
+      "id": "C25",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "B14 and B41 conflict in visible pickup information. Asking which locker applies resolves one material unknown; a generic request is merely acceptable."
+    },
+    {
+      "id": "C26",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The recurring transfer could mean rent or savings. The goal asks about that one ambiguity before action, not for assistance or unrelated curiosity."
+    },
+    {
+      "id": "C27",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The cabinet code is a known item the user wants from the recipient. No previous ask, assistance task or missing referent is supplied."
+    },
+    {
+      "id": "C28",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user chooses a concrete buzzer-volume change from staff. No repeated personal pressure, deadline or coercive consequence is supplied."
+    },
+    {
+      "id": "C29",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user mislabeled an archived guide and promises a tag correction, but does not express regret. This is ownership-only, not an apology inference."
+    },
+    {
+      "id": "C30",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user asked someone to hold a door while packing and caused a wait. Chosen regret is supported, but no discrete error is stated for mistake acknowledgment."
+    },
+    {
+      "id": "C31",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Alarm tests are explicitly described as exhausting; the already-decent draft recognizes that. With no grounded support fact, reassurance would be invented."
+    },
+    {
+      "id": "C32",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The ride is confirmed, so reassurance is the stated operation. The recipient's nervousness also allows recognition, but the grounded support is the defensible primary distinction."
+    },
+    {
+      "id": "C33",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The ladder loan is a one-time Saturday request and the user refuses only that instance. It does not establish repeated pressure or a continuing rule."
+    },
+    {
+      "id": "C34",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "An accusatory key dispute needs a calm evidence-based reply. Ownership is explicitly unresolved, and no continuing personal limit is chosen."
+    },
+    {
+      "id": "C35",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Repeated requests to drop captions are visible; the partial draft refuses this meeting and begins an ongoing rule. Both refusal and boundary are supported, without forced order."
+    },
+    {
+      "id": "C36",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The recipient already has an archive list and the user asks it to be forwarded. No collaborative help is requested; the rough draft preserves the chosen transfer."
+    },
+    {
+      "id": "C37",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The visible menu exchange contains no earlier sheet request. The user now seeks the allergen sheet before ordering, so follow-up is unsupported."
+    },
+    {
+      "id": "C38",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The projector powering on and sound remaining off are known current states. The draft makes no repair estimate or future commitment."
+    },
+    {
+      "id": "C39",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The draft proposes Wednesday and asks the other person to choose between two times. That is active planning plus a request, with no separate availability limit or forecast."
+    },
+    {
+      "id": "C40",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The signs are already installed and photographed. Reporting that state does not create a next-step plan or future estimate."
+    },
+    {
+      "id": "C41",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Two pass types under one name make the reference materially ambiguous. Clarification is primary over a generic request only for this specific inquiry; no separate pass action is asked."
+    },
+    {
+      "id": "C42",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The stairwell map is already identified and held by the other person. Asking for it is a request, not a clarification about which map."
+    },
+    {
+      "id": "C43",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Two contract return dates structurally support one clarification question, but Simplified Chinese wording and naturalness require qualified native-language review before scoring."
+    },
+    {
+      "id": "C44",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Repeated charger taking and prior consent requests structurally support the narrow continuing limit; Traditional Chinese wording remains unapproved for efficacy."
+    },
+    {
+      "id": "C45",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Uploaded webinar slides and captions still being checked are present-state facts with an intentional English term; code-switch naturalness needs native review."
+    },
+    {
+      "id": "C46",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The selected East Gate meeting answer structurally coordinates place and next movement; Simplified Chinese expression remains unapproved for scoring."
+    },
+    {
+      "id": "C47",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "A simple receipt acknowledgement contains no request, status report, limit or other useful capability job; brevity alone was not used as the reason for NONE."
+    },
+    {
+      "id": "C48",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "A quick reaction to the observed rainbow is social chatter. Neither the message nor the selected goal contains an ask or plan, so no catalog capability adds useful guidance."
+    },
+    {
+      "id": "C49",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The router sticker's location is neutral information, not progress on a task. A longer sentence would still lack a capability job."
+    },
+    {
+      "id": "C50",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The other person says the matter is fully settled and no further action remains. Brief closure acknowledgement has no unresolved follow-up or new task."
+    },
+    {
+      "id": "C51",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The incomplete fragment identifies the user's blue umbrella once finished; the referent is already clear. COMPLETE_DRAFT is valid but clarification would add an unnecessary question."
+    },
+    {
+      "id": "C52",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The system notice explicitly requires no response and the fixed action is NO_REPLY_NEEDED. Skill eligibility is zero independently of wording length."
+    },
+    {
+      "id": "M01",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The checklist is done but awaits sign-off. Professional English brevity can trim ordinary update filler while preserving both status facts; casual style is unsupported."
+    },
+    {
+      "id": "M02",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "An informal noodles invitation supports casual English planning, not professional register. The selected yes does not invent a time or obligation."
+    },
+    {
+      "id": "M03",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user accepts a Saturday night-market outing. Casual English can keep the normal but slightly stiff draft conversational without dropping the chosen plan."
+    },
+    {
+      "id": "M04",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Audit approval is still pending. A concise professional English status reply fits; casual style would not match the work context."
+    },
+    {
+      "id": "M05",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user refuses optional installation. Direct respectful English expression changes tone only, while the underlying decline supplies the actual no."
+    },
+    {
+      "id": "M06",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Badge arrival is current status only. Professional concision may fit, but direct-but-polite decision framing would invent a request or refusal."
+    },
+    {
+      "id": "M07",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The selected repair-record transfer is a request and politeness can modify only its expression; Simplified Chinese quality requires native review."
+    },
+    {
+      "id": "M08",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Pending supervisor review is a work-status fact, not a request or refusal. Traditional Chinese professional register is structurally plausible but unapproved."
+    },
+    {
+      "id": "M09",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "Equipment field checks are done while records remain unfinished. Concise professional Chinese may preserve that split; native language review is pending."
+    },
+    {
+      "id": "M10",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user accepts a casual used-book outing. Natural Chinese expression should preserve the plan, not impose work formality; native review is pending."
+    },
+    {
+      "id": "M11",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The river meeting time is accepted in a wordy draft. Natural concision may trim redundancy without altering logistics; native review is pending."
+    },
+    {
+      "id": "M12",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The existing mixed spec-review term is intentionally supplied and the user postpones an invite until timing is known. Code-switch expression needs native review."
+    },
+    {
+      "id": "M13",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The recipient already uses sprint-board terminology and the user requests its link. Code-switch preservation cannot create the request; native review is pending."
+    },
+    {
+      "id": "M14",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The selected book-return plan is pure Chinese and calls for natural brevity, not invented English terms. Native review is pending."
+    },
+    {
+      "id": "M15",
+      "reviewedRevision": "R1",
+      "decision": "PASS",
+      "reviewerType": "CODEX_SEMANTIC_REVIEW",
+      "nativeLanguageGate": "NOT_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user chooses to ask for their helmet at the trailhead. Direct polite English can soften the rough imperative without adding a deadline or changing the requested action."
+    },
+    {
+      "id": "M16",
+      "reviewedRevision": "R1",
+      "decision": "QUARANTINE",
+      "reviewerType": "CODEX_STRUCTURAL_REVIEW",
+      "nativeLanguageGate": "NATIVE_LANGUAGE_REVIEW_REQUIRED",
+      "checks": {
+        "groundingAndNeighbor": true,
+        "intentFactsResponsibility": true,
+        "commitmentsAndCertainty": true,
+        "modeAndDraftRealism": true,
+        "duplicateLineage": true,
+        "primaryAndPairwise": true
+      },
+      "rationale": "The user chooses to decline a Sunday craft workshop. Chinese politeness may shape expression but cannot invent an excuse; Traditional Chinese naturalness needs native review."
+    }
+  ]
+}

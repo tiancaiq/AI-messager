@@ -1,0 +1,242 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: accountability_repair
+definition:
+  id: apology
+  name: Apology
+  description: Use when the user intends to apologize for a supported mistake or impact.
+  languages:
+    - universal
+  situations:
+    - mistake
+    - missed_commitment
+  intents:
+    - apologize
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the user intends to apologize for a supported mistake or impact.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Apologize directly and proportionately for the supported impact.
+  avoid:
+    - Do not invent fault, excuses, or excessive self-blame.
+  compatibleSkills:
+    - acknowledge_mistake
+    - expectation_setting
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: acknowledge_mistake
+    distinction: User wants only to correct their own wrong figure without expressing regret →
+      `acknowledge_mistake`.
+    caseId: H1
+  - id: emotional_validation
+    distinction: Friend reports an upsetting event unrelated to user → `emotional_validation`.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User forgot a promised attachment and wants to apologize to a coworker.
+      visibleContext: User forgot a promised attachment and wants to apologize to a coworker.
+      userIntent: Apologize for forgetting the attachment.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - apology
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User arrived late to a friend's dinner and wants to apologize.
+      visibleContext: User arrived late to a friend's dinner and wants to apologize.
+      userIntent: Apologize for arriving late.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - apology
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User supplied incorrect event directions and wants to apologize to attendees.
+      visibleContext: User supplied incorrect event directions and wants to apologize to attendees.
+      userIntent: Apologize for incorrect directions.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - apology
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: Another participant forgot the attachment; user only reports status.
+      visibleContext: Another participant forgot the attachment; user only reports status.
+      userIntent: Report status without taking responsibility for another person's mistake.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - apology
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User declines an invitation never accepted.
+      visibleContext: User declines an invitation never accepted.
+      userIntent: Decline an invitation.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - apology
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User asks the location of a meeting.
+      visibleContext: User asks the location of a meeting.
+      userIntent: Ask where the meeting is.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - apology
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: User wants only to correct their own wrong figure without expressing regret →
+        `acknowledge_mistake`.
+      visibleContext: User wants only to correct their own wrong figure without expressing regret →
+        `acknowledge_mistake`.
+      userIntent: Correct the user's wrong figure without regret.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - acknowledge_mistake
+      forbidden: []
+      rationale: User wants only to correct their own wrong figure without expressing regret →
+        `acknowledge_mistake`.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Friend reports an upsetting event unrelated to user → `emotional_validation`.
+      visibleContext: Friend reports an upsetting event unrelated to user → `emotional_validation`.
+      userIntent: Acknowledge the friend's upsetting experience.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - emotional_validation
+      forbidden: []
+      rationale: Friend reports an upsetting event unrelated to user → `emotional_validation`.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: "Fact: user forgot the attachment; intent: apologize. “sorry forgot file” → “I'm
+        sorry I forgot the attachment.”"
+      visibleContext: User forgot the attachment.
+      userIntent: Apologize for the forgotten attachment.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: sorry forgot file
+      improved: I'm sorry I forgot the attachment.
+      ledger:
+        facts:
+          - User forgot the attachment.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: "Fact: user arrived late; intent: acknowledge impact and apologize. “sorry you
+        waited” → “I'm sorry I was late and kept you waiting.”"
+      visibleContext: User arrived late and kept the recipient waiting.
+      userIntent: Acknowledge impact and apologize for arriving late.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: sorry you waited
+      improved: I'm sorry I was late and kept you waiting.
+      ledger:
+        facts:
+          - User arrived late and kept the recipient waiting.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#apology
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:8221402bcdfb866433c969297014c3fbbf5aa389ab79d4a628687de6516b5f46
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

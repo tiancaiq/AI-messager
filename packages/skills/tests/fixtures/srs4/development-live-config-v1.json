@@ -1,0 +1,542 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "SRS-4-DEV-LIVE-1",
+  "status": "FROZEN_PENDING_SEPARATE_SPEND_APPROVAL_NO_PROVIDER_CALL",
+  "evidenceUse": "EXPOSED_DEVELOPMENT_ONLY",
+  "credentialSourceCategory": "EXISTING_IGNORED_SKILLS_WORKTREE_ENV_LOCAL_USER_APPROVED_REUSE",
+  "provider": {
+    "api": "OPENAI_RESPONSES",
+    "requestedModel": "gpt-6.1-sol",
+    "modelAvailability": "NOT_LIVE_VERIFIED",
+    "reasoning": { "mode": "standard", "effort": "medium" },
+    "serviceTier": "OMITTED_DEFAULT_STANDARD_ASSUMED",
+    "responseFormat": {
+      "type": "json_schema",
+      "name": "srs4_supervisor_judgment_v1",
+      "strict": true,
+      "schemaSha256": "ce169cf806505ea4d271b07a23bed5a38f030d5a2f3b8dba50d75a6d4359d59f"
+    },
+    "promptId": "SRS-4-OFFLINE-PROMPT-DRAFT-1",
+    "systemInstructionsSha256": "d6eed396a2188bcb01c56ff9f261cbb61f36effde2893c9b84f98a56f4939d1e",
+    "candidateOrder": "SKILL_ID_ASC_NOT_SEMANTIC_RANK",
+    "scoreVisibleToModel": false,
+    "tools": [],
+    "store": false,
+    "temperature": "OMITTED",
+    "topP": "OMITTED",
+    "seed": "OMITTED_UNVERIFIED",
+    "maxOutputTokens": 8192,
+    "timeoutMs": 60000,
+    "automaticRetries": 0
+  },
+  "corpus": {
+    "cases": 53,
+    "plannedModelRequests": 50,
+    "structuralBypasses": 3,
+    "caseBindings": [
+      {
+        "key": "SRS3B:R01",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "68ba6cf4f46b08dfd9bc9af8d8c72bcf179195b8f45ab666e20dab8e527116ca",
+        "payloadBytes": 14533,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R02",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "a188238afb44b4c68998428faf4d604162935eef9e38b3cb1906a880e7ff38b3",
+        "payloadBytes": 15240,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R03",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "55d907832ff165c0e959306fad06ab07b1dfaf98ad37546766010be5e908ce09",
+        "payloadBytes": 14205,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R04",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "cda4a528f80747b697be2fa52d801339c8f44eabb35848b9987cbbac7df6a48f",
+        "payloadBytes": 13978,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R05",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "916ec7b482ba226d22e3525ef232a1741b4715f50cffee3ec0b1cb5b84a0a381",
+        "payloadBytes": 15137,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R06",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "c19985e1c52f01be15b34096ce22cfbee89f18e2043b830db206c80d2dfdb706",
+        "payloadBytes": 15117,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R07",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "f782e06ea4cdc8e418175b1afce7d29da333a9af401389f822019bcad7956079",
+        "payloadBytes": 15449,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R08",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "e01d7eee49e17e40e2df1fe15c4ecd112ba5930fffeb5b2b253777e4f4783500",
+        "payloadBytes": 14055,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R09",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "4e0d2b609ca6ca17bca1ba115dc7907d78048c53fc6a81e2cdb56dc962866961",
+        "payloadBytes": 14498,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R10",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "bea5851d5e44649d45d7ee34164e00c22c4b82309ba41462737c6b82fd506081",
+        "payloadBytes": 14388,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R11",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "dac30a30899c2fb036f8db2b086d62abe9171d4d72569dc2a421435a821ef166",
+        "payloadBytes": 14913,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R12",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "548aadcb278314c0dcff68b0b5239fbc580d5f496c50c427e4499f4bf4175e50",
+        "payloadBytes": 14246,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R13",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "062f16e37fb9a1cae70eed5a4ec021466fadd20bc3ed3f55fce70c119854ab85",
+        "payloadBytes": 13407,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R14",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "d186f3affd5973a7d1e01c3806d58f2864dc86f59b704ecb63e6fb96d8e5a12b",
+        "payloadBytes": 14687,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R15",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "a641eb5c0031d09d03ca91c0ddeebe3347fcb5eda352f86c3d9b65433936cf68",
+        "payloadBytes": 14944,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R16",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "c6674ce4a20f61973dd6dae59a1e3a3c6a884e2f19647d4debd24f083131d9ca",
+        "payloadBytes": 14002,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R17",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "144daf30f641830cb7630d580f663eff3849c006a257fee540d70e476764d902",
+        "payloadBytes": 14297,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R18",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "d5ccb81efaf42cfa4cda7b0e992d57ac4c456d70f50973f9185e53620407b51e",
+        "payloadBytes": 14183,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R19",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "7ca27d69211ceb6cad6b5ffb07ca2078d504fa70e06049b05b9137bc18da8acb",
+        "payloadBytes": 15339,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R20",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "cfe1570a5b74935b6f421f76dac264c8c0bb8cabf4636fb1b7336663a6286667",
+        "payloadBytes": 13939,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R21",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "dbac913b28c07bd956eb68b2ed34ae1efeb3a4d3f8b59e18594b2f2bbb86597b",
+        "payloadBytes": 14840,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R22",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "2c716bc6209bf2b3e8354c1d5fcfe12a5b46fb9bb8504aa655f4175b1b92e0d2",
+        "payloadBytes": 14544,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R23",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "f5c10abf498b924ce6508329c74ed5c4dc9226801d332105147b1c329a6b92c2",
+        "payloadBytes": 14938,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R24",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "83e40385f2ffc1fc324251365ad8942e89afaab22b35ba5799d3876994505be8",
+        "payloadBytes": 14301,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R25",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "82713131d78e1e0928d8e6f022376a75e59b78b633826c65071bbc7092798aa4",
+        "payloadBytes": 14117,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R26",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "9c9904a3d7398e321a9db6059417e5f192858fad0b0030df3b3173cdced381b5",
+        "payloadBytes": 14075,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R27",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "70e3c459b6af31bb0a42de01c78d6e86abcd76c8a62dc637f9cbc1be128572b7",
+        "payloadBytes": 13648,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R28",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "687a3819032693456aea789f444c086633b868ffbd03ff2bbca7258b0b618a9f",
+        "payloadBytes": 14282,
+        "candidateCount": 10
+      },
+      {
+        "key": "SRS3B:R29",
+        "action": "NO_REPLY_NEEDED",
+        "stage": "STRUCTURAL_EMPTY",
+        "modelRequest": false
+      },
+      {
+        "key": "CONTROL:K01",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "b4e3a53b43c0a4853d8af2591ba2673b49ce9de61b70f78ea5a0d790c992d90e",
+        "payloadBytes": 14325,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K02",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "d085ee0ca51e2f14d9a164007a7f24ee1940b5fac85954218ecb398361456b1a",
+        "payloadBytes": 14097,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K03",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "2938a3fd90cc5334a221dd0e4f7da4daea41ce5721e3e7e7be5fb2bf2abbaea1",
+        "payloadBytes": 14069,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K04",
+        "action": "NO_REPLY_NEEDED",
+        "stage": "STRUCTURAL_EMPTY",
+        "modelRequest": false
+      },
+      {
+        "key": "CONTROL:K05",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "110f926f2a2a81ef6965bd371d0d49c9951161cb1d274b0275a31d52cc727f89",
+        "payloadBytes": 14867,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K06",
+        "action": "NO_REPLY_NEEDED",
+        "stage": "STRUCTURAL_EMPTY",
+        "modelRequest": false
+      },
+      {
+        "key": "CONTROL:K07",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "a0b750b49c5a74f29c8c735318019361751cfb7fd055896097df9ff8653243e0",
+        "payloadBytes": 13475,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K08",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "f43ee90f1158736fce9b0cfe97d49770caa16da39cd6b0dc26eb34bd97429fba",
+        "payloadBytes": 13399,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K09",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "85c4289604b528b5b97fb2a3f02f95ea0bee6b68b742034b87c8b410e6b08c27",
+        "payloadBytes": 14134,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K10",
+        "action": "COMPLETE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "12a6733d3c2919518c978d07215f615e27188e5d1d84b62ea688b06f22637408",
+        "payloadBytes": 14432,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K11",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "1b107ba9dc47cb655f724c5ab1e4bc2ffaaee8018e7486b29846e363119c68a9",
+        "payloadBytes": 14064,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K12",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "4757bf43635717dff067fcce80b685ebed44bcedac903a4abf63ceac09c519c4",
+        "payloadBytes": 14909,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K13",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "5edc69e436aebe5d942c473663ed0023953beced711f319a7f97d1a12a4b4e3e",
+        "payloadBytes": 14081,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K14",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "cb611e58ebad8724e84b2f1bbdcd3d661dbe168fbf50a36ae077fdee467c2328",
+        "payloadBytes": 13898,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K15",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "924efab00a42b53e957ee67f473a587c8969891d97cafea0d61d54c076e7a682",
+        "payloadBytes": 15448,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K16",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "efa94d3c0391247bd0b37513f1a7ba77ae765eb9647233460a7f8b52126b1a54",
+        "payloadBytes": 14217,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K17",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "40994fd25450f6469fe675dbaf368a3dff733db070612b34c39650575c06e506",
+        "payloadBytes": 14830,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K18",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "daf889e5d5ab49ae48e13320ffba23d1103ebde5a6d82ba539e899bb01bf3baf",
+        "payloadBytes": 14065,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K19",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "f330b0380079ae37398c44a1f38abf9f1fa126ec49ca2848862262aaf84f5390",
+        "payloadBytes": 14853,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K20",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "0ba91d2e41c5dd1d23a1bf442c8ae37f5b2de6cb9dd309b7af290cb0cdb6ba34",
+        "payloadBytes": 14941,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K21",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "dc52869f641820b16fdc156cff137dbe00afef62f242d3fb3bcdd1b23eecbbdc",
+        "payloadBytes": 13991,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K22",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "61a8d2135131039a2a6b0f491f7cffec5f0e058b5136881aca171302f1926a24",
+        "payloadBytes": 14188,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K23",
+        "action": "REWRITE_DRAFT",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "990a4725f31b49f224b204ea8c39cfa54d7af0996777972917d5f1145aa0f2e0",
+        "payloadBytes": 14435,
+        "candidateCount": 10
+      },
+      {
+        "key": "CONTROL:K24",
+        "action": "SUGGEST_REPLY",
+        "stage": "SUPERVISOR",
+        "modelRequest": true,
+        "payloadSha256": "3767876fb460d9bc515c25039764177ab97e2fd25c502985c9c3ba0559d1c44a",
+        "payloadBytes": 14428,
+        "candidateCount": 10
+      }
+    ]
+  },
+  "costEstimate": {
+    "method": "CONSERVATIVE_INPUT_ESTIMATE_ONE_TOKEN_PER_UTF8_BYTE_PLUS_1024_PER_REQUEST_AND_FULL_OUTPUT_CAP",
+    "totalPayloadBytes": 720448,
+    "estimatedInputTokenEnvelope": 771648,
+    "maxOutputTokensForRun": 409600,
+    "priceUSDPerMillionTokens": { "inputOrCacheWrite": 2.5, "output": 10 },
+    "estimatedMaximumUSD": 6.0251,
+    "proposedSpendCapUSD": 8,
+    "pricingSource": "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+    "caveat": "Estimate, not an invoice or provider-enforced hard cap; requires explicit spend approval."
+  },
+  "sourcePaths": {
+    "supervisor": "packages/skills/tests/srs4-supervisor.ts",
+    "prompt": "packages/skills/tests/srs4-supervisor-prompt.ts",
+    "development": "packages/skills/tests/srs4-development.ts",
+    "evaluator": "packages/skills/tests/srs4-development-evaluator.ts",
+    "bConfig": "packages/skills/tests/fixtures/srs3f/semantic-topk-proposed-config-v1.json",
+    "bTrace": "packages/skills/tests/fixtures/srs3f/semantic-topk-exposed-v1.json",
+    "profiles": "packages/skills/tests/fixtures/srs3/semantic-skill-profiles.json",
+    "auditR2Freeze": "packages/skills/tests/fixtures/srs4/audit-authoring-freeze-v2.json"
+  },
+  "sourceSha256": {
+    "supervisor": "3ff83c44abe310908ea0cad16764ecb78a0efe1b7de82215cc7dadbda8824977",
+    "prompt": "3e05fcfd50796489061a1a819f5d021ba792e846bc4487f2b321ee5bceb14001",
+    "development": "4e35fd500d51b0ce47a364a1a04576dea602a25eda52840d656b1a58a1855eb4",
+    "evaluator": "7fc564c07f6bd25685e4802e64b318fc1f2c51a4586df5e665b922e2cdddba6f",
+    "bConfig": "4f3f94e0b2089c9bb7a8e8c3a83c697b7df3d9f3c4c0c14b4c00ac0d4518327b",
+    "bTrace": "3da194a50d46c33c26b5dcaa2f59ce7d33eb03d4352e5eefc706d9241e6ed214",
+    "profiles": "b061bf17a04e696ad78af45016e6803a96f79f0e617fcb2800a4a591fbc33d1c",
+    "auditR2Freeze": "3297a3577ed7110e01a2629e023bf2371238559543c3c49350dbc28c727fa319"
+  },
+  "noAuditScoring": true,
+  "noProtectedChallenge": true,
+  "noProductionChange": true,
+  "providerCallsAuthorized": false
+}

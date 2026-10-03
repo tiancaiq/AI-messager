@@ -1,0 +1,1097 @@
+{
+  "schemaVersion": 1,
+  "split": "CALIBRATION_ONLY",
+  "scenarios": [
+    {
+      "id": "K01",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "mural-photo-ack",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Here is the mural photo I promised.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "got it thanks", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K02",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "puppy-photo-reaction",
+      "fixedAction": "SUGGEST_REPLY",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Look at the puppy asleep in the basket.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K02",
+          "label": "Use this goal",
+          "intent": "Send a simple friendly reaction to the photo."
+        }
+      }
+    },
+    {
+      "id": "K03",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "museum-door-color",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "What color is the museum side door?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "its green", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K04",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "ferry-ticket-thread-done",
+      "fixedAction": "NO_REPLY_NEEDED",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "USER",
+              "text": "The ferry ticket is in your email.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            },
+            {
+              "id": "m2",
+              "order": 2,
+              "speaker": "OTHER",
+              "text": "Found it, thank you!",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K05",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "book-title-ack",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The book is called The Glass Orchard.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "oh nice", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K06",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "tournament-score-thread-done",
+      "fixedAction": "NO_REPLY_NEEDED",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The match ended 2–1.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            },
+            {
+              "id": "m2",
+              "order": 2,
+              "speaker": "USER",
+              "text": "Thanks for letting me know.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            },
+            {
+              "id": "m3",
+              "order": 3,
+              "speaker": "OTHER",
+              "text": "No problem!",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K07",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "settled-picnic-confirmation",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The picnic is confirmed for noon; see you there.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "yep see u", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K08",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "birthday-greeting-only",
+      "fixedAction": "SUGGEST_REPLY",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "It's my birthday today!",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K08",
+          "label": "Use this goal",
+          "intent": "Wish them a happy birthday."
+        }
+      }
+    },
+    {
+      "id": "K09",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "paint-swatch-fact",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Which paint swatch did you pick?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "the orange one", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K10",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "finished-arrival-phrase",
+      "fixedAction": "COMPLETE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I'll be by the fountain at six, as agreed.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "see you at", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K10",
+          "label": "Use this goal",
+          "intent": "Finish the simple acknowledgment without proposing a new plan."
+        }
+      }
+    },
+    {
+      "id": "K11",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "tea-offer-accept",
+      "fixedAction": "SUGGEST_REPLY",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Want a cup of tea while you're here?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K11",
+          "label": "Use this goal",
+          "intent": "Accept the tea."
+        }
+      }
+    },
+    {
+      "id": "K12",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "fabric-sample-received",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I dropped the fabric sample at reception.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "received it", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K13",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "badge-bin-misplacement",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The visitor badges aren't in the return bin.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "i put them in the supply drawer by mistake. moving them now",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K14",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "kept-dance-partner-waiting",
+      "fixedAction": "SUGGEST_REPLY",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I was waiting outside the hall while you finished your call.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K14",
+          "label": "Use this goal",
+          "intent": "Apologize for keeping them waiting outside."
+        }
+      }
+    },
+    {
+      "id": "K15",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "estate-paperwork-overwhelm",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I feel overwhelmed sorting through my father's estate paperwork.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "that sounds like a lot to carry", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K16",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "backup-lantern-known",
+      "fixedAction": "SUGGEST_REPLY",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I'm worried the campsite will be dark if the lamp breaks.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K16",
+          "label": "Use this goal",
+          "intent": "Remind them we already packed a spare lantern."
+        }
+      }
+    },
+    {
+      "id": "K17",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "single-stall-duty-refusal",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Could you cover my market stall this Saturday?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "i cant cover it this saturday", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K18",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "repeated-evening-visit-limit",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I know I've asked several times, but can I come by late again tonight?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "no late visit tonight. please dont ask to come after 10 again",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K19",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "unanswered-archive-opening-hours",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "USER",
+              "text": "Could you confirm Sunday's archive opening hours?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            },
+            {
+              "id": "m2",
+              "order": 2,
+              "speaker": "OTHER",
+              "text": "I'll check with the caretaker.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "any word from the caretaker on sunday hours?", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K20",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "first-request-blueprint-copy",
+      "fixedAction": "SUGGEST_REPLY",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The updated blueprint is on my laptop.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K20",
+          "label": "Use this goal",
+          "intent": "Ask them for the updated blueprint copy."
+        }
+      }
+    },
+    {
+      "id": "K21",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "choose-choir-practice-slot",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I can rehearse Wednesday or Friday.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "friday at 4?", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K22",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "tent-repair-uncertain-timing",
+      "fixedAction": "SUGGEST_REPLY",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "When will the tent repair be finished?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K22",
+          "label": "Use this goal",
+          "intent": "Say it may take until early next week, but that isn't confirmed."
+        }
+      }
+    },
+    {
+      "id": "K23",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "two-willow-trailheads",
+      "fixedAction": "REWRITE_DRAFT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Meet me at the Willow trailhead; the map has one by the lake and another by the gate.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "which willow trailhead did u mean?", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      }
+    },
+    {
+      "id": "K24",
+      "revision": "R1",
+      "split": "CALIBRATION_ONLY",
+      "scenarioFamily": "archive-reboxing-count",
+      "fixedAction": "SUGGEST_REPLY",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "How far along is the archive reboxing?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic calibration conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "calibration-K24",
+          "label": "Use this goal",
+          "intent": "Tell them 18 of the 24 boxes have been catalogued."
+        }
+      }
+    }
+  ]
+}

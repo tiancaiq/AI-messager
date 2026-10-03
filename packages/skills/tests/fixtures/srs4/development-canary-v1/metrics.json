@@ -1,0 +1,81 @@
+{
+  "experimentId": "SRS-4-DEV-CANARY-1",
+  "configSha256": "7d64661ccd0a1b35dc249ae890708c2ea9487cf8aa5f9002ca80f0639eec4e95",
+  "plannedRequests": 5,
+  "actualRequests": 5,
+  "completed": true,
+  "fatalStop": null,
+  "contractValid": 0,
+  "contractValidityDenominator": 5,
+  "verdict": "FAIL",
+  "stageStats": {
+    "total": 5,
+    "valid": 0,
+    "firstFailureCounts": {
+      "PROVIDER_RESPONSE_PRESENT": 0,
+      "OUTPUT_TEXT_OR_OBJECT_PRESENT": 0,
+      "JSON_PARSE_VALID": 0,
+      "WIRE_SCHEMA_VALID": 0,
+      "CANDIDATE_DECISION_COUNT_VALID": 0,
+      "NO_DUPLICATE_CANDIDATES": 0,
+      "CANDIDATE_ID_SET_VALID": 0,
+      "SELECTION_BUDGET_VALID": 0,
+      "REASON_POLARITY_VALID": 0,
+      "EVIDENCE_REF_UNIQUE": 0,
+      "EVIDENCE_REF_EXISTS": 0,
+      "OWNERSHIP_VALID": 0,
+      "NEGATION_PREREQUISITE_EVIDENCE_VALID": 5,
+      "FACT_GROUNDING_VALID": 0,
+      "RELATION_CONSTRAINTS_VALID": 0,
+      "FINAL_SELECTION_DERIVATION_VALID": 0,
+      "VALID": 0
+    },
+    "passedThroughCounts": {
+      "PROVIDER_RESPONSE_PRESENT": 5,
+      "OUTPUT_TEXT_OR_OBJECT_PRESENT": 5,
+      "JSON_PARSE_VALID": 5,
+      "WIRE_SCHEMA_VALID": 5,
+      "CANDIDATE_DECISION_COUNT_VALID": 5,
+      "NO_DUPLICATE_CANDIDATES": 5,
+      "CANDIDATE_ID_SET_VALID": 5,
+      "SELECTION_BUDGET_VALID": 5,
+      "REASON_POLARITY_VALID": 5,
+      "EVIDENCE_REF_UNIQUE": 5,
+      "EVIDENCE_REF_EXISTS": 5,
+      "OWNERSHIP_VALID": 5,
+      "NEGATION_PREREQUISITE_EVIDENCE_VALID": 0,
+      "FACT_GROUNDING_VALID": 0,
+      "RELATION_CONSTRAINTS_VALID": 0,
+      "FINAL_SELECTION_DERIVATION_VALID": 0,
+      "VALID": 0
+    }
+  },
+  "failureCodeCounts": {
+    "NEGATION_EVIDENCE_INVALID": 3,
+    "PREREQUISITE_EVIDENCE_INVALID": 5
+  },
+  "candidateOmissionCases": [],
+  "wireSchemaFailureCases": [],
+  "evidenceOrProvenanceFailureCases": [
+    "SRS3B:R06",
+    "SRS3B:R10",
+    "SRS3B:R14",
+    "SRS3B:R26",
+    "SRS3B:R13"
+  ],
+  "inputTokens": 16692,
+  "outputTokens": 2638,
+  "knownCostUSD": 0.06811,
+  "conservativeCostUpperBoundUSD": 0.601585,
+  "latencyMs": {
+    "total": 49466,
+    "max": 11904
+  },
+  "modelRequested": "gpt-6.1-sol",
+  "returnedModels": [
+    "gpt-6.1-sol"
+  ],
+  "auditScored": false,
+  "protectedChallengeRead": false,
+  "productionChanged": false
+}

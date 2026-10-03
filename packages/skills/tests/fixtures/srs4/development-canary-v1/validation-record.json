@@ -1,0 +1,21 @@
+{
+  "experimentId": "SRS-4-DEV-CANARY-1",
+  "configSha256": "7d64661ccd0a1b35dc249ae890708c2ea9487cf8aa5f9002ca80f0639eec4e95",
+  "traceSha256": "34f2ba762019bddb6946abc25ab0b3fb458f690266a09ce874df1b6f1d5b6bb7",
+  "metricsSha256": "33ebd0d359394b1c92df5c1e68fdb3eb23c7d5367415436c5b48647dec80188c",
+  "d2FreezeSha256": "504503dc937f425d090dfab231f6919379b2a1d70a4d3747911ab7a712c5b540",
+  "v1ConfigSha256": "3b4ecfe80979486c454009d48bdba640becc8f59c642fff11b759dfd6168f93a",
+  "checks": {
+    "fiveExactCases": [
+      "SRS3B:R06",
+      "SRS3B:R10",
+      "SRS3B:R14",
+      "SRS3B:R26",
+      "SRS3B:R13"
+    ],
+    "noAutomaticRetries": true,
+    "auditScored": false,
+    "protectedChallengeRead": false,
+    "productionChanged": false
+  }
+}

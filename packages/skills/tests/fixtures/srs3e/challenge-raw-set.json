@@ -1,0 +1,3307 @@
+{
+  "schemaVersion": 1,
+  "scenarios": [
+    {
+      "id": "C01",
+      "revision": "R1",
+      "scenarioFamily": "borrowed-display-table",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The table I reserved for tonight wasn't there when I arrived.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "i used it earlier without checking. sorry you had to set up somewhere else",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C02",
+      "revision": "R1",
+      "scenarioFamily": "catering-allergy-list",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The caterer paused my order because the allergy list you sent had the wrong column.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c02",
+          "label": "Use this goal",
+          "intent": "Tell them I sent the wrong allergy list and say sorry their order got held."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C03",
+      "revision": "R1",
+      "scenarioFamily": "volunteer-roster-omission",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I couldn't find my name on the volunteer roster.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "i left your name off. im fixing the roster now", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C04",
+      "revision": "R1",
+      "scenarioFamily": "permit-form-misfiled",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The permit form still isn't in the review folder.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c04",
+          "label": "Use this goal",
+          "intent": "I put the permit form in the wrong folder. Tell them I'll move it."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C05",
+      "revision": "R1",
+      "scenarioFamily": "storm-stay-support",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I'm anxious about being alone during the storm.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "sounds scary. you can stay here like we agreed, generator is working",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C06",
+      "revision": "R1",
+      "scenarioFamily": "renovation-fatigue",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "These weeks of drilling upstairs have really worn me down.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c06",
+          "label": "Use this goal",
+          "intent": "Respond to how worn down they are by the noise."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C07",
+      "revision": "R1",
+      "scenarioFamily": "plants-watering-arranged",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I'm worried the plants won't make it while I'm away.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "the neighbor already agreed to water them, so theres someone checking in",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C08",
+      "revision": "R1",
+      "scenarioFamily": "connection-alternate-bus",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I'm concerned I'll be stranded if the evening connection is cancelled.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c08",
+          "label": "Use this goal",
+          "intent": "Let them know their ticket includes the alternate bus."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C09",
+      "revision": "R1",
+      "scenarioFamily": "doorway-delivery-pressure",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "You keep making a big deal of my parcels. I'm leaving them outside your door again.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "weve talked about this loads. please stop leaving boxes at my door. lets keep this calm",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C10",
+      "revision": "R1",
+      "scenarioFamily": "captioned-call-repeated",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Can we just use video without captions this once? I know you've asked before, but it takes too long to set up.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c10",
+          "label": "Use this goal",
+          "intent": "I can't take a call without captions, including future meetings."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C11",
+      "revision": "R1",
+      "scenarioFamily": "lobby-camera-dispute",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "You obviously moved my parcel. Don't pretend you didn't.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "i didnt move it. can we check when it showed up on lobby camera instead of blaming each other",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C12",
+      "revision": "R1",
+      "scenarioFamily": "restaurant-double-charge",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Our bill is correct. Please stop accusing the staff.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c12",
+          "label": "Use this goal",
+          "intent": "Explain calmly that my receipt has two identical charges."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C13",
+      "revision": "R1",
+      "scenarioFamily": "petition-signature-refusal",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Would you sign the petition at the door today?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "no thanks, im not signing it", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C14",
+      "revision": "R1",
+      "scenarioFamily": "delivery-slot-refusal",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "We can deliver the wardrobe during the early-morning slot. Shall I book it?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c14",
+          "label": "Use this goal",
+          "intent": "Say I can't take the early-morning delivery slot."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C15",
+      "revision": "R1",
+      "scenarioFamily": "bus-transfer-map-help",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I used that transfer station last month.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "could u help me work out which platform the next bus uses",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C16",
+      "revision": "R1",
+      "scenarioFamily": "printer-jam-assistance",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The label printer is still jammed; I've cleared this model before.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c16",
+          "label": "Use this goal",
+          "intent": "Ask if they can help me clear the label printer."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C17",
+      "revision": "R1",
+      "scenarioFamily": "ramp-width-unanswered",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "USER",
+              "text": "Could you check the width of the venue ramp?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            },
+            {
+              "id": "m2",
+              "order": 2,
+              "speaker": "OTHER",
+              "text": "I'll ask facilities.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "checking back on ramp width, could you let me know what facilities said?",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C18",
+      "revision": "R1",
+      "scenarioFamily": "interpreter-booking-unanswered",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "USER",
+              "text": "Could you arrange an interpreter for the community session?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            },
+            {
+              "id": "m2",
+              "order": 2,
+              "speaker": "OTHER",
+              "text": "I sent that to scheduling.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c18",
+          "label": "Use this goal",
+          "intent": "See if scheduling has confirmed the interpreter yet."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C19",
+      "revision": "R1",
+      "scenarioFamily": "greenhouse-sprouts-timing",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "How are the seedlings doing, and when might you transplant them?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "theyve sprouted. might move them this weekend if the beds dry out",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C20",
+      "revision": "R1",
+      "scenarioFamily": "exhibit-audio-state",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Is the exhibit ready for visitors?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c20",
+          "label": "Use this goal",
+          "intent": "Tell them the lights work but the audio guide is still offline."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C21",
+      "revision": "R1",
+      "scenarioFamily": "supplier-tiles-window",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "When should I expect the replacement tiles?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "supplier says midweek at earliest, not confirmed yet",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C22",
+      "revision": "R1",
+      "scenarioFamily": "boarding-call-capacity",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Can we talk through the whole move before your flight?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "i can do a quick call before boarding but", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c22",
+          "label": "Use this goal",
+          "intent": "Finish by saying we can talk longer after I land."
+        }
+      },
+      "fixedAction": "COMPLETE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C23",
+      "revision": "R1",
+      "scenarioFamily": "beach-cleanup-handoff",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I can help at the cleanup. Where should I go?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "east gate at 9? could you bring the spare bags too",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C24",
+      "revision": "R1",
+      "scenarioFamily": "rehearsal-after-acoustic-test",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The venue hasn't confirmed the acoustic test yet. Should we choose a rehearsal slot now?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c24",
+          "label": "Use this goal",
+          "intent": "Suggest picking a rehearsal slot once the venue replies; I think that might be Wednesday."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C25",
+      "revision": "R1",
+      "scenarioFamily": "locker-assignment-conflict",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Your pickup locker is listed as B14 in the app, but the email says B41.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "which locker should i actually go to?", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C26",
+      "revision": "R1",
+      "scenarioFamily": "recurring-transfer-reference",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I moved the recurring transfer like you asked.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c26",
+          "label": "Use this goal",
+          "intent": "Check whether they moved the rent transfer or the savings one."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C27",
+      "revision": "R1",
+      "scenarioFamily": "cabinet-access-code",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The storage cabinet is locked again.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "code for the cabinet when u have it?", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C28",
+      "revision": "R1",
+      "scenarioFamily": "entrance-buzzer-volume",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The entrance buzzer volume can be changed by building staff.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c28",
+          "label": "Use this goal",
+          "intent": "Ask building staff to lower the entrance buzzer volume."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C29",
+      "revision": "R1",
+      "scenarioFamily": "archived-guide-mislabeled",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "This guide says current, but the steps look outdated.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "i marked the archived guide current. ill correct the tag",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C30",
+      "revision": "R1",
+      "scenarioFamily": "door-held-during-packing",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I waited a while holding the door while you finished packing.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c30",
+          "label": "Use this goal",
+          "intent": "Say sorry I kept them waiting while I packed."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C31",
+      "revision": "R1",
+      "scenarioFamily": "shift-noise-exhaustion",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "The constant alarm tests during my shift have been exhausting.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "that sounds really draining. i hear you", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C32",
+      "revision": "R1",
+      "scenarioFamily": "verified-ride-home",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I'm nervous about getting home after the late event.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c32",
+          "label": "Use this goal",
+          "intent": "Remind them the ride I booked for them is confirmed."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C33",
+      "revision": "R1",
+      "scenarioFamily": "one-time-tool-loan-refusal",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Could I borrow your ladder for Saturday?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "i cant lend it this saturday", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C34",
+      "revision": "R1",
+      "scenarioFamily": "heated-inventory-claim",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Your team definitely lost the keys. Stop making excuses.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c34",
+          "label": "Use this goal",
+          "intent": "Calmly say we don't know who had the keys and point to the sign-out log."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C35",
+      "revision": "R1",
+      "scenarioFamily": "repeated-uncaptioned-invite",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I'm asking again: can we drop captions for this meeting?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            },
+            {
+              "id": "m2",
+              "order": 2,
+              "speaker": "USER",
+              "text": "I need captions for meetings, as I've said before.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "no, not for this meeting. going forward", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c35",
+          "label": "Use this goal",
+          "intent": "Finish by saying captions are needed for future meetings too."
+        }
+      },
+      "fixedAction": "COMPLETE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C36",
+      "revision": "R1",
+      "scenarioFamily": "archive-box-list-transfer",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I have the archive-box list on my drive.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "can u forward the list", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C37",
+      "revision": "R1",
+      "scenarioFamily": "first-menu-allergen-request",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Our seasonal menu is ready; allergen details are in a separate sheet.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c37",
+          "label": "Use this goal",
+          "intent": "Get the allergen sheet before I order."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C38",
+      "revision": "R1",
+      "scenarioFamily": "gallery-projector-state",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Is the gallery projector working now?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "projector powers on now. sound still off", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C39",
+      "revision": "R1",
+      "scenarioFamily": "choosing-shared-kitchen-time",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I'm around Tuesday or Wednesday to cook together.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "lets make it wed. can you choose 6 or 7?", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C40",
+      "revision": "R1",
+      "scenarioFamily": "completed-signage-report",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Did the safety signs get installed?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c40",
+          "label": "Use this goal",
+          "intent": "Tell them the signs are installed and photographed."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C41",
+      "revision": "R1",
+      "scenarioFamily": "ambiguous-pass-type",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Your pass is ready. We issued both a day pass and a season pass under that name.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "which pass is ready for me?", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C42",
+      "revision": "R1",
+      "scenarioFamily": "known-stairwell-map-request",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I have the stairwell map you asked about.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c42",
+          "label": "Use this goal",
+          "intent": "Ask for the stairwell map they mentioned."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C43",
+      "revision": "R1",
+      "scenarioFamily": "contract-return-date-reference",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "合同上有两个返还日期，请按约定的日期办理。",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "请问您指的是哪一个返还日期？", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "SIMPLIFIED",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "SIMPLIFIED_CHINESE"
+    },
+    {
+      "id": "C44",
+      "revision": "R1",
+      "scenarioFamily": "charger-repeated-use-limit",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "我這週又沒問就拿了你的充電器，明天還要用。",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            },
+            {
+              "id": "m2",
+              "order": 2,
+              "speaker": "USER",
+              "text": "前兩週我都說過，請先問我。",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "TRADITIONAL",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c44",
+          "label": "Use this goal",
+          "intent": "請說明以後拿充電器前必須先徵得我的同意。"
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "TRADITIONAL_CHINESE"
+    },
+    {
+      "id": "C45",
+      "revision": "R1",
+      "scenarioFamily": "webinar-caption-state-mixed",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "webinar slides 和字幕现在是什么状态？",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "slides 已上传，字幕还在校对", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": "en",
+            "script": "SIMPLIFIED",
+            "codeSwitching": true,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "CODE_SWITCHING"
+    },
+    {
+      "id": "C46",
+      "revision": "R1",
+      "scenarioFamily": "station-east-gate-meetup",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "我到车站后从哪个出口出来？",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "SIMPLIFIED",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c46",
+          "label": "Use this goal",
+          "intent": "约在东门会合，然后一起去展厅。"
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "SIMPLIFIED_CHINESE"
+    },
+    {
+      "id": "C47",
+      "revision": "R1",
+      "scenarioFamily": "plain-acknowledgement-none",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I received the notice.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "got it thanks", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C48",
+      "revision": "R1",
+      "scenarioFamily": "rainbow-smalltalk-none",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "That rainbow over the park looked unreal.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c48",
+          "label": "Use this goal",
+          "intent": "React to the rainbow with a quick comment."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C49",
+      "revision": "R1",
+      "scenarioFamily": "router-sticker-info-none",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Where's the Wi-Fi password posted?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "its on the sticker under the router", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C50",
+      "revision": "R1",
+      "scenarioFamily": "thread-closed-none",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Everything is settled. No more action on either side.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c50",
+          "label": "Use this goal",
+          "intent": "Just say we're all set."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C51",
+      "revision": "R1",
+      "scenarioFamily": "simple-identification-none",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Is that your blue umbrella by the door?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "yes, the blue", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-c51",
+          "label": "Use this goal",
+          "intent": "Finish saying the blue umbrella is mine."
+        }
+      },
+      "fixedAction": "COMPLETE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "C52",
+      "revision": "R1",
+      "scenarioFamily": "no-reply-action-none",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Your ticket has closed automatically. This is a system notice; no response is required.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "NO_REPLY_NEEDED",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "M01",
+      "revision": "R1",
+      "scenarioFamily": "english-professional-brief-update",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Any update on the accessibility checklist?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "quick update, i wanted to let you know the accessibility checklist is done now, just waiting on signoff",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "M02",
+      "revision": "R1",
+      "scenarioFamily": "english-professional-negative-casual",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Want to grab noodles after the walk?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-m02",
+          "label": "Use this goal",
+          "intent": "I'd like to say yes to noodles after the walk."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "M03",
+      "revision": "R1",
+      "scenarioFamily": "english-casual-short-invite",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "We could check out the night market Saturday.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "I'd be happy to come to the night market Saturday, thanks for asking",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "M04",
+      "revision": "R1",
+      "scenarioFamily": "english-casual-negative-work",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Did the security audit summary get approved?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-m04",
+          "label": "Use this goal",
+          "intent": "Tell them the security audit summary is awaiting approval."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "M05",
+      "revision": "R1",
+      "scenarioFamily": "english-direct-respectful-refusal",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "Should I add the optional installation service to your order?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "no i dont want the installation add on", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "M06",
+      "revision": "R1",
+      "scenarioFamily": "english-direct-negative-status",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "What's the current state of the badge order?",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-m06",
+          "label": "Use this goal",
+          "intent": "Tell them the badges have arrived."
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "M07",
+      "revision": "R1",
+      "scenarioFamily": "chinese-polite-request",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "您的维修记录可以通过消息发送。",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "把维修记录发给我", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "SIMPLIFIED",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "SERVICE",
+      "languageGroup": "SIMPLIFIED_CHINESE"
+    },
+    {
+      "id": "M08",
+      "revision": "R1",
+      "scenarioFamily": "chinese-polite-negative-work",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "例行檢查報告完成了嗎？",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "TRADITIONAL",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-m08",
+          "label": "Use this goal",
+          "intent": "回報報告仍在主管審核中，用簡潔的工作語氣。"
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "TRADITIONAL_CHINESE"
+    },
+    {
+      "id": "M09",
+      "revision": "R1",
+      "scenarioFamily": "chinese-professional-update",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "设备点检结果如何？",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "关于设备点检的情况呢，我们目前已经把现场部分做完了，记录还没整理完",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "SIMPLIFIED",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "SIMPLIFIED_CHINESE"
+    },
+    {
+      "id": "M10",
+      "revision": "R1",
+      "scenarioFamily": "chinese-professional-negative-casual",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "周末要不要一起去逛旧书店？",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "SIMPLIFIED",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-m10",
+          "label": "Use this goal",
+          "intent": "自然地接受周末逛旧书店的邀请，不用正式工作语气。"
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "SIMPLIFIED_CHINESE"
+    },
+    {
+      "id": "M11",
+      "revision": "R1",
+      "scenarioFamily": "chinese-natural-short-plan",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "明天傍晚在河边见可以吗？",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": {
+            "text": "如果是明天傍晚的话我觉得我们可以在河边那个地方见面",
+            "confidence": 0.99
+          },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "SIMPLIFIED",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "SIMPLIFIED_CHINESE"
+    },
+    {
+      "id": "M12",
+      "revision": "R1",
+      "scenarioFamily": "chinese-natural-negative-mixed",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "spec review 的时间还没定，先别发邀请。",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": "en",
+            "script": "SIMPLIFIED",
+            "codeSwitching": true,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-m12",
+          "label": "Use this goal",
+          "intent": "回复说会等时间确认后再安排，并保留已有的英文术语。"
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "CODE_SWITCHING"
+    },
+    {
+      "id": "M13",
+      "revision": "R1",
+      "scenarioFamily": "chinese-intentional-mixed-request",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "我这边有 sprint board 的访问权限。",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "能不能给我 sprint board 的链接？", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": "en",
+            "script": "SIMPLIFIED",
+            "codeSwitching": true,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "WORK",
+      "languageGroup": "CODE_SWITCHING"
+    },
+    {
+      "id": "M14",
+      "revision": "R1",
+      "scenarioFamily": "chinese-code-switch-negative-pure",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "周六下午去还书方便吗？",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": null, "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "SIMPLIFIED",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": {
+          "kind": "ACTION",
+          "id": "challenge-m14",
+          "label": "Use this goal",
+          "intent": "答应周六下午一起去还书，回复短一点。"
+        }
+      },
+      "fixedAction": "SUGGEST_REPLY",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "SIMPLIFIED_CHINESE"
+    },
+    {
+      "id": "M15",
+      "revision": "R1",
+      "scenarioFamily": "english-direct-helmet-request",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "I still have your spare helmet in my car.",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "bring my helmet to the trailhead", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "en",
+            "secondary": null,
+            "script": "NOT_APPLICABLE",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "ENGLISH"
+    },
+    {
+      "id": "M16",
+      "revision": "R1",
+      "scenarioFamily": "chinese-polite-workshop-refusal",
+      "split": "EXPOSED_DEVELOPMENT",
+      "request": {
+        "analysis": {
+          "messages": [
+            {
+              "id": "m1",
+              "order": 1,
+              "speaker": "OTHER",
+              "text": "週日的手作課還有名額，要幫你報名嗎？",
+              "textConfidence": 0.99,
+              "speakerConfidence": 0.99
+            }
+          ],
+          "draft": { "text": "我不去了", "confidence": 0.99 },
+          "participants": [],
+          "visibleContact": {
+            "displayName": null,
+            "username": null,
+            "channelOrGroupName": null,
+            "platformHint": null,
+            "confidence": 0.2
+          },
+          "language": {
+            "primary": "zh",
+            "secondary": null,
+            "script": "TRADITIONAL",
+            "codeSwitching": false,
+            "supportedForLanguageSpecificSkills": true,
+            "confidence": 0.99
+          },
+          "conversation": { "summary": "Synthetic challenge conversation.", "confidence": 0.99 },
+          "warnings": [],
+          "overallConfidence": 0.99
+        },
+        "selection": null
+      },
+      "fixedAction": "REWRITE_DRAFT",
+      "catalogScope": "PRODUCTION",
+      "setting": "PERSONAL",
+      "languageGroup": "TRADITIONAL_CHINESE"
+    }
+  ]
+}

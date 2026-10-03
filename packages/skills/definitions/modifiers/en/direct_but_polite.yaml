@@ -1,0 +1,238 @@
+recordVersion: 1
+kind: LANGUAGE_MODIFIER
+capabilityFamily: language_expression
+definition:
+  id: en.direct_but_polite
+  name: English direct but polite
+  description: Use for English boundaries, declines, and clear requests.
+  languages:
+    - en
+  situations:
+    - pressure
+    - conflict
+    - request
+    - invitation
+  intents:
+    - set_boundary
+    - decline
+    - make_request
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use for English boundaries, declines, and clear requests.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Be direct about the decision or request while remaining respectful.
+  avoid:
+    - Do not soften the message until its meaning becomes ambiguous.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: en.professional_conciseness
+    distinction: Current progress report without request/decision → professional_conciseness.
+    caseId: H1
+  - id: decline
+    distinction: Providing an actual refusal → decline supplies job; modifier alone cannot decide refusal.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User declines an English invitation.
+      visibleContext: User declines an English invitation.
+      userIntent: Decline the invitation.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.direct_but_polite
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User makes a clear English request.
+      visibleContext: User makes a clear English request.
+      userIntent: Make a clear request.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.direct_but_polite
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User states a limit in English under repeated pressure.
+      visibleContext: User states a limit in English under repeated pressure.
+      userIntent: State a limit under repeated pressure.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.direct_but_polite
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: Unsupported primary language.
+      visibleContext: Unsupported primary language.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: ko
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.direct_but_polite
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Chinese-only reply.
+      visibleContext: Chinese-only reply.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.direct_but_polite
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User's accept/refuse decision remains unknown.
+      visibleContext: User's accept/refuse decision remains unknown.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.direct_but_polite
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Current progress report without request/decision → professional_conciseness.
+      visibleContext: Current progress report without request/decision → professional_conciseness.
+      userIntent: Report current progress only.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - en.professional_conciseness
+      forbidden: []
+      rationale: Current progress report without request/decision → professional_conciseness.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Providing an actual refusal → decline supplies job; modifier alone cannot decide refusal.
+      visibleContext: Providing an actual refusal → decline supplies job; modifier alone cannot decide refusal.
+      userIntent: Communicate a chosen refusal.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - decline
+      forbidden: []
+      rationale: Providing an actual refusal → decline supplies job; modifier alone cannot decide refusal.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: “No, not doing that extra task” → “I can't take on that extra task.”
+      visibleContext: User will not take the extra task.
+      userIntent: Refuse the extra task.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: No, not doing that extra task
+      improved: I can't take on that extra task.
+      ledger:
+        facts:
+          - User will not take the extra task.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: “Send me the file” → “Please send me the file.”
+      visibleContext: User wants the file.
+      userIntent: Ask for the file.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: Send me the file
+      improved: Please send me the file.
+      ledger:
+        facts:
+          - User wants the file.
+        commitments: []
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#endirect_but_polite
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:e4f5152ad6772c5d6624f4cd5f8a60c388854b53063d122971768aa826fefda4
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

@@ -1,0 +1,242 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: coordination
+definition:
+  id: expectation_setting
+  name: Expectation setting
+  description: Use when supported timing or limits need to be communicated realistically.
+  languages:
+    - universal
+  situations:
+    - missed_commitment
+    - status_request
+    - planning
+  intents:
+    - set_expectation
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when supported timing or limits need to be communicated realistically.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - State supported timing with the same certainty expressed by the user.
+  avoid:
+    - Do not convert maybe or probably into a promise.
+  compatibleSkills:
+    - status_update
+    - acknowledge_mistake
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: status_update
+    distinction: Present progress without future timing → status update.
+    caseId: H1
+  - id: boundary_setting
+    distinction: Ongoing rule against unwanted contact → boundary.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User estimates a draft will probably be ready tomorrow.
+      visibleContext: User estimates a draft will probably be ready tomorrow.
+      userIntent: Communicate a probable completion estimate.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - expectation_setting
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User says a visit can last only one hour.
+      visibleContext: User says a visit can last only one hour.
+      userIntent: State a one-hour visit limit.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - expectation_setting
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User can review one chapter this week, not the full manuscript.
+      visibleContext: User can review one chapter this week, not the full manuscript.
+      userIntent: Offer review of one chapter this week, not the full manuscript.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - expectation_setting
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: User has no timing or scope information.
+      visibleContext: User has no timing or scope information.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - expectation_setting
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Task is already completed and only completion is reported.
+      visibleContext: Task is already completed and only completion is reported.
+      userIntent: Report completed work.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - expectation_setting
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: User asks what another person expects without offering their own expectation.
+      visibleContext: User asks what another person expects without offering their own expectation.
+      userIntent: Ask another person's expectations.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - expectation_setting
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Present progress without future timing → status update.
+      visibleContext: Present progress without future timing → status update.
+      userIntent: Report present progress only.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - status_update
+      forbidden: []
+      rationale: Present progress without future timing → status update.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Ongoing rule against unwanted contact → boundary.
+      visibleContext: Ongoing rule against unwanted contact → boundary.
+      userIntent: Set an ongoing unwanted-contact boundary.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - boundary_setting
+      forbidden: []
+      rationale: Ongoing rule against unwanted contact → boundary.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: User says probably tomorrow. “will finish tomorrow probably” → “I expect to finish
+        tomorrow, but that isn't certain yet.”
+      visibleContext: User estimates completion probably tomorrow.
+      userIntent: Communicate likely completion tomorrow without a promise.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: will finish tomorrow probably
+      improved: I expect to finish tomorrow, but that isn't certain yet.
+      ledger:
+        facts:
+          - User estimates completion probably tomorrow.
+        commitments: []
+        uncertainty:
+          - Tomorrow is an estimate, not a firm commitment.
+    - id: A2
+      sourceText:
+        User can review one chapter this week. “can review it, one chapter only this week” →
+        “I can review one chapter this week.”
+      visibleContext: User can review one chapter this week.
+      userIntent: Limit this week's review to one chapter.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: can review it, one chapter only this week
+      improved: I can review one chapter this week.
+      ledger:
+        facts:
+          - User can review one chapter this week.
+        commitments:
+          - Review is limited to one chapter this week.
+        uncertainty: []
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#expectation_setting
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:8b14ec14f7c9efaed537fb736d4fafdd7d4721cbab3d756d1e5c7419e98d45b5
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

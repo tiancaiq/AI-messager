@@ -6,6 +6,26 @@ import type {
   SkillDefinition,
 } from "@ai-message-coach/contracts";
 
+export {
+  phase8CandidateDefinitions,
+  phase8CandidateGenerationFixtures,
+  phase8CandidateSelectionFixtures,
+  type Phase8CandidateId,
+  type Phase8GenerationFixture,
+  type Phase8SelectionFixture,
+} from "./phase8-candidate-experiment.js";
+
+export {
+  srs25RawScenarios,
+  srs25ScenarioAnnotations,
+  validateSrs25FixtureBoundary,
+  type Srs25CatalogScope,
+  type Srs25RawScenario,
+  type Srs25RetrievalExpectation,
+  type Srs25ScenarioAnnotation,
+  type Srs25SignalExpectation,
+} from "./srs2-5-context-normalization.js";
+
 export const validCoachingDecisionFixture = {
   action: "SUGGEST_REPLY",
   userIntent: { value: "Provide the requested status update.", confidence: 0.9 },

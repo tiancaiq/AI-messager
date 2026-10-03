@@ -1,0 +1,236 @@
+recordVersion: 1
+kind: LANGUAGE_MODIFIER
+capabilityFamily: language_expression
+definition:
+  id: en.casual_naturalness
+  name: English casual naturalness
+  description: Use for short casual English replies and planning.
+  languages:
+    - en
+  situations:
+    - planning
+    - invitation
+  intents: []
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use for short casual English replies and planning.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Use natural conversational English and preserve the message’s brevity.
+  avoid:
+    - Avoid stiff email-like phrasing.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: en.professional_conciseness
+    distinction: Professional progress report → professional_conciseness.
+    caseId: H1
+  - id: en.direct_but_polite
+    distinction: Refusal needs explicit clarity → direct_but_polite; casual tone must retain the no.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Friends coordinate lunch in English.
+      visibleContext: Friends coordinate lunch in English.
+      userIntent: Coordinate lunch.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.casual_naturalness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User accepts an informal invitation.
+      visibleContext: User accepts an informal invitation.
+      userIntent: Accept an informal invitation.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.casual_naturalness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User restates an agreed weekend meeting.
+      visibleContext: User restates an agreed weekend meeting.
+      userIntent: Restate the agreed weekend meeting.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - en.casual_naturalness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: Unsupported primary language.
+      visibleContext: Unsupported primary language.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: ko
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.casual_naturalness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Chinese-only chat.
+      visibleContext: Chinese-only chat.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.casual_naturalness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: No chosen reply intent and action is SUGGEST_ACTIONS.
+      visibleContext: No chosen reply intent and action is SUGGEST_ACTIONS.
+      userIntent: null
+      action: SUGGEST_ACTIONS
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - en.casual_naturalness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Professional progress report → professional_conciseness.
+      visibleContext: Professional progress report → professional_conciseness.
+      userIntent: Report professional progress.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - en.professional_conciseness
+      forbidden: []
+      rationale: Professional progress report → professional_conciseness.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Refusal needs explicit clarity → direct_but_polite; casual tone must retain the no.
+      visibleContext: Refusal needs explicit clarity → direct_but_polite; casual tone must retain the no.
+      userIntent: Communicate refusal clearly.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - en.direct_but_polite
+      forbidden: []
+      rationale: Refusal needs explicit clarity → direct_but_polite; casual tone must retain the no.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: Confirmed 6 p.m. plan. “I shall see you at six o'clock” → “See you at six.”
+      visibleContext: A 6 p.m. plan is confirmed.
+      userIntent: Restate the confirmed 6 p.m. plan.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: I shall see you at six o'clock
+      improved: See you at six.
+      ledger:
+        facts:
+          - A 6 p.m. plan is confirmed.
+        commitments:
+          - The 6 p.m. plan is already confirmed.
+        uncertainty: []
+    - id: A2
+      sourceText: User proposes Saturday. “Would Saturday be an agreeable day for you?” → “Does
+        Saturday work for you?”
+      visibleContext: User proposes Saturday.
+      userIntent: Propose Saturday.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: Would Saturday be an agreeable day for you?
+      improved: Does Saturday work for you?
+      ledger:
+        facts:
+          - User proposes Saturday.
+        commitments: []
+        uncertainty:
+          - Saturday is proposed, not agreed.
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#encasual_naturalness
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:5f14e5051ba62067e21af4c02c136f9c8b3e24a0a28d6b5e348c2eef419d2d01
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

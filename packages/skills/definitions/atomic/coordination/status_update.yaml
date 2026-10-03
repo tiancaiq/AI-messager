@@ -1,0 +1,241 @@
+recordVersion: 1
+kind: ATOMIC
+capabilityFamily: coordination
+definition:
+  id: status_update
+  name: Status update
+  description: Use when the other person requests progress or the user provides current status.
+  languages:
+    - universal
+  situations:
+    - status_request
+    - missed_commitment
+  intents:
+    - provide_status
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use when the other person requests progress or the user provides current status.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - State the known current status and relevant next step clearly.
+  avoid:
+    - Do not invent progress, dates, blockers, or certainty.
+  compatibleSkills:
+    - acknowledge_mistake
+    - expectation_setting
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: expectation_setting
+    distinction: “Probably tomorrow” is a future estimate → expectation setting.
+    caseId: H1
+  - id: planning
+    distinction: Arranging who does the next step → planning.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: User reports two sections finished and one pending.
+      visibleContext: User reports two sections finished and one pending.
+      userIntent: Report two sections finished and one pending.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - status_update
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: User tells a friend their train is delayed.
+      visibleContext: User tells a friend their train is delayed.
+      userIntent: Report a train delay.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - status_update
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: User tells a customer an item has shipped, supported by visible confirmation.
+      visibleContext: User tells a customer an item has shipped, supported by visible confirmation.
+      userIntent: Report the confirmed shipment.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected:
+        - status_update
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: Status is unknown and user wants to ask for it.
+      visibleContext: Status is unknown and user wants to ask for it.
+      userIntent: Ask for unknown status.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - status_update
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: User wants to invent progress to reassure a manager.
+      visibleContext: User wants to invent progress to reassure a manager.
+      userIntent: Invent progress to reassure.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - status_update
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Message only sets a future availability limit.
+      visibleContext: Message only sets a future availability limit.
+      userIntent: State a future availability limit.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - status_update
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: “Probably tomorrow” is a future estimate → expectation setting.
+      visibleContext: “Probably tomorrow” is a future estimate → expectation setting.
+      userIntent: Communicate a probable future estimate.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - expectation_setting
+      forbidden: []
+      rationale: “Probably tomorrow” is a future estimate → expectation setting.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Arranging who does the next step → planning.
+      visibleContext: Arranging who does the next step → planning.
+      userIntent: Arrange who does the next step.
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - planning
+      forbidden: []
+      rationale: Arranging who does the next step → planning.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: "Facts: draft complete, review not started. “done draft review later” → “The draft
+        is complete; the review hasn't started yet.”"
+      visibleContext: The draft is complete. The review has not started.
+      userIntent: Report the completed draft and pending review.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: done draft review later
+      improved: The draft is complete; the review hasn't started yet.
+      ledger:
+        facts:
+          - The draft is complete.
+          - The review has not started.
+        commitments: []
+        uncertainty: []
+    - id: A2
+      sourceText: "Fact: train delayed; arrival unknown. “train late dunno arrival” → “The train is
+        delayed, and I don't have a new arrival time yet.”"
+      visibleContext: The train is delayed. A new arrival time is unknown.
+      userIntent: Report the delay and unknown arrival time.
+      action: REWRITE_DRAFT
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: train late dunno arrival
+      improved: The train is delayed, and I don't have a new arrival time yet.
+      ledger:
+        facts:
+          - The train is delayed.
+          - A new arrival time is unknown.
+        commitments: []
+        uncertainty:
+          - No new arrival time is known.
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#status_update
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:0ca9ab17617c03dc373c61bed069b6f11c8b9ed6d56308dfb1dc494f00f820f9
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW

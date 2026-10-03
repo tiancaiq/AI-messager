@@ -1,0 +1,103 @@
+{
+  "artifactVersion": 1,
+  "date": "2026-09-24",
+  "scope": "PHASE_8C_SELECTION_AND_BOUNDED_8D_UPLIFT_PILOT",
+  "authorization": {
+    "perspective_acknowledgement": "AUTHORIZED_FOR_EVALUATION_ONLY",
+    "give_constructive_feedback": "AUTHORIZED_FOR_EVALUATION_ONLY",
+    "confirmation": "DEFERRED_NOT_RUN",
+    "productionActivation": false
+  },
+  "production": {
+    "definitionCount": 21,
+    "registryDigest": "sha256:c96fc9c9a5b26909ecf635bbae3ebef28abf15ed4729216cc28caf7698ad1ee3",
+    "candidateDefinitionsPublished": false,
+    "defaultCandidateRouting": false
+  },
+  "selection": {
+    "perspective_acknowledgement": {
+      "direct": {
+        "passed": 16,
+        "total": 16,
+        "positive": "8/8",
+        "negative": "2/2",
+        "hardNeighbor": "4/4",
+        "strictNone": "2/2",
+        "rewriteDraft": "8/8",
+        "suggestReply": "8/8"
+      },
+      "rawOptIn": "4/4",
+      "defaultIsolation": "4/4"
+    },
+    "give_constructive_feedback": {
+      "direct": {
+        "passed": 16,
+        "total": 16,
+        "positive": "8/8",
+        "negative": "2/2",
+        "hardNeighbor": "4/4",
+        "strictNone": "2/2",
+        "rewriteDraft": "8/8",
+        "suggestReply": "8/8"
+      },
+      "rawOptIn": "4/4",
+      "defaultIsolation": "4/4"
+    }
+  },
+  "livePilot": {
+    "provider": "openai",
+    "model": "gpt-5.6-luna",
+    "repetitions": 1,
+    "retries": 0,
+    "syntheticCases": 8,
+    "conditions": ["G", "E", "N", "E+N"],
+    "requests": 32,
+    "successfulOutputs": 24,
+    "failedOutputs": 8,
+    "reviewArtifact": {
+      "basename": "ai-message-coach-phase8-candidate-review.json",
+      "sha256": "sha256:7c8320a147cd568c11c981090d5f4833ab26ec7371be3a4cc27528c6edacc4bb",
+      "conditionMapSha256": "sha256:c7c415f11bf914db2a239a34e50873e4cc8e561ca813fd09e8f5132fdfa71e11",
+      "retention": "USER_TEMP_DIRECTORY_UNTIL_REVIEW_OR_USER_DELETION"
+    },
+    "perspective_acknowledgement": {
+      "rewriteDraft": {
+        "successes": 8,
+        "failures": 0,
+        "automatedSafetyPasses": 8
+      },
+      "suggestReply": {
+        "successes": 8,
+        "failures": 0,
+        "automatedSafetyPasses": 8
+      }
+    },
+    "give_constructive_feedback": {
+      "rewriteDraft": {
+        "successes": 0,
+        "failures": 8,
+        "automatedSafetyPasses": 0,
+        "failureCode": "INVALID_RESPONSE"
+      },
+      "suggestReply": {
+        "successes": 8,
+        "failures": 0,
+        "automatedSafetyPasses": 8
+      }
+    }
+  },
+  "dispositions": {
+    "perspective_acknowledgement": {
+      "decision": "DEFER",
+      "reason": "Selection and bounded generation completed, but blinded human uplift review, independent held-out authorship, and the preregistered coverage floor remain incomplete."
+    },
+    "give_constructive_feedback": {
+      "decision": "DEFER",
+      "reason": "Selection passed, but every rewrite arm failed shared response validation across all four conditions; no candidate-specific rewrite uplift can be estimated, and blinded human review remains incomplete."
+    },
+    "confirmation": {
+      "decision": "DEFER",
+      "reason": "Explicitly deferred by the user; no Phase 8C or 8D experiment was run."
+    }
+  }
+}

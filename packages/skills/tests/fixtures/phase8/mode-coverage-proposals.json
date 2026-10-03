@@ -1,0 +1,751 @@
+{
+  "packetVersion": 1,
+  "status": "PROPOSED_FOR_HUMAN_REVIEW_NOT_EXECUTED",
+  "partition": "EXPOSED_DEVELOPMENT_PLANNING_NOT_HELD_OUT",
+  "note": "11 semantic scenario families, 22 correlated proposed mode variants and 11 separate information-loss controls. No observed actions, selection results or uplift. No tags/gold IDs are injected into application input.",
+  "families": [
+    {
+      "familyId": "mode-apology",
+      "capability": "apology",
+      "candidate": false,
+      "sourceRefs": ["apology/P1", "apology/A1"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "apology",
+      "optionalModifierHypotheses": ["en.professional_conciseness"],
+      "evidenceLedger": ["User forgot the promised attachment."],
+      "rewrite": {
+        "draft": "I'm sorry I forgot the attachment.",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "The attachment was missing."
+          },
+          {
+            "speaker": "USER",
+            "text": "I forgot the promised attachment."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "The attachment was missing."
+          },
+          {
+            "speaker": "USER",
+            "text": "I forgot the promised attachment."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Apologize for forgetting the promised attachment; do not add an excuse or repair promise."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove the draft and apology selection, retaining only the missing attachment report. Do not infer that the user chose regret or committed to resending.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "No paired raw empty-draft input or measured generation result. An explicit selection can supply apology intent, but lexical/context eligibility must later be measured.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-emotional_validation",
+      "capability": "emotional_validation",
+      "candidate": false,
+      "sourceRefs": ["emotional_validation/P1", "emotional_validation/A1"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "emotional_validation",
+      "optionalModifierHypotheses": [],
+      "evidenceLedger": ["Other person explicitly states sadness after not getting the role."],
+      "rewrite": {
+        "draft": "That sounds sad and disappointing.",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "I'm sad that I didn't get the role."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "I'm sad that I didn't get the role."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Acknowledge the sadness they explicitly expressed without advice or predictions."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove the user's draft/selection. Visible sadness supports a possible response, but does not authorize invented shared experience, responsibility or advice.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Canonical feeling cases do not establish both-mode usefulness or avoid deriving an unspoken interpretation.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-boundary_setting",
+      "capability": "boundary_setting",
+      "candidate": false,
+      "sourceRefs": ["boundary_setting/P2", "boundary_setting/A2"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "boundary_setting",
+      "optionalModifierHypotheses": ["en.direct_but_polite"],
+      "evidenceLedger": [
+        "Repeated lending request is visible.",
+        "User has chosen not to lend more."
+      ],
+      "rewrite": {
+        "draft": "I won't lend you any more money. Please stop asking.",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "I'm asking again: please lend me money."
+          },
+          {
+            "speaker": "USER",
+            "text": "I have decided not to lend any more money."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "I'm asking again: please lend me money."
+          },
+          {
+            "speaker": "USER",
+            "text": "I have decided not to lend any more money."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "State my chosen no-more-lending limit and ask them to stop asking; do not claim I lack the means."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove both user-owned choice and selection, leaving the request alone. Do not invent refusal or inability.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Current A2 has a choice/inability review flag; both-mode inputs must retain the actual choice.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-decline",
+      "capability": "decline",
+      "candidate": false,
+      "sourceRefs": ["decline/P1", "decline/A1"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "decline",
+      "optionalModifierHypotheses": ["en.direct_but_polite", "en.casual_naturalness"],
+      "evidenceLedger": ["An invitation is visible.", "User has chosen not to attend."],
+      "rewrite": {
+        "draft": "Thanks for inviting me, but I won't attend.",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "Would you like to join us tonight?"
+          },
+          {
+            "speaker": "USER",
+            "text": "I have decided not to attend."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "Would you like to join us tonight?"
+          },
+          {
+            "speaker": "USER",
+            "text": "I have decided not to attend."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Decline the invitation without inventing a reason or future commitment."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove the only user choice, draft and selection. Invitation remains; choices are appropriate, not a forced refusal or acceptance.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Existing rewrite and chosen-decline regressions are useful historical coverage; a reviewed matched pair and within-mode uplift are still absent.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-request",
+      "capability": "request",
+      "candidate": false,
+      "sourceRefs": ["request/P1", "request/A1"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "request",
+      "optionalModifierHypotheses": ["en.professional_conciseness", "en.direct_but_polite"],
+      "evidenceLedger": ["User wants the agenda.", "No deadline is supplied."],
+      "rewrite": {
+        "draft": "Could you send me the agenda?",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "We are preparing for the meeting."
+          },
+          {
+            "speaker": "USER",
+            "text": "I need the agenda and want to ask for it."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "We are preparing for the meeting."
+          },
+          {
+            "speaker": "USER",
+            "text": "I need the agenda and want to ask for it."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Could you send me the agenda? Ask for that file without adding a deadline."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove the draft and user-owned request/selection. Meeting preparation alone does not establish a request, recipient obligation or deadline.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Source audit: make_request tests only analysis.draft.text. Empty-draft selected intent is not checked by that predicate. This is an existing extraction hypothesis, not a new capability or authorized repair.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-status_update",
+      "capability": "status_update",
+      "candidate": false,
+      "sourceRefs": ["status_update/P1", "status_update/A1"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "status_update",
+      "optionalModifierHypotheses": ["en.professional_conciseness"],
+      "evidenceLedger": ["Draft complete.", "Review not started."],
+      "rewrite": {
+        "draft": "The draft is complete; review hasn't started.",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "Any progress update?"
+          },
+          {
+            "speaker": "USER",
+            "text": "The draft is complete. Review has not started."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "Any progress update?"
+          },
+          {
+            "speaker": "USER",
+            "text": "The draft is complete. Review has not started."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Report the completed draft and pending review using only the visible facts."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove the user's factual status, draft and selection. A progress request alone cannot supply progress facts.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Existing status-request cases cover some raw routing; no blinded paired-mode quality result or independently reviewed equivalent pair exists.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-expectation_setting",
+      "capability": "expectation_setting",
+      "candidate": false,
+      "sourceRefs": ["expectation_setting/P1", "expectation_setting/A1"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "expectation_setting",
+      "optionalModifierHypotheses": ["en.professional_conciseness"],
+      "evidenceLedger": ["User estimates probably tomorrow.", "Estimate remains uncertain."],
+      "rewrite": {
+        "draft": "The draft will probably be ready tomorrow, but I'm not certain.",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "When will the draft be ready?"
+          },
+          {
+            "speaker": "USER",
+            "text": "I think it will probably be ready tomorrow, but I am not certain."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "When will the draft be ready?"
+          },
+          {
+            "speaker": "USER",
+            "text": "I think it will probably be ready tomorrow, but I am not certain."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Communicate that the draft will probably be ready tomorrow, retaining uncertainty."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove the estimate-bearing draft and user statement/selection. A timing question cannot create a tomorrow estimate.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Timing evidence must survive outside the draft. Later test whether selected intent plus visible status evidence yields set_expectation in both modes without certainty hardening.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-clarification",
+      "capability": "clarification",
+      "candidate": false,
+      "sourceRefs": ["clarification/P1", "clarification/A1"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "clarification",
+      "optionalModifierHypotheses": ["en.professional_conciseness", "en.direct_but_polite"],
+      "evidenceLedger": [
+        "Sales and budget reports are independently named in user-owned context.",
+        "Intended report is unknown."
+      ],
+      "rewrite": {
+        "draft": "Do you mean the sales report or the budget report?",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "Please send the report."
+          },
+          {
+            "speaker": "USER",
+            "text": "I have a sales report and a budget report, and I do not know which one you mean."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "Please send the report."
+          },
+          {
+            "speaker": "USER",
+            "text": "I have a sales report and a budget report, and I do not know which one you mean."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Ask which of the two explicitly visible reports is meant; do not assume either is selected."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove the user-owned alternatives. Do not invent named reports or turn missing information into an understood proposition.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Pair proposal repairs evidence completeness only in exposed development planning material, not YAML. The current clarify predicate depends on requestPattern(policy intent); actual derivation remains unmeasured.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-perspective_acknowledgement",
+      "capability": "perspective_acknowledgement",
+      "candidate": true,
+      "sourceRefs": [
+        "phase-5:perspective_acknowledgement/P2",
+        "phase-5:perspective_acknowledgement/A1"
+      ],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "perspective_acknowledgement",
+      "optionalModifierHypotheses": [],
+      "evidenceLedger": [
+        "Recipient explicitly interprets short reply as dismissive.",
+        "User wants recognition without motive concession."
+      ],
+      "rewrite": {
+        "draft": "I can see how my short reply came across as dismissive to you.",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "Your short reply came across as dismissive to me."
+          },
+          {
+            "speaker": "USER",
+            "text": "I want to acknowledge how it came across without saying I intended to dismiss you."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "Your short reply came across as dismissive to me."
+          },
+          {
+            "speaker": "USER",
+            "text": "I want to acknowledge how it came across without saying I intended to dismiss you."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Acknowledge their stated interpretation without agreeing that dismissal was intended."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove user's recognition intent and any visible interpretation. Do not infer feeling, motive, guilt or agreement.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Candidate is absent and acknowledge_perspective is not a supported intent tag. Both-mode candidate selection/uplift are NOT RUN; no simulation or schema cast.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-confirmation",
+      "capability": "confirmation",
+      "candidate": true,
+      "sourceRefs": ["phase-5:confirmation/P1", "phase-5:confirmation/A1"],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "confirmation",
+      "optionalModifierHypotheses": [],
+      "evidenceLedger": [
+        "Other person offered Friday delivery.",
+        "User wants to verify before dependent scheduling."
+      ],
+      "rewrite": {
+        "draft": "Before I schedule the dependent work, can you confirm you're offering Friday delivery?",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "I can deliver on Friday."
+          },
+          {
+            "speaker": "USER",
+            "text": "Before I schedule the dependent work, I want to verify that Friday is the delivery offer."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "I can deliver on Friday."
+          },
+          {
+            "speaker": "USER",
+            "text": "Before I schedule the dependent work, I want to verify that Friday is the delivery offer."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Verify the other person's understood Friday offer before dependent scheduling; do not accept it or promise delivery yourself."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Replace Friday offer with toward the end of the week and remove verification selection. Friday is no longer supported; ask for missing date if warranted, never invent it.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Candidate/confirm_understanding tag absent. Distinguish the Phase 3 which-deliverable seed from one-understood-proposition verification before 8B; neither is tested here.",
+      "reviewer": null,
+      "humanDecision": null
+    },
+    {
+      "familyId": "mode-give_constructive_feedback",
+      "capability": "give_constructive_feedback",
+      "candidate": true,
+      "sourceRefs": [
+        "phase-5:give_constructive_feedback/P1",
+        "phase-5:give_constructive_feedback/A1"
+      ],
+      "language": {
+        "primary": "en",
+        "secondary": null,
+        "codeSwitching": false
+      },
+      "focalExpectation": "give_constructive_feedback",
+      "optionalModifierHypotheses": [],
+      "evidenceLedger": [
+        "User reports two interruptions.",
+        "User could not finish.",
+        "User chooses to request a chance to finish."
+      ],
+      "rewrite": {
+        "draft": "I was interrupted twice and couldn't finish my point. Please let me finish before responding.",
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "What did you want to discuss about our conversation?"
+          },
+          {
+            "speaker": "USER",
+            "text": "You interrupted me twice and I could not finish. I want to ask you to let me finish before responding."
+          }
+        ],
+        "selection": null,
+        "proposedAction": "REWRITE_DRAFT",
+        "observedAction": null,
+        "evidenceSource": "Visible synthetic draft and attributed messages."
+      },
+      "generate": {
+        "draft": null,
+        "messages": [
+          {
+            "speaker": "OTHER",
+            "text": "What did you want to discuss about our conversation?"
+          },
+          {
+            "speaker": "USER",
+            "text": "You interrupted me twice and I could not finish. I want to ask you to let me finish before responding."
+          }
+        ],
+        "selection": {
+          "kind": "ACTION",
+          "id": "review-proposal",
+          "label": "User-chosen intent (review proposal)",
+          "intent": "Give feedback about the two observed interruptions and supported impact, requesting time to finish without an identity attack."
+        },
+        "proposedAction": "SUGGEST_REPLY",
+        "observedAction": null,
+        "evidenceSource": "Attributed visible messages plus explicit synthetic user choice, independent of a draft. Label is test setup metadata, not an application-generated choice."
+      },
+      "informationLossControl": {
+        "draft": null,
+        "selection": null,
+        "change": "Remove user-owned observations/impact/change request. The recipient's question alone does not establish an incident, frequency, motive or desired correction.",
+        "observedAction": null,
+        "expectation": "Let the unchanged Phase 3 policy decide; do not force SUGGEST_REPLY or preserve a focal skill when its only support was removed."
+      },
+      "coverageGap": "Candidate/give_feedback tag absent. Both-mode feasibility and benefit beyond request/de-escalation/status need later gated study.",
+      "reviewer": null,
+      "humanDecision": null
+    }
+  ],
+  "languageExpansion": {
+    "state": "NOT_AUTHORED_NOT_REVIEWED",
+    "required": [
+      "Independent Simplified Chinese pairs",
+      "Independent Traditional Chinese pairs",
+      "Intentional mixed en/zh",
+      "Unsupported primary with supported secondary",
+      "Unknown primary",
+      "Switching false and regional/script variants"
+    ],
+    "modifierTargets": [
+      "en.professional_conciseness",
+      "en.casual_naturalness",
+      "en.direct_but_polite",
+      "zh.politeness_calibration",
+      "zh.professional_formality",
+      "zh.natural_conciseness",
+      "zh.code_switching"
+    ],
+    "note": "Chinese mode-pair translations are not silently counted as independent contexts. Assign language-competent authors/reviewers before later case expansion."
+  },
+  "additionalContrasts": {
+    "state": "PLANNED_NOT_AUTHORED",
+    "perApplicableFamily": [
+      "focal negative permitting appropriate neighbor",
+      "hard-neighbor with independently supplied evidence",
+      "legitimate global NONE with no required or optional skills"
+    ],
+    "regressionActions": [
+      "COMPLETE_DRAFT",
+      "SUGGEST_ACTIONS",
+      "ASK_CLARIFICATION",
+      "NO_REPLY_NEEDED"
+    ],
+    "note": "These requirements remain gaps for 8C; rewrite-only A cases and this positive-pair packet do not satisfy them."
+  }
+}

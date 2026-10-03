@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "configId": "SRS-3F-B-PROPOSED-TOPK-1",
+  "status": "PROPOSED_NOT_CHALLENGE_AUTHORIZED",
+  "evidenceUse": "EXPOSED_DEVELOPMENT_ONLY",
+  "alpha": 0,
+  "admission": null,
+  "operationSignals": null,
+  "topK": [3, 5, 10],
+  "structuralEligibility": [
+    "PRODUCTION",
+    "ACTIVE",
+    "FIXED_AGENT_ACTION",
+    "LANGUAGE",
+    "CODE_SWITCH_PREREQUISITE",
+    "ATOMIC_LANE"
+  ],
+  "queryPolicy": "FROZEN_SRS3E_SOURCE_AWARE_PRIMARY_MAX_ALPHA_ZERO",
+  "tieRule": "SCORE_DESC_THEN_SKILL_ID",
+  "scorerSha256": "ce1769c1f155e82a37a4f72a20de9b2f13579ef5e4bce45c7034e1d6813f0108",
+  "sourceAwareScorerSha256": "f436123a66faf591c8b88263d8b5d790528b1ceb61c79c0db64cedd433cde6a5",
+  "profileArtifactSha256": "b061bf17a04e696ad78af45016e6803a96f79f0e617fcb2800a4a591fbc33d1c",
+  "vectorArtifactSha256": "b02d4664585c29d3a0ac33e41c6827d2bd4d5d065fd7eb289182084c6dc05588",
+  "catalogSha256": "b31ee97d4ea0b8f6350c0f1fcfa3709994be0c0c86942eeca51dfbcaae3efecb",
+  "catalogBindings": [
+    {
+      "skillId": "acknowledge_mistake",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:5b651416a95e3c48749ce4619e95e008970edcd9f389449df62b79c5c9ce12ac"
+    },
+    {
+      "skillId": "apology",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:8221402bcdfb866433c969297014c3fbbf5aa389ab79d4a628687de6516b5f46"
+    },
+    {
+      "skillId": "ask_for_help",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:6f02649adcc780b7ee1bea2a75ac8680bd807555b22b08aa8c7935a04a245945"
+    },
+    {
+      "skillId": "boundary_setting",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:1a0f4f43e8748abea7927701881b2c953b3a0f79434d0d60bdc213d18eead59e"
+    },
+    {
+      "skillId": "clarification",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:c36a893beaccbaa708d46caea9970730824b33f40edd886d473859b085ca25bb"
+    },
+    {
+      "skillId": "de_escalation",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:1c8bd46ae515a8cdca6a50238e5f0ba0e4a2f9c1b71ad4779a1566c594051168"
+    },
+    {
+      "skillId": "decline",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:06ae122d785ae6ed915dd6fa57b3f4bec013276c53285b165cc16ed662e4bd0a"
+    },
+    {
+      "skillId": "emotional_validation",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:5e5a186c00510fc7d58ddc9c23d6214e02f03a30a6d2595fe453a490d9f6441d"
+    },
+    {
+      "skillId": "en.casual_naturalness",
+      "lane": "LANGUAGE_MODIFIER",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:5f14e5051ba62067e21af4c02c136f9c8b3e24a0a28d6b5e348c2eef419d2d01"
+    },
+    {
+      "skillId": "en.direct_but_polite",
+      "lane": "LANGUAGE_MODIFIER",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:e4f5152ad6772c5d6624f4cd5f8a60c388854b53063d122971768aa826fefda4"
+    },
+    {
+      "skillId": "en.professional_conciseness",
+      "lane": "LANGUAGE_MODIFIER",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:8e8866c920a71ac1370148cb9c80ad968104f03c389eee271899923c522072b2"
+    },
+    {
+      "skillId": "expectation_setting",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:8b14ec14f7c9efaed537fb736d4fafdd7d4721cbab3d756d1e5c7419e98d45b5"
+    },
+    {
+      "skillId": "follow_up",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:d48baec95cb149f23b14c4082a16bde90fcff16daa0ae397102d7e9efd1732ec"
+    },
+    {
+      "skillId": "planning",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:f43aeda3624c08258657f4caedff9d0ee4e5d2ecf242fa1df9eb292fde631273"
+    },
+    {
+      "skillId": "reassurance",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:1a2712cefd5c7580782fb244375bdc7721dd17cee9026a68640013727486ff7e"
+    },
+    {
+      "skillId": "request",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:1c95d6ca98d075a39d13cf8859f654e1b8b08d7c7a9d8fde5fc33fbfa59bc341"
+    },
+    {
+      "skillId": "status_update",
+      "lane": "ATOMIC",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:0ca9ab17617c03dc373c61bed069b6f11c8b9ed6d56308dfb1dc494f00f820f9"
+    },
+    {
+      "skillId": "zh.code_switching",
+      "lane": "LANGUAGE_MODIFIER",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:fd064e6bdde7fd1076e53d29cdd170688a302c3cbb7b9e97faf1758524deb624"
+    },
+    {
+      "skillId": "zh.natural_conciseness",
+      "lane": "LANGUAGE_MODIFIER",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:4919bbe8c31bb790bf8bc0b077ad776d05daec6a060d020aaedca780b9484332"
+    },
+    {
+      "skillId": "zh.politeness_calibration",
+      "lane": "LANGUAGE_MODIFIER",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:4d5484395f4e00eec44905ab5f2ac7be1ebc0277ac33bd9e6a78616e8949df96"
+    },
+    {
+      "skillId": "zh.professional_formality",
+      "lane": "LANGUAGE_MODIFIER",
+      "version": 1,
+      "status": "ACTIVE",
+      "sourceDigest": "sha256:d02f406cb4ed7fb871516e9a7100c161b089eca8e09deef0e6d55c7050f6cff4"
+    }
+  ],
+  "calibrationFreezeSha256": "bcb55ca5ee19973e974550c75a06892e58cfa8f0bc9380efcfce790eb25e0f8a",
+  "srs3bManifestSha256": "0700162fd5b7c656c1d6134cdd3d69baa9a824eb4a01a598b7ea6d4b4c666362",
+  "model": {
+    "packageVersion": "3.8.1",
+    "repository": "Xenova/all-MiniLM-L6-v2",
+    "revision": "751bff37182d3f1213fa05d7196b954e230abad9",
+    "dtype": "int8",
+    "device": "cpu",
+    "dimensions": 384,
+    "pooling": "mean",
+    "normalize": true,
+    "tokenLimit": 256,
+    "modelFiles": {
+      "config.json": "7135149f7cffa1a573466c6e4d8423ed73b62fd2332c575bf738a0d033f70df7",
+      "tokenizer_config.json": "9261e7d79b44c8195c1cada2b453e55b00aeb81e907a6664974b4d7776172ab3",
+      "tokenizer.json": "da0e79933b9ed51798a3ae27893d3c5fa4a201126cef75586296df9b4d2c62a0",
+      "onnx/model_int8.onnx": "afdb6f1a0e45b715d0bb9b11772f032c399babd23bfc31fed1c170afc848bdb1"
+    }
+  },
+  "exposedTraceSha256": "3da194a50d46c33c26b5dcaa2f59ce7d33eb03d4352e5eefc706d9241e6ed214",
+  "challengeRunAuthorized": false
+}

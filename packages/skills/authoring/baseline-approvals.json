@@ -1,0 +1,95 @@
+{
+  "notice": "Frozen baseline approval fingerprints. Captured before migration; do not update to inherit changed behavior. Not a runtime definition source.",
+  "revision": "a77f476b532c6ddd81eadbca835b312425fd4f1c",
+  "evidenceRefs": [
+    ".agent/plans/phase-4.md#assumptions-and-decisions",
+    "docs/skills.md#initial-atomic-registry",
+    "User approved migration-only runtime inheritance on 2026-09-17; canonical examples remain pending human review."
+  ],
+  "definitions": [
+    {
+      "id": "apology",
+      "definitionDigest": "sha256:8221402bcdfb866433c969297014c3fbbf5aa389ab79d4a628687de6516b5f46"
+    },
+    {
+      "id": "acknowledge_mistake",
+      "definitionDigest": "sha256:5b651416a95e3c48749ce4619e95e008970edcd9f389449df62b79c5c9ce12ac"
+    },
+    {
+      "id": "emotional_validation",
+      "definitionDigest": "sha256:5e5a186c00510fc7d58ddc9c23d6214e02f03a30a6d2595fe453a490d9f6441d"
+    },
+    {
+      "id": "reassurance",
+      "definitionDigest": "sha256:1a2712cefd5c7580782fb244375bdc7721dd17cee9026a68640013727486ff7e"
+    },
+    {
+      "id": "boundary_setting",
+      "definitionDigest": "sha256:1a0f4f43e8748abea7927701881b2c953b3a0f79434d0d60bdc213d18eead59e"
+    },
+    {
+      "id": "de_escalation",
+      "definitionDigest": "sha256:1c8bd46ae515a8cdca6a50238e5f0ba0e4a2f9c1b71ad4779a1566c594051168"
+    },
+    {
+      "id": "decline",
+      "definitionDigest": "sha256:06ae122d785ae6ed915dd6fa57b3f4bec013276c53285b165cc16ed662e4bd0a"
+    },
+    {
+      "id": "ask_for_help",
+      "definitionDigest": "sha256:6f02649adcc780b7ee1bea2a75ac8680bd807555b22b08aa8c7935a04a245945"
+    },
+    {
+      "id": "follow_up",
+      "definitionDigest": "sha256:d48baec95cb149f23b14c4082a16bde90fcff16daa0ae397102d7e9efd1732ec"
+    },
+    {
+      "id": "status_update",
+      "definitionDigest": "sha256:0ca9ab17617c03dc373c61bed069b6f11c8b9ed6d56308dfb1dc494f00f820f9"
+    },
+    {
+      "id": "expectation_setting",
+      "definitionDigest": "sha256:8b14ec14f7c9efaed537fb736d4fafdd7d4721cbab3d756d1e5c7419e98d45b5"
+    },
+    {
+      "id": "planning",
+      "definitionDigest": "sha256:f43aeda3624c08258657f4caedff9d0ee4e5d2ecf242fa1df9eb292fde631273"
+    },
+    {
+      "id": "clarification",
+      "definitionDigest": "sha256:c36a893beaccbaa708d46caea9970730824b33f40edd886d473859b085ca25bb"
+    },
+    {
+      "id": "request",
+      "definitionDigest": "sha256:1c95d6ca98d075a39d13cf8859f654e1b8b08d7c7a9d8fde5fc33fbfa59bc341"
+    },
+    {
+      "id": "en.professional_conciseness",
+      "definitionDigest": "sha256:8e8866c920a71ac1370148cb9c80ad968104f03c389eee271899923c522072b2"
+    },
+    {
+      "id": "en.casual_naturalness",
+      "definitionDigest": "sha256:5f14e5051ba62067e21af4c02c136f9c8b3e24a0a28d6b5e348c2eef419d2d01"
+    },
+    {
+      "id": "en.direct_but_polite",
+      "definitionDigest": "sha256:e4f5152ad6772c5d6624f4cd5f8a60c388854b53063d122971768aa826fefda4"
+    },
+    {
+      "id": "zh.politeness_calibration",
+      "definitionDigest": "sha256:4d5484395f4e00eec44905ab5f2ac7be1ebc0277ac33bd9e6a78616e8949df96"
+    },
+    {
+      "id": "zh.professional_formality",
+      "definitionDigest": "sha256:d02f406cb4ed7fb871516e9a7100c161b089eca8e09deef0e6d55c7050f6cff4"
+    },
+    {
+      "id": "zh.natural_conciseness",
+      "definitionDigest": "sha256:4919bbe8c31bb790bf8bc0b077ad776d05daec6a060d020aaedca780b9484332"
+    },
+    {
+      "id": "zh.code_switching",
+      "definitionDigest": "sha256:fd064e6bdde7fd1076e53d29cdd170688a302c3cbb7b9e97faf1758524deb624"
+    }
+  ]
+}

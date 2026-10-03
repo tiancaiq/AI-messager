@@ -1,0 +1,236 @@
+recordVersion: 1
+kind: LANGUAGE_MODIFIER
+capabilityFamily: language_expression
+definition:
+  id: zh.natural_conciseness
+  name: Chinese natural conciseness
+  description: Use for concise Chinese chat replies and planning.
+  languages:
+    - zh
+  situations:
+    - planning
+    - invitation
+    - request
+  intents: []
+  actions:
+    - REWRITE_DRAFT
+    - COMPLETE_DRAFT
+    - SUGGEST_REPLY
+  useWhen:
+    - Use for concise Chinese chat replies and planning.
+  doNotUseWhen:
+    - Do not apply when its communication operation is unsupported by visible context or user
+      intent.
+  principles:
+    - Keep Chinese chat wording natural, concise, and easy to act on.
+  avoid:
+    - Avoid literal translation patterns and redundant subjects.
+  compatibleSkills: []
+  conflictingSkills: []
+  version: 1
+  status: ACTIVE
+neighbors:
+  - id: zh.professional_formality
+    distinction: Formal work progress report → professional_formality.
+    caseId: H1
+  - id: zh.code_switching
+    distinction: Intentional mixed terms → code_switching may additionally fit.
+    caseId: H2
+conceptualNotes: []
+examples:
+  expectationScope: AUTHORING_ONLY
+  selection:
+    - id: P1
+      sourceText: Simplified Chinese friend planning.
+      visibleContext: Simplified Chinese friend planning.
+      userIntent: Coordinate a plan.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hans
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.natural_conciseness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P2
+      sourceText: Traditional Chinese casual invitation response.
+      visibleContext: Traditional Chinese casual invitation response.
+      userIntent: Respond to a casual invitation.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh-Hant
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.natural_conciseness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: P3
+      sourceText: Chinese request containing redundant wording.
+      visibleContext: Chinese request containing redundant wording.
+      userIntent: Make a request concisely.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected:
+        - zh.natural_conciseness
+      acceptable: []
+      forbidden: []
+      rationale:
+        "Canonical positive: the stated intent supports this communication function. This is
+        an authoring expectation, not a measured router result."
+      category: POSITIVE
+    - id: N1
+      sourceText: English-only context.
+      visibleContext: English-only context.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: en
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.natural_conciseness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N2
+      sourceText: Unsupported primary language.
+      visibleContext: Unsupported primary language.
+      userIntent: null
+      action: SUGGEST_REPLY
+      language:
+        primary: ko
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.natural_conciseness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: N3
+      sourceText: Upstream NO_REPLY_NEEDED.
+      visibleContext: Upstream NO_REPLY_NEEDED.
+      userIntent: null
+      action: NO_REPLY_NEEDED
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden:
+        - zh.natural_conciseness
+      rationale: "Canonical exclusion: the stated evidence, intent, language or action does not
+        support the focal definition. This is an authoring expectation, not a measured router
+        result."
+      category: NEGATIVE
+    - id: H1
+      sourceText: Formal work progress report → professional_formality.
+      visibleContext: Formal work progress report → professional_formality.
+      userIntent: Report formal work progress.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable:
+        - zh.professional_formality
+      forbidden: []
+      rationale: Formal work progress report → professional_formality.
+      category: NEIGHBOR
+    - id: H2
+      sourceText: Intentional mixed terms → code_switching may additionally fit.
+      visibleContext: Intentional mixed terms → code_switching may additionally fit.
+      userIntent: Preserve intentional mixed terms.
+      action: SUGGEST_REPLY
+      language:
+        primary: zh
+        secondary: en
+        codeSwitching: true
+      expected: []
+      acceptable:
+        - zh.code_switching
+      forbidden: []
+      rationale: Intentional mixed terms → code_switching may additionally fit.
+      category: NEIGHBOR
+  application:
+    - id: A1
+      sourceText: Agreed Saturday meeting. “那我们就按照我们说好的在周六见面吧” → “那就周六见。”
+      visibleContext: Meeting on Saturday is agreed.
+      userIntent: Restate the agreed Saturday meeting.
+      action: REWRITE_DRAFT
+      language:
+        primary: zh-Hans
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: 那我们就按照我们说好的在周六见面吧
+      improved: 那就周六见。
+      ledger:
+        facts:
+          - Meeting on Saturday is agreed.
+        commitments:
+          - The Saturday meeting is already agreed.
+        uncertainty: []
+    - id: A2
+      sourceText: User asks for a time. “請問你可不可以告訴我一下時間是幾點呢” → “請問是幾點？”
+      visibleContext: User asks for the time.
+      userIntent: Ask what time is intended.
+      action: REWRITE_DRAFT
+      language:
+        primary: zh-Hant
+        secondary: null
+        codeSwitching: false
+      expected: []
+      acceptable: []
+      forbidden: []
+      rationale: Canonical wording demonstration; preserve the supplied ledger. Not measured model output.
+      category: APPLICATION
+      draft: 請問你可不可以告訴我一下時間是幾點呢
+      improved: 請問是幾點？
+      ledger:
+        facts:
+          - User asks for the time.
+        commitments: []
+        uncertainty:
+          - The time is unknown.
+provenance:
+  authorship: internal
+  definitionSource: a77f476b532c6ddd81eadbca835b312425fd4f1c:packages/skills/src/registry.ts
+  exampleSource: docs/skills/phase-5-registry-expansion.md#zhnatural_conciseness
+  examples: independently-authored-synthetic
+  rights: Internal baseline definitions and independently authored synthetic Phase 5 examples; no
+    external dialogue or dataset copied.
+review:
+  runtime:
+    state: INHERITED
+    baselineRevision: a77f476b532c6ddd81eadbca835b312425fd4f1c
+    definitionDigest: sha256:4919bbe8c31bb790bf8bc0b077ad776d05daec6a060d020aaedca780b9484332
+    evidenceRefs:
+      - .agent/plans/phase-4.md#assumptions-and-decisions
+      - docs/skills/phase-7-registry-migration.md#approval-policy-for-implementation
+  examples:
+    state: PENDING_HUMAN_REVIEW
