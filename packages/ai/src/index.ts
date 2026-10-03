@@ -9,6 +9,7 @@ export {
   type CommunicationProblem,
   type UserSuppliedCommunicationContext,
 } from "./communication-problem.js";
+export { projectSkillEvidence } from "./skill-evidence.js";
 export {
   CONVERSATION_ANALYSIS_INSTRUCTIONS,
   CONVERSATION_ANALYSIS_USER_TEXT,

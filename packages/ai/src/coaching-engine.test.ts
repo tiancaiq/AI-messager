@@ -13,6 +13,7 @@ import { skillSelectionEvaluationFixtures } from "@ai-message-coach/test-fixture
 import { coachConversation, type CoachingTextGenerator } from "./coaching-engine.js";
 import { decideCoachingAction } from "./coaching-policy.js";
 import { deriveSkillContext } from "./skill-context.js";
+import { compareSkillReferences, type SkillShadowTrace } from "./skill-shadow.js";
 
 const analysis: ConversationAnalysis = {
   messages: [
@@ -79,6 +80,7 @@ describe("provider-neutral coaching engine", () => {
       const contexts: (typeof expectedContext)[] = [];
       const plans: CommunicationPlan[] = [];
       const statuses: unknown[] = [];
+      const traces: SkillShadowTrace[] = [];
       const textGenerator = generator({
         ok: false,
         error: { code: "PROVIDER_ERROR", message: "Synthetic generation failure." },
@@ -92,6 +94,7 @@ describe("provider-neutral coaching engine", () => {
         },
         onCommunicationPlan: (plan) => plans.push(plan),
         onProblemNormalization: (status) => statuses.push(status),
+        onShadowComparison: (trace) => traces.push(trace),
       });
       expect(statuses, fixture.id).toEqual([
         { status: "NORMALIZED", goalKind: expect.any(String) },
@@ -99,6 +102,24 @@ describe("provider-neutral coaching engine", () => {
       expect(JSON.stringify(statuses), fixture.id).not.toContain(
         fixture.request.analysis.draft.text ?? "synthetic-private-text",
       );
+      expect(traces, fixture.id).toHaveLength(1);
+      expect(traces[0]?.action, fixture.id).toBe(expectedPolicy.action);
+      expect(traces[0]?.productionSelected, fixture.id).toEqual(
+        (expectedPolicy.action === "SUGGEST_ACTIONS" ||
+        expectedPolicy.action === "ASK_CLARIFICATION" ||
+        expectedPolicy.action === "NO_REPLY_NEEDED"
+          ? []
+          : expectedPlan.selectedSkills
+        ).map(({ id, version }) => ({ id, version })),
+      );
+      const traceText = JSON.stringify(traces);
+      for (const privateText of [
+        fixture.request.analysis.draft.text,
+        ...fixture.request.analysis.messages.map((message) => message.text),
+        fixture.request.analysis.visibleContact.displayName,
+      ]) {
+        if (privateText) expect(traceText, fixture.id).not.toContain(privateText);
+      }
       if (
         ["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"].includes(expectedPolicy.action)
       ) {
@@ -150,6 +171,9 @@ describe("provider-neutral coaching engine", () => {
 
     await expect(
       coachConversation(textGenerator, request, {
+        onShadowComparison: (trace) => {
+          trace.shadowSelected.splice(0);
+        },
         onCommunicationPlan: (plan) => {
           inspectedPlans.push(plan);
           plan.principles.splice(0);
@@ -167,6 +191,68 @@ describe("provider-neutral coaching engine", () => {
     ]);
     expect(inspectedPlans[0]?.principles).toEqual([]);
     expect(generatedGuidance[0]?.principles.length).toBeGreaterThan(0);
+  });
+
+  it("isolates a failing shadow observer from production result and model-call count", async () => {
+    const result: CoachingDecisionResult = {
+      ok: true,
+      decision: {
+        action: "REWRITE_DRAFT",
+        ...fixedDecision,
+        primary: "Sorry, testing is taking longer, so it will probably be tomorrow.",
+        alternatives: [],
+      },
+    };
+    const textGenerator = generator(result);
+    await expect(
+      coachConversation(textGenerator, request, {
+        onShadowComparison: () => {
+          throw new Error("synthetic observer failure");
+        },
+      }),
+    ).resolves.toEqual(result);
+    expect(textGenerator.generateCoachingDecision).toHaveBeenCalledTimes(1);
+  });
+
+  it("classifies structural shadow differences deterministically without claiming quality", () => {
+    const production: CommunicationPlan = {
+      status: "SELECTED",
+      selectedSkills: [{ id: "alpha", version: 1, reasons: ["Synthetic metadata match."] }],
+      principles: [],
+      avoid: [],
+    };
+    const shadow = {
+      status: "SELECTED" as const,
+      selectedSkills: [{ id: "alpha", version: 1 }],
+      reasons: [{ skillId: "alpha", evidenceRefs: ["E1"], code: "NEED_MATCH" as const }],
+      uncertaintyCodes: [],
+      catalogSnapshotId: "synthetic",
+    };
+    expect(compareSkillReferences(production, shadow, false)).toBe("MATCH");
+    expect(
+      compareSkillReferences(
+        production,
+        { ...shadow, status: "NONE", selectedSkills: [], reasons: [] },
+        true,
+      ),
+    ).toBe("EXPECTED_DIFFERENCE");
+    expect(
+      compareSkillReferences(
+        production,
+        { ...shadow, status: "NONE", selectedSkills: [], reasons: [] },
+        false,
+      ),
+    ).toBe("POTENTIAL_REGRESSION");
+    expect(
+      compareSkillReferences({ ...production, status: "NONE", selectedSkills: [] }, shadow, false),
+    ).toBe("POTENTIAL_IMPROVEMENT");
+    expect(
+      compareSkillReferences(
+        { ...production, status: "FAILED", selectedSkills: [] },
+        shadow,
+        false,
+      ),
+    ).toBe("NOT_COMPARABLE");
   });
 
   it("distinguishes a selection failure and falls back to generic generation", async () => {

@@ -10,14 +10,17 @@ import {
   type CommunicationGuidance,
   type CommunicationPlan,
   type ProviderConfiguration,
+  type SkillContext,
 } from "@ai-message-coach/contracts";
 import { createSkillEngine, initialSkillRegistry } from "@ai-message-coach/skills";
 
 import {
   normalizeCommunicationProblem,
+  type CommunicationProblem,
   type CommunicationProblemGoalKind,
 } from "./communication-problem.js";
 import { decideCoachingAction, type CoachingPolicyDecision } from "./coaching-policy.js";
+import { runB2SkillShadow, type SkillShadowTrace } from "./skill-shadow.js";
 import { deriveSkillContext, type CommunicationSkillPlanner } from "./skill-context.js";
 
 export interface CoachingTextGenerator {
@@ -36,6 +39,7 @@ export interface CoachingEngineOptions {
     status: "NORMALIZED" | "FAILED";
     goalKind: CommunicationProblemGoalKind | null;
   }) => void;
+  onShadowComparison?: (trace: SkillShadowTrace) => void;
 }
 
 const safeFailure: CoachingDecisionResult = {
@@ -70,6 +74,21 @@ function inspectProblemNormalization(
     options.onProblemNormalization?.(status);
   } catch {
     // In-process structural inspection must never change product behavior.
+  }
+}
+
+function inspectShadowComparison(
+  options: CoachingEngineOptions,
+  problem: CommunicationProblem | null,
+  context: SkillContext | null,
+  action: CoachingPolicyDecision["action"],
+  productionPlan: CommunicationPlan,
+): void {
+  try {
+    const trace = runB2SkillShadow(problem, context, action, productionPlan);
+    options.onShadowComparison?.(structuredClone(trace));
+  } catch {
+    // Shadow comparison must never affect policy, Composer, provider calls or public results.
   }
 }
 
@@ -214,8 +233,9 @@ export async function coachConversation(
   const parsedConfiguration = ProviderConfigurationSchema.safeParse(generator.configuration);
   if (!parsedRequest.success || !parsedConfiguration.success) return safeFailure;
 
+  let problem: CommunicationProblem | null = null;
   try {
-    const problem = normalizeCommunicationProblem(parsedRequest.data);
+    problem = normalizeCommunicationProblem(parsedRequest.data);
     inspectProblemNormalization(options, { status: "NORMALIZED", goalKind: problem.goal.kind });
   } catch {
     inspectProblemNormalization(options, { status: "FAILED", goalKind: null });
@@ -225,20 +245,28 @@ export async function coachConversation(
   const deterministic = localDecision(policy);
   if (deterministic) {
     inspectPlan(options, noCommunicationPlan);
+    let shadowContext: SkillContext | null = null;
+    try {
+      shadowContext = deriveSkillContext(parsedRequest.data, policy);
+    } catch {
+      // Production local decisions do not depend on Skill context.
+    }
+    inspectShadowComparison(options, problem, shadowContext, policy.action, noCommunicationPlan);
     return { ok: true, decision: deterministic };
   }
 
   let communicationPlan: CommunicationPlan;
+  let skillContext: SkillContext | null = null;
   try {
+    skillContext = deriveSkillContext(parsedRequest.data, policy);
     communicationPlan = CommunicationPlanSchema.parse(
-      (options.skillPlanner ?? defaultSkillPlanner).plan(
-        deriveSkillContext(parsedRequest.data, policy),
-      ),
+      (options.skillPlanner ?? defaultSkillPlanner).plan(skillContext),
     );
   } catch {
     communicationPlan = { status: "FAILED", selectedSkills: [], principles: [], avoid: [] };
   }
   inspectPlan(options, communicationPlan);
+  inspectShadowComparison(options, problem, skillContext, policy.action, communicationPlan);
 
   if (!parsedConfiguration.data.configured) {
     return {

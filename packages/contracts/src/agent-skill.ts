@@ -2,7 +2,12 @@ import { z } from "zod";
 
 import { AgentActionSchema } from "./coaching.js";
 import { ConfidenceSchema } from "./confidence.js";
-import { SelectedSkillSchema, SkillContextSchema } from "./skills.js";
+import {
+  SelectedSkillSchema,
+  SkillContextSchema,
+  SkillIntentTagSchema,
+  SkillSituationTagSchema,
+} from "./skills.js";
 
 export const SkillEvidenceIdSchema = z.string().regex(/^E[1-9][0-9]{0,2}$/);
 export const SkillEvidenceSourceSchema = z.enum([
@@ -21,6 +26,7 @@ export const SkillEvidenceKindSchema = z.enum([
   "HARD_CONSTRAINT",
   "STYLE_PRIORITY",
   "ANALYSIS_WARNING",
+  "CONTEXT_TAG",
   "UNKNOWN",
   "UNKNOWN_IDENTITY",
   "UNKNOWN_RELATIONSHIP",
@@ -63,6 +69,15 @@ export const SkillEvidenceSchema = z
         code: "custom",
         message: "Visible text must retain observed provenance.",
       });
+    if (evidence.kind === "CONTEXT_TAG") {
+      const code = evidence.value.format === "CODE" ? evidence.value.code : "";
+      const situation =
+        code.startsWith("SITUATION:") && SkillSituationTagSchema.safeParse(code.slice(10)).success;
+      const intent =
+        code.startsWith("INTENT:") && SkillIntentTagSchema.safeParse(code.slice(7)).success;
+      if (evidence.source !== "DETERMINISTIC_DERIVATION" || (!situation && !intent))
+        context.addIssue({ code: "custom", message: "Context tags require a valid derived code." });
+    }
   });
 
 export const SkillTaskPurposeSchema = z.object({ kind: z.literal("PRIMARY_COACHING") }).strict();
@@ -73,7 +88,7 @@ export const ApprovedCatalogSnapshotIdSchema = z
 
 const EvidenceListSchema = z
   .array(SkillEvidenceSchema)
-  .max(12)
+  .max(32)
   .superRefine((items, context) => {
     if (new Set(items.map((item) => item.id)).size !== items.length)
       context.addIssue({ code: "custom", message: "Evidence IDs must be unique." });

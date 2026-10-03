@@ -6,6 +6,20 @@ export {
 } from "./engine.js";
 export { initialSkillRegistry } from "./registry.js";
 export {
+  approvedCatalogFingerprint,
+  createApprovedSkillCatalogSnapshot,
+  validateApprovedSkillCatalogSnapshot,
+} from "./catalog-snapshot.js";
+export {
+  communicationSignalIds,
+  assessCommunicationNeeds,
+  createEvidenceAwareSkillAssessor,
+} from "./communication-signals.js";
+export {
+  createEvidenceAwareSkillSelector,
+  selectEvidenceAwareSkills,
+} from "./evidence-aware-selector.js";
+export {
   createDeterministicSkillAssessor,
   validateCommunicationAssessment,
   validateSkillPlan,

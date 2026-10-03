@@ -262,6 +262,12 @@ After a validated `CoachingRequest`, `packages/ai` deterministically normalizes 
 
 Phase A does not route policy or skill selection through the new problem. The existing deterministic action policy, `SkillContext`, skill plan, provider prompt/call count, and result remain authoritative and unchanged. An optional in-process status hook reports only whether normalization succeeded and the structural goal kind; it carries no message text and is not logged, persisted, sent over IPC, or used as analytics. Normalization failure leaves the existing coaching path intact. See the [Phase A plan](../.agent/plans/agent-architecture-phase-a.md) and [overall architecture plan](agent-architecture-plan.md).
 
+## Agent architecture Phase B2 shadow boundary
+
+The Agent now projects request-local structural evidence from the Phase A problem and the already-derived `SkillContext`: observed language and draft/message presence, deterministic context tags, up to three existing analysis-warning codes, explicit user-supplied field presence where available, and unknown identity/relationship markers. It does not copy message text, drafts, names or relationship claims into the Skill request. The fixed policy action remains an input. The Skill System deterministically assesses six broad communication needs, then selects exact approved skill ID/version references from a validated catalog fingerprint while preserving active/action/language/tag eligibility, conflicts and the cap. The new selection does not compile a SkillPlan.
+
+This path is shadow-only. The existing flat `CommunicationPlan` alone supplies Composer guidance; the B2 result cannot affect wording, policy, provider calls, IPC or the public result. An optional in-process trace exposes only action, structural signal/skill references, statuses, snapshot identity and comparison category. It is neither logged nor persisted. See the [B2 execution plan](../.agent/plans/agent-architecture-phase-b2.md).
+
 ## Core domain shape
 
 The action vocabulary below is implemented. The broader confidence shape illustrates later domains and does not authorize relationship, identity, or memory work in Phase 4.

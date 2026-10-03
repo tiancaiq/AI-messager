@@ -69,12 +69,36 @@ function candidateScore(skill: SkillDefinition, context: SkillContext): number {
   return score;
 }
 
-function conflicts(skill: SkillDefinition, selected: readonly SkillDefinition[]): boolean {
+export function conflictsWithSelected(
+  skill: SkillDefinition,
+  selected: readonly SkillDefinition[],
+): boolean {
   return selected.some(
     (existing) =>
       skill.conflictingSkills.includes(existing.id) ||
       existing.conflictingSkills.includes(skill.id),
   );
+}
+
+/** Shared hard eligibility and baseline ranking for production and B2 shadow selection. */
+export function rankEligibleSkillCandidates(
+  registry: readonly SkillDefinition[],
+  context: SkillContext,
+): { skill: SkillDefinition; score: number }[] {
+  const languages = eligibleSkillLanguages(context);
+  return registry
+    .filter((skill) => skill.status === "ACTIVE")
+    .filter((skill) => skill.languages.some((language) => languages.has(language)))
+    .filter((skill) => skill.actions.includes(context.action))
+    .filter((skill) => skill.id !== "zh.code_switching" || context.language.codeSwitching)
+    .filter(
+      (skill) =>
+        (skill.intents.length === 0 || intersects(skill.intents, context.intentTags)) &&
+        (skill.situations.length === 0 || intersects(skill.situations, context.situationTags)),
+    )
+    .map((skill) => ({ skill, score: candidateScore(skill, context) }))
+    .filter(({ score }) => score > 0)
+    .sort((left, right) => right.score - left.score || left.skill.id.localeCompare(right.skill.id));
 }
 
 function compose(
@@ -103,26 +127,11 @@ export function createSkillEngine(input: readonly unknown[]): SkillEngine {
       const context = SkillContextSchema.parse(rawContext);
       if (["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"].includes(context.action))
         return { status: "NONE", selectedSkills: [], principles: [], avoid: [] };
-      const languages = eligibleSkillLanguages(context);
       const reasons = new Map<string, string[]>();
-      const candidates = registry
-        .filter((skill) => skill.status === "ACTIVE")
-        .filter((skill) => skill.languages.some((language) => languages.has(language)))
-        .filter((skill) => skill.actions.includes(context.action))
-        .filter((skill) => skill.id !== "zh.code_switching" || context.language.codeSwitching)
-        .filter(
-          (skill) =>
-            (skill.intents.length === 0 || intersects(skill.intents, context.intentTags)) &&
-            (skill.situations.length === 0 || intersects(skill.situations, context.situationTags)),
-        )
-        .map((skill) => ({ skill, score: candidateScore(skill, context) }))
-        .filter(({ score }) => score > 0)
-        .sort(
-          (left, right) => right.score - left.score || left.skill.id.localeCompare(right.skill.id),
-        );
+      const candidates = rankEligibleSkillCandidates(registry, context);
       const selected: SkillDefinition[] = [];
       for (const { skill } of candidates) {
-        if (selected.length >= 4 || conflicts(skill, selected)) continue;
+        if (selected.length >= 4 || conflictsWithSelected(skill, selected)) continue;
         const matches: string[] = [];
         if (intersects(skill.intents, context.intentTags))
           matches.push("Matched communication intent.");

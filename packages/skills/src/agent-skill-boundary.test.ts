@@ -10,6 +10,7 @@ import { describe, expect, it } from "vitest";
 
 import {
   createDeterministicSkillAssessor,
+  createApprovedSkillCatalogSnapshot,
   initialSkillRegistry,
   validateCommunicationAssessment as validateAssessmentWithSignals,
   validateSkillPlan,
@@ -21,10 +22,8 @@ const skill = initialSkillRegistry.find(
   (candidate) => candidate.status === "ACTIVE" && candidate.actions.includes("REWRITE_DRAFT"),
 )!;
 const reference = { id: skill.id, version: skill.version };
-const snapshot: ApprovedSkillCatalogSnapshot = {
-  id: "approved-test",
-  registry: initialSkillRegistry,
-};
+const snapshot: ApprovedSkillCatalogSnapshot =
+  createApprovedSkillCatalogSnapshot(initialSkillRegistry);
 const allowedSignals = new Set(["wording_support"]);
 const validateCommunicationAssessment = (
   request: SkillAssessmentRequest,
@@ -141,14 +140,24 @@ describe("B1 Skill boundary", () => {
         snapshot,
       ),
     ).toThrow("UNRESOLVED_APPROVED_SKILL_REFERENCE");
+    const inactiveSnapshot = createApprovedSkillCatalogSnapshot(
+      snapshot.registry.map((candidate) =>
+        candidate.id === skill.id ? { ...candidate, status: "INACTIVE" } : candidate,
+      ),
+    );
+    expect(() =>
+      validateSkillSelectionResult(
+        { ...selectionRequest, catalogSnapshotId: inactiveSnapshot.id },
+        { ...selection, catalogSnapshotId: inactiveSnapshot.id },
+        inactiveSnapshot,
+      ),
+    ).toThrow("UNRESOLVED_APPROVED_SKILL_REFERENCE");
     expect(() =>
       validateSkillSelectionResult(selectionRequest, selection, {
         ...snapshot,
-        registry: snapshot.registry.map((candidate) =>
-          candidate.id === skill.id ? { ...candidate, status: "INACTIVE" } : candidate,
-        ),
+        registry: inactiveSnapshot.registry,
       }),
-    ).toThrow("UNRESOLVED_APPROVED_SKILL_REFERENCE");
+    ).toThrow("CATALOG_SNAPSHOT_MISMATCH");
     expect(() =>
       validateSkillSelectionResult(selectionRequest, selection, {
         ...snapshot,

@@ -15,13 +15,12 @@ import {
   type SkillSelectionResult,
 } from "@ai-message-coach/contracts";
 
-import { validateSkillRegistry } from "./engine.js";
+import {
+  validateApprovedSkillCatalogSnapshot,
+  type ApprovedSkillCatalogSnapshot,
+} from "./catalog-snapshot.js";
 
-/** A caller-supplied view of one canonical approved runtime registry, not another registry. */
-export interface ApprovedSkillCatalogSnapshot {
-  readonly id: string;
-  readonly registry: readonly SkillDefinition[];
-}
+export type { ApprovedSkillCatalogSnapshot } from "./catalog-snapshot.js";
 
 export interface SkillAssessmentPort {
   assess(request: SkillAssessmentRequest): Promise<CommunicationAssessment>;
@@ -65,7 +64,7 @@ function assertSnapshot(
   const snapshotId = ApprovedCatalogSnapshotIdSchema.parse(snapshot.id);
   if (requestedId !== snapshotId || returnedId !== snapshotId)
     throw new Error("CATALOG_SNAPSHOT_MISMATCH");
-  return validateSkillRegistry(snapshot.registry);
+  return validateApprovedSkillCatalogSnapshot(snapshot);
 }
 
 export function validateCommunicationAssessment(
