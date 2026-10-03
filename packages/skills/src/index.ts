@@ -19,6 +19,7 @@ export {
   createEvidenceAwareSkillSelector,
   selectEvidenceAwareSkills,
 } from "./evidence-aware-selector.js";
+export { createDeterministicSkillPlanCompiler } from "./deterministic-skill-plan-compiler.js";
 export {
   createDeterministicSkillAssessor,
   validateCommunicationAssessment,

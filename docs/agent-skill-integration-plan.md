@@ -1,6 +1,6 @@
 # Agent–Skill System integration plan
 
-Status: B1 complete; B2 shadow-only complete pending review; production Skill flow unchanged; B3–B5 not authorized.
+Status: B1/B2 frozen; B3 shadow-only complete pending review; production Skill flow unchanged; B4/B5 hold.
 
 Updated: 2026-10-04
 Related: [agent architecture plan](agent-architecture-plan.md), [Phase B checkpoint](agent-architecture-phase-b-checkpoint.md), [product behavior](product-behavior.md), [privacy](privacy.md).
@@ -104,19 +104,22 @@ type SkillSelectionResult = {
 
 type SkillPlanCompilationRequest = {
   action: AgentAction; // fixed Agent input, not returned
-  selectedSkills: SelectedSkillReference[];
+  selection: SkillSelectionResult; // sole source of exact selected references
   evidence: SkillEvidence[];
+  context: SkillContextProjection;
   constraints: BoundedCommunicationConstraints;
   catalogSnapshotId: ApprovedCatalogSnapshotId;
 };
 
 type SkillPlan = {
+  status: "COMPILED" | "NONE" | "FAILED";
   selectedSkills: SelectedSkillReference[];
   principles: BoundedGuidance[];
   avoid: BoundedGuidance[];
   tradeoffs: BoundedGuidance[];
   recommendations: BoundedGuidance[];
-  evidenceRefs: string[];
+  failureCode?: SkillFailureCode;
+  catalogSnapshotId: ApprovedCatalogSnapshotId;
 };
 
 interface SkillAssessmentPort {
@@ -132,7 +135,7 @@ interface SkillPlanCompiler {
 }
 ```
 
-The B1 names above correspond to strict Zod-first exports in `packages/contracts/src/agent-skill.ts` and Skill-side validators/ports in `packages/skills/src/agent-skill-boundary.ts`. The implemented `taskPurpose` is the closed `PRIMARY_COACHING` scope, with no free-text goal. B2 adds a validated `CONTEXT_TAG` evidence kind and permits up to 32 bounded structural evidence items so all existing context tags can be represented; no raw draft/message text is projected. B2 derives a deterministic, non-cryptographic approved-runtime fingerprint and validates the ID against the actual registry values, preventing accidental mismatched pairing. The six Skill-owned signal IDs and deterministic assessor/selector live in `packages/skills`; B1's inert `UNASSESSED` default remains available. The `SkillContext.intent` free-text field remains unused by the production selector and is omitted from the new projection. Strict assessment, selection and SkillPlan schemas verify references and reject action/orchestration fields. B2 does not implement SkillPlan compilation.
+The B1 names above correspond to strict Zod-first exports in `packages/contracts/src/agent-skill.ts` and Skill-side validators/ports in `packages/skills/src/agent-skill-boundary.ts`. The implemented `taskPurpose` is the closed `PRIMARY_COACHING` scope, with no free-text goal. B2 adds a validated `CONTEXT_TAG` evidence kind and permits up to 32 bounded structural evidence items so all existing context tags can be represented; no raw draft/message text is projected. B2 derives a deterministic, non-cryptographic approved-runtime fingerprint and validates the ID against the actual registry values, preventing accidental mismatched pairing. The six Skill-owned signal IDs and deterministic assessor/selector live in `packages/skills`; B1's inert `UNASSESSED` default remains available. The `SkillContext.intent` free-text field remains unused by the production selector and is omitted from the new projection. Strict assessment, selection and SkillPlan schemas verify references and reject action/orchestration fields. B3 evolves the compiler request to carry the validated selection result rather than duplicate selected references; its deterministic compiled guidance remains shadow-only.
 
 ## 7. Shared multi-agent use and non-exclusive metadata
 
@@ -166,12 +169,12 @@ packages/ai ──→ packages/skills ──→ packages/contracts
 ## 11. Revised shadow-first Phase B
 
 1. **B1 — Agent ↔ Skill contract:** frozen at `0b32f9e`; fixed action input, bounded source-attributed evidence, closed descriptive `taskPurpose`, distinct assessment/selection/SkillPlan seams, and a provider-neutral assessment port. Skill outputs omit action and orchestration fields.
-2. **B2 — Evidence-aware deterministic selection:** shadow-only implementation against committed Skills baseline `dcc52eb` and its matching approved runtime values. It preserves eligibility, conflicts, cap and production output, and produces structural comparison without a model call. See the [B2 execution plan](../.agent/plans/agent-architecture-phase-b2.md).
-3. **B3 — SkillPlan compiler:** separate selected canonical references from bounded compiled guidance; preserve current principles/avoidances through a compatibility adapter. No extra model call.
+2. **B2 — Evidence-aware deterministic selection:** frozen at `60e2e9c` against committed Skills baseline `dcc52eb` and its matching approved runtime values. It preserves eligibility, conflicts, cap and production output, and produces structural comparison without a model call. See the [B2 execution plan](../.agent/plans/agent-architecture-phase-b2.md).
+3. **B3 — SkillPlan compiler:** deterministic compilation from the exact selected canonical references into bounded, evidence-linked approved principles/avoidances for shadow comparison. No extra model call or production guidance change. See the [B3 execution plan](../.agent/plans/agent-architecture-phase-b3.md).
 4. **B4 — Communication metadata:** add validated non-exclusive capability/domain metadata only where it measurably improves selection/evaluation; no Agent-side hard domain router.
 5. **B5 — Shadow comparison and cutover review:** compare current flat selection with evidence-aware selection, exact IDs/versions, `NONE`, conflicts, guidance, refreshed fixtures and human-reviewed cases. The current production selector/Composer input remain authoritative through this review. Only a separate later decision may authorize cutover.
 
-Each implementation slice gets its own execution plan under `.agent/PLANS.md`. The committed approved runtime projection is reconciled for B2; newer uncommitted Skills work remains outside this baseline. B3 and all production cutover remain separate authorization gates. The old complete one-owner-per-skill table is no longer a gate. This document does not authorize later routing or provider work.
+Each implementation slice gets its own execution plan under `.agent/PLANS.md`. The committed approved runtime projection is reconciled for B2/B3; newer uncommitted Skills work remains outside this baseline. B4/B5 and all production cutover remain separate authorization gates. The old complete one-owner-per-skill table is no longer a gate. This document does not authorize later routing or provider work.
 
 ## 12. Boundary test plan
 
@@ -194,4 +197,4 @@ Use deterministic synthetic fixtures and fake ports by default, with separate op
 
 No LLM supervisor in initial Phase B, autonomous loop, skill-driven agent spawning/model selection/revision, semantic/vector retrieval, SRS-4 production integration, memory personalization, second registry or new microservice. These limits do **not** remove the overall multi-agent architecture: Supervisor, specialist agents, one Composer and Evaluator remain Agent-owned roles in later approved phases. Model-assisted Skill assessment/compilation is permitted only after a separate quality/privacy/budget gate.
 
-The B1 contract slice remains a frozen rollback point. B2 is reviewable when its bounded structural projection, approved signal vocabulary, deterministic assessment and selection, fingerprint binding, shadow comparison and production parity gates pass. It does not claim wording-quality improvement or production routing acceptance. B3 compilation, B4 metadata, model-assisted ports and B5 cutover remain separately gated.
+The B1 contract and B2 selection slices remain separate frozen rollback points. B3 is reviewable when exact-reference compilation, bounds, evidence citations, structural guidance comparison and production-parity gates pass. None claims wording-quality improvement or production routing acceptance. B4 metadata, model-assisted ports and B5 cutover remain separately gated.

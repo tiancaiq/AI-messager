@@ -75,8 +75,9 @@ const selection: SkillSelectionResult = {
 };
 const compilationRequest: SkillPlanCompilationRequest = {
   action: "REWRITE_DRAFT",
-  selectedSkills: [reference],
+  selection,
   evidence: assessmentRequest.evidence,
+  context: assessmentRequest.context,
   constraints: [{ kind: "HARD", evidenceRef: "E1" }],
   catalogSnapshotId: snapshot.id,
 };

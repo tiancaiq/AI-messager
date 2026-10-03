@@ -80,24 +80,28 @@ export function conflictsWithSelected(
   );
 }
 
+/** Validation predicate only; it does not rank or choose a replacement skill. */
+export function isEligibleSkillForContext(skill: SkillDefinition, context: SkillContext): boolean {
+  const languages = eligibleSkillLanguages(context);
+  return (
+    skill.status === "ACTIVE" &&
+    skill.languages.some((language) => languages.has(language)) &&
+    skill.actions.includes(context.action) &&
+    (skill.id !== "zh.code_switching" || context.language.codeSwitching) &&
+    (skill.intents.length === 0 || intersects(skill.intents, context.intentTags)) &&
+    (skill.situations.length === 0 || intersects(skill.situations, context.situationTags)) &&
+    candidateScore(skill, context) > 0
+  );
+}
+
 /** Shared hard eligibility and baseline ranking for production and B2 shadow selection. */
 export function rankEligibleSkillCandidates(
   registry: readonly SkillDefinition[],
   context: SkillContext,
 ): { skill: SkillDefinition; score: number }[] {
-  const languages = eligibleSkillLanguages(context);
   return registry
-    .filter((skill) => skill.status === "ACTIVE")
-    .filter((skill) => skill.languages.some((language) => languages.has(language)))
-    .filter((skill) => skill.actions.includes(context.action))
-    .filter((skill) => skill.id !== "zh.code_switching" || context.language.codeSwitching)
-    .filter(
-      (skill) =>
-        (skill.intents.length === 0 || intersects(skill.intents, context.intentTags)) &&
-        (skill.situations.length === 0 || intersects(skill.situations, context.situationTags)),
-    )
+    .filter((skill) => isEligibleSkillForContext(skill, context))
     .map((skill) => ({ skill, score: candidateScore(skill, context) }))
-    .filter(({ score }) => score > 0)
     .sort((left, right) => right.score - left.score || left.skill.id.localeCompare(right.skill.id));
 }
 

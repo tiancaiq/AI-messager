@@ -137,23 +137,37 @@ export function validateSkillPlan(
   const request = SkillPlanCompilationRequestSchema.parse(rawRequest);
   const plan = SkillPlanSchema.parse(rawPlan);
   const registry = assertSnapshot(request.catalogSnapshotId, plan.catalogSnapshotId, snapshot);
-  assertApprovedReferences(request.selectedSkills, request.action, registry);
+  if (request.selection.catalogSnapshotId !== snapshot.id)
+    throw new Error("CATALOG_SNAPSHOT_MISMATCH");
   const evidenceIds = new Set(request.evidence.map((item) => item.id));
   for (const constraint of request.constraints)
     assertEvidenceRefs([constraint.evidenceRef], evidenceIds);
+  for (const reason of request.selection.reasons)
+    assertEvidenceRefs(reason.evidenceRefs, evidenceIds);
+
+  if (request.selection.status === "NONE" && plan.status !== "NONE")
+    throw new Error("SKILL_PLAN_STATUS_MISMATCH");
+  if (request.selection.status === "FAILED" && plan.status !== "FAILED")
+    throw new Error("SKILL_PLAN_STATUS_MISMATCH");
+  if (request.selection.status === "SELECTED" && plan.status === "NONE")
+    throw new Error("SKILL_PLAN_STATUS_MISMATCH");
+  if (plan.status === "COMPILED")
+    assertApprovedReferences(request.selection.selectedSkills, request.action, registry);
 
   if (
     plan.status !== "FAILED" &&
-    (plan.selectedSkills.length !== request.selectedSkills.length ||
+    (plan.selectedSkills.length !== request.selection.selectedSkills.length ||
       plan.selectedSkills.some(
         (skill, index) =>
-          skill.id !== request.selectedSkills[index]?.id ||
-          skill.version !== request.selectedSkills[index]?.version,
+          skill.id !== request.selection.selectedSkills[index]?.id ||
+          skill.version !== request.selection.selectedSkills[index]?.version,
       ))
   )
     throw new Error("SKILL_PLAN_SELECTION_MISMATCH");
 
-  const selected = new Set(request.selectedSkills.map((skill) => `${skill.id}@${skill.version}`));
+  const selected = new Set(
+    request.selection.selectedSkills.map((skill) => `${skill.id}@${skill.version}`),
+  );
   for (const item of [
     ...plan.principles,
     ...plan.avoid,

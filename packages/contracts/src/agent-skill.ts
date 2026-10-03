@@ -203,8 +203,9 @@ export const SkillSelectionResultSchema = z
 export const SkillPlanCompilationRequestSchema = z
   .object({
     action: AgentActionSchema,
-    selectedSkills: SkillReferenceListSchema,
+    selection: SkillSelectionResultSchema,
     evidence: EvidenceListSchema,
+    context: SkillContextProjectionSchema,
     constraints: z
       .array(
         z
@@ -252,6 +253,10 @@ export const SkillPlanSchema = z
       context.addIssue({ code: "custom", message: "NONE/FAILED cannot contain guidance." });
     if ((plan.status === "FAILED") !== (plan.failureCode !== undefined))
       context.addIssue({ code: "custom", message: "FAILED requires a failure code." });
+    if (guidance.length > 24)
+      context.addIssue({ code: "custom", message: "SkillPlan guidance exceeds total bound." });
+    if (JSON.stringify(plan).length > 32_768)
+      context.addIssue({ code: "custom", message: "SkillPlan exceeds serialized size bound." });
   });
 
 export type SkillEvidence = z.infer<typeof SkillEvidenceSchema>;

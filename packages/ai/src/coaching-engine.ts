@@ -20,7 +20,7 @@ import {
   type CommunicationProblemGoalKind,
 } from "./communication-problem.js";
 import { decideCoachingAction, type CoachingPolicyDecision } from "./coaching-policy.js";
-import { runB2SkillShadow, type SkillShadowTrace } from "./skill-shadow.js";
+import { runB3SkillShadow, type SkillPlanShadowTrace } from "./skill-shadow.js";
 import { deriveSkillContext, type CommunicationSkillPlanner } from "./skill-context.js";
 
 export interface CoachingTextGenerator {
@@ -39,7 +39,7 @@ export interface CoachingEngineOptions {
     status: "NORMALIZED" | "FAILED";
     goalKind: CommunicationProblemGoalKind | null;
   }) => void;
-  onShadowComparison?: (trace: SkillShadowTrace) => void;
+  onShadowComparison?: (trace: SkillPlanShadowTrace) => void;
 }
 
 const safeFailure: CoachingDecisionResult = {
@@ -77,15 +77,15 @@ function inspectProblemNormalization(
   }
 }
 
-function inspectShadowComparison(
+async function inspectShadowComparison(
   options: CoachingEngineOptions,
   problem: CommunicationProblem | null,
   context: SkillContext | null,
   action: CoachingPolicyDecision["action"],
   productionPlan: CommunicationPlan,
-): void {
+): Promise<void> {
   try {
-    const trace = runB2SkillShadow(problem, context, action, productionPlan);
+    const trace = await runB3SkillShadow(problem, context, action, productionPlan);
     options.onShadowComparison?.(structuredClone(trace));
   } catch {
     // Shadow comparison must never affect policy, Composer, provider calls or public results.
@@ -251,7 +251,13 @@ export async function coachConversation(
     } catch {
       // Production local decisions do not depend on Skill context.
     }
-    inspectShadowComparison(options, problem, shadowContext, policy.action, noCommunicationPlan);
+    await inspectShadowComparison(
+      options,
+      problem,
+      shadowContext,
+      policy.action,
+      noCommunicationPlan,
+    );
     return { ok: true, decision: deterministic };
   }
 
@@ -266,7 +272,7 @@ export async function coachConversation(
     communicationPlan = { status: "FAILED", selectedSkills: [], principles: [], avoid: [] };
   }
   inspectPlan(options, communicationPlan);
-  inspectShadowComparison(options, problem, skillContext, policy.action, communicationPlan);
+  await inspectShadowComparison(options, problem, skillContext, policy.action, communicationPlan);
 
   if (!parsedConfiguration.data.configured) {
     return {

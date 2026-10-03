@@ -13,7 +13,7 @@ import { skillSelectionEvaluationFixtures } from "@ai-message-coach/test-fixture
 import { coachConversation, type CoachingTextGenerator } from "./coaching-engine.js";
 import { decideCoachingAction } from "./coaching-policy.js";
 import { deriveSkillContext } from "./skill-context.js";
-import { compareSkillReferences, type SkillShadowTrace } from "./skill-shadow.js";
+import { compareSkillReferences, type SkillPlanShadowTrace } from "./skill-shadow.js";
 
 const analysis: ConversationAnalysis = {
   messages: [
@@ -80,12 +80,12 @@ describe("provider-neutral coaching engine", () => {
       const contexts: (typeof expectedContext)[] = [];
       const plans: CommunicationPlan[] = [];
       const statuses: unknown[] = [];
-      const traces: SkillShadowTrace[] = [];
+      const traces: SkillPlanShadowTrace[] = [];
       const textGenerator = generator({
         ok: false,
         error: { code: "PROVIDER_ERROR", message: "Synthetic generation failure." },
       });
-      await coachConversation(textGenerator, fixture.request, {
+      const actualResult = await coachConversation(textGenerator, fixture.request, {
         skillPlanner: {
           plan(context) {
             contexts.push(context);
@@ -103,6 +103,7 @@ describe("provider-neutral coaching engine", () => {
         fixture.request.analysis.draft.text ?? "synthetic-private-text",
       );
       expect(traces, fixture.id).toHaveLength(1);
+      expect(traces[0]?.path, fixture.id).toBe("B3_SHADOW");
       expect(traces[0]?.action, fixture.id).toBe(expectedPolicy.action);
       expect(traces[0]?.productionSelected, fixture.id).toEqual(
         (expectedPolicy.action === "SUGGEST_ACTIONS" ||
@@ -111,6 +112,19 @@ describe("provider-neutral coaching engine", () => {
           ? []
           : expectedPlan.selectedSkills
         ).map(({ id, version }) => ({ id, version })),
+      );
+      expect(traces[0]?.planComparisonCategory, fixture.id).toBe("MATCH");
+      expect(traces[0]?.guidanceContentEqual, fixture.id).toBe(true);
+      expect(traces[0]?.guidanceOrderEqual, fixture.id).toBe(true);
+      expect(traces[0]?.principleCount, fixture.id).toBe(
+        ["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"].includes(expectedPolicy.action)
+          ? 0
+          : expectedPlan.principles.length,
+      );
+      expect(traces[0]?.avoidCount, fixture.id).toBe(
+        ["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"].includes(expectedPolicy.action)
+          ? 0
+          : expectedPlan.avoid.length,
       );
       const traceText = JSON.stringify(traces);
       for (const privateText of [
@@ -123,15 +137,28 @@ describe("provider-neutral coaching engine", () => {
       if (
         ["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"].includes(expectedPolicy.action)
       ) {
+        expect(actualResult, fixture.id).toMatchObject({
+          ok: true,
+          decision: { action: expectedPolicy.action },
+        });
         expect(contexts, fixture.id).toEqual([]);
         expect(plans, fixture.id).toEqual([
           { status: "NONE", selectedSkills: [], principles: [], avoid: [] },
         ]);
         expect(textGenerator.generateCoachingDecision, fixture.id).not.toHaveBeenCalled();
       } else {
+        expect(actualResult, fixture.id).toEqual({
+          ok: false,
+          error: { code: "PROVIDER_ERROR", message: "Synthetic generation failure." },
+        });
         expect(contexts, fixture.id).toEqual([expectedContext]);
         expect(plans, fixture.id).toEqual([expectedPlan]);
         expect(textGenerator.generateCoachingDecision, fixture.id).toHaveBeenCalledTimes(1);
+        expect(textGenerator.generateCoachingDecision, fixture.id).toHaveBeenCalledWith(
+          fixture.request,
+          expectedPolicy,
+          { principles: expectedPlan.principles, avoid: expectedPlan.avoid },
+        );
       }
     }
   });

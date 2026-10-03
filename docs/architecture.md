@@ -268,6 +268,12 @@ The Agent now projects request-local structural evidence from the Phase A proble
 
 This path is shadow-only. The existing flat `CommunicationPlan` alone supplies Composer guidance; the B2 result cannot affect wording, policy, provider calls, IPC or the public result. An optional in-process trace exposes only action, structural signal/skill references, statuses, snapshot identity and comparison category. It is neither logged nor persisted. See the [B2 execution plan](../.agent/plans/agent-architecture-phase-b2.md).
 
+## Agent architecture Phase B3 shadow compilation
+
+The B3 `SkillPlanCompiler` consumes the validated B2 `SkillSelectionResult`, fixed action, allowed structural evidence and context, and the same approved catalog snapshot. It validates exact active ID/version references, action/language/context eligibility and conflicts without ranking or selecting again. It copies approved runtime principles and avoidances in selected-skill order, deduplicates and bounds them, and cites the selection reasons' evidence references. It does not interpolate raw evidence or create recommendations/tradeoffs without approved metadata. `NONE` and `FAILED` yield no guidance.
+
+Compilation remains request-local and shadow-only. The Agent compares selected references, status, principle/avoidance counts, content and order with the production `CommunicationPlan` in memory; the optional trace contains only structural results, not guidance strings. The old plan alone reaches Composer, so provider prompts/calls, IPC, public output and copy behavior are unchanged. See the [B3 execution plan](../.agent/plans/agent-architecture-phase-b3.md).
+
 ## Core domain shape
 
 The action vocabulary below is implemented. The broader confidence shape illustrates later domains and does not authorize relationship, identity, or memory work in Phase 4.
