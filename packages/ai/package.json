@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "@ai-message-coach/contracts": "workspace:*",
-    "@ai-message-coach/skills": "workspace:*"
+    "@ai-message-coach/skills": "workspace:*",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@ai-message-coach/test-fixtures": "workspace:*"

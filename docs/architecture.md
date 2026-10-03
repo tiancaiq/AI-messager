@@ -124,6 +124,7 @@ Do not expose chain-of-thought. Evidence should be concise, observable reference
 - validation and safe failure for invalid/refused/incomplete model output;
 - normalized provider failure handling;
 - deterministic Phase 3 draft-aware action policy;
+- deterministic Phase A `CommunicationProblem` normalization alongside the unchanged policy path;
 - deterministic Phase 4 skill-context derivation after the action is fixed;
 - provider-neutral wording generation with compact composed skill guidance;
 - isolated OpenAI vision and coaching adapters.
@@ -254,6 +255,12 @@ flowchart TD
 ```
 
 `SkillContext` uses the fixed action, visible messages/draft, selected intent, normalized situation/intent tags, language/code-switching, and material ambiguity. It contains no relationship, identity, avatar, contact history, temporal history, or memory input. Selection and composition are deterministic and in-memory; selected skills are not written as user history. Development inspection may expose only structured IDs, versions, and concise reasons, never hidden reasoning or conversation content.
+
+## Agent architecture Phase A foundation
+
+After a validated `CoachingRequest`, `packages/ai` deterministically normalizes a request-scoped `CommunicationProblem` alongside the existing policy path. It records exact observed draft/context evidence, selected intent when present, language, observed contact cues, a conservative goal and meaning source, analysis warnings, and explicit unknowns. User instruction, recipient, relationship, hard constraints, and stylistic priorities have a bounded internal input seam, but the current renderer/IPC has no producer for those fields. A visible name remains an observation and never becomes confirmed identity or relationship.
+
+Phase A does not route policy or skill selection through the new problem. The existing deterministic action policy, `SkillContext`, skill plan, provider prompt/call count, and result remain authoritative and unchanged. An optional in-process status hook reports only whether normalization succeeded and the structural goal kind; it carries no message text and is not logged, persisted, sent over IPC, or used as analytics. Normalization failure leaves the existing coaching path intact. See the [Phase A plan](../.agent/plans/agent-architecture-phase-a.md) and [overall architecture plan](agent-architecture-plan.md).
 
 ## Core domain shape
 

@@ -7,7 +7,12 @@ import type {
 } from "@ai-message-coach/contracts";
 import { describe, expect, it, vi } from "vitest";
 
+import { createSkillEngine, initialSkillRegistry } from "@ai-message-coach/skills";
+import { skillSelectionEvaluationFixtures } from "@ai-message-coach/test-fixtures";
+
 import { coachConversation, type CoachingTextGenerator } from "./coaching-engine.js";
+import { decideCoachingAction } from "./coaching-policy.js";
+import { deriveSkillContext } from "./skill-context.js";
 
 const analysis: ConversationAnalysis = {
   messages: [
@@ -65,6 +70,51 @@ function generator(result: CoachingDecisionResult, configured = true): CoachingT
 }
 
 describe("provider-neutral coaching engine", () => {
+  it("normalizes structurally while leaving current skill inputs and results unchanged", async () => {
+    const skillEngine = createSkillEngine(initialSkillRegistry);
+    for (const fixture of skillSelectionEvaluationFixtures) {
+      const expectedPolicy = decideCoachingAction(fixture.request);
+      const expectedContext = deriveSkillContext(fixture.request, expectedPolicy);
+      const expectedPlan = skillEngine.select(expectedContext);
+      const contexts: (typeof expectedContext)[] = [];
+      const plans: CommunicationPlan[] = [];
+      const statuses: unknown[] = [];
+      const textGenerator = generator({
+        ok: false,
+        error: { code: "PROVIDER_ERROR", message: "Synthetic generation failure." },
+      });
+      await coachConversation(textGenerator, fixture.request, {
+        skillPlanner: {
+          plan(context) {
+            contexts.push(context);
+            return skillEngine.select(context);
+          },
+        },
+        onCommunicationPlan: (plan) => plans.push(plan),
+        onProblemNormalization: (status) => statuses.push(status),
+      });
+      expect(statuses, fixture.id).toEqual([
+        { status: "NORMALIZED", goalKind: expect.any(String) },
+      ]);
+      expect(JSON.stringify(statuses), fixture.id).not.toContain(
+        fixture.request.analysis.draft.text ?? "synthetic-private-text",
+      );
+      if (
+        ["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"].includes(expectedPolicy.action)
+      ) {
+        expect(contexts, fixture.id).toEqual([]);
+        expect(plans, fixture.id).toEqual([
+          { status: "NONE", selectedSkills: [], principles: [], avoid: [] },
+        ]);
+        expect(textGenerator.generateCoachingDecision, fixture.id).not.toHaveBeenCalled();
+      } else {
+        expect(contexts, fixture.id).toEqual([expectedContext]);
+        expect(plans, fixture.id).toEqual([expectedPlan]);
+        expect(textGenerator.generateCoachingDecision, fixture.id).toHaveBeenCalledTimes(1);
+      }
+    }
+  });
+
   it("validates provider wording and fixed action", async () => {
     const result: CoachingDecisionResult = {
       ok: true,

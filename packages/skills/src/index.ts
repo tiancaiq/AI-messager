@@ -6,6 +6,16 @@ export {
 } from "./engine.js";
 export { initialSkillRegistry } from "./registry.js";
 export {
+  createDeterministicSkillAssessor,
+  validateCommunicationAssessment,
+  validateSkillPlan,
+  validateSkillSelectionResult,
+  type ApprovedSkillCatalogSnapshot,
+  type SkillAssessmentPort,
+  type SkillPlanCompiler,
+  type SkillSelector,
+} from "./agent-skill-boundary.js";
+export {
   calculateSkillEvaluationMetrics,
   type SkillEvaluationMetrics,
   type SkillEvaluationObservation,

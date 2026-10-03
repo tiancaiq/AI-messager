@@ -180,6 +180,26 @@ Phase 4 is implemented and committed at `a77f476` under the [Phase 4 execution p
 - Deterministic verification, build, API health, practical Electron startup, and Browser QA pass.
 - Post-fix live final-reply confirmation, live model comparison, and controlled Windows validation remain explicitly pending.
 
+## Agent architecture Phase A — communication problem foundation
+
+**Status:** complete (2026-10-01). Formatting gate: **PASS WITH DOCUMENTED WORKTREE EXCEPTION**; see the [Phase A completion record](../.agent/plans/agent-architecture-phase-a.md#completion-record). Phase B production routing has not started.
+
+**Outcome:** add a deterministic, validated, request-scoped `CommunicationProblem` after existing screenshot observations while keeping the current policy, skill selection, provider call count, renderer flow, and privacy boundary unchanged. This is the first approved increment of the [overall agent architecture plan](agent-architecture-plan.md); see the [Phase A execution plan](../.agent/plans/agent-architecture-phase-a.md).
+
+**In scope:** internal normalization and bounded provenance/unknown fields, an optional future user-supplied instruction seam with no current IPC producer, structural-only test/debug status, and policy/skill/call-count parity tests.
+
+**Out of scope:** capability or domain routing, specialist runtime, supervisor, composer replacement, evaluator revisions, new provider calls, relationship/identity inference or memory lookup, renderer/IPC changes, and persistence.
+
+**Acceptance criteria:** validated deterministic normalization; no promotion of visible contact cues into confirmed identity/relationship; exact supported preservation source and language propagation; separate hard constraints and style priorities; unchanged policy decisions, skill selection, call count and public result; no new sensitive-data persistence or logging; canonical validation commands pass. The new problem is shadow data until a later reviewed migration demonstrates parity.
+
+## Agent architecture Phase B — Agent–Skill integration
+
+**Entry status:** **B1 CONTRACT-ONLY COMPLETE; B2–B5 INTEGRATION HOLD** (2026-10-04). The [historical skill-catalog checkpoint](agent-architecture-phase-b-checkpoint.md), [revised overall plan](agent-architecture-plan.md#13-migration-plan) and [Agent–Skill integration plan](agent-skill-integration-plan.md) define the boundary. The former exactly-one ownership/domain-router decision is superseded. B1 validates against a caller-supplied approved registry snapshot; the concurrent skill catalog remains unreconciled and must be reviewed before B2 or production cutover. See the [B1 completion record](../.agent/plans/agent-architecture-phase-b1.md#completion-record).
+
+**Slices:** B1 shared Agent–Skill contracts and provider-neutral assessment port with no production change; B2 evidence-aware deterministic selection; B3 separate SkillPlan compilation; B4 optional validated non-exclusive communication metadata; B5 shadow parity/regression and human-reviewed cutover review. The current selector remains production-authoritative, and initial Phase B adds no provider call. A separate decision is required to make the new Skill boundary production-authoritative. Each implementation slice requires its own execution plan and acceptance criteria before code changes.
+
+The [B1 entry checkpoint](agent-architecture-phase-b1-entry-checkpoint.md) and [B1 execution plan](../.agent/plans/agent-architecture-phase-b1.md) record the user-authorized contract-only implementation. The existing flat selector and Composer input remain production-authoritative; no new provider call or catalog copy is introduced.
+
 ## Data + Memory roadmap
 
 DATA-00 through DATA-03 and MEM-00 are complete. Later rows remain proposed implementation milestones requiring their own execution plans and acceptance review. The [memory contract](memory.md) is the source of truth for domain semantics and acceptance scenarios M01–M21. [Architecture](architecture.md#data--memory-boundaries-data-00) and [privacy](privacy.md#local-memory-storage-data-00) specify module and security boundaries.

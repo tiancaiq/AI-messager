@@ -13,6 +13,10 @@ import {
 } from "@ai-message-coach/contracts";
 import { createSkillEngine, initialSkillRegistry } from "@ai-message-coach/skills";
 
+import {
+  normalizeCommunicationProblem,
+  type CommunicationProblemGoalKind,
+} from "./communication-problem.js";
 import { decideCoachingAction, type CoachingPolicyDecision } from "./coaching-policy.js";
 import { deriveSkillContext, type CommunicationSkillPlanner } from "./skill-context.js";
 
@@ -28,6 +32,10 @@ export interface CoachingTextGenerator {
 export interface CoachingEngineOptions {
   skillPlanner?: CommunicationSkillPlanner;
   onCommunicationPlan?: (plan: CommunicationPlan) => void;
+  onProblemNormalization?: (status: {
+    status: "NORMALIZED" | "FAILED";
+    goalKind: CommunicationProblemGoalKind | null;
+  }) => void;
 }
 
 const safeFailure: CoachingDecisionResult = {
@@ -51,6 +59,17 @@ function inspectPlan(options: CoachingEngineOptions, plan: CommunicationPlan): v
     options.onCommunicationPlan?.(structuredClone(plan));
   } catch {
     // Development inspection must never change product behavior.
+  }
+}
+
+function inspectProblemNormalization(
+  options: CoachingEngineOptions,
+  status: { status: "NORMALIZED" | "FAILED"; goalKind: CommunicationProblemGoalKind | null },
+): void {
+  try {
+    options.onProblemNormalization?.(status);
+  } catch {
+    // In-process structural inspection must never change product behavior.
   }
 }
 
@@ -194,6 +213,13 @@ export async function coachConversation(
   const parsedRequest = CoachingRequestSchema.safeParse(request);
   const parsedConfiguration = ProviderConfigurationSchema.safeParse(generator.configuration);
   if (!parsedRequest.success || !parsedConfiguration.success) return safeFailure;
+
+  try {
+    const problem = normalizeCommunicationProblem(parsedRequest.data);
+    inspectProblemNormalization(options, { status: "NORMALIZED", goalKind: problem.goal.kind });
+  } catch {
+    inspectProblemNormalization(options, { status: "FAILED", goalKind: null });
+  }
 
   const policy = decideCoachingAction(parsedRequest.data);
   const deterministic = localDecision(policy);

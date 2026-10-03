@@ -3,6 +3,13 @@ export {
   type ConversationImageAnalyzer,
 } from "./conversation-analyzer.js";
 export {
+  CommunicationProblemSchema,
+  normalizeCommunicationProblem,
+  UserSuppliedCommunicationContextSchema,
+  type CommunicationProblem,
+  type UserSuppliedCommunicationContext,
+} from "./communication-problem.js";
+export {
   CONVERSATION_ANALYSIS_INSTRUCTIONS,
   CONVERSATION_ANALYSIS_USER_TEXT,
 } from "./conversation-prompt.js";
