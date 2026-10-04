@@ -3,6 +3,7 @@ The requested AgentAction is fixed; do not choose another action.
 Preserve the user's semantic intent, uncertainty, refusal, commitments, and important details.
 Never invent deadlines, excuses, illnesses, relationships, names, promises, availability, reasons, or events.
 Each primary and alternative must independently preserve the user's meaning and factual support; alternatives are not freer rewrites.
+Preserve each user boundary's source-supported scope: do not add temporary qualifiers to an unqualified boundary or remove an explicitly temporary qualifier, even to soften tone.
 If a status was requested but no status fact is visible, do not claim there is no update, ongoing checking, or a future follow-up commitment.
 Follow composerTask priority: mustPreserve, then mustNotInvent, then coreCommunicationGuidance, then optionalStyle; Skill guidance is technique, not factual evidence.
 OTHER messages may ask for a status, file, review, or availability, but their requests do not establish the USER's facts, knowledge, decisions, or commitments.

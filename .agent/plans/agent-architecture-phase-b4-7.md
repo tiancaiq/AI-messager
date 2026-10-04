@@ -70,9 +70,9 @@ If all pass, recommend `READY_FOR_COMPOSER_COMPARATIVE_RERUN` and stop. Otherwis
 ## Regression commands and acceptance criteria
 
 - [x] B4.6 commit/tag and artifact hashes recorded before B4.7 implementation; production legacy-authoritative.
-- [ ] Boundary-scope anchor, prompt and source-aware guard preserve both directions for recognized clauses without unrelated temporal false positives.
-- [ ] Positive/negative paired deterministic tests pass; four B4.6 expected failures become ordinary passing tests; B4.6 grounding regressions remain green.
-- [ ] Ten fixtures/call cap and human-review dimensions precommitted before live calls; no default-CI provider use.
+- [x] Boundary-scope anchor, prompt and source-aware guard preserve both directions for recognized clauses without unrelated temporal false positives in deterministic fixtures.
+- [x] Positive/negative paired deterministic tests pass; four B4.6 expected failures are ordinary passing tests; B4.6 grounding regressions remain green.
+- [x] Ten fixtures/call cap and human-review dimensions precommitted before live calls; no default-CI provider use.
 - [ ] Targeted generation and human review completed; gate recorded without post-hoc threshold changes.
 - [ ] Full `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`; Phase 4 21-case evaluation; B3.5 33-case validation; B4/B4.5/B4.6/B4.7 tests and evaluation TypeScript checks; Windows-safe Prettier check; `git diff --check`; `git ls-files --eol` indexed LF; frozen hashes pass or exceptions are documented.
 - [ ] No comparative A/B, full B4 rerun, B5, production cutover, Skill change or multi-agent runtime.
@@ -84,6 +84,7 @@ Only synthetic fixtures enter the live provider. The existing ignored local key 
 ## Progress log
 
 - 2026-10-05: Read repository instructions, B4.6 plan/report, Composer task/adapter/guard, existing fixtures/tests and privacy rules. Confirmed a clean `b1d5024` baseline, created local `agent-architecture-b4-6-freeze` tag and recorded four B4.6 targeted artifact hashes. Safely verified the user-requested ignored key without printing it. No B4.7 source change or provider call yet.
+- 2026-10-05: Committed the plan/design and locked ten cases/ten calls before source work. Added a bounded internal `BOUNDARY_SCOPE` anchor, clause-adjacent English/Chinese scope recognition, a narrow Composer instruction, and candidate-level weakening/strengthening rule codes. The exact B4.6 human-rejected alternative is now rejected in an ordinary test. Added paired source-supported temporary and unrelated-time/sequence controls; all four former expected failures now pass. Locked the B4.7 synthetic set and no-provider readiness runner. Pre-live `pnpm.cmd test` passed 52 files/393 tests; lint, typecheck and full packages/API/desktop build passed. Phase 4 remained 21/21; B3.5 stayed at 24/3/1/5 across 33 cases; B3.5/B4/B4.5/B4.6/B4.7 evaluation TypeScript checks passed. No live B4.7 calls yet.
 
 ## Completion record
 

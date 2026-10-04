@@ -25,6 +25,8 @@ The bounded source-aware backstop recognizes high-signal English and Simplified/
 
 This is not a global ban on `先`, `暫時`, `暂时`, “for now,” “at the moment” or “for the time being.” `先確認時間，再回覆他` is sequence, not a boundary. “Tomorrow” elsewhere in a sentence is a factual timing anchor, not automatic boundary temporariness. An explicit source `請先不要催我` can become `暫時請不要催我` where meaning is preserved. A source “For now, I can't take on more work” cannot silently become “I can't take on more work.”
 
+When the same recognized source boundary kind carries conflicting scopes in different clauses, derivation abstains instead of placing a contradictory hard anchor. When wording such as “maybe” leaves a recognized boundary's duration unclear, the anchor can be `UNKNOWN`; the backstop rejects an added explicit temporary qualifier, while the existing uncertainty guard handles loss of uncertainty. These cases still require semantic review.
+
 The guard should abstain outside the recognized clause/kind patterns rather than reject all unfamiliar phrasing. Tests must expose this limited coverage; no claim of full entailment. All generated primary and alternative candidates use the same task/guard. The existing adapter's action, strict output schema, model, `store: false` and output budget do not change.
 
 ## Regression and live gate

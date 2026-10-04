@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"],
+    "types": ["node"],
+    "rootDir": "../..",
+    "noEmit": true
+  },
+  "include": ["tests/composer-b4-7-*.ts", "../../scripts/evaluate-composer-b4-7-targeted.ts"]
+}

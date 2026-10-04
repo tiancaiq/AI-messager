@@ -218,9 +218,8 @@ describe("B4.6 Composer task and candidate grounding", () => {
     ).toBeNull();
   });
 
-  // Human-reviewed B4.6 blocker: the primary is valid, but an alternative may not
-  // turn an unqualified pressure boundary into a temporary pause. These remain
-  // expected failures until the next Composer refinement adds a reliable backstop.
+  // Human-reviewed B4.6 blocker: a valid primary cannot rescue an alternative
+  // that turns an unqualified pressure boundary into a temporary pause.
   for (const [label, draft, alternative] of [
     ["先", "我不能再這樣做了，請不要再催。", "我不能再這樣做了，請先不要再催。"],
     ["暫時", "我不能再這樣做了，請不要再催。", "我不能再這樣做了，請暫時不要再催。"],
@@ -235,11 +234,133 @@ describe("B4.6 Composer task and candidate grounding", () => {
       "I can't keep doing this. Please stop pressuring me at the moment.",
     ],
   ] as const) {
-    it.fails(`rejects an unsupported ${label} qualifier in a boundary alternative`, () => {
+    it(`rejects an unsupported ${label} qualifier in a boundary alternative`, () => {
       const input = request("Please do this now.", draft);
       expect(guard(input, draft, [alternative])).toBe("BOUNDARY_TEMPORAL_WEAKENING");
     });
   }
+
+  it("propagates a source-qualified durable boundary anchor into the provider task", () => {
+    const input = request("現在就要，別再拖了。", "我不能再這樣做了，請不要再催。");
+    const policy = decideCoachingAction(input);
+    const task = buildComposerTask(input, policy, guidance);
+    expect(task.mustPreserve).toContainEqual(
+      expect.objectContaining({
+        concept: "BOUNDARY_SCOPE",
+        value: "STOP_PRESSURE:DURABLE_OR_UNQUALIFIED",
+        owner: "USER",
+        sourceRef: "DRAFT",
+      }),
+    );
+    const payload = buildOpenAiCoachingRequest(input, policy, guidance, "fixture-model", task);
+    const text = (payload.input as { content: { text: string }[] }[])[0]!.content[0]!.text;
+    expect(JSON.parse(text).composerTask.mustPreserve).toContainEqual(
+      expect.objectContaining({
+        concept: "BOUNDARY_SCOPE",
+        value: "STOP_PRESSURE:DURABLE_OR_UNQUALIFIED",
+      }),
+    );
+  });
+
+  it("rejects the exact human-rejected B4.6 alternative despite its valid primary", () => {
+    const input = request("現在就要，別再拖了。", "我不能再這樣做了，請不要再催。");
+    expect(
+      guard(input, "我沒辦法再這樣做下去了，請不要再催了。", [
+        "這件事我沒辦法再繼續了，請先不要再催我。",
+      ]),
+    ).toBe("BOUNDARY_TEMPORAL_WEAKENING");
+  });
+
+  it("rejects Simplified Chinese durable-to-temporary boundary scope", () => {
+    const input = request("现在就要。", "我不能再这样做了，请不要再催我。");
+    expect(
+      guard(input, "我不能再这样做了，请不要再催我。", ["我不能再这样做了，请暂时不要再催我。"]),
+    ).toBe("BOUNDARY_TEMPORAL_WEAKENING");
+  });
+
+  it("rejects English durable-to-temporary scope but allows an equivalent unqualified paraphrase", () => {
+    const input = request("Please answer again.", "Please stop asking me about this.");
+    expect(guard(input, "Please don't keep asking me about this.")).toBeNull();
+    expect(guard(input, "For now, please stop asking me about this.")).toBe(
+      "BOUNDARY_TEMPORAL_WEAKENING",
+    );
+    expect(guard(input, "Please stop asking me about this for the time being.")).toBe(
+      "BOUNDARY_TEMPORAL_WEAKENING",
+    );
+  });
+
+  it("preserves a source-supported temporary English work limit without strengthening it", () => {
+    const input = request("Can you take on more work?", "For now, I can't take on more work.");
+    const task = buildComposerTask(input, decideCoachingAction(input), guidance);
+    expect(task.mustPreserve).toContainEqual(
+      expect.objectContaining({ concept: "BOUNDARY_SCOPE", value: "CAPACITY_LIMIT:TEMPORARY" }),
+    );
+    expect(guard(input, "I can't take on more work at the moment.")).toBeNull();
+    expect(guard(input, "I can't take on more work.")).toBe("BOUNDARY_TEMPORAL_STRENGTHENING");
+    expect(
+      guard(input, "For now, I can't take on more work.", ["I can't take on more work."]),
+    ).toBe("BOUNDARY_TEMPORAL_STRENGTHENING");
+  });
+
+  it("preserves a source-supported temporary Chinese pressure boundary", () => {
+    const input = request("現在可以嗎？", "請先不要催我。");
+    expect(guard(input, "暫時請不要催我。")).toBeNull();
+    expect(guard(input, "請不要催我。")).toBe("BOUNDARY_TEMPORAL_STRENGTHENING");
+  });
+
+  it("does not treat an unrelated tomorrow fact as temporary pressure scope", () => {
+    const input = request(
+      "Can you do this tomorrow?",
+      "I can't do this tomorrow. Please stop pressuring me.",
+    );
+    expect(guard(input, "I can't do this tomorrow. Please don't keep pushing me.")).toBeNull();
+  });
+
+  it("does not treat Chinese 先 used for sequence as a boundary qualifier", () => {
+    const input = request("你要先做什麼？", "先確認時間，再回覆他。");
+    const task = buildComposerTask(input, decideCoachingAction(input), guidance);
+    expect(task.mustPreserve.some(({ concept }) => concept === "BOUNDARY_SCOPE")).toBe(false);
+    expect(guard(input, "先確認時間，再回覆他。")).toBeNull();
+  });
+
+  it("does not let empathy and de-escalation make an extra-work limit temporary", () => {
+    const input = request(
+      "This is urgent. Please take on more work.",
+      "I understand this is urgent, but I can't keep taking on extra work.",
+    );
+    expect(
+      guard(input, "I hear this is urgent, but I can't keep taking on extra work."),
+    ).toBeNull();
+    expect(guard(input, "I hear this is urgent, but for now I can't take on more work.")).toBe(
+      "BOUNDARY_TEMPORAL_WEAKENING",
+    );
+  });
+
+  it("rejects temporal scope invented for a recognized but uncertain boundary", () => {
+    const input = request("Can you continue?", "Maybe I can't keep doing this.");
+    const task = buildComposerTask(input, decideCoachingAction(input), guidance);
+    expect(task.mustPreserve).toContainEqual(
+      expect.objectContaining({ concept: "BOUNDARY_SCOPE", value: "CAPACITY_LIMIT:UNKNOWN" }),
+    );
+    expect(guard(input, "Maybe, for now I can't keep doing this.")).toBe(
+      "BOUNDARY_TEMPORAL_WEAKENING",
+    );
+  });
+
+  it("rejects malformed boundary-scope anchors before provider serialization", () => {
+    const input = request("Please stop.", "Please stop pressuring me.");
+    const task = buildComposerTask(input, decideCoachingAction(input), guidance);
+    expect(() =>
+      ComposerTaskSchema.parse({
+        ...task,
+        mustPreserve: task.mustPreserve.map((anchor) =>
+          anchor.concept === "BOUNDARY_SCOPE"
+            ? { ...anchor, value: "STOP_PRESSURE:PERMANENT" }
+            : anchor,
+        ),
+      }),
+    ).toThrow();
+  });
 
   it("accepts a conventional pass refusal and rejects an acceptance reversal", () => {
     const input: CoachingRequest = {

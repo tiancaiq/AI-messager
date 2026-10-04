@@ -23,6 +23,7 @@ const AnchorSchema = z
       "STATUS",
       "COMMITMENT",
       "REQUEST",
+      "BOUNDARY_SCOPE",
       "LANGUAGE_SCRIPT",
     ]),
     value: z.string().trim().min(1).max(80),
@@ -98,6 +99,13 @@ export const ComposerTaskSchema = z
       context.addIssue({ code: "custom", message: "Duplicate meaning anchor." });
     if (new Set(task.mustNotInvent).size !== task.mustNotInvent.length)
       context.addIssue({ code: "custom", message: "Duplicate non-invention category." });
+    if (
+      task.mustPreserve.some(
+        ({ concept, value, owner }) =>
+          concept === "BOUNDARY_SCOPE" && (owner !== "USER" || !boundaryAnchorValue.test(value)),
+      )
+    )
+      context.addIssue({ code: "custom", message: "Invalid boundary-scope anchor." });
   });
 
 export type ComposerTask = z.infer<typeof ComposerTaskSchema>;
@@ -142,6 +150,82 @@ const unsupportedInformationClaim =
   /\b(?:i (?:don['’]t|do not|haven['’]t|have not) have (?:enough |sufficient |the )?(?:information|context|details)|i need (?:more )?(?:information|context|details)|i(?:['’]m| am) not able to (?:provide|give|share) (?:an? )?(?:accurate |reliable )?(?:progress |status )?update (?:based on|without)|i(?:['’]m| am) not sure|i (?:haven['’]t|have not) decided|i need to check)\b|(?:我|我們|我们)(?:目前|這邊|这边)?(?:沒有|没有).{0,9}(?:資訊|信息|資料|资料|掌握)|(?:현재 대화|이 대화).{0,30}(?:정보|진행 상황).{0,12}(?:없어|없습니다)/iu;
 const assertedEmotion =
   /\b(?:you (?:are|feel)|you(?:['’]re| are) (?:clearly )?|i (?:know|understand) (?:that )?you(?:['’]re| are)) (?:upset|frustrated|sad|angry)\b|(?:你|您)(?:很|感到)(?:難過|难过|沮喪|沮丧|生氣|生气)/iu;
+
+type BoundaryKind = "STOP_PRESSURE" | "CAPACITY_LIMIT";
+type BoundaryScope = "DURABLE_OR_UNQUALIFIED" | "TEMPORARY" | "UNKNOWN";
+const boundaryAnchorValue =
+  /^(?:STOP_PRESSURE|CAPACITY_LIMIT):(?:DURABLE_OR_UNQUALIFIED|TEMPORARY|UNKNOWN)$/u;
+const boundaryPatterns: readonly { kind: BoundaryKind; pattern: RegExp; language: "en" | "zh" }[] =
+  [
+    {
+      kind: "STOP_PRESSURE",
+      language: "en",
+      pattern:
+        /\b(?:please\s+)?(?:don['’]t|do not|stop|quit)\s+(?:(?:keep|continue)\s+)?(?:asking|pressuring|pushing|nagging|pestering)(?:\s+(?:me|us))?(?:\s+about\s+(?:this|that|it))?/giu,
+    },
+    {
+      kind: "STOP_PRESSURE",
+      language: "zh",
+      pattern:
+        /(?:請|请)?(?:先|暫時|暂时)?(?:不要|別|别|停止|停)(?:再|一直|繼續|继续)?(?:催|問|问|逼|施壓|施压)(?:我|我們|我们)?/gu,
+    },
+    {
+      kind: "CAPACITY_LIMIT",
+      language: "en",
+      pattern:
+        /\b(?:i|we)\s+(?:can['’]t|cannot|can not|won['’]t|will not|am not able to|are not able to)\s+(?:(?:keep|continue)\s+)?(?:(?:taking|take)\s+on\s+(?:more|extra)\s+work|(?:doing|do)\s+this)\b/giu,
+    },
+    {
+      kind: "CAPACITY_LIMIT",
+      language: "zh",
+      pattern:
+        /(?:我|我們|我们)(?:先|暫時|暂时)?(?:不能|沒辦法|没办法|無法|无法)(?:再|繼續|继续)?(?:這樣|这样|繼續|继续|做|承擔|承担|接)(?:做|下去)?/gu,
+    },
+  ];
+const englishTemporary =
+  /(?:for now|at the moment|for the moment|for the time being|temporarily|right now)/iu;
+const englishTemporaryPrefix =
+  /(?:for now|at the moment|for the moment|for the time being|temporarily|right now)\s*,?\s*$/iu;
+const englishTemporarySuffix =
+  /^\s+(?:for now|at the moment|for the moment|for the time being|temporarily|right now)\b/iu;
+const chineseTemporary = /(?:先|暫時|暂时)/u;
+const chineseTemporaryPrefix = /(?:先|暫時|暂时)\s*[,，]?\s*$/u;
+const unknownBoundaryPrefix = /(?:maybe|perhaps|可能|也許|也许)\s*[,，]?\s*$/iu;
+const sentenceBreak = /[.!?。！？;；\n]/gu;
+
+function precedingClause(text: string, start: number): string {
+  const before = text.slice(0, start);
+  let lastBreak = -1;
+  for (const match of before.matchAll(sentenceBreak)) lastBreak = match.index;
+  return before.slice(lastBreak + 1);
+}
+
+/** Narrow clause-attached scope recognition, never a global temporal-word ban. */
+function boundaryScopes(text: string): Map<BoundaryKind, Set<BoundaryScope>> {
+  const normalized = text.normalize("NFKC");
+  const found = new Map<BoundaryKind, Set<BoundaryScope>>();
+  for (const { kind, pattern, language } of boundaryPatterns) {
+    for (const match of normalized.matchAll(pattern)) {
+      const before = precedingClause(normalized, match.index);
+      const after = normalized.slice(match.index + match[0].length);
+      const temporary =
+        language === "en"
+          ? englishTemporary.test(match[0]) ||
+            englishTemporaryPrefix.test(before) ||
+            englishTemporarySuffix.test(after)
+          : chineseTemporary.test(match[0]) || chineseTemporaryPrefix.test(before);
+      const scope: BoundaryScope = temporary
+        ? "TEMPORARY"
+        : unknownBoundaryPrefix.test(before)
+          ? "UNKNOWN"
+          : "DURABLE_OR_UNQUALIFIED";
+      const scopes = found.get(kind) ?? new Set<BoundaryScope>();
+      scopes.add(scope);
+      found.set(kind, scopes);
+    }
+  }
+  return found;
+}
 
 export function userOwnedEvidenceText(request: CoachingRequest): string {
   return [
@@ -244,6 +328,18 @@ export function buildComposerTask(
         owner: "USER",
         sourceRef: source.sourceRef,
       });
+    for (const [kind, scopes] of boundaryScopes(sourceText)) {
+      // Conflicting source clauses cannot support a single high-priority scope anchor.
+      if (scopes.size !== 1) continue;
+      const scope = [...scopes][0]!;
+      anchors.push({
+        concept: "BOUNDARY_SCOPE",
+        value: `${kind}:${scope}`,
+        certainty: "DEFINITE",
+        owner: "USER",
+        sourceRef: source.sourceRef,
+      });
+    }
     const seenTiming = new Set<string>();
     for (const match of sourceText.matchAll(timing)) {
       const value = match[0].toLowerCase();
@@ -320,7 +416,9 @@ export type ComposerTaskViolation =
   | "STATUS_REPLY_GROUNDING"
   | "UNSUPPORTED_INFORMATION_STATE"
   | "UNSUPPORTED_COMMITMENT"
-  | "UNSUPPORTED_EMOTION";
+  | "UNSUPPORTED_EMOTION"
+  | "BOUNDARY_TEMPORAL_WEAKENING"
+  | "BOUNDARY_TEMPORAL_STRENGTHENING";
 
 /** High-signal backstop only; it does not replace human semantic review. */
 export function detectComposerTaskViolation(
@@ -343,6 +441,21 @@ export function detectComposerTaskViolation(
     return "UNSUPPORTED_COMMITMENT";
   if (task.mustNotInvent.includes("EMOTIONAL_STATE") && assertedEmotion.test(normalized))
     return "UNSUPPORTED_EMOTION";
+  const candidateScopes = boundaryScopes(normalized);
+  for (const anchor of task.mustPreserve) {
+    if (anchor.concept !== "BOUNDARY_SCOPE") continue;
+    const [kind, sourceScope] = anchor.value.split(":") as [BoundaryKind, BoundaryScope];
+    const observedScopes = candidateScopes.get(kind);
+    // An unrecognized paraphrase needs semantic review; this bounded guard must abstain.
+    if (!observedScopes) continue;
+    if (sourceScope !== "TEMPORARY" && observedScopes.has("TEMPORARY"))
+      return "BOUNDARY_TEMPORAL_WEAKENING";
+    if (
+      sourceScope === "TEMPORARY" &&
+      (observedScopes.has("DURABLE_OR_UNQUALIFIED") || observedScopes.has("UNKNOWN"))
+    )
+      return "BOUNDARY_TEMPORAL_STRENGTHENING";
+  }
   if (task.statusReplyMode === "ASK_SCOPE_ONLY" && !/[?？]\s*$/u.test(normalized))
     return "STATUS_REPLY_GROUNDING";
   return null;

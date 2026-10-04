@@ -154,7 +154,9 @@ export type CoachingGuardRuleCode =
   | "STATUS_REPLY_GROUNDING"
   | "UNSUPPORTED_INFORMATION_STATE"
   | "UNSUPPORTED_COMMITMENT"
-  | "UNSUPPORTED_EMOTION";
+  | "UNSUPPORTED_EMOTION"
+  | "BOUNDARY_TEMPORAL_WEAKENING"
+  | "BOUNDARY_TEMPORAL_STRENGTHENING";
 
 function normalizedText(value: string): string {
   return value.normalize("NFKC").toLowerCase();
