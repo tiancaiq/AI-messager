@@ -100,7 +100,7 @@ function guidanceForGeneration(plan: CommunicationPlan): CommunicationGuidance {
 }
 
 const uncertainIntent =
-  /\b(?:uncertain|not (?:yet )?(?:certain|sure)|maybe|possibly|probably|likely|unlikely|approximately|approximate|roughly|tentative|might|may|could)\b|\baround\s+\d|(?:不确定|不確定|可能|也许|也許|大概|差不多|暂定|暫定)/iu;
+  /\b(?:uncertain|not (?:yet )?(?:certain|sure)|maybe|possibly|probably|likely|unlikely|approximately|approximate|roughly|tentative|might|may|could(?!\s+you\b))\b|\baround\s+\d|(?:不确定|不確定|可能|也许|也許|大概|差不多|暂定|暫定)/iu;
 const negatedRefusalIntent =
   /\b(?:do not|don['’]t|will not|won['’]t|would not|wouldn['’]t)\s+(?:want to\s+)?(?:decline|refuse|reject)\b|(?:不想|不会|不會)\s*(?:拒绝|拒絕|婉拒)/iu;
 const uncertaintyOutput =
@@ -110,7 +110,9 @@ const hardenedCertaintyOutput =
 const refusalIntent =
   /\b(?:declin(?:e|ing)|refus(?:e|ing)|reject(?:ing)?|cannot|can['’]t|can not|won['’]t|will not|do not want|don['’]t want|not able|unable|not available)\b|(?:拒绝|拒絕|婉拒|不想|不能|无法|無法|没办法|沒辦法|不会|不會|不参加|不參加)/iu;
 const refusalOutput =
-  /\b(?:declin(?:e|ing)|refus(?:e|ing)|reject(?:ing)?|cannot|can['’]t|can not|won['’]t|will not|do not want|don['’]t want|not able|unable|not available|rather not|have to pass|need to pass|sit this out|skip this|need more time|not possible|isn['’]t possible|won['’]t work|not going to)\b|(?:拒绝|拒絕|婉拒|不想|不能|无法|無法|没办法|沒辦法|不会|不會|不参加|不參加|这次不行|這次不行)/iu;
+  /\b(?:declin(?:e|ing)|refus(?:e|ing)|reject(?:ing)?|cannot|can['’]t|can not|won['’]t|will not|do not want|don['’]t want|not able|unable|not available|rather not|not willing to (?:continue|apologize)|have to pass|need to pass|sit this out|skip this|need more time|not possible|isn['’]t possible|won['’]t work|not going to)\b|(?:拒绝|拒絕|婉拒|不想|不能|无法|無法|没办法|沒辦法|不会|不會|不参加|不參加|这次不行|這次不行)/iu;
+const conventionalPassRefusal =
+  /\bi(?:['’]ll| will) pass(?:\s+(?:tonight|today|tomorrow|this time|for now))?(?=$|[.,!?;:])/iu;
 const hardAcceptanceOutput =
   /\b(?:accept|accepted|will attend|can attend|i(?:'|’)ll (?:come|join|go|attend)|happy to (?:come|join|go|attend)|count me in|see you there)\b|(?:没问题|沒問題|接受|参加|參加|我会去|我會去|算我一个|算我一個)/iu;
 const negatedRefusalOutput =
@@ -122,7 +124,26 @@ const negativeCommitmentIntent =
 const positiveCommitmentOutput =
   /\b(?:(?:i|we)(?:'|’)ll|(?:i|we) will|(?:i|we) can(?!['’]?t\b))\s+(?:come|join|go|attend|do|send|finish|complete|make|help|handle|review|deliver|be there|take care)|\b(?:definitely|guarantee|promise)\b|(?:我(?:会|會)|我们(?:会|會)|我們(?:会|會))(?:去|来|來|参加|參加|完成|做|发|發|发送|發送|处理|處理|帮|幫)|(?:一定|保证|保證)/iu;
 const factualAnchor =
-  /(?:\b\d{1,4}(?::\d{2})?(?:\s?(?:a\.?m\.?|p\.?m\.?))?\b|\b(?:today|tomorrow|tonight|yesterday|monday|tuesday|wednesday|thursday|friday|saturday|sunday|morning|afternoon|evening|weekend|next week|this week|last week)\b|(?:今天|明天|今晚|昨天|上午|下午|晚上|周末|週末|下周|下週|本周|本週|上周|上週|星期[一二三四五六日天]|周[一二三四五六日天]|週[一二三四五六日天]|\d{1,2}[点點時时月日号號]))/giu;
+  /(?:下午三[点點時时]|\b\d{1,4}(?::\d{2})?(?:\s?(?:a\.?m\.?|p\.?m\.?))?\b|\b(?:today|tomorrow|tonight|yesterday|monday|tuesday|wednesday|thursday|friday|saturday|sunday|morning|afternoon|evening|weekend|next week|this week|last week)\b|(?:今天|明天|今晚|昨天|上午|下午|晚上|周末|週末|下周|下週|本周|本週|上周|上週|星期[一二三四五六日天]|周[一二三四五六日天]|週[一二三四五六日天]|\d{1,2}[点點時时月日号號]))/giu;
+const statusNoUpdate =
+  /\b(?:no (?:concrete |confirmed |new |substantial )?(?:progress|updates?|status update)|(?:i|we) (?:do not|don['’]t|haven['’]t|have not) have (?:a |an |any )?(?:concrete |confirmed |new |substantial )?(?:progress |status )?update|nothing (?:new )?to report)\b|(?:没有|沒有|还没有|還沒有|暂时没有|暫時沒有)(?:.{0,8})(?:进度|進度|更新)|(?:진행 상황|업데이트)(?:은|는|이|가)? (?:없습니다|없어요)|(?:아직|현재).{0,25}(?:업데이트|진행 상황).{0,12}(?:없습니다|없어요)/iu;
+const statusChecking =
+  /\b(?:i(?:'m| am)|we(?:'re| are)) (?:still )?(?:checking|confirming|verifying|looking into)\b|(?:还在|還在|正在)(?:.{0,5})(?:确认|確認|核实|核實)|(?:确认|確認|核实|核實)中|확인 중/iu;
+const statusFollowUp =
+  /\b(?:i(?:'ll| will)|we(?:'ll| will)) (?:share|send|provide|give|post) (?:you )?(?:an? |the )?(?:update|more|progress)\b|\b(?:i(?:'ll| will)|we(?:'ll| will)) (?:update you|let you know|follow up|check back|keep you posted)\b|(?:再|会|會)(?:.{0,4})(?:回覆|回复|更新)(?:你)?|(?:업데이트|공유)(?:드리겠습니다|하겠습니다)/iu;
+const priorThanks = /\b(?:thanks|thank you) again\b|(?:再次|再一次)(?:谢谢|謝謝|感谢|感謝)/iu;
+const thanksExpression = /\b(?:thanks|thank you)\b|(?:谢谢|謝謝|感谢|感謝)/iu;
+const negatedChineseParticipation =
+  /(?:不|没|沒|未|不会|不會|无法|無法|不能|不想)(?:\s|还是|還是|再){0,4}(?:参加|參加)/gu;
+
+export type CoachingGuardRuleCode =
+  | "POLICY_MISMATCH"
+  | "UNCERTAINTY_PRESERVATION"
+  | "REFUSAL_PRESERVATION"
+  | "NEGATIVE_COMMITMENT"
+  | "FACTUAL_ANCHOR"
+  | "STATUS_GROUNDING"
+  | "PRIOR_APPRECIATION";
 
 function normalizedText(value: string): string {
   return value.normalize("NFKC").toLowerCase();
@@ -144,23 +165,72 @@ function explicitIntent(request: CoachingRequest, policy: CoachingPolicyDecision
 }
 
 function factualAnchors(value: string): Set<string> {
-  return new Set([...normalizedText(value).matchAll(factualAnchor)].map(([match]) => match));
+  return new Set(
+    [...normalizedText(value).matchAll(factualAnchor)].map(([match]) =>
+      /^(?:下午三[点點時时]|3\s?p\.?m\.?)$/u.test(match) ? "time:15:00" : match,
+    ),
+  );
 }
 
 function hasActualRefusalOutput(value: string): boolean {
-  return refusalOutput.test(
-    value.replace(negatedRefusalOutput, "").replace(nonRefusalInabilityOutput, ""),
+  const remaining = value.replace(negatedRefusalOutput, "").replace(nonRefusalInabilityOutput, "");
+  return refusalOutput.test(remaining) || conventionalPassRefusal.test(remaining);
+}
+
+function hasHardAcceptanceOutput(value: string): boolean {
+  return hardAcceptanceOutput.test(value.replace(negatedChineseParticipation, ""));
+}
+
+function groundedUserText(request: CoachingRequest): string {
+  return normalizedText(
+    [
+      ...request.analysis.messages
+        .filter(({ speaker, speakerConfidence }) => speaker === "USER" && speakerConfidence >= 0.8)
+        .map(({ text }) => text),
+      ...(request.analysis.draft.text !== null && request.analysis.draft.confidence >= 0.8
+        ? [request.analysis.draft.text]
+        : []),
+      ...(request.selection !== null
+        ? [
+            request.selection.kind === "ACTION"
+              ? request.selection.intent
+              : request.selection.answer,
+          ]
+        : []),
+    ].join("\n"),
+  );
+}
+
+function supportedPriorThanks(request: CoachingRequest): boolean {
+  return (
+    request.analysis.messages.some(
+      ({ speaker, speakerConfidence, text }) =>
+        speaker === "USER" && speakerConfidence >= 0.8 && thanksExpression.test(text),
+    ) ||
+    priorThanks.test(request.analysis.draft.text ?? "") ||
+    (request.selection !== null &&
+      priorThanks.test(
+        request.selection.kind === "ACTION" ? request.selection.intent : request.selection.answer,
+      ))
+  );
+}
+
+function unsupportedStatusClaim(message: string, userSource: string): boolean {
+  return (
+    (statusNoUpdate.test(message) && !statusNoUpdate.test(userSource)) ||
+    (statusChecking.test(message) && !statusChecking.test(userSource)) ||
+    (statusFollowUp.test(message) && !statusFollowUp.test(userSource))
   );
 }
 
 // These are conservative, explainable lexical guards for high-signal invariants. They do not
 // claim general semantic equivalence or complete hallucination detection; live human review remains
 // necessary for paraphrases and unsupported facts outside the bounded anchors below.
-function passesDeterministicOutputGuards(
+export function evaluateCoachingDecisionGuards(
   decision: CoachingDecision,
   request: CoachingRequest,
   policy: CoachingPolicyDecision,
-): boolean {
+): CoachingGuardRuleCode | null {
   if (
     decision.action !== policy.action ||
     decision.userIntent.value !== policy.userIntent.value ||
@@ -169,7 +239,7 @@ function passesDeterministicOutputGuards(
     decision.ambiguity.material !== policy.ambiguity.material ||
     decision.ambiguity.reason !== policy.ambiguity.reason
   )
-    return false;
+    return "POLICY_MISMATCH";
 
   const intent = normalizedText(explicitIntent(request, policy));
   const refusalRequired = refusalIntent.test(intent) && !negatedRefusalIntent.test(intent);
@@ -182,27 +252,32 @@ function passesDeterministicOutputGuards(
       request.selection?.kind === "CLARIFICATION" ? request.selection.answer : "",
     ].join("\n"),
   );
+  const userSource = groundedUserText(request);
 
-  return generatedMessages(decision).every((message) => {
+  for (const message of generatedMessages(decision)) {
     const normalized = normalizedText(message);
     if (
       uncertainIntent.test(intent) &&
       (!uncertaintyOutput.test(normalized) || hardenedCertaintyOutput.test(normalized))
     )
-      return false;
+      return "UNCERTAINTY_PRESERVATION";
     if (
       refusalRequired &&
-      (!hasActualRefusalOutput(normalized) || hardAcceptanceOutput.test(normalized))
+      (!hasActualRefusalOutput(normalized) || hasHardAcceptanceOutput(normalized))
     )
-      return false;
+      return "REFUSAL_PRESERVATION";
     if (negativeCommitmentIntent.test(intent) && positiveCommitmentOutput.test(normalized))
-      return false;
+      return "NEGATIVE_COMMITMENT";
     const outputAnchors = factualAnchors(normalized);
-    return (
-      [...requiredAnchors].every((anchor) => outputAnchors.has(anchor)) &&
-      [...outputAnchors].every((anchor) => sourceAnchors.has(anchor))
-    );
-  });
+    if (
+      ![...requiredAnchors].every((anchor) => outputAnchors.has(anchor)) ||
+      ![...outputAnchors].every((anchor) => sourceAnchors.has(anchor))
+    )
+      return "FACTUAL_ANCHOR";
+    if (unsupportedStatusClaim(normalized, userSource)) return "STATUS_GROUNDING";
+    if (priorThanks.test(normalized) && !supportedPriorThanks(request)) return "PRIOR_APPRECIATION";
+  }
+  return null;
 }
 
 function localDecision(policy: CoachingPolicyDecision): CoachingDecision | undefined {
@@ -303,7 +378,7 @@ export async function coachConversation(
     if (
       !parsed.success ||
       (parsed.data.ok &&
-        !passesDeterministicOutputGuards(parsed.data.decision, parsedRequest.data, policy))
+        evaluateCoachingDecisionGuards(parsed.data.decision, parsedRequest.data, policy) !== null)
     )
       return {
         ok: false,

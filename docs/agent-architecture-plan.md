@@ -1,6 +1,6 @@
 # Agent architecture implementation plan
 
-Status: revised architecture; B1/B2/B3/B3.5 frozen; B4 evaluation-only quality experiment in progress; B5/cutover hold
+Status: revised architecture; B1/B2/B3/B3.5 frozen; B4 blocked; B4.5 needs Composer refinement; B5/cutover hold
 
 Updated: 2026-10-04
 Branch: `codex/agent-architecture`

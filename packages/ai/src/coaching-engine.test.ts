@@ -459,10 +459,9 @@ describe("provider-neutral coaching engine", () => {
     await expect(coachConversation(generator(result), declineRequest)).resolves.toEqual(result);
   });
 
-  // B4 human review accepted these as genuine refusals. These executable known-gap
-  // cases must be converted to ordinary passing tests when the guard is repaired.
-  it.fails.each(["I'll pass.", "I'll pass tonight.", "I think I'll pass."])(
-    "should accept a conventional refusal (known guard false positive): %s",
+  // B4 human review accepted these as genuine refusals; B4.5 repairs the lexical gap.
+  it.each(["I'll pass.", "I'll pass tonight.", "I think I'll pass."])(
+    "accepts a conventional refusal: %s",
     async (text) => {
       const declineRequest: CoachingRequest = {
         analysis: {
@@ -492,7 +491,7 @@ describe("provider-neutral coaching engine", () => {
     },
   );
 
-  it.fails("should accept 我还是不参加了。 as a refusal (known guard false positive)", async () => {
+  it("accepts 我还是不参加了。 as a refusal", async () => {
     const declineRequest: CoachingRequest = {
       analysis: {
         ...analysis,
@@ -536,6 +535,7 @@ describe("provider-neutral coaching engine", () => {
     "I’d be delighted to join you.",
     "I cannot wait to join you.",
     "I can’t resist—I’d love to join you.",
+    "I'll pass this along.",
   ])("rejects a reply that lacks an uncontradicted refusal: %s", async (text) => {
     const declineRequest: CoachingRequest = {
       analysis: {
