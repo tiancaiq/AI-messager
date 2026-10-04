@@ -206,6 +206,8 @@ B4 has its own [evaluation plan](../.agent/plans/agent-architecture-phase-b4.md)
 
 B4.5 used a [separate root-cause/refinement plan](../.agent/plans/agent-architecture-phase-b4-5.md) and [focused report](agent-composer-b4-5-evaluation.md). Human review of 23 fresh synthetic pairs found six new wins, six legacy wins, eight ties and three both-fail status cases. The reduced decisive-loss deficit and repaired tentative-tomorrow output do not satisfy the precommitted factual/meaning gate: unsupported user information-state claims and a new-arm unsupported Korean send promise remain. Decision: `NEEDS_COMPOSER_REFINEMENT`; no full B4 rerun or production cutover is authorized.
 
+B4.6 is a separately scoped [Composer grounding milestone](../.agent/plans/agent-architecture-phase-b4-6.md) against the frozen B4.5 baseline. It makes source-qualified meaning and non-invention priorities explicit in an internal Composer task, adds candidate-level grounding regressions, and gates a small synthetic live set before any conditional focused A/B. The approved Skill pipeline and production legacy selector stay unchanged; B5 and full B4 rerun remain on hold. See the [grounding design](agent-composer-b4-6-grounding.md).
+
 ## Data + Memory roadmap
 
 DATA-00 through DATA-03 and MEM-00 are complete. Later rows remain proposed implementation milestones requiring their own execution plans and acceptance review. The [memory contract](memory.md) is the source of truth for domain semantics and acceptance scenarios M01–M21. [Architecture](architecture.md#data--memory-boundaries-data-00) and [privacy](privacy.md#local-memory-storage-data-00) specify module and security boundaries.

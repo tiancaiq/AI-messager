@@ -97,12 +97,13 @@ export async function runComposerB4Case(
     let providerCalls = 0;
     const recordingGenerator: CoachingTextGenerator = {
       configuration: generator.configuration,
-      async generateCoachingDecision(request, policy, communicationGuidance) {
+      async generateCoachingDecision(request, policy, communicationGuidance, task) {
         providerCalls += 1;
         providerResult = await generator.generateCoachingDecision(
           request,
           policy,
           communicationGuidance,
+          task,
         );
         return providerResult;
       },

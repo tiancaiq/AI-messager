@@ -15,6 +15,7 @@ import {
 import type { CoachingTextGenerator } from "./coaching-engine.js";
 import type { CoachingPolicyDecision } from "./coaching-policy.js";
 import { COACHING_INSTRUCTIONS } from "./coaching-prompt.js";
+import { buildComposerTask, ComposerTaskSchema, type ComposerTask } from "./composer-task.js";
 
 const DEFAULT_MODEL = "gpt-5.6-luna";
 const DEFAULT_TIMEOUT_MS = 45_000;
@@ -91,7 +92,16 @@ function safeConversation(
   request: CoachingRequest,
   policy: CoachingPolicyDecision,
   communicationGuidance: CommunicationGuidance,
+  rawTask?: ComposerTask,
 ): string {
+  const task = ComposerTaskSchema.parse(
+    rawTask ?? buildComposerTask(request, policy, communicationGuidance),
+  );
+  if (
+    task.fixedAction !== policy.action ||
+    JSON.stringify(task.coreCommunicationGuidance) !== JSON.stringify(communicationGuidance)
+  )
+    throw new Error("Composer task does not match the fixed action and guidance.");
   return JSON.stringify({
     fixedDecision: {
       action: policy.action,
@@ -113,7 +123,7 @@ function safeConversation(
     draft: request.analysis.draft.text,
     language: request.analysis.language,
     warnings: request.analysis.warnings,
-    communicationGuidance,
+    composerTask: task,
   });
 }
 
@@ -122,6 +132,7 @@ export function buildOpenAiCoachingRequest(
   policy: CoachingPolicyDecision,
   communicationGuidance: CommunicationGuidance,
   modelId: string,
+  task?: ComposerTask,
 ): Record<string, unknown> {
   const format = outputFormat(policy.action);
   return {
@@ -132,7 +143,10 @@ export function buildOpenAiCoachingRequest(
       {
         role: "user",
         content: [
-          { type: "input_text", text: safeConversation(request, policy, communicationGuidance) },
+          {
+            type: "input_text",
+            text: safeConversation(request, policy, communicationGuidance, task),
+          },
         ],
       },
     ],
@@ -228,6 +242,7 @@ export class OpenAiCoachingAdapter implements CoachingTextGenerator {
     request: CoachingRequest,
     policy: CoachingPolicyDecision,
     communicationGuidance: CommunicationGuidance,
+    task?: ComposerTask,
   ): Promise<CoachingDecisionResult> {
     if (!this.#apiKey) return failure("NOT_CONFIGURED", "Configure an API key, then try again.");
     if (!isProviderGeneratedAction(policy.action))
@@ -243,6 +258,7 @@ export class OpenAiCoachingAdapter implements CoachingTextGenerator {
             policy,
             communicationGuidance,
             this.configuration.modelId,
+            task,
           ),
         ),
         signal: AbortSignal.timeout(this.#timeoutMs),

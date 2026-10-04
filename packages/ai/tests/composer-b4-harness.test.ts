@@ -148,9 +148,10 @@ describe("B4 evaluation-only Composer A/B isolation", () => {
       ),
     );
     const inputs = payloads.map(promptInput);
-    expect(inputs[0]?.communicationGuidance).not.toEqual(inputs[1]?.communicationGuidance);
-    delete inputs[0]!.communicationGuidance;
-    delete inputs[1]!.communicationGuidance;
+    const tasks = inputs.map((input) => input.composerTask as Record<string, unknown>);
+    expect(tasks[0]?.coreCommunicationGuidance).not.toEqual(tasks[1]?.coreCommunicationGuidance);
+    delete tasks[0]!.coreCommunicationGuidance;
+    delete tasks[1]!.coreCommunicationGuidance;
     expect(inputs[0]).toEqual(inputs[1]);
     const withoutInput = payloads.map((payload) => ({ ...payload, input: undefined }));
     expect(withoutInput[0]).toEqual(withoutInput[1]);

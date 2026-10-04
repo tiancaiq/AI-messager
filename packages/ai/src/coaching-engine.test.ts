@@ -172,6 +172,13 @@ describe("provider-neutral coaching engine", () => {
           fixture.request,
           expectedPolicy,
           { principles: expectedPlan.principles, avoid: expectedPlan.avoid },
+          expect.objectContaining({
+            fixedAction: expectedPolicy.action,
+            coreCommunicationGuidance: {
+              principles: expectedPlan.principles,
+              avoid: expectedPlan.avoid,
+            },
+          }),
         );
       }
     }

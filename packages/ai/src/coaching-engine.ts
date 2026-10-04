@@ -20,6 +20,12 @@ import {
   type CommunicationProblemGoalKind,
 } from "./communication-problem.js";
 import { decideCoachingAction, type CoachingPolicyDecision } from "./coaching-policy.js";
+import {
+  buildComposerTask,
+  detectComposerTaskViolation,
+  userOwnedEvidenceText,
+  type ComposerTask,
+} from "./composer-task.js";
 import { runB3SkillShadow, type SkillPlanShadowTrace } from "./skill-shadow.js";
 import { deriveSkillContext, type CommunicationSkillPlanner } from "./skill-context.js";
 
@@ -29,6 +35,7 @@ export interface CoachingTextGenerator {
     request: CoachingRequest,
     policy: CoachingPolicyDecision,
     communicationGuidance: CommunicationGuidance,
+    task: ComposerTask,
   ): Promise<CoachingDecisionResult>;
 }
 
@@ -143,7 +150,11 @@ export type CoachingGuardRuleCode =
   | "NEGATIVE_COMMITMENT"
   | "FACTUAL_ANCHOR"
   | "STATUS_GROUNDING"
-  | "PRIOR_APPRECIATION";
+  | "PRIOR_APPRECIATION"
+  | "STATUS_REPLY_GROUNDING"
+  | "UNSUPPORTED_INFORMATION_STATE"
+  | "UNSUPPORTED_COMMITMENT"
+  | "UNSUPPORTED_EMOTION";
 
 function normalizedText(value: string): string {
   return value.normalize("NFKC").toLowerCase();
@@ -182,23 +193,7 @@ function hasHardAcceptanceOutput(value: string): boolean {
 }
 
 function groundedUserText(request: CoachingRequest): string {
-  return normalizedText(
-    [
-      ...request.analysis.messages
-        .filter(({ speaker, speakerConfidence }) => speaker === "USER" && speakerConfidence >= 0.8)
-        .map(({ text }) => text),
-      ...(request.analysis.draft.text !== null && request.analysis.draft.confidence >= 0.8
-        ? [request.analysis.draft.text]
-        : []),
-      ...(request.selection !== null
-        ? [
-            request.selection.kind === "ACTION"
-              ? request.selection.intent
-              : request.selection.answer,
-          ]
-        : []),
-    ].join("\n"),
-  );
+  return normalizedText(userOwnedEvidenceText(request));
 }
 
 function supportedPriorThanks(request: CoachingRequest): boolean {
@@ -230,6 +225,7 @@ export function evaluateCoachingDecisionGuards(
   decision: CoachingDecision,
   request: CoachingRequest,
   policy: CoachingPolicyDecision,
+  task: ComposerTask = buildComposerTask(request, policy, { principles: [], avoid: [] }),
 ): CoachingGuardRuleCode | null {
   if (
     decision.action !== policy.action ||
@@ -242,7 +238,9 @@ export function evaluateCoachingDecisionGuards(
     return "POLICY_MISMATCH";
 
   const intent = normalizedText(explicitIntent(request, policy));
-  const refusalRequired = refusalIntent.test(intent) && !negatedRefusalIntent.test(intent);
+  const refusalRequired =
+    (refusalIntent.test(intent) || conventionalPassRefusal.test(intent)) &&
+    !negatedRefusalIntent.test(intent);
   const requiredAnchors = factualAnchors(intent);
   const sourceAnchors = factualAnchors(
     [
@@ -276,6 +274,10 @@ export function evaluateCoachingDecisionGuards(
       return "FACTUAL_ANCHOR";
     if (unsupportedStatusClaim(normalized, userSource)) return "STATUS_GROUNDING";
     if (priorThanks.test(normalized) && !supportedPriorThanks(request)) return "PRIOR_APPRECIATION";
+  }
+  for (const message of generatedMessages(decision)) {
+    const taskViolation = detectComposerTaskViolation(message, task);
+    if (taskViolation !== null) return taskViolation;
   }
   return null;
 }
@@ -368,17 +370,27 @@ export async function coachConversation(
     };
   }
 
+  let task: ComposerTask;
+  try {
+    task = buildComposerTask(parsedRequest.data, policy, guidanceForGeneration(communicationPlan));
+    if (task.fixedAction !== policy.action) return safeFailure;
+  } catch {
+    return safeFailure;
+  }
+
   try {
     const result = await generator.generateCoachingDecision(
       parsedRequest.data,
       policy,
       guidanceForGeneration(communicationPlan),
+      task,
     );
     const parsed = CoachingDecisionResultSchema.safeParse(result);
     if (
       !parsed.success ||
       (parsed.data.ok &&
-        evaluateCoachingDecisionGuards(parsed.data.decision, parsedRequest.data, policy) !== null)
+        evaluateCoachingDecisionGuards(parsed.data.decision, parsedRequest.data, policy, task) !==
+          null)
     )
       return {
         ok: false,
