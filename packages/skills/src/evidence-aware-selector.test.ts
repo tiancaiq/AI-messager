@@ -273,4 +273,78 @@ describe("B2 deterministic Skill assessment and selection", () => {
       ).result.status,
     ).toBe("FAILED");
   });
+
+  it("uses marginal meaning priority and repair overlap when eligible skills exceed the cap", () => {
+    const context = {
+      ...assessmentRequest.context,
+      situationTags: ["status_request", "mistake", "request"] as const,
+      intentTags: [
+        "set_expectation",
+        "provide_status",
+        "apologize",
+        "acknowledge_mistake",
+        "ask_for_help",
+      ] as const,
+    };
+    const codes = [
+      "SITUATION:status_request",
+      "SITUATION:mistake",
+      "SITUATION:request",
+      "INTENT:set_expectation",
+      "INTENT:provide_status",
+      "INTENT:apologize",
+      "INTENT:acknowledge_mistake",
+      "INTENT:ask_for_help",
+    ];
+    const input = SkillAssessmentRequestSchema.parse({
+      ...assessmentRequest,
+      context,
+      evidence: [
+        assessmentRequest.evidence[0],
+        ...codes.map((code, index) => ({
+          id: `E${index + 2}`,
+          kind: "CONTEXT_TAG",
+          source: "DETERMINISTIC_DERIVATION",
+          value: { format: "CODE", code },
+        })),
+      ],
+    });
+    const catalog = createApprovedSkillCatalogSnapshot([
+      syntheticSkill("style_modifier", {
+        languages: ["en"],
+        situations: ["request"],
+        intents: ["ask_for_help"],
+      }),
+      syntheticSkill("repair_acknowledge", {
+        situations: ["mistake"],
+        intents: ["acknowledge_mistake"],
+      }),
+      syntheticSkill("repair_apologize", {
+        situations: ["mistake"],
+        intents: ["apologize"],
+      }),
+      syntheticSkill("help", { situations: ["request"], intents: ["ask_for_help"] }),
+      syntheticSkill("status", { situations: ["status_request"], intents: ["provide_status"] }),
+      syntheticSkill("expectation", {
+        situations: ["status_request"],
+        intents: ["set_expectation"],
+      }),
+    ]);
+    const result = selectEvidenceAwareSkills(
+      {
+        ...input,
+        assessment: assessCommunicationNeeds(input),
+        maxSkills: 4,
+        catalogSnapshotId: catalog.id,
+      },
+      catalog,
+    ).result;
+    expect(result.selectedSkills.map(({ id }) => id)).toEqual([
+      "expectation",
+      "status",
+      "help",
+      "repair_acknowledge",
+    ]);
+    expect(result.reasons.every((reason) => reason.evidenceRefs.length > 0)).toBe(true);
+  });
 });

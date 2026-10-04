@@ -73,6 +73,12 @@ function generator(result: CoachingDecisionResult, configured = true): CoachingT
 describe("provider-neutral coaching engine", () => {
   it("normalizes structurally while leaving current skill inputs and results unchanged", async () => {
     const skillEngine = createSkillEngine(initialSkillRegistry);
+    const reviewedOrderDifferences = new Set([
+      "missed-commitment",
+      "professional-status",
+      "less-confrontational-no-apology",
+    ]);
+    const reviewedContentDifferences = new Set(["mixed-planning"]);
     for (const fixture of skillSelectionEvaluationFixtures) {
       const expectedPolicy = decideCoachingAction(fixture.request);
       const expectedContext = deriveSkillContext(fixture.request, expectedPolicy);
@@ -113,9 +119,17 @@ describe("provider-neutral coaching engine", () => {
           : expectedPlan.selectedSkills
         ).map(({ id, version }) => ({ id, version })),
       );
-      expect(traces[0]?.planComparisonCategory, fixture.id).toBe("MATCH");
-      expect(traces[0]?.guidanceContentEqual, fixture.id).toBe(true);
-      expect(traces[0]?.guidanceOrderEqual, fixture.id).toBe(true);
+      expect(traces[0]?.planComparisonCategory, fixture.id).toBe(
+        reviewedOrderDifferences.has(fixture.id) || reviewedContentDifferences.has(fixture.id)
+          ? "EXPECTED_DIFFERENCE"
+          : "MATCH",
+      );
+      expect(traces[0]?.guidanceContentEqual, fixture.id).toBe(
+        !reviewedContentDifferences.has(fixture.id),
+      );
+      expect(traces[0]?.guidanceOrderEqual, fixture.id).toBe(
+        !reviewedOrderDifferences.has(fixture.id) && !reviewedContentDifferences.has(fixture.id),
+      );
       expect(traces[0]?.principleCount, fixture.id).toBe(
         ["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"].includes(expectedPolicy.action)
           ? 0

@@ -23,6 +23,7 @@ import { z } from "zod";
 
 import type { CommunicationProblem } from "./communication-problem.js";
 import { projectSkillEvidence } from "./skill-evidence.js";
+import { refineShadowSkillContext } from "./skill-shadow-context.js";
 
 const snapshot = createApprovedSkillCatalogSnapshot(initialSkillRegistry);
 const compiler = createDeterministicSkillPlanCompiler(snapshot);
@@ -120,17 +121,18 @@ function runB2SkillShadowStages(
   let conflictBlocked = false;
   try {
     if (!problem || !context) throw new Error("MISSING_SHADOW_INPUT");
-    const evidence = projectSkillEvidence(problem, context, action);
+    const shadowContext = refineShadowSkillContext(problem, context);
+    const evidence = projectSkillEvidence(problem, shadowContext, action);
     const assessmentInput = {
       action,
       taskPurpose: { kind: "PRIMARY_COACHING" as const },
       evidence,
       context: {
-        situationTags: context.situationTags,
-        intentTags: context.intentTags,
-        language: context.language,
-        draftPresent: context.draftPresent,
-        ambiguityMaterial: context.ambiguityMaterial,
+        situationTags: shadowContext.situationTags,
+        intentTags: shadowContext.intentTags,
+        language: shadowContext.language,
+        draftPresent: shadowContext.draftPresent,
+        ambiguityMaterial: shadowContext.ambiguityMaterial,
       },
     };
     const assessment = assessCommunicationNeeds(assessmentInput);

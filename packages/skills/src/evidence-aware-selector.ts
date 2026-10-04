@@ -3,6 +3,8 @@ import {
   SkillContextSchema,
   SkillSelectionRequestSchema,
   SkillSelectionResultSchema,
+  type SkillContext,
+  type SkillDefinition,
   type SkillSelectionRequest,
   type SkillSelectionResult,
 } from "@ai-message-coach/contracts";
@@ -52,6 +54,35 @@ function assessmentRequest(request: SkillSelectionRequest) {
     evidence: request.evidence,
     context: request.context,
   });
+}
+
+function isRepairFunction(skill: SkillDefinition, context: SkillContext): boolean {
+  return skill.intents.some(
+    (intent) =>
+      context.intentTags.includes(intent) &&
+      (intent === "apologize" || intent === "acknowledge_mistake"),
+  );
+}
+
+/** Marginal priority only when the cap binds; hard eligibility still comes from the registry. */
+function capPriority(
+  skill: SkillDefinition,
+  context: SkillContext,
+  selected: readonly SkillDefinition[],
+): number {
+  const matchedIntents = skill.intents.filter((intent) => context.intentTags.includes(intent));
+  // The current approved catalog uses non-universal skills as expression modifiers. Recheck
+  // this assumption at the next committed catalog checkpoint rather than reading IDs or paths.
+  if (!skill.languages.includes("universal")) return 1;
+  if (matchedIntents.includes("set_expectation") || matchedIntents.includes("provide_status"))
+    return 5;
+  if (matchedIntents.includes("make_request") && context.intentTags.includes("set_boundary"))
+    return 1;
+  const primary = matchedIntents.length ? 4 : 3;
+  return isRepairFunction(skill, context) &&
+    selected.some((item) => isRepairFunction(item, context))
+    ? primary - 2
+    : primary;
 }
 
 export function selectEvidenceAwareSkills(
@@ -128,8 +159,18 @@ export function selectEvidenceAwareSkills(
   const selected: (typeof registry)[number][] = [];
   const reasons: SkillSelectionResult["reasons"] = [];
   let conflictBlocked = false;
-  for (const { skill } of candidates) {
-    if (selected.length >= request.maxSkills) continue;
+  const capPressure = candidates.length > request.maxSkills;
+  const remaining = [...candidates];
+  while (selected.length < request.maxSkills && remaining.length > 0) {
+    if (capPressure)
+      remaining.sort(
+        (left, right) =>
+          capPriority(right.skill, context, selected) -
+            capPriority(left.skill, context, selected) ||
+          right.score - left.score ||
+          left.skill.id.localeCompare(right.skill.id),
+      );
+    const { skill } = remaining.shift()!;
     if (conflictsWithSelected(skill, selected)) {
       conflictBlocked = true;
       continue;
