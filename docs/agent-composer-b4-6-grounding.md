@@ -1,6 +1,6 @@
 # Phase B4.6 Composer grounding contract and propagation audit
 
-Status: pre-implementation design; B4.5 baseline frozen at `af6e9e3` (`agent-architecture-b4-5-freeze`)
+Status: design prepared before B4.6 implementation; B4.5 baseline frozen at `af6e9e3` (`agent-architecture-b4-5-freeze`). The later [targeted evaluation](agent-composer-b4-6-targeted-evaluation.md) found one unresolved alternative-level boundary-weakening failure.
 
 ## Authority and priority
 

@@ -218,6 +218,29 @@ describe("B4.6 Composer task and candidate grounding", () => {
     ).toBeNull();
   });
 
+  // Human-reviewed B4.6 blocker: the primary is valid, but an alternative may not
+  // turn an unqualified pressure boundary into a temporary pause. These remain
+  // expected failures until the next Composer refinement adds a reliable backstop.
+  for (const [label, draft, alternative] of [
+    ["先", "我不能再這樣做了，請不要再催。", "我不能再這樣做了，請先不要再催。"],
+    ["暫時", "我不能再這樣做了，請不要再催。", "我不能再這樣做了，請暫時不要再催。"],
+    [
+      "for now",
+      "I can't keep doing this. Please stop pressuring me.",
+      "I can't keep doing this. Please stop pressuring me for now.",
+    ],
+    [
+      "at the moment",
+      "I can't keep doing this. Please stop pressuring me.",
+      "I can't keep doing this. Please stop pressuring me at the moment.",
+    ],
+  ] as const) {
+    it.fails(`rejects an unsupported ${label} qualifier in a boundary alternative`, () => {
+      const input = request("Please do this now.", draft);
+      expect(guard(input, draft, [alternative])).toBe("BOUNDARY_TEMPORAL_WEAKENING");
+    });
+  }
+
   it("accepts a conventional pass refusal and rejects an acceptance reversal", () => {
     const input: CoachingRequest = {
       ...request("Want to come tonight?"),

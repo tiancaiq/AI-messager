@@ -1,6 +1,6 @@
 # Agent architecture Phase B4.6 — Composer grounding and candidate meaning preservation
 
-Status: in progress; pre-implementation plan
+Status: evaluation complete; targeted gate failed — `NEEDS_COMPOSER_REFINEMENT`
 Owner: Codex
 Started: 2026-10-04
 Updated: 2026-10-04
@@ -64,9 +64,9 @@ Conditional second stage, only after targeted human signoff: 23 frozen B4.5 synt
 - [x] Internal task validates fixed action, bounded source-qualified anchors/categories, guidance/style separation and contradictions before provider call.
 - [x] Every generated candidate obeys candidate-level guard checks; supported facts remain expressible and unsupported commitments/status/prior events are rejected within the explicitly bounded patterns.
 - [x] At least 18 synthetic deterministic scenarios pass, including explicit test-only tone and all B4.5 guard regressions.
-- [ ] Targeted set/cap locked before live calls, then run only after all deterministic gates pass; human review and precommitted gate recorded.
-- [ ] Conditional A/B occurs only after targeted signoff; no automatic full B4 rerun, B5 or cutover.
-- [ ] Full `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`; Phase 4 21-case evaluation; B3.5 33-case evaluation; B4/B4.5/B4.6 tests and evaluation TypeScript checks; Windows-safe `pnpm exec prettier --check . --end-of-line auto`; `git diff --check`; `git ls-files --eol` index LF; frozen artifact hashes all pass or an explicit exception is documented.
+- [x] Targeted set/cap locked before live calls, then run only after all deterministic gates pass; human review and failed precommitted gate recorded.
+- [x] Conditional A/B withheld because targeted signoff failed; no full B4 rerun, B5 or cutover.
+- [x] Full `pnpm test`, `pnpm lint`, `pnpm typecheck`, `pnpm build`; Phase 4 21-case evaluation; B3.5 33-case evaluation; B4/B4.5/B4.6 tests and evaluation TypeScript checks; Windows-safe Prettier check; `git diff --check`; `git ls-files --eol` index LF; frozen artifact hashes pass. The targeted *quality* gate failed as documented above.
 
 ## Privacy, risk, rollback, limitations
 
@@ -77,7 +77,13 @@ Only synthetic fixtures and the approved local B4/B4.5 artifacts are used. The e
 - 2026-10-04: Read repository instructions, product/privacy rules, B4.5 plan/report and Composer code. Confirmed clean B4.5 commit `af6e9e3`, created local `agent-architecture-b4-5-freeze` tag, recorded five ignored artifact hashes, and safely confirmed the user-requested existing key without revealing it. No B4.6 source change or provider call yet.
 - 2026-10-05: Documented the source-to-Composer audit before source changes, then added an internal bounded task and explicit prompt priority/ownership rules, source-qualified anchors, unknown-status scope-question mode, and candidate-level information-state/commitment/emotion backstops. The exact production action and legacy plan remain authoritative; B4.5 refusal/modal/anchor guards remain active. One older desktop synthetic case showed an explicit user draft “Yes I can” answering a review request, so the task now permits that supported acceptance while still rejecting a bare incoming request as commitment. Added 28 task/grounding tests and two targeted-fixture tests (30 new B4.6 tests). The target set is locked at 13 fixtures/13 calls with no retries; readiness invokes no provider.
 - 2026-10-05: Pre-live gates passed: `pnpm test` (51 files/376 tests), `pnpm lint`, `pnpm typecheck`, `pnpm build` (packages/API/desktop main/preload/renderer), B3.5/B4/B4.5/B4.6 evaluation TypeScript checks, Phase 4 21/21, B3.5 33 cases with unchanged 24/3/1/5 categories, Windows-safe `prettier --check . --end-of-line auto`, and `git diff --check`. Tracked/index representations checked with `git ls-files --eol` remain `i/lf`; no unrelated normalization. All five B4.5 artifact hashes remain unchanged. No live B4.6 call yet.
+- 2026-10-05: Opt-in targeted generation completed exactly 13 synthetic cases/13 calls, no retries or provider errors. All 13 normalized packages passed deterministic guards; median request-local duration was about 2,529 ms and worst about 4,687 ms. The ignored local worksheet/recommendations were prepared without claiming human signoff. The human reviewer approved 12 packages and rejected `chinese-boundary-traditional`: an alternative adds `先` to an unqualified pressure boundary, a `MATERIAL_MEANING_WEAKENING` despite guard PASS. The precommitted 13/13, no-invalid-alternative and all-controls gates fail. The conditional 23-pair A/B was not run. Four expected-failing deterministic cases capture `先`, `暫時`, “for now” and “at the moment” as a later narrow Composer/guard-refinement target; they do not alter or rerun the failed live evaluation.
 
 ## Completion record
 
-Pending implementation, deterministic gates, targeted generation, human review, and the conditional focused A/B decision.
+B4.6 implementation and targeted evaluation are complete, but its **success criteria were not met**. The internal Composer task and candidate guards improved this 13-case sample enough for 12 human-acceptable packages and no unsupported-status or unsupported-commitment failures. One control package still changed durable boundary meaning in an alternative. The deterministic guard rejected zero packages and missed that failure; human review is authoritative. Recommendation: `NEEDS_COMPOSER_REFINEMENT`. The next milestone should narrowly address temporal weakening of durable boundaries, with supported-temporary counterexamples and fresh precommitted targeted validation. B4.5 remains frozen, production remains legacy-authoritative, and B5/full B4 rerun are still blocked. See the [targeted report](../../docs/agent-composer-b4-6-targeted-evaluation.md). Final regression command results are recorded below.
+
+- `pnpm.cmd test`: 51 files, 376 passed and four expected-failing boundary regressions; no unexpected failures. `pnpm.cmd lint`, `pnpm.cmd typecheck`, `pnpm.cmd build`: PASS, including packages, API and desktop main/preload/renderer.
+- `node scripts/evaluate-phase-4.mjs`: 21/21. `tsx scripts/evaluate-skill-pipeline.ts`: 33 cases, unchanged 24 MATCH / 3 EXPECTED_DIFFERENCE / 1 POTENTIAL_IMPROVEMENT / 5 POTENTIAL_REGRESSION.
+- `tsc --noEmit` with the Skill-pipeline, B4, B4.5 and B4.6 evaluation configs: PASS. `node_modules/.bin/prettier.cmd --check . --end-of-line auto`: PASS. The equivalent `pnpm exec prettier` launcher failed to locate the installed binary in this Windows shell, so the checked-in binary was invoked directly; formatting policy is unchanged. `git diff --check`: PASS. `git ls-files --eol`: tracked/index files remain `i/lf`; Windows materializes CRLF for some files. No unrelated normalization.
+- All five B4.5 local artifact SHA-256 values still match the frozen values above. The B4.6 targeted run used exactly 13 provider calls; the conditional A/B used zero. The human-decision record and normalized targeted outputs remain ignored and local.
