@@ -1,6 +1,6 @@
 # Agent architecture Phase B4 — Composer A/B quality evaluation
 
-Status: in progress; bounded generation complete, blind human quality review pending
+Status: complete; BLOCKED_BY_REGRESSION, no cutover
 Owner: Codex
 Started: 2026-10-04
 Updated: 2026-10-04
@@ -64,9 +64,9 @@ Default CI uses synthetic fake generators only. Test exact prompt-payload equali
 - [x] 30 synthetic/reviewed provider-generation cases cover ordinary and adversarial needs, English/Chinese and sparse/boundary situations without private data.
 - [x] Guidance source is the only intended A/B prompt variable; fixed action, Composer implementation, provider/model/configuration/schema and deterministic guards are identical.
 - [x] Live calls remained at 60 with no automatic retry; actual count/model/status are reported.
-- [ ] Blind or minimally biased human review and per-dimension reasons are recorded; meaning/safety failures are blocking.
-- [ ] Win/tie/loss/failure counts and one B4 decision category are reported, including limitations and whether B5 planning is justified.
-- [x] Full repository tests/lint/typecheck/build, Phase 4 evaluation, Windows-safe formatting and whitespace checks pass; production stays legacy-authoritative with unchanged user-visible behavior.
+- [x] Human reviewer supplied 30 blind case-level dispositions and reasons before arm mapping; factual/meaning failures override lexical guard PASS. File transcription followed map opening; this sequence deviation is documented.
+- [x] Win/tie/loss/failure counts and B4 decision are reported: 4 new wins, 10 legacy wins, 10 ties, 5 both fail, 1 not comparable; `BLOCKED_BY_REGRESSION`. B5/cutover planning is not justified by this result.
+- [x] Full repository tests/lint/typecheck/build, B4/B3.5 TypeScript checks, Phase 4 and B3.5 evaluations, Windows-safe formatting and whitespace checks pass; production stays legacy-authoritative with unchanged user-visible behavior. Four executable refusal tests are marked expected-failure pending a later guard repair.
 
 ## Validation commands
 
@@ -83,7 +83,9 @@ Provider variability can affect outputs even when guidance is the only intended 
 - 2026-10-04: Reused the approved local credential in process for 30 synthetic pairs/60 OpenAI calls on `gpt-5.6-luna`, with `store: false`, no retry and no private conversation. All 60 provider results were schema-valid. The same production guard passed 55 arms: 26 pairs both valid, three pairs one invalid, one pair both invalid. Synthetic candidates and sealed arm map are in ignored `.local-eval/b4/`; blind human review remains pending. See the [evaluation report](../../docs/agent-composer-b4-evaluation.md).
 - 2026-10-04: Full deterministic suite passed 47 files / 313 tests after adding explicit balanced-order and 60-call budget assertions; ESLint, eight TypeScript checks, five package/API builds, desktop main/native staging/preload/renderer builds, Phase 4 21/21 and B3.5 33-case evaluation passed. Formatting and whitespace are to be rechecked after final documentation edits.
 - 2026-10-04: Windows-safe Prettier, `git diff --check` and untracked-file trailing-whitespace checks passed after documentation updates; tracked-index LF policy is unchanged. Independently recomputed approved runtime JSON SHA-256 and confirmed the frozen value. Prepared 30 blinded Codex recommendations in the ignored evaluation directory without opening the arm map; human approval is pending.
+- 2026-10-04: Human reviewer approved/corrected all 30 case-level dispositions before unblinding. The `ordinary-appreciation` source check found no prior user thank-you, so both packages' “again” alternatives fail factual validity. Human decisions were transcribed into the ignored record after the arm map was opened; no decisions changed, but this departed from the stricter file-write order. Unblinded tally: 4 new wins, 10 legacy wins, 10 ties, 5 both fail, 1 not comparable. Recorded the accepted `decline-after-action` false-positive override only for B4 scoring, four executable expected-failure refusal regression tests, and a durable guard/Composer/fixture follow-up list in the evaluation report. No production guard or runtime change.
+- 2026-10-04: Post-review validation passed `pnpm test` (47 files; 313 ordinary passes and four expected-failure guard regressions), `pnpm lint`, `pnpm typecheck`, `pnpm build`, the B3.5 and B4 evaluation TypeScript checks, `node scripts/evaluate-phase-4.mjs` (21/21), `pnpm exec tsx scripts/evaluate-skill-pipeline.ts` (33 cases), `pnpm exec prettier --check . --end-of-line auto`, and `git diff --check`. Git index remains LF for all changed files; Windows worktree line endings vary, so the repository LF policy is unchanged. No further provider calls.
 
 ## Completion record
 
-Evaluation harness and bounded generation are complete, with production still on the legacy `CommunicationPlan`. Blind human quality review, case-level dispositions, final win/tie/failure counts and the B4 recommendation remain pending. Do not unblind or claim a quality win until the reviewer records judgments. B5 and production cutover remain out of scope.
+The B4 harness, bounded generation and human review are complete. Decision: `BLOCKED_BY_REGRESSION`; the new arm has a real package-level meaning failure in `missed-commitment`, loses 10 versus four decisive non-failing cases, and shares five factual-validity failures with legacy. The deterministic guard also has documented false positives/negatives. The signed-off B3.5 shadow pipeline remains intact and production remains on the legacy `CommunicationPlan`. Do not start B5 or cut over. Recommend a separate, approved Composer/guard refinement and controlled re-evaluation milestone after resolving `GUARD-STATUS-01`, `GUARD-REFUSAL-02`, `GUARD-MODAL-03`, `COMPOSER-MEANING-04` and `FIXTURE-TONE-05` in the report. Tests added: four executable expected-failure refusal regressions; no production behavior changes. Commands/results are recorded in the progress log. Limitations: single provider generation per arm, synthetic-only context, no exact token-cost data, one invalid tone fixture, and the review-file transcription-order deviation.

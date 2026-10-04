@@ -459,6 +459,75 @@ describe("provider-neutral coaching engine", () => {
     await expect(coachConversation(generator(result), declineRequest)).resolves.toEqual(result);
   });
 
+  // B4 human review accepted these as genuine refusals. These executable known-gap
+  // cases must be converted to ordinary passing tests when the guard is repaired.
+  it.fails.each(["I'll pass.", "I'll pass tonight.", "I think I'll pass."])(
+    "should accept a conventional refusal (known guard false positive): %s",
+    async (text) => {
+      const declineRequest: CoachingRequest = {
+        analysis: {
+          ...analysis,
+          draft: { text: null, confidence: 0.96 },
+          messages: [{ ...analysis.messages[0]!, text: "Want to come tonight?" }],
+        },
+        selection: {
+          kind: "ACTION",
+          id: "decline",
+          label: "Decline",
+          intent: "Decline without inventing a reason.",
+        },
+      };
+      const result: CoachingDecisionResult = {
+        ok: true,
+        decision: {
+          action: "SUGGEST_REPLY",
+          userIntent: { value: "Decline without inventing a reason.", confidence: 1 },
+          actionConfidence: 1,
+          ambiguity: { material: false, reason: null },
+          replies: [{ label: "Natural", text }],
+        },
+      };
+
+      await expect(coachConversation(generator(result), declineRequest)).resolves.toEqual(result);
+    },
+  );
+
+  it.fails("should accept 我还是不参加了。 as a refusal (known guard false positive)", async () => {
+    const declineRequest: CoachingRequest = {
+      analysis: {
+        ...analysis,
+        draft: { text: null, confidence: 0.96 },
+        messages: [{ ...analysis.messages[0]!, text: "今晚要参加吗？" }],
+        language: {
+          primary: "zh",
+          secondary: null,
+          script: "SIMPLIFIED",
+          codeSwitching: false,
+          supportedForLanguageSpecificSkills: true,
+          confidence: 0.99,
+        },
+      },
+      selection: {
+        kind: "ACTION",
+        id: "decline",
+        label: "Decline",
+        intent: "我还是不参加了。",
+      },
+    };
+    const result: CoachingDecisionResult = {
+      ok: true,
+      decision: {
+        action: "SUGGEST_REPLY",
+        userIntent: { value: "我还是不参加了。", confidence: 1 },
+        actionConfidence: 1,
+        ambiguity: { material: false, reason: null },
+        replies: [{ label: "Natural", text: "我还是不参加了。" }],
+      },
+    };
+
+    await expect(coachConversation(generator(result), declineRequest)).resolves.toEqual(result);
+  });
+
   it.each([
     "I can’t decline—count me in.",
     "I refuse to say no; I'll join.",
