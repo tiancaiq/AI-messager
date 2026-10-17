@@ -11,6 +11,10 @@ import {
   type CommunicationPlan,
   type ProviderConfiguration,
   type SkillContext,
+  type SkillRankingDiagnostic,
+  type CoachingValidationInspection,
+  type CoachingGuardRuleCode,
+  type ShadowStageInspection,
 } from "@ai-message-coach/contracts";
 import { createSkillEngine, initialSkillRegistry } from "@ai-message-coach/skills";
 
@@ -47,6 +51,19 @@ export interface CoachingEngineOptions {
     goalKind: CommunicationProblemGoalKind | null;
   }) => void;
   onShadowComparison?: (trace: SkillPlanShadowTrace) => void;
+  onSkillContext?: (context: SkillContext) => void;
+  onSkillRanking?: (ranking: SkillRankingDiagnostic) => void;
+  onShadowDetails?: (details: ShadowStageInspection) => void;
+  onComposerGuidance?: (guidance: CommunicationGuidance) => void;
+  onValidation?: (validation: CoachingValidationInspection) => void;
+}
+
+function inspect<T>(callback: ((value: T) => void) | undefined, value: T): void {
+  try {
+    callback?.(structuredClone(value));
+  } catch {
+    /* Inspection never changes results. */
+  }
 }
 
 const safeFailure: CoachingDecisionResult = {
@@ -55,9 +72,6 @@ const safeFailure: CoachingDecisionResult = {
 };
 
 const defaultSkillEngine = createSkillEngine(initialSkillRegistry);
-const defaultSkillPlanner: CommunicationSkillPlanner = {
-  plan: (context) => defaultSkillEngine.select(context),
-};
 const noCommunicationPlan: CommunicationPlan = {
   status: "NONE",
   selectedSkills: [],
@@ -92,7 +106,13 @@ async function inspectShadowComparison(
   productionPlan: CommunicationPlan,
 ): Promise<void> {
   try {
-    const trace = await runB3SkillShadow(problem, context, action, productionPlan);
+    const trace = await runB3SkillShadow(
+      problem,
+      context,
+      action,
+      productionPlan,
+      options.onShadowDetails,
+    );
     options.onShadowComparison?.(structuredClone(trace));
   } catch {
     // Shadow comparison must never affect policy, Composer, provider calls or public results.
@@ -143,20 +163,7 @@ const thanksExpression = /\b(?:thanks|thank you)\b|(?:谢谢|謝謝|感谢|感�
 const negatedChineseParticipation =
   /(?:不|没|沒|未|不会|不會|无法|無法|不能|不想)(?:\s|还是|還是|再){0,4}(?:参加|參加)/gu;
 
-export type CoachingGuardRuleCode =
-  | "POLICY_MISMATCH"
-  | "UNCERTAINTY_PRESERVATION"
-  | "REFUSAL_PRESERVATION"
-  | "NEGATIVE_COMMITMENT"
-  | "FACTUAL_ANCHOR"
-  | "STATUS_GROUNDING"
-  | "PRIOR_APPRECIATION"
-  | "STATUS_REPLY_GROUNDING"
-  | "UNSUPPORTED_INFORMATION_STATE"
-  | "UNSUPPORTED_COMMITMENT"
-  | "UNSUPPORTED_EMOTION"
-  | "BOUNDARY_TEMPORAL_WEAKENING"
-  | "BOUNDARY_TEMPORAL_STRENGTHENING";
+export type { CoachingGuardRuleCode } from "@ai-message-coach/contracts";
 
 function normalizedText(value: string): string {
   return value.normalize("NFKC").toLowerCase();
@@ -344,8 +351,11 @@ export async function coachConversation(
   let skillContext: SkillContext | null = null;
   try {
     skillContext = deriveSkillContext(parsedRequest.data, policy);
+    inspect(options.onSkillContext, skillContext);
     communicationPlan = CommunicationPlanSchema.parse(
-      (options.skillPlanner ?? defaultSkillPlanner).plan(skillContext),
+      options.skillPlanner
+        ? options.skillPlanner.plan(skillContext)
+        : defaultSkillEngine.select(skillContext, options.onSkillRanking),
     );
   } catch {
     communicationPlan = { status: "FAILED", selectedSkills: [], principles: [], avoid: [] };
@@ -381,6 +391,7 @@ export async function coachConversation(
   }
 
   try {
+    inspect(options.onComposerGuidance, task.coreCommunicationGuidance);
     const result = await generator.generateCoachingDecision(
       parsedRequest.data,
       policy,
@@ -388,12 +399,22 @@ export async function coachConversation(
       task,
     );
     const parsed = CoachingDecisionResultSchema.safeParse(result);
-    if (
-      !parsed.success ||
-      (parsed.data.ok &&
-        evaluateCoachingDecisionGuards(parsed.data.decision, parsedRequest.data, policy, task) !==
-          null)
-    )
+    const rule =
+      parsed.success && parsed.data.ok
+        ? evaluateCoachingDecisionGuards(parsed.data.decision, parsedRequest.data, policy, task)
+        : null;
+    inspect(options.onValidation, {
+      stage: !parsed.success
+        ? "RESULT_SCHEMA_REJECTED"
+        : !parsed.data.ok
+          ? "ADAPTER_FAILURE"
+          : rule !== null
+            ? "GUARD_REJECTED"
+            : "PASSED",
+      guardRule: rule,
+      candidate: parsed.success && parsed.data.ok ? parsed.data.decision : null,
+    });
+    if (!parsed.success || rule !== null)
       return {
         ok: false,
         error: {

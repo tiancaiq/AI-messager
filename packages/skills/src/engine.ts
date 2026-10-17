@@ -2,15 +2,20 @@ import {
   CommunicationPlanSchema,
   SkillContextSchema,
   SkillDefinitionSchema,
+  SkillRankingDiagnosticSchema,
   type CommunicationPlan,
   type SkillContext,
   type SkillDefinition,
   type SkillLanguage,
+  type SkillRankingDiagnostic,
 } from "@ai-message-coach/contracts";
 
 export interface SkillEngine {
   readonly registry: readonly SkillDefinition[];
-  select(context: SkillContext): CommunicationPlan;
+  select(
+    context: SkillContext,
+    inspect?: (diagnostic: SkillRankingDiagnostic) => void,
+  ): CommunicationPlan;
 }
 
 function freezeSkill(skill: SkillDefinition): SkillDefinition {
@@ -82,16 +87,28 @@ export function conflictsWithSelected(
 
 /** Validation predicate only; it does not rank or choose a replacement skill. */
 export function isEligibleSkillForContext(skill: SkillDefinition, context: SkillContext): boolean {
+  return eligibilityExclusions(skill, context).length === 0;
+}
+
+function eligibilityExclusions(skill: SkillDefinition, context: SkillContext): string[] {
   const languages = eligibleSkillLanguages(context);
-  return (
-    skill.status === "ACTIVE" &&
-    skill.languages.some((language) => languages.has(language)) &&
-    skill.actions.includes(context.action) &&
-    (skill.id !== "zh.code_switching" || context.language.codeSwitching) &&
-    (skill.intents.length === 0 || intersects(skill.intents, context.intentTags)) &&
-    (skill.situations.length === 0 || intersects(skill.situations, context.situationTags)) &&
-    candidateScore(skill, context) > 0
-  );
+  return [
+    ...(skill.status !== "ACTIVE" ? ["Not active."] : []),
+    ...(!skill.languages.some((language) => languages.has(language))
+      ? ["Language not eligible."]
+      : []),
+    ...(!skill.actions.includes(context.action) ? ["Action not eligible."] : []),
+    ...(skill.id === "zh.code_switching" && !context.language.codeSwitching
+      ? ["Code-switching required."]
+      : []),
+    ...(skill.intents.length > 0 && !intersects(skill.intents, context.intentTags)
+      ? ["No matching intent tag."]
+      : []),
+    ...(skill.situations.length > 0 && !intersects(skill.situations, context.situationTags)
+      ? ["No matching situation tag."]
+      : []),
+    ...(candidateScore(skill, context) <= 0 ? ["No positive metadata score."] : []),
+  ];
 }
 
 /** Shared hard eligibility and baseline ranking for production and B2 shadow selection. */
@@ -127,15 +144,32 @@ export function createSkillEngine(input: readonly unknown[]): SkillEngine {
   const registry = validateSkillRegistry(input);
   return {
     registry,
-    select(rawContext) {
+    select(rawContext, inspect) {
       const context = SkillContextSchema.parse(rawContext);
       if (["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"].includes(context.action))
         return { status: "NONE", selectedSkills: [], principles: [], avoid: [] };
       const reasons = new Map<string, string[]>();
       const candidates = rankEligibleSkillCandidates(registry, context);
       const selected: SkillDefinition[] = [];
-      for (const { skill } of candidates) {
-        if (selected.length >= 4 || conflictsWithSelected(skill, selected)) continue;
+      const diagnostic: SkillRankingDiagnostic = { maxSkills: 4, candidates: [] };
+      for (const [index, { skill, score }] of candidates.entries()) {
+        const capped = selected.length >= 4;
+        const conflict = !capped && conflictsWithSelected(skill, selected);
+        if (capped || conflict) {
+          diagnostic.candidates.push({
+            id: skill.id,
+            version: skill.version,
+            rank: index + 1,
+            score,
+            outcome: capped ? "TOP_K_CAP" : "CONFLICT",
+            reasons: [
+              capped
+                ? "Four skills already selected; later candidates are not evaluated for conflicts."
+                : "Conflicts with an earlier selected skill.",
+            ],
+          });
+          continue;
+        }
         const matches: string[] = [];
         if (intersects(skill.intents, context.intentTags))
           matches.push("Matched communication intent.");
@@ -145,6 +179,31 @@ export function createSkillEngine(input: readonly unknown[]): SkillEngine {
           matches.push("Matched language convention.");
         reasons.set(skill.id, matches);
         selected.push(skill);
+        diagnostic.candidates.push({
+          id: skill.id,
+          version: skill.version,
+          rank: index + 1,
+          score,
+          outcome: "SELECTED",
+          reasons: matches,
+        });
+      }
+      for (const skill of registry) {
+        const exclusions = eligibilityExclusions(skill, context);
+        if (exclusions.length)
+          diagnostic.candidates.push({
+            id: skill.id,
+            version: skill.version,
+            rank: null,
+            score: null,
+            outcome: "INELIGIBLE",
+            reasons: exclusions,
+          });
+      }
+      try {
+        inspect?.(SkillRankingDiagnosticSchema.parse(diagnostic));
+      } catch {
+        /* Observers cannot change selection. */
       }
       return compose(selected, reasons);
     },

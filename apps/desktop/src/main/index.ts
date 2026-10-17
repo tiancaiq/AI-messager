@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { OpenAiCoachingAdapter, OpenAiVisionAdapter } from "@ai-message-coach/ai";
 import {
   APP_NAME,
+  LAB_DEVELOPMENT_ARGUMENT,
   COACHING_REQUEST_CHANNEL,
   COPY_COACHING_TEXT_CHANNEL,
   CONVERSATION_ANALYSIS_CHANNEL,
@@ -23,6 +24,8 @@ import { app, BrowserWindow, clipboard, ipcMain } from "electron";
 import { createConversationCaptureService } from "./conversation-capture.js";
 import { createConversationAnalysisService } from "./conversation-analysis.js";
 import { copyCoachingText, createCoachingService } from "./coaching.js";
+import { createLabService } from "./lab.js";
+import { registerLabHandlers } from "./lab-ipc.js";
 import { LocalMemoryCoordinator } from "./local-memory/coordinator.js";
 import {
   createDevelopmentMemoryDebugSnapshot,
@@ -46,16 +49,15 @@ const conversationAnalysisService = createConversationAnalysisService(
       : { modelId: process.env.OPENAI_VISION_MODEL }),
   }),
 );
-const coachingService = createCoachingService(
-  new OpenAiCoachingAdapter({
-    ...(process.env.OPENAI_API_KEY === undefined ? {} : { apiKey: process.env.OPENAI_API_KEY }),
-    ...(process.env.OPENAI_TEXT_MODEL === undefined
-      ? process.env.OPENAI_VISION_MODEL === undefined
-        ? {}
-        : { modelId: process.env.OPENAI_VISION_MODEL }
-      : { modelId: process.env.OPENAI_TEXT_MODEL }),
-  }),
-);
+const coachingAdapter = new OpenAiCoachingAdapter({
+  ...(process.env.OPENAI_API_KEY === undefined ? {} : { apiKey: process.env.OPENAI_API_KEY }),
+  ...(process.env.OPENAI_TEXT_MODEL === undefined
+    ? process.env.OPENAI_VISION_MODEL === undefined
+      ? {}
+      : { modelId: process.env.OPENAI_VISION_MODEL }
+    : { modelId: process.env.OPENAI_TEXT_MODEL }),
+});
+const coachingService = createCoachingService(coachingAdapter);
 const localMemory = new LocalMemoryCoordinator();
 const developmentMemoryDebugSnapshotMode =
   process.defaultApp && process.env.AI_MESSAGE_COACH_MEMORY_DEBUG_SNAPSHOT === "1";
@@ -176,6 +178,10 @@ async function createWindow(developmentUrl: string | undefined): Promise<void> {
     show: false,
     title: APP_NAME,
     webPreferences: {
+      additionalArguments:
+        developmentUrl !== undefined && !app.isPackaged && process.defaultApp
+          ? [LAB_DEVELOPMENT_ARGUMENT]
+          : [],
       contextIsolation: true,
       nodeIntegration: false,
       preload: join(__dirname, "../preload/index.cjs"),
@@ -256,6 +262,15 @@ app
     registerCaptureHandler();
     registerAnalysisHandlers();
     registerCoachingHandlers();
+    registerLabHandlers(
+      createLabService(coachingService, coachingAdapter.configuration),
+      {
+        packaged: app.isPackaged,
+        defaultApp: process.defaultApp === true,
+        rendererUrl: developmentUrl,
+      },
+      (event) => isAuthorizedRenderer(event.sender, event.senderFrame),
+    );
     registerLocalMemoryHandlers(localMemory, (event) =>
       isAuthorizedRenderer(event.sender, event.senderFrame),
     );

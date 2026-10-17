@@ -299,3 +299,4 @@ export {
   type SkillSituationTag,
   type SkillStatus,
 } from "./skills.js";
+export * from "./lab.js";

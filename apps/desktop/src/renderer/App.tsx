@@ -11,6 +11,7 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { CaptureSelection } from "./CaptureSelection.js";
 import { LocalMemoryInspector } from "./LocalMemoryInspector.js";
 import { LocalMemorySettings } from "./LocalMemorySettings.js";
+import { Lab } from "./Lab.js";
 import {
   captureReducer,
   initialCaptureState,
@@ -285,6 +286,9 @@ export function App() {
       : (window.messageCoach?.appInfo.name ?? "AI Message Coach");
   const inspectorAvailable =
     typeof window !== "undefined" && window.messageCoach?.inspectLocalMemory !== undefined;
+  const labAvailable = typeof window !== "undefined" && window.messageCoach?.runLab !== undefined;
+  const [labOpen, setLabOpen] = useState(false);
+  const labEntry = useRef<HTMLButtonElement>(null);
 
   const releaseObjectUrl = useCallback((imageUrl: string | undefined): void => {
     if (imageUrl === undefined || !objectUrlsReference.current.delete(imageUrl)) {
@@ -747,6 +751,16 @@ export function App() {
     );
   }
 
+  if (labOpen && labAvailable)
+    return (
+      <Lab
+        onClose={() => {
+          setLabOpen(false);
+          requestAnimationFrame(() => labEntry.current?.focus());
+        }}
+      />
+    );
+
   return (
     <main className="app-shell">
       <section className="home-content">
@@ -769,6 +783,16 @@ export function App() {
                 providerConfiguration.configured ? "configured" : "not configured"
               }`}
         </p>
+        {labAvailable && (
+          <button
+            ref={labEntry}
+            className="button button-quiet"
+            type="button"
+            onClick={() => setLabOpen(true)}
+          >
+            Open Lab · development
+          </button>
+        )}
         <LocalMemorySettings />
         {inspectorAvailable ? <LocalMemoryInspector /> : null}
       </section>

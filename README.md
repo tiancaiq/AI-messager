@@ -95,6 +95,8 @@ No API key or external service is required for default tests. Phase 2 live use r
 
 ## Commands
 
+The unpackaged desktop development app includes **Open Lab · development** for typed-conversation coaching with an optional draft and request-local pipeline inspection. See [Development Message Lab](docs/development-lab.md) for launch instructions, source assumptions, production-versus-shadow guidance, and privacy limits. No credential is copied into a new worktree automatically.
+
 | Command | Purpose |
 |---|---|
 | `pnpm dev` | Build shared packages, then run API and desktop development processes |

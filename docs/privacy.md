@@ -132,6 +132,10 @@ Structured logs remain allowlisted, content-free, and bounded. Background failur
 
 ## User control
 
+The Lab's optional temporary recipient preview keeps name/nickname and relationship in separate renderer component state only. They are not part of LabRequest, IPC, provider context, logs, browser storage or local memory. Clear, Close, reload and unmount discard them. The UI explicitly states that they are not used for generation yet; entering them is not identity confirmation or contact enrollment.
+
+The development-only [Message Lab](development-lab.md) accepts manually supplied draft/context as an explicitly labelled simulation of analysis input. It retains only the current component/request state, displays validated normalized candidates and structural diagnostics, and adds no persistent trace or content logs. Rejected schema-valid wording is labelled inspection-only; malformed/provider payloads and private reasoning are withheld. Clear/Close release view references and ignore late results; an already submitted provider request can finish and incur usage. Main independently gates Lab IPC to unpackaged allowlisted development sessions, and a main-issued argv marker enables its sandboxed preload methods. Production has no Lab bridge/handlers. No memory source or write is enabled.
+
 The user chooses when to capture by clicking Generate or invoking an equivalent explicit trigger, can correct or reset the selected region, chooses the reply/action, and decides whether to copy it. The coach never sends automatically. A future insertion feature still requires explicit review and action.
 
 Before durable memory is introduced, the product needs clear controls to:

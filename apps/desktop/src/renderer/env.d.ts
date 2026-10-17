@@ -1,5 +1,7 @@
 import type {
   AppInfo,
+  LabRequest,
+  LabResult,
   ConversationAnalysisResult,
   ConversationCaptureResult,
   ConversationImageRequest,
@@ -21,6 +23,8 @@ declare global {
   interface Window {
     readonly messageCoach?: {
       readonly appInfo: AppInfo;
+      readonly runLab?: (request: LabRequest) => Promise<LabResult>;
+      readonly getLabConfiguration?: () => Promise<ProviderConfiguration | null>;
       readonly analyzeConversationImage: (
         request: ConversationImageRequest,
       ) => Promise<ConversationAnalysisResult>;

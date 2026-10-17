@@ -1,5 +1,12 @@
 import {
   APP_NAME,
+  LAB_DEVELOPMENT_ARGUMENT,
+  LAB_RUN_CHANNEL,
+  LAB_CONFIGURATION_CHANNEL,
+  LabRequestSchema,
+  LabResultSchema,
+  type LabRequest,
+  type LabResult,
   AppInfoSchema,
   COACHING_REQUEST_CHANNEL,
   COPY_COACHING_TEXT_CHANNEL,
@@ -218,10 +225,36 @@ const productionBridge = {
   saveMessageLength,
 };
 
-const bridge = Object.freeze(
-  process.defaultApp && isDesktopDevelopmentRendererUrl(process.env.VITE_DEV_SERVER_URL)
-    ? { ...productionBridge, inspectLocalMemory }
-    : productionBridge,
-);
+async function runLab(request: LabRequest): Promise<LabResult> {
+  const input = LabRequestSchema.safeParse(request);
+  if (!input.success) return { ok: false, code: "INVALID_REQUEST", action: null };
+  try {
+    const result = LabResultSchema.safeParse(await ipcRenderer.invoke(LAB_RUN_CHANNEL, input.data));
+    return result.success ? result.data : { ok: false, code: "LAB_FAILED", action: null };
+  } catch {
+    return { ok: false, code: "UNAVAILABLE", action: null };
+  }
+}
+
+async function getLabConfiguration(): Promise<ProviderConfiguration | null> {
+  try {
+    const result = ProviderConfigurationSchema.safeParse(
+      await ipcRenderer.invoke(LAB_CONFIGURATION_CHANNEL),
+    );
+    return result.success ? result.data : null;
+  } catch {
+    return null;
+  }
+}
+
+const bridge = Object.freeze({
+  ...productionBridge,
+  ...(process.defaultApp && isDesktopDevelopmentRendererUrl(process.env.VITE_DEV_SERVER_URL)
+    ? { inspectLocalMemory }
+    : {}),
+  // Sandboxed preload exposes argv, but not main's defaultApp/environment flags.
+  // Only trusted main adds this marker in an unpackaged allowlisted dev session.
+  ...(process.argv.includes(LAB_DEVELOPMENT_ARGUMENT) ? { runLab, getLabConfiguration } : {}),
+});
 
 contextBridge.exposeInMainWorld("messageCoach", bridge);

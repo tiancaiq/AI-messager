@@ -1,0 +1,231 @@
+.lab-shell {
+  --lab-canvas: #05091c;
+  --lab-panel: #111b35;
+  --lab-text: #d9e5ff;
+  --lab-muted: #91a4c7;
+  --lab-accent: #7cb6ff;
+  --lab-alert: #ffc78a;
+  max-width: 1120px;
+  height: 100vh;
+  overflow: auto;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  color: var(--lab-text);
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+.lab-shell h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+.lab-shell h2 {
+  font-size: 1.35rem;
+}
+.lab-shell h3 {
+  font-size: 1rem;
+  margin: 24px 0 8px;
+}
+.lab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.lab-kicker {
+  color: var(--lab-accent);
+  font-size: 0.85rem;
+  margin: 0;
+}
+.lab-muted,
+.lab-shell small {
+  color: var(--lab-muted);
+}
+.lab-input,
+.lab-result,
+.lab-section {
+  background: var(--lab-panel);
+  padding: 24px;
+  border-radius: 12px;
+  margin-top: 24px;
+  border: 1px solid var(--lab-muted);
+}
+.lab-input label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.lab-input label span {
+  font-weight: 400;
+  color: var(--lab-muted);
+}
+.lab-input textarea,
+.lab-input input[type="text"],
+.lab-input select {
+  box-sizing: border-box;
+  width: 100%;
+  color: var(--lab-text);
+  background: var(--lab-canvas);
+  border: 1px solid var(--lab-muted);
+  border-radius: 6px;
+  padding: 12px;
+  font: inherit;
+}
+.lab-input textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+.lab-context-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+.lab-recipient {
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+.lab-recipient[open] {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--lab-muted);
+}
+.lab-preview-label {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border: 1px solid var(--lab-muted);
+  border-radius: 4px;
+  color: var(--lab-muted);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+.lab-controls {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+.lab-controls > div {
+  margin-right: auto;
+}
+.lab-shell :focus-visible {
+  outline: 3px solid var(--lab-accent);
+  outline-offset: 4px;
+}
+.lab-shell button:disabled,
+.lab-shell textarea:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+.lab-shell summary {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 6px 0;
+}
+.lab-section > summary {
+  color: var(--lab-accent);
+  font-size: 1.1rem;
+}
+.lab-shadow > summary {
+  color: var(--lab-muted);
+}
+.lab-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+}
+.lab-facts dt {
+  color: var(--lab-muted);
+}
+.lab-facts dd {
+  margin: 4px 0;
+}
+.lab-shell code,
+.lab-structure {
+  font-family: Consolas, monospace;
+  font-size: 0.88rem;
+  overflow-wrap: anywhere;
+}
+.lab-structure {
+  white-space: pre-wrap;
+  max-height: 480px;
+  overflow: auto;
+  background: var(--lab-canvas);
+  padding: 16px;
+  border-radius: 6px;
+}
+.lab-message {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 1.1rem;
+  border-left: 3px solid var(--lab-accent);
+  padding: 12px 20px;
+  background: var(--lab-canvas);
+}
+.lab-rejected,
+.lab-notice {
+  border-color: var(--lab-alert);
+}
+.lab-notice {
+  border-left: 3px solid var(--lab-alert);
+  padding: 8px 16px;
+}
+.lab-rejected .lab-message {
+  border-color: var(--lab-alert);
+}
+.lab-table-scroll {
+  overflow: auto;
+  max-height: 480px;
+  margin: 16px 0;
+}
+.lab-table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.lab-table caption {
+  text-align: left;
+  color: var(--lab-muted);
+  padding: 8px 0;
+}
+.lab-table th {
+  background: var(--lab-canvas);
+  position: sticky;
+  top: 0;
+}
+.lab-table th,
+.lab-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--lab-muted);
+  vertical-align: top;
+}
+.lab-table td p {
+  margin: 4px 0;
+}
+.lab-table small {
+  display: block;
+}
+@media (max-width: 720px) {
+  .lab-shell {
+    padding: 20px 16px;
+  }
+  .lab-context-grid {
+    grid-template-columns: 1fr;
+  }
+  .lab-header {
+    align-items: start;
+  }
+  .lab-input,
+  .lab-result,
+  .lab-section {
+    padding: 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lab-shell * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -11,6 +11,7 @@ import {
   type SkillReference,
   type SkillSelectionRequest,
   type SkillSelectionResult,
+  type ShadowStageInspection,
 } from "@ai-message-coach/contracts";
 import {
   assessCommunicationNeeds,
@@ -239,6 +240,7 @@ export async function runB3SkillShadow(
   context: SkillContext | null,
   action: AgentAction,
   productionPlan: CommunicationPlan,
+  inspect?: (details: ShadowStageInspection) => void,
 ): Promise<SkillPlanShadowTrace> {
   const { trace, request, selection } = runB2SkillShadowStages(
     problem,
@@ -253,6 +255,7 @@ export async function runB3SkillShadow(
   let guidanceOrderEqual = false;
   let planComparisonCategory: SkillPlanShadowTrace["planComparisonCategory"] = "NOT_COMPARABLE";
   let planFailureCode: SkillPlanShadowTrace["planFailureCode"] = "COMPILATION_FAILED";
+  let inspectedPlan: ShadowStageInspection["plan"] = null;
   try {
     if (request) {
       const plan = await compiler.compile({
@@ -263,6 +266,7 @@ export async function runB3SkillShadow(
         constraints: [],
         catalogSnapshotId: snapshot.id,
       });
+      inspectedPlan = plan;
       planStatus = plan.status;
       principleCount = plan.principles.length;
       avoidCount = plan.avoid.length;
@@ -276,6 +280,11 @@ export async function runB3SkillShadow(
     }
   } catch {
     // A shadow failure cannot affect the production plan or provider call.
+  }
+  try {
+    inspect?.(structuredClone({ request, selection, plan: inspectedPlan }));
+  } catch {
+    /* Inspection cannot affect the shadow or production path. */
   }
   return SkillPlanShadowTraceSchema.parse({
     ...trace,
