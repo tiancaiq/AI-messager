@@ -122,6 +122,7 @@ export function normalizeCommunicationProblem(
       : request.selection.kind === "ACTION"
         ? request.selection.intent
         : request.selection.answer;
+  const explicitReplyGoal = request.userDirection?.text ?? null;
 
   const goal: CommunicationProblem["goal"] = selectedIntent
     ? {
@@ -129,18 +130,24 @@ export function normalizeCommunicationProblem(
         value: selectedIntent,
         provenance: "DETERMINISTIC_DERIVATION",
       }
-    : draft !== null
-      ? { kind: "WORK_WITH_DRAFT", value: null, provenance: "DETERMINISTIC_DERIVATION" }
-      : supplied.instruction
-        ? {
-            kind: "FOLLOW_INSTRUCTION",
-            value: supplied.instruction,
-            provenance: "DETERMINISTIC_DERIVATION",
-          }
-        : { kind: "UNKNOWN", value: null, provenance: "UNKNOWN" };
+    : explicitReplyGoal
+      ? {
+          kind: "FOLLOW_INSTRUCTION",
+          value: explicitReplyGoal,
+          provenance: "DETERMINISTIC_DERIVATION",
+        }
+      : draft !== null
+        ? { kind: "WORK_WITH_DRAFT", value: null, provenance: "DETERMINISTIC_DERIVATION" }
+        : supplied.instruction
+          ? {
+              kind: "FOLLOW_INSTRUCTION",
+              value: supplied.instruction,
+              provenance: "DETERMINISTIC_DERIVATION",
+            }
+          : { kind: "UNKNOWN", value: null, provenance: "UNKNOWN" };
 
   const unknowns: CommunicationProblem["unknowns"] = ["CONFIRMED_IDENTITY"];
-  if (!supplied.instruction) unknowns.push("EXPLICIT_INSTRUCTION");
+  if (!supplied.instruction && !explicitReplyGoal) unknowns.push("EXPLICIT_INSTRUCTION");
   if (!supplied.recipient) unknowns.push("RECIPIENT");
   if (!supplied.relationship) unknowns.push("RELATIONSHIP");
   if (goal.kind === "UNKNOWN") unknowns.push("COMMUNICATION_GOAL");
@@ -171,9 +178,11 @@ export function normalizeCommunicationProblem(
       : null,
     meaningToPreserve: selectedIntent
       ? { text: selectedIntent, provenance: "USER_SUPPLIED" }
-      : draft !== null
-        ? { text: draft, provenance: "OBSERVED_SCREENSHOT" }
-        : null,
+      : explicitReplyGoal
+        ? { text: explicitReplyGoal, provenance: "USER_SUPPLIED" }
+        : draft !== null
+          ? { text: draft, provenance: "OBSERVED_SCREENSHOT" }
+          : null,
     language: request.analysis.language,
     visibleContact: {
       ...request.analysis.visibleContact,

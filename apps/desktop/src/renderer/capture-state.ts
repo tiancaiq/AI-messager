@@ -36,7 +36,11 @@ export type CaptureState =
   | { status: "PREVIEW"; preview: CropPreviewResource }
   | { status: "ANALYZING"; preview: CropPreviewResource }
   | { status: "ANALYSIS_ERROR"; preview: CropPreviewResource; message: string }
-  | { status: "DECIDING"; result: AnalysisResultResource; selection: CoachingSelection | null }
+  | {
+      status: "DECIDING";
+      result: AnalysisResultResource;
+      selection: CoachingSelection | null;
+    }
   | {
       status: "COACHING_ERROR";
       result: AnalysisResultResource;
@@ -97,7 +101,11 @@ export function captureReducer(state: CaptureState, event: CaptureEvent): Captur
         : state;
     case "ANALYSIS_SUCCEEDED":
       return state.status === "ANALYZING"
-        ? { status: "DECIDING", result: event.result, selection: null }
+        ? {
+            status: "DECIDING",
+            result: event.result,
+            selection: null,
+          }
         : state;
     case "ANALYSIS_FAILED":
       return state.status === "ANALYZING"
@@ -118,7 +126,11 @@ export function captureReducer(state: CaptureState, event: CaptureEvent): Captur
         : state;
     case "RETRY_COACHING":
       return state.status === "COACHING_ERROR"
-        ? { status: "DECIDING", result: state.result, selection: state.selection }
+        ? {
+            status: "DECIDING",
+            result: state.result,
+            selection: state.selection,
+          }
         : state;
     case "CONTINUE_COACHING":
       return state.status === "COACHING_RESULT"

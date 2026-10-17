@@ -46,16 +46,15 @@ const conversationAnalysisService = createConversationAnalysisService(
       : { modelId: process.env.OPENAI_VISION_MODEL }),
   }),
 );
-const coachingService = createCoachingService(
-  new OpenAiCoachingAdapter({
-    ...(process.env.OPENAI_API_KEY === undefined ? {} : { apiKey: process.env.OPENAI_API_KEY }),
-    ...(process.env.OPENAI_TEXT_MODEL === undefined
-      ? process.env.OPENAI_VISION_MODEL === undefined
-        ? {}
-        : { modelId: process.env.OPENAI_VISION_MODEL }
-      : { modelId: process.env.OPENAI_TEXT_MODEL }),
-  }),
-);
+const coachingAdapter = new OpenAiCoachingAdapter({
+  ...(process.env.OPENAI_API_KEY === undefined ? {} : { apiKey: process.env.OPENAI_API_KEY }),
+  ...(process.env.OPENAI_TEXT_MODEL === undefined
+    ? process.env.OPENAI_VISION_MODEL === undefined
+      ? {}
+      : { modelId: process.env.OPENAI_VISION_MODEL }
+    : { modelId: process.env.OPENAI_TEXT_MODEL }),
+});
+const coachingService = createCoachingService(coachingAdapter, coachingAdapter);
 const localMemory = new LocalMemoryCoordinator();
 const developmentMemoryDebugSnapshotMode =
   process.defaultApp && process.env.AI_MESSAGE_COACH_MEMORY_DEBUG_SNAPSHOT === "1";

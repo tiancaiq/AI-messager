@@ -107,6 +107,30 @@ describe("Phase 3 coaching contracts", () => {
     ).toEqual(analysis);
   });
 
+  it("keeps an explicit new-reply goal separate from screenshot draft and choices", () => {
+    const goal = { kind: "NEW_REPLY_GOAL", text: "Ask what happened." };
+    expect(
+      CoachingRequestSchema.parse({ analysis, selection: null, userDirection: goal }).userDirection,
+    ).toEqual(goal);
+    for (const userDirection of [
+      { kind: "NEW_REPLY_GOAL", text: " " },
+      { kind: "NEW_REPLY_GOAL", text: "x".repeat(501) },
+      { kind: "NEW_REPLY_GOAL", text: "Ask what happened.", nextAction: "SEND" },
+      { kind: "TOOL", text: "Ask what happened." },
+    ]) {
+      expect(
+        CoachingRequestSchema.safeParse({ analysis, selection: null, userDirection }).success,
+      ).toBe(false);
+    }
+    expect(
+      CoachingRequestSchema.safeParse({
+        analysis,
+        selection: { kind: "CLARIFICATION", answer: "Ask why." },
+        userDirection: goal,
+      }).success,
+    ).toBe(false);
+  });
+
   it("rejects relationship and skill fields at the Phase 3 decision boundary", () => {
     expect(
       CoachingDecisionSchema.safeParse({

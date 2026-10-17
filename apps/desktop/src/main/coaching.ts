@@ -1,4 +1,8 @@
-import { coachConversation, type CoachingTextGenerator } from "@ai-message-coach/ai";
+import {
+  coachConversation,
+  type CoachingTextGenerator,
+  type DraftInstructionInterpreter,
+} from "@ai-message-coach/ai";
 import type {
   CoachingDecisionResult,
   CoachingRequest,
@@ -14,14 +18,19 @@ export interface CoachingService {
   requestCoaching(request: CoachingRequest): Promise<CoachingDecisionResult>;
 }
 
-export function createCoachingService(generator: CoachingTextGenerator): CoachingService {
+export function createCoachingService(
+  generator: CoachingTextGenerator,
+  draftInterpreter?: DraftInstructionInterpreter,
+): CoachingService {
   let inFlight = false;
   return {
     async requestCoaching(request) {
       if (inFlight) return inProgress;
       inFlight = true;
       try {
-        return await coachConversation(generator, request);
+        return await coachConversation(generator, request, {
+          ...(draftInterpreter === undefined ? {} : { draftInterpreter }),
+        });
       } finally {
         inFlight = false;
       }

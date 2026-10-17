@@ -9,6 +9,8 @@ describe("desktop capture entry", () => {
 
     expect(markup).toContain("<h1>AI Message Coach</h1>");
     expect(markup).toContain(">Generate</button>");
+    expect(markup).not.toContain("Optional goal for a new reply");
+    expect(markup).not.toContain("rather than a rewrite of the visible draft");
     expect(markup).toContain("Local preferences");
     expect(markup).toContain("not applied to coaching yet");
     expect(markup).not.toContain("Local Memory Inspector");

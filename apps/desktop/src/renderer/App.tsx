@@ -498,7 +498,11 @@ export function App() {
       try {
         const bridge = window.messageCoach;
         if (!bridge) throw new Error("The desktop coaching bridge is unavailable.");
-        const result = await bridge.requestCoaching({ analysis, selection });
+        const result = await bridge.requestCoaching({
+          analysis,
+          selection,
+          replyDecisionMode: "R1",
+        });
         if (!mountedReference.current) return;
         dispatch(
           result.ok

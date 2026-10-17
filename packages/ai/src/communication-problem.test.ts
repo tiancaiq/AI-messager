@@ -83,6 +83,26 @@ describe("Phase A communication problem normalization", () => {
     expect(problem.meaningToPreserve).toBeNull();
   });
 
+  it("keeps an explicit new-reply goal user-owned even when a compose draft is visible", () => {
+    const directed: CoachingRequest = {
+      ...request,
+      userDirection: { kind: "NEW_REPLY_GOAL", text: "Ask what happened." },
+    };
+    const problem = normalizeCommunicationProblem(directed);
+    expect(problem.goal).toEqual({
+      kind: "FOLLOW_INSTRUCTION",
+      value: "Ask what happened.",
+      provenance: "DETERMINISTIC_DERIVATION",
+    });
+    expect(problem.meaningToPreserve).toEqual({
+      text: "Ask what happened.",
+      provenance: "USER_SUPPLIED",
+    });
+    expect(problem.sourceDraft?.text).toBe(request.analysis.draft.text);
+    expect(problem.instruction).toBeNull();
+    expect(problem.unknowns).not.toContain("EXPLICIT_INSTRUCTION");
+  });
+
   it("does not promote visible contact cues into confirmed identity or relationship", () => {
     const observed: CoachingRequest = {
       ...request,
@@ -192,6 +212,11 @@ describe("Phase A communication problem normalization", () => {
         before.action,
       );
     }
-    expect(Object.keys(CoachingRequestSchema.shape)).toEqual(["analysis", "selection"]);
+    expect(Object.keys(CoachingRequestSchema.shape)).toEqual([
+      "analysis",
+      "selection",
+      "replyDecisionMode",
+      "userDirection",
+    ]);
   });
 });

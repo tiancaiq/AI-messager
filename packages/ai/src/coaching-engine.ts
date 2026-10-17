@@ -28,6 +28,12 @@ import {
 } from "./composer-task.js";
 import { runB3SkillShadow, type SkillPlanShadowTrace } from "./skill-shadow.js";
 import { deriveSkillContext, type CommunicationSkillPlanner } from "./skill-context.js";
+import {
+  hasSuspectedInlineInstruction,
+  resolveDraftInstruction,
+  shouldInterpretDraft,
+  type DraftInstructionInterpreter,
+} from "./draft-instruction.js";
 
 export interface CoachingTextGenerator {
   readonly configuration: ProviderConfiguration;
@@ -40,6 +46,7 @@ export interface CoachingTextGenerator {
 }
 
 export interface CoachingEngineOptions {
+  draftInterpreter?: DraftInstructionInterpreter;
   skillPlanner?: CommunicationSkillPlanner;
   onCommunicationPlan?: (plan: CommunicationPlan) => void;
   onProblemNormalization?: (status: {
@@ -155,6 +162,7 @@ export type CoachingGuardRuleCode =
   | "UNSUPPORTED_INFORMATION_STATE"
   | "UNSUPPORTED_COMMITMENT"
   | "UNSUPPORTED_EMOTION"
+  | "NO_CONTACT_REPLY_SCOPE"
   | "BOUNDARY_TEMPORAL_WEAKENING"
   | "BOUNDARY_TEMPORAL_STRENGTHENING";
 
@@ -174,6 +182,7 @@ function explicitIntent(request: CoachingRequest, policy: CoachingPolicyDecision
     return request.selection.kind === "ACTION"
       ? request.selection.intent
       : request.selection.answer;
+  if (request.userDirection != null) return request.userDirection.text;
   return request.analysis.draft.text ?? policy.userIntent.value ?? "";
 }
 
@@ -204,7 +213,8 @@ function supportedPriorThanks(request: CoachingRequest): boolean {
       ({ speaker, speakerConfidence, text }) =>
         speaker === "USER" && speakerConfidence >= 0.8 && thanksExpression.test(text),
     ) ||
-    priorThanks.test(request.analysis.draft.text ?? "") ||
+    (request.userDirection == null && priorThanks.test(request.analysis.draft.text ?? "")) ||
+    priorThanks.test(request.userDirection?.text ?? "") ||
     (request.selection !== null &&
       priorThanks.test(
         request.selection.kind === "ACTION" ? request.selection.intent : request.selection.answer,
@@ -247,7 +257,8 @@ export function evaluateCoachingDecisionGuards(
   const sourceAnchors = factualAnchors(
     [
       ...request.analysis.messages.map(({ text }) => text),
-      request.analysis.draft.text ?? "",
+      request.userDirection == null ? (request.analysis.draft.text ?? "") : "",
+      request.userDirection?.text ?? "",
       request.selection?.kind === "ACTION" ? request.selection.intent : "",
       request.selection?.kind === "CLARIFICATION" ? request.selection.answer : "",
     ].join("\n"),
@@ -312,21 +323,95 @@ export async function coachConversation(
   const parsedConfiguration = ProviderConfigurationSchema.safeParse(generator.configuration);
   if (!parsedRequest.success || !parsedConfiguration.success) return safeFailure;
 
+  let effectiveRequest = parsedRequest.data;
+  let inlineInstruction: string | null = null;
+  if (hasSuspectedInlineInstruction(effectiveRequest) && !shouldInterpretDraft(effectiveRequest))
+    return {
+      ok: false,
+      error: {
+        code: "INVALID_RESPONSE",
+        message:
+          "The mixed draft is too long to interpret safely. Please shorten it and try again.",
+      },
+    };
+  if (shouldInterpretDraft(effectiveRequest)) {
+    if (!parsedConfiguration.data.configured)
+      return {
+        ok: false,
+        error: { code: "NOT_CONFIGURED", message: "Configure an API key, then try again." },
+      };
+    if (!parsedConfiguration.data.capabilities.structuredOutput || !options.draftInterpreter)
+      return {
+        ok: false,
+        error: { code: "MODEL_UNAVAILABLE", message: "Draft interpretation is unavailable." },
+      };
+    let interpretation: ReturnType<typeof resolveDraftInstruction>;
+    try {
+      interpretation = resolveDraftInstruction(
+        effectiveRequest.analysis.draft.text!,
+        await options.draftInterpreter.interpretDraftInstruction(effectiveRequest),
+      );
+    } catch {
+      return safeFailure;
+    }
+    if (interpretation.kind === "UNCERTAIN") {
+      return {
+        ok: false,
+        error: {
+          code: "INVALID_RESPONSE",
+          message:
+            "I could not separate your message from the instruction. Please edit the draft and try again.",
+        },
+      };
+    }
+    if (interpretation.kind === "MIXED" || interpretation.kind === "INSTRUCTION_ONLY") {
+      if (interpretation.kind === "INSTRUCTION_ONLY" && interpretation.purpose === "REPLY_GOAL") {
+        if (effectiveRequest.selection !== null)
+          return {
+            ok: false,
+            error: {
+              code: "INVALID_RESPONSE",
+              message:
+                "The draft goal conflicts with the selected reply. Please edit the draft and try again.",
+            },
+          };
+        effectiveRequest = {
+          ...effectiveRequest,
+          userDirection: { kind: "NEW_REPLY_GOAL", text: interpretation.instructionText },
+        };
+      } else {
+        inlineInstruction = interpretation.instructionText;
+      }
+      effectiveRequest = {
+        ...effectiveRequest,
+        analysis: {
+          ...effectiveRequest.analysis,
+          draft: {
+            ...effectiveRequest.analysis.draft,
+            text: interpretation.kind === "MIXED" ? interpretation.messageText : null,
+          },
+        },
+      };
+    }
+  }
+
   let problem: CommunicationProblem | null = null;
   try {
-    problem = normalizeCommunicationProblem(parsedRequest.data);
+    problem = normalizeCommunicationProblem(effectiveRequest, {
+      ...(inlineInstruction === null ? {} : { instruction: inlineInstruction }),
+    });
     inspectProblemNormalization(options, { status: "NORMALIZED", goalKind: problem.goal.kind });
   } catch {
     inspectProblemNormalization(options, { status: "FAILED", goalKind: null });
   }
 
-  const policy = decideCoachingAction(parsedRequest.data);
+  const policy = decideCoachingAction(effectiveRequest);
   const deterministic = localDecision(policy);
   if (deterministic) {
     inspectPlan(options, noCommunicationPlan);
     let shadowContext: SkillContext | null = null;
     try {
-      shadowContext = deriveSkillContext(parsedRequest.data, policy);
+      shadowContext = deriveSkillContext(effectiveRequest, policy);
     } catch {
       // Production local decisions do not depend on Skill context.
     }
@@ -343,7 +428,7 @@ export async function coachConversation(
   let communicationPlan: CommunicationPlan;
   let skillContext: SkillContext | null = null;
   try {
-    skillContext = deriveSkillContext(parsedRequest.data, policy);
+    skillContext = deriveSkillContext(effectiveRequest, policy);
     communicationPlan = CommunicationPlanSchema.parse(
       (options.skillPlanner ?? defaultSkillPlanner).plan(skillContext),
     );
@@ -374,7 +459,9 @@ export async function coachConversation(
 
   let task: ComposerTask;
   try {
-    task = buildComposerTask(parsedRequest.data, policy, guidanceForGeneration(communicationPlan));
+    task = buildComposerTask(effectiveRequest, policy, guidanceForGeneration(communicationPlan), {
+      ...(inlineInstruction === null ? {} : { instruction: inlineInstruction }),
+    });
     if (task.fixedAction !== policy.action) return safeFailure;
   } catch {
     return safeFailure;
@@ -382,7 +469,7 @@ export async function coachConversation(
 
   try {
     const result = await generator.generateCoachingDecision(
-      parsedRequest.data,
+      effectiveRequest,
       policy,
       guidanceForGeneration(communicationPlan),
       task,
@@ -391,8 +478,12 @@ export async function coachConversation(
     if (
       !parsed.success ||
       (parsed.data.ok &&
-        evaluateCoachingDecisionGuards(parsed.data.decision, parsedRequest.data, policy, task) !==
-          null)
+        (evaluateCoachingDecisionGuards(parsed.data.decision, effectiveRequest, policy, task) !==
+          null ||
+          (inlineInstruction !== null &&
+            generatedMessages(parsed.data.decision).some((text) =>
+              text.toLocaleLowerCase().includes(inlineInstruction.toLocaleLowerCase()),
+            ))))
     )
       return {
         ok: false,

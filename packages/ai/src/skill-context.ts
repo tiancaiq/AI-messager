@@ -101,20 +101,33 @@ export function deriveSkillContext(
     coachingRequest.selection?.kind === "ACTION"
       ? coachingRequest.selection.intent
       : (coachingRequest.selection?.answer ?? "");
-  const draft = analysis.draft.text ?? "";
+  const observedDraft = analysis.draft.text ?? "";
+  const draft = coachingRequest.userDirection != null ? "" : observedDraft;
+  const replyDirection = coachingRequest.userDirection?.text ?? "";
   const otherEvidence = analysis.messages
     .filter((message) => message.speaker === "OTHER")
     .map((message) => message.text);
   const userMessages = analysis.messages
     .filter((message) => message.speaker === "USER")
     .map((message) => message.text);
-  const currentUserIntent = [draft, selectedIntent].filter((text) => text.trim().length > 0);
-  const userOwnedEvidence = [...userMessages, ...currentUserIntent];
-  const visible = [...analysis.messages.map((message) => message.text), draft, selectedIntent].join(
-    "\n",
+  const currentUserIntent = [draft, selectedIntent, replyDirection].filter(
+    (text) => text.trim().length > 0,
   );
-  const explicitSelection = coachingRequest.selection !== null;
-  const intentEvidence = [policy.userIntent.value ?? "", draft, selectedIntent].join("\n");
+  const userOwnedEvidence = [...userMessages, ...currentUserIntent];
+  const visible = [
+    ...analysis.messages.map((message) => message.text),
+    observedDraft,
+    selectedIntent,
+    replyDirection,
+  ].join("\n");
+  const explicitSelection =
+    coachingRequest.selection !== null || coachingRequest.userDirection != null;
+  const intentEvidence = [
+    policy.userIntent.value ?? "",
+    draft,
+    selectedIntent,
+    replyDirection,
+  ].join("\n");
   const supportedMistake = userOwnedEvidence.some(hasSupportedMistake);
   const statusRequested = otherEvidence.some(hasStatusRequest);
   const userStatusVisible = userOwnedEvidence.some(hasUserStatus);

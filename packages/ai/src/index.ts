@@ -25,6 +25,14 @@ export {
   type CoachingTextGenerator,
 } from "./coaching-engine.js";
 export { decideCoachingAction, type CoachingPolicyDecision } from "./coaching-policy.js";
+export { buildOpenAiDraftInstructionRequest } from "./openai-coaching-adapter.js";
+export {
+  DraftInstructionInterpretationSchema,
+  hasSuspectedInlineInstruction,
+  resolveDraftInstruction,
+  shouldInterpretDraft,
+  type DraftInstructionInterpreter,
+} from "./draft-instruction.js";
 export { deriveSkillContext, type CommunicationSkillPlanner } from "./skill-context.js";
 export { COACHING_INSTRUCTIONS } from "./coaching-prompt.js";
 export {

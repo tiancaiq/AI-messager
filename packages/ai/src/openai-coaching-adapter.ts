@@ -16,6 +16,13 @@ import type { CoachingTextGenerator } from "./coaching-engine.js";
 import type { CoachingPolicyDecision } from "./coaching-policy.js";
 import { COACHING_INSTRUCTIONS } from "./coaching-prompt.js";
 import { buildComposerTask, ComposerTaskSchema, type ComposerTask } from "./composer-task.js";
+import {
+  DRAFT_INSTRUCTION_INSTRUCTIONS,
+  DraftInstructionInterpretationSchema,
+  DraftInstructionJsonSchema,
+  type DraftInstructionInterpretation,
+  type DraftInstructionInterpreter,
+} from "./draft-instruction.js";
 
 const DEFAULT_MODEL = "gpt-5.6-luna";
 const DEFAULT_TIMEOUT_MS = 45_000;
@@ -120,7 +127,7 @@ function safeConversation(
       speaker,
       text,
     })),
-    draft: request.analysis.draft.text,
+    draft: request.userDirection == null ? request.analysis.draft.text : null,
     language: request.analysis.language,
     warnings: request.analysis.warnings,
     composerTask: task,
@@ -157,6 +164,42 @@ export function buildOpenAiCoachingRequest(
         name: format.name,
         strict: true,
         schema: format.schema,
+      },
+    },
+  };
+}
+
+export function buildOpenAiDraftInstructionRequest(
+  request: CoachingRequest,
+  modelId: string,
+): Record<string, unknown> {
+  return {
+    model: modelId,
+    store: false,
+    instructions: DRAFT_INSTRUCTION_INSTRUCTIONS,
+    input: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "input_text",
+            text: JSON.stringify({
+              draft: request.analysis.draft.text,
+              messages: request.analysis.messages
+                .slice(-4)
+                .map(({ speaker, text }) => ({ speaker, text: text.slice(0, 1_000) })),
+            }),
+          },
+        ],
+      },
+    ],
+    max_output_tokens: 300,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "draft_instruction_interpretation",
+        strict: true,
+        schema: schema(DraftInstructionJsonSchema),
       },
     },
   };
@@ -220,7 +263,7 @@ function httpFailure(status: number, payload: unknown): CoachingDecisionResult {
   return failure("PROVIDER_ERROR", "A message could not be generated. Please try again.");
 }
 
-export class OpenAiCoachingAdapter implements CoachingTextGenerator {
+export class OpenAiCoachingAdapter implements CoachingTextGenerator, DraftInstructionInterpreter {
   readonly configuration: ProviderConfiguration;
   readonly #apiKey: string | undefined;
   readonly #fetch: FetchImplementation;
@@ -236,6 +279,22 @@ export class OpenAiCoachingAdapter implements CoachingTextGenerator {
       configured: this.#apiKey !== undefined,
       capabilities: { textGeneration: true, vision: true, structuredOutput: true },
     };
+  }
+
+  async interpretDraftInstruction(
+    request: CoachingRequest,
+  ): Promise<DraftInstructionInterpretation> {
+    if (!this.#apiKey) throw new Error("Provider is not configured.");
+    const response = await this.#fetch(RESPONSES_URL, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${this.#apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify(buildOpenAiDraftInstructionRequest(request, this.configuration.modelId)),
+      signal: AbortSignal.timeout(this.#timeoutMs),
+    });
+    if (!response.ok) throw new Error("Draft interpretation provider request failed.");
+    const text = outputText(await response.json());
+    if (!text) throw new Error("Draft interpretation response was incomplete.");
+    return DraftInstructionInterpretationSchema.parse(JSON.parse(text));
   }
 
   async generateCoachingDecision(

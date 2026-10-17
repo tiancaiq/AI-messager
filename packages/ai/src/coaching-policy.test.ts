@@ -56,6 +56,7 @@ function analysis(
 const request = (value: ConversationAnalysis): CoachingRequest => ({
   analysis: value,
   selection: null,
+  replyDecisionMode: "R1",
 });
 
 describe("draft-aware coaching policy", () => {
@@ -70,12 +71,108 @@ describe("draft-aware coaching policy", () => {
     expect(decideCoachingAction(request(analysis({ draft }))).action).toBe(expected);
   });
 
-  it("suggests a reply when no draft exists but the request is obvious", () => {
+  it("offers choices when answering a request would commit unknown user ability", () => {
+    const result = decideCoachingAction(
+      request(analysis({ message: "Can you send me the file when you get home?" })),
+    );
+    expect(result.action).toBe("SUGGEST_ACTIONS");
+    expect(result.actions?.map(({ id }) => id)).toEqual(["accept", "decline", "details"]);
+  });
+
+  it("suggests a brief general acknowledgment without assuming a wish to continue contact", () => {
+    for (const message of [
+      "I don't want to speak with you, we are done",
+      "Please don't contact me again.",
+      "我不想再和你說話了，別再聯絡我。",
+    ]) {
+      const result = decideCoachingAction(request(analysis({ message })));
+      expect(result.action, message).toBe("SUGGEST_REPLY");
+      expect(result.userIntent.value, message).toMatch(/brief, general expression of regret/iu);
+      expect(result.noReply, message).toBeUndefined();
+    }
+  });
+
+  it("treats a coach-entered direction as the explicit goal of a new reply", () => {
+    const result = decideCoachingAction({
+      ...request(analysis({ message: "I don't want to speak with you, we are done" })),
+      userDirection: { kind: "NEW_REPLY_GOAL", text: "Ask what happened." },
+    });
+    expect(result.action).toBe("SUGGEST_REPLY");
+    expect(result.userIntent).toEqual({ value: "Ask what happened.", confidence: 1 });
+  });
+
+  it("does not mistake a coach-entered new-reply direction for a visible draft", () => {
+    const result = decideCoachingAction({
+      ...request(analysis({ message: "What happened?", draft: "Thanks for asking." })),
+      userDirection: { kind: "NEW_REPLY_GOAL", text: "Ask for more detail instead." },
+    });
+    expect(result.action).toBe("SUGGEST_REPLY");
+    expect(result.userIntent.value).toBe("Ask for more detail instead.");
+  });
+
+  it("uses a specific acknowledgment goal for a simple incoming statement", () => {
+    const result = decideCoachingAction(request(analysis({ message: "I submitted the review." })));
+    expect(result.action).toBe("SUGGEST_REPLY");
+    expect(result.userIntent.value).toMatch(/acknowledge/iu);
+  });
+
+  it("asks for the user's answer when an open question requires unknown personal facts", () => {
+    const result = decideCoachingAction(request(analysis({ message: "What happened?" })));
+    expect(result.action).toBe("ASK_CLARIFICATION");
+    expect(result.ambiguity.material).toBe(true);
+  });
+
+  it("does not infer a reply goal from low-confidence incoming text or speaker ownership", () => {
+    const observed = analysis({ message: "I don't want to speak with you." });
+    const uncertain = {
+      ...observed,
+      messages: [{ ...observed.messages[0]!, speakerConfidence: 0.4 }],
+    };
+    expect(decideCoachingAction(request(uncertain)).action).toBe("ASK_CLARIFICATION");
+  });
+
+  it("does not reply to a stale incoming turn when the latest visible message is from the user", () => {
+    const observed = analysis({ message: "Can you send me the file?" });
+    const result = decideCoachingAction(
+      request({
+        ...observed,
+        messages: [
+          ...observed.messages,
+          {
+            id: "m2",
+            order: 2,
+            speaker: "USER",
+            text: "I'll check and let you know.",
+            textConfidence: 0.95,
+            speakerConfidence: 0.95,
+          },
+        ],
+      }),
+    );
+    expect(result.action).toBe("NO_REPLY_NEEDED");
+    expect(result.noReply?.optionalReply).toBeNull();
+  });
+
+  it("asks before replying when the newest visible speaker is unknown", () => {
+    const observed = analysis({ message: "I submitted the review." });
     expect(
       decideCoachingAction(
-        request(analysis({ message: "Can you send me the file when you get home?" })),
+        request({
+          ...observed,
+          messages: [
+            ...observed.messages,
+            {
+              id: "m2",
+              order: 2,
+              speaker: "UNKNOWN",
+              text: "Can you send it?",
+              textConfidence: 0.95,
+              speakerConfidence: 0.2,
+            },
+          ],
+        }),
       ).action,
-    ).toBe("SUGGEST_REPLY");
+    ).toBe("ASK_CLARIFICATION");
   });
 
   it("offers actions for materially different invitation choices", () => {
@@ -137,7 +234,7 @@ describe("draft-aware coaching policy", () => {
     }
   });
 
-  it("supports Traditional Chinese and other-language contexts without skills", () => {
+  it("supports Traditional Chinese and conservatively clarifies unsupported languages", () => {
     expect(
       decideCoachingAction(
         request(analysis({ message: "今晚要不要一起來？", language: "zh", script: "TRADITIONAL" })),
@@ -146,6 +243,6 @@ describe("draft-aware coaching policy", () => {
     expect(
       decideCoachingAction(request(analysis({ message: "자료를 보내 주세요", language: "ko" })))
         .action,
-    ).toBe("SUGGEST_REPLY");
+    ).toBe("ASK_CLARIFICATION");
   });
 });

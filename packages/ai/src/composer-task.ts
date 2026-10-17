@@ -11,7 +11,7 @@ import {
   normalizeCommunicationProblem,
   type UserSuppliedCommunicationContext,
 } from "./communication-problem.js";
-import type { CoachingPolicyDecision } from "./coaching-policy.js";
+import { hasReliableNoContactBoundary, type CoachingPolicyDecision } from "./coaching-policy.js";
 
 const AnchorSchema = z
   .object({
@@ -53,6 +53,13 @@ export const MustNotInventCategorySchema = z.enum([
 export const ComposerTaskSchema = z
   .object({
     fixedAction: AgentActionSchema,
+    replyGoal: z
+      .object({
+        value: z.string().trim().min(1).max(500),
+        source: z.enum(["EXPLICIT_USER", "SELECTED_CONTINUATION", "INFERRED_VISIBLE_CONTEXT"]),
+      })
+      .strict()
+      .nullable(),
     mustPreserve: z.array(AnchorSchema).max(16),
     mustNotInvent: z.array(MustNotInventCategorySchema).max(14),
     coreCommunicationGuidance: CommunicationGuidanceSchema,
@@ -69,9 +76,15 @@ export const ComposerTaskSchema = z
       })
       .strict(),
     statusReplyMode: z.enum(["NONE", "ASK_SCOPE_ONLY"]),
+    otherBoundary: z.enum(["NONE", "NO_CONTACT"]),
   })
   .strict()
   .superRefine((task, context) => {
+    if ((task.fixedAction === "SUGGEST_REPLY") !== (task.replyGoal !== null))
+      context.addIssue({
+        code: "custom",
+        message: "Reply goal must match the fixed reply action.",
+      });
     if (
       task.statusReplyMode === "ASK_SCOPE_ONLY" &&
       (task.fixedAction !== "SUGGEST_REPLY" ||
@@ -150,6 +163,8 @@ const unsupportedInformationClaim =
   /\b(?:i (?:don['’]t|do not|haven['’]t|have not) have (?:enough |sufficient |the )?(?:information|context|details)|i need (?:more )?(?:information|context|details)|i(?:['’]m| am) not able to (?:provide|give|share) (?:an? )?(?:accurate |reliable )?(?:progress |status )?update (?:based on|without)|i(?:['’]m| am) not sure|i (?:haven['’]t|have not) decided|i need to check)\b|(?:我|我們|我们)(?:目前|這邊|这边)?(?:沒有|没有).{0,9}(?:資訊|信息|資料|资料|掌握)|(?:현재 대화|이 대화).{0,30}(?:정보|진행 상황).{0,12}(?:없어|없습니다)/iu;
 const assertedEmotion =
   /\b(?:you (?:are|feel)|you(?:['’]re| are) (?:clearly )?|i (?:know|understand) (?:that )?you(?:['’]re| are)) (?:upset|frustrated|sad|angry)\b|(?:你|您)(?:很|感到)(?:難過|难过|沮喪|沮丧|生氣|生气)/iu;
+const inferredNoContactOverreach =
+  /[?？]|\b(?:please (?:reconsider|give me another chance)|(?:can|could) we (?:talk|discuss)|let['’]s (?:talk|discuss)|i(?:['’]m| am) sorry (?:for (?:what i did|hurting you)|i (?:hurt you|was wrong|messed up)))\b|(?:能不能|可不可以)(?:再|繼續|继续)?(?:聊|談|谈)|(?:再|繼續|继续)(?:聊聊|談談|谈谈)/iu;
 
 type BoundaryKind = "STOP_PRESSURE" | "CAPACITY_LIMIT";
 type BoundaryScope = "DURABLE_OR_UNQUALIFIED" | "TEMPORARY" | "UNKNOWN";
@@ -232,11 +247,16 @@ export function userOwnedEvidenceText(request: CoachingRequest): string {
     ...request.analysis.messages
       .filter(({ speaker, speakerConfidence }) => speaker === "USER" && speakerConfidence >= 0.8)
       .map(({ text }) => text),
-    ...(request.analysis.draft.text !== null && request.analysis.draft.confidence >= 0.8
+    ...(request.userDirection == null &&
+    request.analysis.draft.text !== null &&
+    request.analysis.draft.confidence >= 0.8
       ? [request.analysis.draft.text]
       : []),
     ...(request.selection !== null
       ? [request.selection.kind === "ACTION" ? request.selection.intent : request.selection.answer]
+      : []),
+    ...(request.userDirection !== undefined && request.userDirection !== null
+      ? [request.userDirection.text]
       : []),
   ].join("\n");
 }
@@ -257,7 +277,11 @@ export function buildComposerTask(
       ? {
           text: problem.meaningToPreserve.text,
           sourceRef:
-            problem.meaningToPreserve.provenance === "USER_SUPPLIED" ? "SELECTION" : "DRAFT",
+            problem.meaningToPreserve.provenance === "USER_SUPPLIED"
+              ? request.userDirection != null
+                ? "USER_DIRECTION"
+                : "SELECTION"
+              : "DRAFT",
         }
       : null;
   const acceptedRequest =
@@ -391,6 +415,7 @@ export function buildComposerTask(
   const lastOther = problem.latestOtherMessage;
   const unknownStatusReply =
     policy.action === "SUGGEST_REPLY" &&
+    request.userDirection == null &&
     lastOther !== null &&
     statusRequest.test(lastOther.text) &&
     !statusFact.test(userText) &&
@@ -401,6 +426,18 @@ export function buildComposerTask(
 
   return ComposerTaskSchema.parse({
     fixedAction: policy.action,
+    replyGoal:
+      policy.action === "SUGGEST_REPLY" && policy.userIntent.value !== null
+        ? {
+            value: policy.userIntent.value,
+            source:
+              request.userDirection != null
+                ? "EXPLICIT_USER"
+                : request.selection !== null
+                  ? "SELECTED_CONTINUATION"
+                  : "INFERRED_VISIBLE_CONTEXT",
+          }
+        : null,
     mustPreserve: anchors,
     mustNotInvent: [...categories],
     coreCommunicationGuidance: guidance,
@@ -409,6 +446,7 @@ export function buildComposerTask(
       priorities: problem.stylisticPriorities.map(({ value }) => value),
     },
     statusReplyMode: unknownStatusReply ? "ASK_SCOPE_ONLY" : "NONE",
+    otherBoundary: hasReliableNoContactBoundary(request.analysis) ? "NO_CONTACT" : "NONE",
   });
 }
 
@@ -417,6 +455,7 @@ export type ComposerTaskViolation =
   | "UNSUPPORTED_INFORMATION_STATE"
   | "UNSUPPORTED_COMMITMENT"
   | "UNSUPPORTED_EMOTION"
+  | "NO_CONTACT_REPLY_SCOPE"
   | "BOUNDARY_TEMPORAL_WEAKENING"
   | "BOUNDARY_TEMPORAL_STRENGTHENING";
 
@@ -441,6 +480,12 @@ export function detectComposerTaskViolation(
     return "UNSUPPORTED_COMMITMENT";
   if (task.mustNotInvent.includes("EMOTIONAL_STATE") && assertedEmotion.test(normalized))
     return "UNSUPPORTED_EMOTION";
+  if (
+    task.otherBoundary === "NO_CONTACT" &&
+    task.replyGoal?.source === "INFERRED_VISIBLE_CONTEXT" &&
+    inferredNoContactOverreach.test(normalized)
+  )
+    return "NO_CONTACT_REPLY_SCOPE";
   const candidateScopes = boundaryScopes(normalized);
   for (const anchor of task.mustPreserve) {
     if (anchor.concept !== "BOUNDARY_SCOPE") continue;

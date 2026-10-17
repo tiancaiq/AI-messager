@@ -36,8 +36,25 @@ export const CoachingRequestSchema = z
   .object({
     analysis: ConversationAnalysisSchema,
     selection: CoachingSelectionSchema.nullable(),
+    replyDecisionMode: z.literal("R1").optional(),
+    userDirection: z
+      .object({
+        kind: z.literal("NEW_REPLY_GOAL"),
+        text: z.string().trim().min(1).max(500),
+      })
+      .strict()
+      .nullable()
+      .optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((request, context) => {
+    if (request.selection !== null && request.userDirection != null)
+      context.addIssue({
+        code: "custom",
+        message: "A selected continuation and a new-reply goal cannot be combined.",
+        path: ["userDirection"],
+      });
+  });
 
 const UserIntentSchema = z
   .object({
