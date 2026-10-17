@@ -1,13 +1,17 @@
 import {
   SkillDefinitionSchema,
-  type AgentAction,
+  type CommunicationSkillAction,
   type SkillDefinition,
   type SkillIntentTag,
   type SkillLanguage,
   type SkillSituationTag,
 } from "@ai-message-coach/contracts";
 
-const wordingActions: AgentAction[] = ["REWRITE_DRAFT", "COMPLETE_DRAFT", "SUGGEST_REPLY"];
+const wordingActions: CommunicationSkillAction[] = [
+  "REWRITE_DRAFT",
+  "COMPLETE_DRAFT",
+  "SUGGEST_REPLY",
+];
 
 interface SkillSeed {
   id: string;
@@ -16,7 +20,7 @@ interface SkillSeed {
   languages: SkillLanguage[];
   situations?: SkillSituationTag[];
   intents?: SkillIntentTag[];
-  actions?: AgentAction[];
+  actions?: CommunicationSkillAction[];
   principles: string[];
   avoid?: string[];
   compatibleSkills?: string[];

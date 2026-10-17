@@ -108,7 +108,7 @@ export function createSkillEngine(input: readonly unknown[]): SkillEngine {
       const candidates = registry
         .filter((skill) => skill.status === "ACTIVE")
         .filter((skill) => skill.languages.some((language) => languages.has(language)))
-        .filter((skill) => skill.actions.includes(context.action))
+        .filter((skill) => skill.actions.some((action) => action === context.action))
         .filter((skill) => skill.id !== "zh.code_switching" || context.language.codeSwitching)
         .filter(
           (skill) =>

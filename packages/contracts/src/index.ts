@@ -253,6 +253,7 @@ export {
 export {
   CommunicationGuidanceSchema,
   CommunicationPlanSchema,
+  CommunicationSkillActionSchema,
   SelectedSkillSchema,
   SkillDefinitionSchema,
   SkillContextSchema,
@@ -262,6 +263,7 @@ export {
   SkillStatusSchema,
   type CommunicationGuidance,
   type CommunicationPlan,
+  type CommunicationSkillAction,
   type SelectedSkill,
   type SkillDefinition,
   type SkillContext,

@@ -1,5 +1,6 @@
 {
   "name": "@ai-message-coach/skills",
+  "description": "Approved communication-strategy skills and deterministic selection for AI Message Coach.",
   "version": "0.0.0",
   "private": true,
   "type": "module",

@@ -48,6 +48,15 @@ describe("Phase 4 skill contracts", () => {
     expect(SkillDefinitionSchema.parse(validSkill)).toEqual(validSkill);
   });
 
+  it.each(["SUGGEST_ACTIONS", "ASK_CLARIFICATION", "NO_REPLY_NEEDED"])(
+    "rejects a communication skill targeting the non-wording action %s",
+    (action) => {
+      expect(SkillDefinitionSchema.safeParse({ ...validSkill, actions: [action] }).success).toBe(
+        false,
+      );
+    },
+  );
+
   it("rejects speculative relationship metadata and invalid versions", () => {
     expect(
       SkillDefinitionSchema.safeParse({ ...validSkill, relationship: "manager" }).success,

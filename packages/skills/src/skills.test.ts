@@ -27,6 +27,11 @@ describe("initial skill registry", () => {
       expect(parseSkillDefinition(skill)).toEqual(skill);
       expect(skill.version).toBe(1);
       expect(skill.status).toBe("ACTIVE");
+      expect(
+        skill.actions.every((action) =>
+          ["REWRITE_DRAFT", "COMPLETE_DRAFT", "SUGGEST_REPLY"].includes(action),
+        ),
+      ).toBe(true);
       expect(JSON.stringify(skill).toLowerCase()).not.toContain("relationship");
     }
     expect(validateSkillRegistry(initialSkillRegistry)).toHaveLength(21);

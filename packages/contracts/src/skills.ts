@@ -4,6 +4,11 @@ import { AgentActionSchema } from "./coaching.js";
 
 export const SkillStatusSchema = z.enum(["ACTIVE", "INACTIVE"]);
 export const SkillLanguageSchema = z.enum(["universal", "en", "zh"]);
+export const CommunicationSkillActionSchema = z.enum([
+  "REWRITE_DRAFT",
+  "COMPLETE_DRAFT",
+  "SUGGEST_REPLY",
+]);
 export const SkillSituationTagSchema = z.enum([
   "mistake",
   "missed_commitment",
@@ -48,7 +53,7 @@ export const SkillDefinitionSchema = z
     languages: z.array(SkillLanguageSchema).min(1).max(3),
     situations: z.array(SkillSituationTagSchema).max(10),
     intents: z.array(SkillIntentTagSchema).max(10),
-    actions: z.array(AgentActionSchema).min(1).max(6),
+    actions: z.array(CommunicationSkillActionSchema).min(1).max(3),
     useWhen: z.array(z.string().trim().min(1).max(300)).min(1).max(6),
     doNotUseWhen: z.array(z.string().trim().min(1).max(300)).max(6),
     principles: z.array(z.string().trim().min(1).max(300)).min(1).max(6),
@@ -165,6 +170,7 @@ export const CommunicationPlanSchema = z
 
 export type SkillStatus = z.infer<typeof SkillStatusSchema>;
 export type SkillLanguage = z.infer<typeof SkillLanguageSchema>;
+export type CommunicationSkillAction = z.infer<typeof CommunicationSkillActionSchema>;
 export type SkillSituationTag = z.infer<typeof SkillSituationTagSchema>;
 export type SkillIntentTag = z.infer<typeof SkillIntentTagSchema>;
 export type SkillDefinition = z.infer<typeof SkillDefinitionSchema>;
