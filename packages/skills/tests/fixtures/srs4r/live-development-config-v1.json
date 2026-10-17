@@ -1,0 +1,1231 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "SRS-4R-A-LIVE-PROOF-V1",
+  "status": "FROZEN_EXPOSED_DEVELOPMENT_ONLY",
+  "approval": { "totalSpendCapUSD": 2, "maximumRequests": 138 },
+  "provider": {
+    "model": "gpt-5.6-luna",
+    "endpoint": "https://api.openai.com/v1/responses",
+    "store": false,
+    "reasoningEffort": "low",
+    "timeoutMs": 45000,
+    "automaticRetries": 0,
+    "batchMaxOutputTokens": 8192,
+    "singletonMaxOutputTokens": 1024
+  },
+  "priceUSDPerMillionTokens": { "input": 0.2, "output": 1.2 },
+  "maximumReservedCostUSD": 0.9868192,
+  "sourcePaths": {
+    "offlineFreeze": "packages/skills/tests/fixtures/srs4r/assessor-offline-freeze-v1.json",
+    "developmentLoader": "packages/skills/tests/srs4-development.ts",
+    "liveConfigBuilder": "packages/skills/tests/srs4r-live-config.ts",
+    "independencePlan": "packages/skills/tests/fixtures/srs4r/assessor-independence-plan-v1.json"
+  },
+  "sourceSha256": {
+    "offlineFreeze": "76cab0f8b3391c132b17bd5e1c53ff6f4447a168f26f7e9398d33049516cdfc0",
+    "developmentLoader": "4e35fd500d51b0ce47a364a1a04576dea602a25eda52840d656b1a58a1855eb4",
+    "liveConfigBuilder": "69de334d380ed10fd1ce1c306501ab779ce39575cc073dfb1bf67b650094b342",
+    "independencePlan": "e18390fdbb75d5a1b7ccc32f2f839cfa0d15a66d09f7a94e18e8591d41ea4d16"
+  },
+  "caseBindings": [
+    {
+      "key": "SRS3B:R01",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "2d22eed7a877e663a848f3a246f5b198f0d1d8dcee24fdbf02f88f14d5bbe1cb",
+        "requestBytes": 16741,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133834
+      }
+    },
+    {
+      "key": "SRS3B:R02",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "f41c38c87f847ee021919eb7dcef5390c30a7c90de7ee232244157f716c8d941",
+        "requestBytes": 17510,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013537200000000001
+      }
+    },
+    {
+      "key": "SRS3B:R03",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "9cacc3b9ea473622ba9c5e2078f8466bda0811429e469032de9b7f0a411d9376",
+        "requestBytes": 16401,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133154
+      }
+    },
+    {
+      "key": "SRS3B:R04",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "01dcb663a82513701471fe1c98c1ee317a051f7a6f5eb6d743e4fa4069a431f7",
+        "requestBytes": 16142,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132636
+      }
+    },
+    {
+      "key": "SRS3B:R05",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "476dc0e9f5767d9aac7df6c378490c066c1dfb0d10fbdbd0036584ee29c1a033",
+        "requestBytes": 17407,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0135166
+      }
+    },
+    {
+      "key": "SRS3B:R06",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "e953f504b492eeb3e6d7fc2c848b4b8a6acb7f82807559b77ec2924f26be17c1",
+        "requestBytes": 17389,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013513
+      },
+      "reverseOrder": {
+        "requestSha256": "78d1e1614fb5f1ce52d420185a5c21ef2d7a63e1c10bb2bcf12abef49df698c4",
+        "requestBytes": 17389,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013513
+      },
+      "singletons": [
+        {
+          "skillId": "acknowledge_mistake",
+          "requestSha256": "23777d460c2b44e0592d0b6120e035da92dab1bf41204dfb8e0ad60ba585913c",
+          "requestBytes": 6083,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026501999999999997
+        },
+        {
+          "skillId": "ask_for_help",
+          "requestSha256": "2284c1c649f806d2728be832e0edc6ddb08253412cb9329180a1f8c493fb5878",
+          "requestBytes": 6257,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002685
+        },
+        {
+          "skillId": "clarification",
+          "requestSha256": "2bfb992dfb248057c1e2df9243f0be4051e1d134b847275b7f4c5308593e76df",
+          "requestBytes": 6321,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026978
+        },
+        {
+          "skillId": "decline",
+          "requestSha256": "9d1e8c482774082d97907e89c128ba03d6bcae765dfb398236d2234f07f95a21",
+          "requestBytes": 5985,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026306000000000003
+        },
+        {
+          "skillId": "expectation_setting",
+          "requestSha256": "0e529879bcc40ebb3d66480d8291fccea94c523c83037837d90880f482d7834c",
+          "requestBytes": 6439,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0027214
+        },
+        {
+          "skillId": "follow_up",
+          "requestSha256": "44ad04807c792c781a6e88ca00213087f425e69892861a50beaf83d49fac1cec",
+          "requestBytes": 6281,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026898
+        },
+        {
+          "skillId": "planning",
+          "requestSha256": "4e2cfb52319f351fb7bf90e5d3b74bb3a5e438d02279dd391934bbcd9d3fbcfa",
+          "requestBytes": 6489,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0027314
+        },
+        {
+          "skillId": "reassurance",
+          "requestSha256": "8eb237aa6bca947a04f04bdacdb7c5a656dbe5df28fdcd490028af3037146e1f",
+          "requestBytes": 5828,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025992
+        },
+        {
+          "skillId": "request",
+          "requestSha256": "2c8ed2e74f0f3c10ebd22575a13cec25832b755be6051b9ddbbe35400f5fc78b",
+          "requestBytes": 6669,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0027674
+        },
+        {
+          "skillId": "status_update",
+          "requestSha256": "396704d26e191a3495eef366541d6e20be27741ff5bb3f004e13eb61c64965e3",
+          "requestBytes": 6258,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026852
+        }
+      ]
+    },
+    {
+      "key": "SRS3B:R07",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "bc6933585328c3b151f77bc617e1578b342da2a382b9cba8bc701c1f44d949d8",
+        "requestBytes": 17737,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0135826
+      }
+    },
+    {
+      "key": "SRS3B:R08",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "2b3da9bcf716ba14f787ee2909feeffb7aabe609f2a4eed830b7700b54f1bf3e",
+        "requestBytes": 16229,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013281
+      }
+    },
+    {
+      "key": "SRS3B:R09",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "63d03ad05575cdcb4ccf83de5873ea988b5a37dc8bbb6957b24f3fb254b14fd0",
+        "requestBytes": 16702,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133756
+      }
+    },
+    {
+      "key": "SRS3B:R10",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "9fadec10ec3ff079c232ce698dfc73db2034f01ed376568dbc5e55628c9bbbe1",
+        "requestBytes": 16582,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133516
+      },
+      "reverseOrder": {
+        "requestSha256": "75e308fdd5dc76a67fd55eeee281c8c1bc6ce09cca16e8862c031c5b36d159ac",
+        "requestBytes": 16582,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133516
+      },
+      "singletons": [
+        {
+          "skillId": "acknowledge_mistake",
+          "requestSha256": "62d6a10ecb9118ab8609e22acff5a0f5ea9be945b320a7df65a912265988d030",
+          "requestBytes": 5733,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025802
+        },
+        {
+          "skillId": "ask_for_help",
+          "requestSha256": "fd14e4ead55d1b4d4181822d8c3888244e96fd5cd223bfe696eaa3a8036b1613",
+          "requestBytes": 6131,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026598000000000004
+        },
+        {
+          "skillId": "boundary_setting",
+          "requestSha256": "12ea899dec44c85f71f3553b37d0dcc12b78700c9fc593a68d45b1904184b70a",
+          "requestBytes": 6420,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0027176000000000006
+        },
+        {
+          "skillId": "clarification",
+          "requestSha256": "9109786c43d25e73fbfc7ac19fc7c509089af20601d27a1c7879a1f22333338b",
+          "requestBytes": 6195,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026726000000000002
+        },
+        {
+          "skillId": "de_escalation",
+          "requestSha256": "c3e216e5509d4b7f1cc0b0c689b5b8cf7c1d91881b40171f1957e2990b39dcdc",
+          "requestBytes": 6187,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002671
+        },
+        {
+          "skillId": "decline",
+          "requestSha256": "7182e50e21c103becd3f6010929c5975f35cda2189d92e720adb81098292a88f",
+          "requestBytes": 5889,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026114000000000003
+        },
+        {
+          "skillId": "emotional_validation",
+          "requestSha256": "e2994f7bec0f78ca8322135e2b664db94138bdabf69a8e4675944479daad3347",
+          "requestBytes": 5974,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026284
+        },
+        {
+          "skillId": "expectation_setting",
+          "requestSha256": "68be2f3cc9c978c4c49bd47866398f3b565c930d530000a2afb1f11ad56889c1",
+          "requestBytes": 6053,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026441999999999998
+        },
+        {
+          "skillId": "reassurance",
+          "requestSha256": "999cead73aa8b1b586ac39c6cd633e9858c4429c4f526910c94bccf86c720661",
+          "requestBytes": 5948,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026232
+        },
+        {
+          "skillId": "request",
+          "requestSha256": "804377573173991531f119acedbefd19b01f59c3ec42561567997d2a6d3a72e2",
+          "requestBytes": 6139,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026614
+        }
+      ]
+    },
+    {
+      "key": "SRS3B:R11",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "d368e4237e25b6c2ca2a7b235b1bc87c82a51fa4f75f9e6256491be6c016db3e",
+        "requestBytes": 17159,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013467
+      }
+    },
+    {
+      "key": "SRS3B:R12",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "b8259974747039df11a527d8c6de7a274c015886ab988659e5dd9cd0abfa21e7",
+        "requestBytes": 16430,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133212
+      }
+    },
+    {
+      "key": "SRS3B:R13",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "ee74caabb959d621875feb04da3bcf5ef5ed84068d4dc778e02c9c917c0bb554",
+        "requestBytes": 15537,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0131426
+      }
+    },
+    {
+      "key": "SRS3B:R14",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "d8b685a9fbf467cdc57e28249033a1a5ea7edd4b0e1dac0d3a8bcf9a0f9e6e72",
+        "requestBytes": 16913,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013417799999999999
+      },
+      "reverseOrder": {
+        "requestSha256": "098689952f9dfeb167a2de4142f1115035a4ca713401947604e6555efc0a5ac8",
+        "requestBytes": 16913,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013417799999999999
+      },
+      "singletons": [
+        {
+          "skillId": "acknowledge_mistake",
+          "requestSha256": "7a774c519eac8f23afb43b56e19930325059a4ebdcf1af58cd306da02f80f36d",
+          "requestBytes": 5926,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026188
+        },
+        {
+          "skillId": "clarification",
+          "requestSha256": "9ef7349a26aebf3eeef63dcb65757b5aa85e6932df42f3776cb766eb638bcffd",
+          "requestBytes": 5974,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026284
+        },
+        {
+          "skillId": "decline",
+          "requestSha256": "f3b493e65f25a7a063522d539d93f4b6ebd0b6e70114666415abf11a9794dc16",
+          "requestBytes": 5828,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025992
+        },
+        {
+          "skillId": "emotional_validation",
+          "requestSha256": "6ddb9c41379fd3b66c8abd41e3d88f6adbc89eadc0bec0f42fc293aa619fea1c",
+          "requestBytes": 5943,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026222
+        },
+        {
+          "skillId": "expectation_setting",
+          "requestSha256": "e4eaf2eb9637a452a229df308650d0c0a9a80f95c6b68ecb647fabf5c431b5a2",
+          "requestBytes": 6282,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.00269
+        },
+        {
+          "skillId": "follow_up",
+          "requestSha256": "4b10987d655ae6798367e08e051532e5d106d0ad9565a1ccf06037892cdd5c3c",
+          "requestBytes": 6124,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026584
+        },
+        {
+          "skillId": "planning",
+          "requestSha256": "e188bf4507b406e242c8d7b8503840e530bfe7c90cf7644def9f17f8eb405971",
+          "requestBytes": 6332,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0027
+        },
+        {
+          "skillId": "reassurance",
+          "requestSha256": "c9e8daed0baed8bc307a61c279874ea8be9896cce41ce107c21ed3e8896b6948",
+          "requestBytes": 5917,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002617
+        },
+        {
+          "skillId": "request",
+          "requestSha256": "014674080b91e4206dc88ad51196e8ea31118513d8a5958e8d34ef608811a654",
+          "requestBytes": 6294,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026924
+        },
+        {
+          "skillId": "status_update",
+          "requestSha256": "5e7baf1289948028ab4671c3cdf893d5c760600619bad9058c2fc5abae773bac",
+          "requestBytes": 6101,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026538
+        }
+      ]
+    },
+    {
+      "key": "SRS3B:R15",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "a639ee7af0a1929a8fa67a7482e3e9c3218890bd26fd5765d9170e8da39a2ec9",
+        "requestBytes": 17192,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0134736
+      }
+    },
+    {
+      "key": "SRS3B:R16",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "091dc6359491fe9869d2edf2bdc3d14cf4b1adcc6317ea2b34e17e2f8b5d7170",
+        "requestBytes": 16170,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132692
+      }
+    },
+    {
+      "key": "SRS3B:R17",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "a7d090fa210a09d0d4b8a7c45df809bc268344bcfe05d8340d869842b056fdec",
+        "requestBytes": 16483,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133318
+      }
+    },
+    {
+      "key": "SRS3B:R18",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "afcddc3af2185aa496765f19440f51b6f192325f9d0b25c74b9ffaba3ac34ea8",
+        "requestBytes": 16373,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133098
+      }
+    },
+    {
+      "key": "SRS3B:R19",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "f5bb2523f4978d14a6522d74c32fcac5b5b171b60bb15af28ea466eb8ff043eb",
+        "requestBytes": 17611,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013557399999999999
+      },
+      "reverseOrder": {
+        "requestSha256": "81d81e7227160bfc65e8ef8eee1ae2fb6da6b74434d3168cba3911fba5bdc11a",
+        "requestBytes": 17611,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013557399999999999
+      },
+      "singletons": [
+        {
+          "skillId": "boundary_setting",
+          "requestSha256": "fb5f2b8a1301cb56fa05ed55170dd4ddc100ea50996ee62d971b1dea193e3b56",
+          "requestBytes": 6213,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026761999999999997
+        },
+        {
+          "skillId": "clarification",
+          "requestSha256": "b24081587f7d74c45ec8db2cfe59f836d3d6c75777e8e0b73142948d0a9aeed6",
+          "requestBytes": 6027,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002639
+        },
+        {
+          "skillId": "decline",
+          "requestSha256": "bbc368a3482dfccdccf21d5e5b5a652e66799466adaf24aee866c166ea1e3280",
+          "requestBytes": 6124,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026584
+        },
+        {
+          "skillId": "emotional_validation",
+          "requestSha256": "652c1a1acf69fb020a1968a7c2768079fd478beb90d2aafcae2cd1c486b75706",
+          "requestBytes": 5996,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026328000000000002
+        },
+        {
+          "skillId": "expectation_setting",
+          "requestSha256": "e2b228cdea7400749c760f90d731e54d608a1eaa207747e6d79852ccf5484b6d",
+          "requestBytes": 6527,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002739
+        },
+        {
+          "skillId": "follow_up",
+          "requestSha256": "15eb969bae24ec4e613e51b8d85375871e21593395eeef137e546224364da340",
+          "requestBytes": 6177,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002669
+        },
+        {
+          "skillId": "planning",
+          "requestSha256": "46bc708a8c20da0f1eec99460b68585916b8425c1c1c5f228613325c83b44b70",
+          "requestBytes": 6385,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0027106000000000005
+        },
+        {
+          "skillId": "reassurance",
+          "requestSha256": "6e7e4c66cff472f42f5d44732bbd32a84eab21d5fb024eddf2af59bb8153bd20",
+          "requestBytes": 5970,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026276000000000003
+        },
+        {
+          "skillId": "request",
+          "requestSha256": "c6b296bd4be7899f1a258efec44ad6157d0ad364fce2781e914a457745688308",
+          "requestBytes": 6347,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002703
+        },
+        {
+          "skillId": "status_update",
+          "requestSha256": "334cc30f81b29dadf84e01a7b3f085e1add0ecde7318a65b70b845bedb1b663e",
+          "requestBytes": 6130,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026596000000000002
+        }
+      ]
+    },
+    {
+      "key": "SRS3B:R20",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "d0bd3ca2e6bc921c14bbcf9194dca3c55ab343a1375ffc77ada17d1810319755",
+        "requestBytes": 16103,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132558
+      }
+    },
+    {
+      "key": "SRS3B:R21",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "de880fabb5c411233c5422dc29eeb33146f660f80a5b48a20459bfc23ae143d4",
+        "requestBytes": 17080,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0134512
+      }
+    },
+    {
+      "key": "SRS3B:R22",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "42116acc1a18db89c9aa1f21665f9cbf586e9ef354994132af05ad5403808e68",
+        "requestBytes": 16760,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133872
+      }
+    },
+    {
+      "key": "SRS3B:R23",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "2920e3cbfcdedbfd8460ca93f2e7894d7c5d7369f2e65d70cf2ddfce05fd1cb7",
+        "requestBytes": 17184,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013472
+      }
+    },
+    {
+      "key": "SRS3B:R24",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "951e63c316bb8fa41cf3123c93f88c07ba6b17f894f0c2f298fd9ddb3a09a88a",
+        "requestBytes": 16501,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013335399999999999
+      },
+      "reverseOrder": {
+        "requestSha256": "0a604515de48a97a2b442fbfd16b2e6415a22d0e019b1fe2cf3cb90806ee7595",
+        "requestBytes": 16501,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013335399999999999
+      },
+      "singletons": [
+        {
+          "skillId": "apology",
+          "requestSha256": "0699c3b950a97c56e8a016702e1c351856c5357ed0e56309bd0f4556b3c6c6cc",
+          "requestBytes": 5919,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026174
+        },
+        {
+          "skillId": "ask_for_help",
+          "requestSha256": "17a4bcfec9abfa1248a920bd87b5cbc538ff04bd3d616c7f7aef5de200fb2e3f",
+          "requestBytes": 5913,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026162
+        },
+        {
+          "skillId": "boundary_setting",
+          "requestSha256": "e635ab1fa3e6538aa739fae1bf20fbba48defbe8aa3c5375e22a547e4daae16a",
+          "requestBytes": 6219,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026774
+        },
+        {
+          "skillId": "de_escalation",
+          "requestSha256": "a17b9336d818952b3556b4e4ee75c380ae11ae1e63b02c5ba84ac3b10c878902",
+          "requestBytes": 6186,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026708
+        },
+        {
+          "skillId": "decline",
+          "requestSha256": "690090f3dd275d2237d6212c2687faf194896d97a24cdf83f501fe50a460c33a",
+          "requestBytes": 6101,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026538
+        },
+        {
+          "skillId": "emotional_validation",
+          "requestSha256": "4e8518e59d624e20a7037dd84bd139edf637615b2d16a8ad561f7d9438c1e45c",
+          "requestBytes": 5741,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025818
+        },
+        {
+          "skillId": "follow_up",
+          "requestSha256": "09f488c3b61d233726e140592b87d9cdc811176afc005a22d9f80ff997322ff0",
+          "requestBytes": 6154,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026644
+        },
+        {
+          "skillId": "planning",
+          "requestSha256": "598c14810769cc7d11e4b1e4aec2ed0c127afdbf15af912925e070c07a67e746",
+          "requestBytes": 6150,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026636000000000003
+        },
+        {
+          "skillId": "request",
+          "requestSha256": "c44ca819e505a0705f8d10709336fd4ebcb497511baf2a94541a1de4715b0e88",
+          "requestBytes": 6332,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0027
+        },
+        {
+          "skillId": "status_update",
+          "requestSha256": "dfe7fd724bac13ee3339abfb3ef0c605bca6ef6f028f85ddb4ce9661d79b9b3a",
+          "requestBytes": 5864,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026064
+        }
+      ]
+    },
+    {
+      "key": "SRS3B:R25",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "f827188de0cdf6fa4b917732df159bf87d58fb13d5f46f5de794098f4d9126e3",
+        "requestBytes": 16305,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013296200000000001
+      }
+    },
+    {
+      "key": "SRS3B:R26",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "d7878c5a4a39c83e35cf91ec953bbc0d55aacda12ea031e9cab45cf7d404ff1b",
+        "requestBytes": 16263,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013287799999999999
+      },
+      "reverseOrder": {
+        "requestSha256": "fedabbce6e7b3c64fee8da143f5cba3bc5b48cd9c245003eca7621cf924ec2af",
+        "requestBytes": 16263,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013287799999999999
+      },
+      "singletons": [
+        {
+          "skillId": "acknowledge_mistake",
+          "requestSha256": "bfb10f2d111ac64cdf2aefa88e3da50fe9adeb8ebde851c421c401678bfba071",
+          "requestBytes": 6108,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026552
+        },
+        {
+          "skillId": "apology",
+          "requestSha256": "26986b4147129064cd0c0a1cd1d380ed3162e39762fdf82467c0ad7f12db8ce6",
+          "requestBytes": 6134,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026604000000000003
+        },
+        {
+          "skillId": "ask_for_help",
+          "requestSha256": "68a431d6168267a28ffcf3018be54ba0761c5b84dbe9ff425bd0a9cac968f05b",
+          "requestBytes": 6092,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002652
+        },
+        {
+          "skillId": "clarification",
+          "requestSha256": "2760786d42a4d344a5c1616bdf0cea9d4f48abef03ddb98fffe3d6076b4e701f",
+          "requestBytes": 6156,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026648
+        },
+        {
+          "skillId": "decline",
+          "requestSha256": "9b7d9c363b3c00d38daa2fb7c79da751d894af518b56631abb37ce1f13ac1687",
+          "requestBytes": 5608,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025551999999999997
+        },
+        {
+          "skillId": "emotional_validation",
+          "requestSha256": "1a0eb06cdbf4979af9d395f72dc6934acbee239e8822df8497baa6319b48bdd9",
+          "requestBytes": 5935,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026206000000000003
+        },
+        {
+          "skillId": "follow_up",
+          "requestSha256": "f7170e3590ef7ac759d0dc5180efbd95317405c6cea6232d2c159ea2fbb9137e",
+          "requestBytes": 6116,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026568000000000004
+        },
+        {
+          "skillId": "reassurance",
+          "requestSha256": "356eefb6edf3ad0fb30b152ea9738ee29bb3aaf3dd81308b50d9f98439239740",
+          "requestBytes": 5909,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026154
+        },
+        {
+          "skillId": "request",
+          "requestSha256": "aef89d735359486139443469a987b4ee91794e1199eb99ef47fb7dd9d7cc134b",
+          "requestBytes": 6291,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026918000000000003
+        },
+        {
+          "skillId": "status_update",
+          "requestSha256": "0c3408ef753c3d0659f6e4978bbac7e8b5d84245f975ee45e4c45ff7d82f88b1",
+          "requestBytes": 5650,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025636000000000005
+        }
+      ]
+    },
+    {
+      "key": "SRS3B:R27",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "f00bb681833226bf535dc39a2f65585df2ccfce7452c8c3d40ccfda4b28191cf",
+        "requestBytes": 15790,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0131932
+      }
+    },
+    {
+      "key": "SRS3B:R28",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "6aa949e5f226ff49bac62fe7ee3e76f36fd2091c74f786739d1b63440f3913cd",
+        "requestBytes": 16486,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133324
+      }
+    },
+    { "key": "SRS3B:R29", "action": "NO_REPLY_NEEDED", "modelRequest": false },
+    {
+      "key": "CONTROL:K01",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "469fae9829b16cbc93575def85442088bf7b719ccdc68fbf3ad0630525357898",
+        "requestBytes": 16541,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133434
+      }
+    },
+    {
+      "key": "CONTROL:K02",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "29112b7eb9dc7a155fea42cc21e1670b25fe353a4157bdcc01c154da69b2064a",
+        "requestBytes": 16279,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013291
+      }
+    },
+    {
+      "key": "CONTROL:K03",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "8947c146506f8bb506212bf6db14c6629bcc37889c71df433bb8871322821510",
+        "requestBytes": 16257,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132866
+      }
+    },
+    {
+      "key": "CONTROL:K04",
+      "action": "NO_REPLY_NEEDED",
+      "modelRequest": false
+    },
+    {
+      "key": "CONTROL:K05",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "bf33e60cfd57ce76dee018e84daac72fa202f4a1cb7854b66836333736eb46d9",
+        "requestBytes": 17113,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013457799999999999
+      }
+    },
+    {
+      "key": "CONTROL:K06",
+      "action": "NO_REPLY_NEEDED",
+      "modelRequest": false
+    },
+    {
+      "key": "CONTROL:K07",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "2b52bd5718a2f418aa5f416be4ee1ffbbafce52518bd8dfa92e797a6cc98ee09",
+        "requestBytes": 15615,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0131582
+      }
+    },
+    {
+      "key": "CONTROL:K08",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "14e4b6d57abd6d186229481b86c1c5c0dbdebae7d3fafd6f1b24720b574c4814",
+        "requestBytes": 15531,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0131414
+      }
+    },
+    {
+      "key": "CONTROL:K09",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "d6d96ac447e20766a7477bd467feac0cd581327364061fae3d4cf2d0c76e4768",
+        "requestBytes": 16324,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133
+      }
+    },
+    {
+      "key": "CONTROL:K10",
+      "action": "COMPLETE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "dbd6b151f9800d338df4e105fe60f8763e9d1c155a89eefe85465522f2242550",
+        "requestBytes": 16658,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133668
+      }
+    },
+    {
+      "key": "CONTROL:K11",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "c056f07eeaa787bd7ef52eb7f080301b09a2b81002effc3e5133647cb2d7daa9",
+        "requestBytes": 16246,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132844
+      }
+    },
+    {
+      "key": "CONTROL:K12",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "f4912330d40a87d94ae409f4616ea6d125c1f3dce6db6dbc0cfddb728eb43f22",
+        "requestBytes": 17163,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013467799999999999
+      }
+    },
+    {
+      "key": "CONTROL:K13",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "60fd703ab3f827365f0f4518b37137ba79fbe0baf016e5bbe732fa84b572305d",
+        "requestBytes": 16261,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132874
+      }
+    },
+    {
+      "key": "CONTROL:K14",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "612f67dbc6b935ab3778402a55e96d1cf7a8e653eba9456b9926121ab3e3da47",
+        "requestBytes": 16066,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132484
+      }
+    },
+    {
+      "key": "CONTROL:K15",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "d1c19efc592be364f16eb7d22f3ff06150c7c1fb84efbf978f9b3ed6f2cca6f4",
+        "requestBytes": 17732,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013581600000000001
+      }
+    },
+    {
+      "key": "CONTROL:K16",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "7804f6bbc0ffb99c7012d1b09a861e49cb2f8a0c1e29704f883026be13678881",
+        "requestBytes": 16405,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133162
+      }
+    },
+    {
+      "key": "CONTROL:K17",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "25e57aac8f4d7dd19eae262b3e8b50f834bb057b4ad0c76f3934c6cd453b5e2e",
+        "requestBytes": 17066,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0134484
+      }
+    },
+    {
+      "key": "CONTROL:K18",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "1d38a647481d38184a85aa07330c6d910c45b0885a40f60ca41a99cd0233bf2b",
+        "requestBytes": 16239,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013283
+      }
+    },
+    {
+      "key": "CONTROL:K19",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "71459abb2ee7a66b79e19f6a7774ebc8a9e9d1d17595166f169df9c38ce1494c",
+        "requestBytes": 17095,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013454200000000001
+      }
+    },
+    {
+      "key": "CONTROL:K20",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "db411e9fa9b008e666b0296e12c90e3be38793ef0a835d15b16c3e0278aa8ee5",
+        "requestBytes": 17195,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0134742
+      }
+    },
+    {
+      "key": "CONTROL:K21",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "bf3d693f0680a6fdba3ca325efc041c35412de3daebe605a0e2c709fcf065ad6",
+        "requestBytes": 16173,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132698
+      },
+      "reverseOrder": {
+        "requestSha256": "361fcda20839105d8980b61c1704823871f14933806ca56d67d485eb10ddccff",
+        "requestBytes": 16173,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0132698
+      },
+      "singletons": [
+        {
+          "skillId": "apology",
+          "requestSha256": "170fe74a5294122421f9c7af14d3425e0972bf0cecbd778f16e85a25c1c75f67",
+          "requestBytes": 5614,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025564
+        },
+        {
+          "skillId": "ask_for_help",
+          "requestSha256": "1dfe57f141859bfbcfab334976340baf5a96b8a919ea32d79b0771bff2d394db",
+          "requestBytes": 5809,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025954
+        },
+        {
+          "skillId": "de_escalation",
+          "requestSha256": "b565264bdaca056e1828044a5b27cda83bbfacdb95dd5e292c905d27da3e9c0a",
+          "requestBytes": 5818,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025972
+        },
+        {
+          "skillId": "decline",
+          "requestSha256": "db68a66f23c841763b1465f4a6045741bc0c9073ba2a3fba140a7fca3d52f0f9",
+          "requestBytes": 5754,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025844
+        },
+        {
+          "skillId": "expectation_setting",
+          "requestSha256": "e6b558ef392852e2627ea51cc6271ddd66562012dbb957064afb59c5c4a301fa",
+          "requestBytes": 6184,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026704000000000003
+        },
+        {
+          "skillId": "follow_up",
+          "requestSha256": "5aca96c8c48e51cbe37ac9ab1c71731115a8f49a49e17d7582a43e452e0a7c9e",
+          "requestBytes": 6050,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026436000000000003
+        },
+        {
+          "skillId": "planning",
+          "requestSha256": "054f411d96ee4633e7dae5b72d4ef3203fca7412d1fc636e1f454996987b8e72",
+          "requestBytes": 6258,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026852
+        },
+        {
+          "skillId": "reassurance",
+          "requestSha256": "ff0e6dcafffc8fe811da683ccfe5174ab5ed35778db7bb12ca47b59091c0c612",
+          "requestBytes": 5597,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002553
+        },
+        {
+          "skillId": "request",
+          "requestSha256": "dd91061ac33f4fa5614c0fd203ad9c5657b2b0bf7a22624fb5e4e3d0b7b31a0f",
+          "requestBytes": 6228,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026791999999999996
+        },
+        {
+          "skillId": "status_update",
+          "requestSha256": "10baeb107051db4fe69c60770daf68997bde9f1333b19a1cd4717deab815effe",
+          "requestBytes": 6003,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026341999999999997
+        }
+      ]
+    },
+    {
+      "key": "CONTROL:K22",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "e9399d31b81bdbb4ef05e8ca96068230085fcc273bb06d8744009d2a430d6141",
+        "requestBytes": 16372,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133096
+      },
+      "reverseOrder": {
+        "requestSha256": "cd66899d9bc708e79f5e80ac93d3894ca5e7110405f28d54e02114dfb248851c",
+        "requestBytes": 16372,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133096
+      },
+      "singletons": [
+        {
+          "skillId": "acknowledge_mistake",
+          "requestSha256": "127d1775d9721732352e75ec4193bf16076bcabd7309755efecebceee53fb3fe",
+          "requestBytes": 6127,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.002659
+        },
+        {
+          "skillId": "apology",
+          "requestSha256": "c8ff653542c60e50ae199849e91fcfd13b65d654f7aa8f1468e4fbd76112a31b",
+          "requestBytes": 6153,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026642
+        },
+        {
+          "skillId": "clarification",
+          "requestSha256": "42a368b1e9c195860ca953f0f0ef158792db1290e65437ddd17eb250683ab906",
+          "requestBytes": 5745,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025826000000000004
+        },
+        {
+          "skillId": "decline",
+          "requestSha256": "a15f6f0eb3d19b671d0ea5b9856eb1627eab9f759e7309c44b655d90c0ea5eab",
+          "requestBytes": 5815,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0025966000000000006
+        },
+        {
+          "skillId": "emotional_validation",
+          "requestSha256": "f08e3f78ae551f00d3d59d3230e5d0fcfa1b8f6e18d854ad5f723cb27f0a673e",
+          "requestBytes": 5930,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026196000000000006
+        },
+        {
+          "skillId": "expectation_setting",
+          "requestSha256": "1003b06c4f6bd5b34c03fc7016c3a07de88f589a4a75557e9cc7a36e9b83d438",
+          "requestBytes": 6269,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026874
+        },
+        {
+          "skillId": "follow_up",
+          "requestSha256": "240ea005102156603b9523ca155c8d10cdb13f12954dd3dc5d9ff237f31e55aa",
+          "requestBytes": 5911,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026158
+        },
+        {
+          "skillId": "planning",
+          "requestSha256": "95c5106b5a2044c93d48e447be62a0c04c42cc286012524b511de6e8f5ec248a",
+          "requestBytes": 6121,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026578
+        },
+        {
+          "skillId": "reassurance",
+          "requestSha256": "9a11374e97d83a6fe3cffa2feed2d3e7373c54467b5934060df4a4c4dec20f03",
+          "requestBytes": 5904,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026144000000000002
+        },
+        {
+          "skillId": "status_update",
+          "requestSha256": "75d8cc8a4d5559e8f40a1c0049da97fe468d9f6ec55437621eddfb2a10c9d7be",
+          "requestBytes": 6088,
+          "maxOutputTokens": 1024,
+          "costUpperBoundUSD": 0.0026512
+        }
+      ]
+    },
+    {
+      "key": "CONTROL:K23",
+      "action": "REWRITE_DRAFT",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "d4aed573c8950843a224f11e8adb9a25fa3c9ab0e495233056772b5f289720a4",
+        "requestBytes": 16635,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.013362200000000001
+      }
+    },
+    {
+      "key": "CONTROL:K24",
+      "action": "SUGGEST_REPLY",
+      "modelRequest": true,
+      "idOrder": {
+        "requestSha256": "08cc83a1f95ba8a69d8f1b6df80efdbf83f19eda9eb3302b444209d90d956043",
+        "requestBytes": 16646,
+        "maxOutputTokens": 8192,
+        "costUpperBoundUSD": 0.0133644
+      }
+    }
+  ],
+  "independenceCaseKeys": [
+    "SRS3B:R06",
+    "SRS3B:R10",
+    "SRS3B:R14",
+    "SRS3B:R19",
+    "SRS3B:R24",
+    "SRS3B:R26",
+    "CONTROL:K21",
+    "CONTROL:K22"
+  ],
+  "auditScored": false,
+  "protectedChallengeRead": false,
+  "productionChanged": false,
+  "combinationImplemented": false
+}

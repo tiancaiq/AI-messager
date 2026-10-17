@@ -1,0 +1,132 @@
+{
+  "experimentId": "SRS-4R-A-LIVE-PROOF-V1",
+  "configSha256": "1fa4019d91e53c5d0746f99f91614ecbfa2e40b16324f48504ef2e1ba537db2e",
+  "calls": [
+    {
+      "key": "SRS3B:R06",
+      "view": "BATCH_ID_ORDER",
+      "skillId": null,
+      "httpStatus": 200,
+      "providerStatus": "completed",
+      "returnedModel": "gpt-5.6-luna",
+      "inputTokens": 3771,
+      "outputTokens": 665,
+      "latencyMs": 10435,
+      "costUpperBoundUSD": 0.013513,
+      "knownCostUSD": 0.0015522,
+      "failureCode": null,
+      "validationStatus": "VALID",
+      "validationFailureCodes": []
+    },
+    {
+      "key": "SRS3B:R06",
+      "view": "BATCH_REVERSE_ORDER",
+      "skillId": null,
+      "httpStatus": 200,
+      "providerStatus": "completed",
+      "returnedModel": "gpt-5.6-luna",
+      "inputTokens": 3771,
+      "outputTokens": 720,
+      "latencyMs": 9675,
+      "costUpperBoundUSD": 0.013513,
+      "knownCostUSD": 0.0016182,
+      "failureCode": "APPLICATION_VALIDATION_FAILED",
+      "validationStatus": "FAILED",
+      "validationFailureCodes": ["EXPLICIT_NEGATION_EVIDENCE_INVALID"]
+    }
+  ],
+  "gateRecords": [],
+  "observations": [
+    {
+      "key": "SRS3B:R06",
+      "action": "SUGGEST_REPLY",
+      "stage": "ASSESSOR",
+      "status": "VALID",
+      "candidateIds": [
+        "follow_up",
+        "ask_for_help",
+        "reassurance",
+        "status_update",
+        "request",
+        "decline",
+        "clarification",
+        "acknowledge_mistake",
+        "planning",
+        "expectation_setting"
+      ],
+      "hardEligibleIds": [
+        "acknowledge_mistake",
+        "apology",
+        "ask_for_help",
+        "boundary_setting",
+        "clarification",
+        "de_escalation",
+        "decline",
+        "emotional_validation",
+        "expectation_setting",
+        "follow_up",
+        "planning",
+        "reassurance",
+        "request",
+        "status_update"
+      ],
+      "groundedCandidateIds": [
+        "acknowledge_mistake",
+        "ask_for_help",
+        "clarification",
+        "decline",
+        "expectation_setting",
+        "follow_up",
+        "planning",
+        "reassurance",
+        "request",
+        "status_update"
+      ],
+      "applicabilityById": {
+        "acknowledge_mistake": "UNSUPPORTED",
+        "ask_for_help": "UNSUPPORTED",
+        "clarification": "UNSUPPORTED",
+        "decline": "UNSUPPORTED",
+        "expectation_setting": "UNSUPPORTED",
+        "follow_up": "UNSUPPORTED",
+        "planning": "UNSUPPORTED",
+        "reassurance": "UNSUPPORTED",
+        "request": "CORE",
+        "status_update": "UNSUPPORTED"
+      },
+      "blockingReasonsById": {
+        "acknowledge_mistake": ["PREREQUISITE_NOT_ESTABLISHED"],
+        "ask_for_help": ["NO_MATERIAL_JOB"],
+        "clarification": ["NO_MATERIAL_JOB"],
+        "decline": ["PREREQUISITE_NOT_ESTABLISHED"],
+        "expectation_setting": ["NO_MATERIAL_JOB"],
+        "follow_up": ["PREREQUISITE_NOT_ESTABLISHED"],
+        "planning": ["NO_MATERIAL_JOB"],
+        "reassurance": ["PREREQUISITE_NOT_ESTABLISHED"],
+        "request": [],
+        "status_update": ["NO_MATERIAL_JOB"]
+      }
+    }
+  ],
+  "gate": {
+    "gateId": "SRS-4R-A-SINGLETON-BATCH-INDEPENDENCE-V1",
+    "gateStatus": "NOT_RUN",
+    "parityStatus": "NOT_RUN",
+    "evidenceKind": "NONE",
+    "expectedCaseCount": 8,
+    "observedCaseCount": 0,
+    "comparedCandidateCount": 0,
+    "applicabilityMismatchCount": 0,
+    "supportDecisionMismatchCount": 0,
+    "invalidViewCount": 0,
+    "reasonMismatchCount": 0,
+    "mismatches": []
+  },
+  "metrics": null,
+  "reservedUpperBoundUSD": 0.027026,
+  "knownBilledUSD": 0.00317,
+  "fatalStop": "BATCH_REVERSE_ORDER_INVALID",
+  "auditScored": false,
+  "protectedChallengeRead": false,
+  "productionChanged": false
+}

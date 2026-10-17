@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "customConditions": ["development"],
+    "types": ["node"]
+  },
+  "include": ["evaluate-srs4r-live.ts", "freeze-srs4r-live.ts"]
+}
